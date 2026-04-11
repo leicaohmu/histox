@@ -10,9 +10,10 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.autosummary',  # ← 加这一行
     'myst_parser',
 ]
-
 html_theme = 'sphinx_rtd_theme'
 html_logo = './_static/logo.png'  # 可选：侧边栏logo
 html_static_path = ['_static']

@@ -1,4 +1,4 @@
-.. currentmodule:: slideflow
+.. currentmodule:: histox
 
 histox.SlideMap
 ==================
