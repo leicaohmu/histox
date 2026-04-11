@@ -2,4 +2,4 @@ sphinx
 sphinx-rtd-theme
 myst-parser
 sphinxcontrib-video
-torch==2.0.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
