@@ -7,7 +7,7 @@ import io
 import os
 import struct
 import numpy as np
-import histox as sf
+import histox as hx
 
 from typing import Dict, Iterable, List, Optional, Tuple, Union, TYPE_CHECKING
 
@@ -93,11 +93,11 @@ class TFRecord:
         elif self._length is not None:
             return self._length
         else:
-            self._length = sf.io.get_tfrecord_length(self.path)
+            self._length = hx.io.get_tfrecord_length(self.path)
             return self._length
 
     def __getitem__(self, idx):
-        record = sf.io.get_tfrecord_by_index(
+        record = hx.io.get_tfrecord_by_index(
             self.path, idx, index_array=self.index
         )
         if self.decode_images:
@@ -112,7 +112,7 @@ class TFRecord:
     def img_format(self) -> str:
         """Return the image format of the tfrecord."""
         if self._img_format is None:
-            tfr_format = sf.io.detect_tfrecord_format(self.path)
+            tfr_format = hx.io.detect_tfrecord_format(self.path)
             if tfr_format is None:
                 raise ValueError("Unable to detect tfrecord format; file is empty.")
             self._fields, self._img_format = tfr_format
@@ -122,7 +122,7 @@ class TFRecord:
     def fields(self) -> List[str]:
         """Return the fields of the tfrecord."""
         if self._fields is None:
-            tfr_format = sf.io.detect_tfrecord_format(self.path)
+            tfr_format = hx.io.detect_tfrecord_format(self.path)
             if tfr_format is None:
                 raise ValueError("Unable to detect tfrecord fields; file is empty.")
             self._fields, self._img_format = tfr_format
@@ -135,10 +135,10 @@ class TFRecord:
         """Decode the image contained within the record."""
         if isinstance(record, dict):
             return {
-                k: v if k != 'image_raw' else sf.io.decode_image(v, img_type=self.img_format)
+                k: v if k != 'image_raw' else hx.io.decode_image(v, img_type=self.img_format)
                 for k, v in record.items()
             }
-        return sf.io.decode_image(record, img_type=self.img_format)
+        return hx.io.decode_image(record, img_type=self.img_format)
 
     def __repr__(self) -> str:
         return f"<TFRecord(path='{self.path}') length={len(self)}>"
@@ -170,7 +170,7 @@ class TFRecord:
         """
         if decode is None:
             decode = self.decode_images
-        return sf.io.get_tfrecord_by_location(
+        return hx.io.get_tfrecord_by_location(
             self.path,
             (x, y),
             locations_array=self.locations,

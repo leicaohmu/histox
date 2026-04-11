@@ -5,7 +5,7 @@ import click
 import multiprocessing
 import logging
 import tabulate  # type: ignore
-import histox as sf
+import histox as hx
 from histox.test import TestSuite
 from histox.util import colors as col
 
@@ -72,7 +72,7 @@ def main(slides, out, all_tests, slide_threads, **kwargs):
     if not out:
         out = 'histox_test'
     if 'SF_LOGGING_LEVEL' in os.environ:
-        verbosity = sf.getLoggingLevel()
+        verbosity = hx.getLoggingLevel()
     else:
         verbosity = logging.WARNING
 
@@ -81,7 +81,7 @@ def main(slides, out, all_tests, slide_threads, **kwargs):
         if kwargs[test] is None and all_tests is not None:
             kwargs[test] = all_tests
 
-    sf.about()
+    hx.about()
 
     # Show tests to run
     print(col.bold("\nTests to run:"))

@@ -2,7 +2,7 @@
 
 import cv2
 import numpy as np
-import histox as sf
+import histox as hx
 import rasterio
 import shapely.affinity as sa
 from histox import errors
@@ -18,7 +18,7 @@ def _apply_mask(image, mask):
     return cv2.bitwise_or(image, image, mask=resized_mask)
 
 
-def _get_level_for_otsu(wsi: "sf.WSI", min_size: int = 500) -> int:
+def _get_level_for_otsu(wsi: "hx.WSI", min_size: int = 500) -> int:
     """Find the smallest downsample level of a minimum size."""
     smallest_dim = np.array([min(L['dimensions']) for L in wsi.levels])
     level_ids = np.array([L['level'] for L in wsi.levels])
@@ -58,10 +58,10 @@ class Otsu:
 
             .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
                     from histox.slide import qc
 
-                    wsi = sf.WSI(...)
+                    wsi = hx.WSI(...)
                     gaussian = qc.GaussianV2()
                     otsu = qc.Otsu()
                     wsi.qc([gaussian, otsu])
@@ -71,10 +71,10 @@ class Otsu:
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
                     from histox.slide import qc
 
-                    wsi = sf.WSI(...)
+                    wsi = hx.WSI(...)
                     otsu = qc.Otsu()
                     wsi.qc(otsu)
 
@@ -91,12 +91,12 @@ class Otsu:
 
     def _thumb_from_slide(
         self,
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
     ) -> np.ndarray:
         """Get a thumbnail from the given slide.
 
         Args:
-            wsi (sf.WSI): Whole-slide image.
+            wsi (hx.WSI): Whole-slide image.
 
         Returns:
             np.ndarray: RGB thumbnail of the whole-slide image.
@@ -110,10 +110,10 @@ class Otsu:
 
         try:
             if wsi.slide.has_levels:
-                sf.log.debug("Applying Otsu's thresholding at level={}".format(level))
+                hx.log.debug("Applying Otsu's thresholding at level={}".format(level))
                 thumb = wsi.slide.read_level(level=level, to_numpy=True)
             else:
-                sf.log.debug("Applying Otsu's thresholding at level=None")
+                hx.log.debug("Applying Otsu's thresholding at level=None")
                 thumb = wsi.slide.read_level(to_numpy=True)
         except Exception as e:
             raise errors.QCError(
@@ -171,13 +171,13 @@ class Otsu:
 
     def __call__(
         self,
-        wsi: Union["sf.WSI", np.ndarray],
+        wsi: Union["hx.WSI", np.ndarray],
         mask: Optional[np.ndarray] = None,
     ) -> np.ndarray:
         """Perform Otsu's thresholding on the given slide or image.
 
         Args:
-            slide (sf.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
+            slide (hx.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
                 with shape (h, w, c) and type np.uint8.
             mask (np.ndarray): Restrict Otsu's threshold to the area of the
                 image indicated by this boolean mask. Defaults to None.
@@ -185,7 +185,7 @@ class Otsu:
         Returns:
             np.ndarray: QC boolean mask, where True = filtered out.
         """
-        if isinstance(wsi, sf.WSI):
+        if isinstance(wsi, hx.WSI):
             thumb = self._thumb_from_slide(wsi)
         else:
             thumb = wsi

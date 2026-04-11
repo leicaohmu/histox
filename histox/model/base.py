@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 from pandas.api.types import is_float_dtype, is_integer_dtype
 
 import numpy as np
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.util import log, log_manifest, no_scope  # noqa: F401
 
@@ -139,7 +139,7 @@ class _ModelParams:
                 Defaults to False.
         """
         if isinstance(tile_um, str):
-            sf.util.assert_is_mag(tile_um)
+            hx.util.assert_is_mag(tile_um)
             tile_um = tile_um.lower()
 
         self.tile_px = tile_px
@@ -288,7 +288,7 @@ class _ModelParams:
         if not self.normalizer:
             return None
         else:
-            return sf.norm.autoselect(self.normalizer, self.normalizer_source, **kwargs)
+            return hx.norm.autoselect(self.normalizer, self.normalizer_source, **kwargs)
 
     def load_dict(self, hp_dict: Dict[str, Any]) -> None:
         for key, value in hp_dict.items():
@@ -390,7 +390,7 @@ class _ModelParams:
             assert 0 <= self.l2_dense <= 1
 
         # Augmentation checks.
-        valid_aug = 'xyrjbn' if sf.backend() == 'tensorflow' else 'xyrdspbjnc'
+        valid_aug = 'xyrjbn' if hx.backend() == 'tensorflow' else 'xyrdspbjnc'
         if isinstance(self.augment, str) and not all(s in valid_aug for s in self.augment):
             raise errors.ModelParamsError(
                 "Unrecognized augmentation(s): {}".format(
@@ -400,7 +400,7 @@ class _ModelParams:
 
         # Specific considerations.
         if isinstance(self.tile_um, str):
-            sf.util.assert_is_mag(self.tile_um)
+            hx.util.assert_is_mag(self.tile_um)
             self.tile_um = self.tile_um.lower()
         if self.training_balance == 'auto':
             self.training_balance = 'category' if self.model_type() == 'classification' else 'patient'
@@ -408,7 +408,7 @@ class _ModelParams:
             self.epochs = [self.epochs]
 
         # PyTorch checks.
-        if sf.backend() == 'torch':
+        if hx.backend() == 'torch':
             if self.l2_dense:
                 log.warn(
                     "'l2_dense' is not implemented in PyTorch backend. "

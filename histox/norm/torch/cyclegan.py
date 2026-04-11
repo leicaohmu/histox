@@ -22,7 +22,7 @@ import torch.nn as nn
 import numpy as np
 import functools
 import torchvision.transforms as transforms
-import histox as sf
+import histox as hx
 
 from torchvision.transforms.functional import center_crop
 from typing import Union, Optional, List, Tuple
@@ -36,7 +36,7 @@ def download_weights() -> Tuple[str, str]:
     """Download the pretrained checkpoint from HuggingFace."""
     from huggingface_hub import hf_hub_download
 
-    sf.log.debug(
+    hx.log.debug(
         "Using pretrained CycleGAN weights, available at https://osf.io/byf27/"
     )
     he2mt = hf_hub_download(
@@ -392,11 +392,11 @@ class CycleGanStainTranslator:
             try:
                 he2mt_weights, mt2he_weights = download_weights()
             except Exception as e:
-                sf.log.warning("Unable to download pretrained weights. Error: {}".format(e))
+                hx.log.warning("Unable to download pretrained weights. Error: {}".format(e))
 
         self.device = device or torch_utils.get_device()
         self.mixed_precision = mixed_precision
-        sf.log.debug("CycleGAN mixed_precision={}".format(self.mixed_precision))
+        hx.log.debug("CycleGAN mixed_precision={}".format(self.mixed_precision))
         self.build_networks()
         self.load_weights(he2mt_weights, mt2he_weights)
         self.normalize = transforms.Compose([

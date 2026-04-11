@@ -7,7 +7,7 @@ or model.pytorch based on the environmental variable SF_BACKEND.
 import warnings
 from typing import Any, Dict, List
 
-import histox as sf
+import histox as hx
 from histox import errors
 from .base import BaseFeatureExtractor
 from .features import DatasetFeatures
@@ -20,11 +20,11 @@ from .extractors import (
 
 # --- Backend-specific imports ------------------------------------------------
 
-if sf.backend() == 'tensorflow':
+if hx.backend() == 'tensorflow':
     from histox.model.tensorflow import (SurvivalTrainer, Features, load, # noqa F401
                                             RegressionTrainer, ModelParams,
                                             Trainer, UncertaintyInterface)
-elif sf.backend() == 'torch':
+elif hx.backend() == 'torch':
     from histox.model.torch import (SurvivalTrainer, Features, load, # noqa F401
                                        RegressionTrainer, ModelParams,
                                        Trainer, UncertaintyInterface)
@@ -36,7 +36,7 @@ else:
 
 def is_tensorflow_tensor(arg: Any) -> bool:
     """Checks if the given object is a Tensorflow Tensor."""
-    if sf.util.tf_available:
+    if hx.util.tf_available:
         import tensorflow as tf
         return isinstance(arg, tf.Tensor)
     else:
@@ -45,7 +45,7 @@ def is_tensorflow_tensor(arg: Any) -> bool:
 
 def is_torch_tensor(arg: Any) -> bool:
     """Checks if the given object is a Tensorflow Tensor."""
-    if sf.util.torch_available:
+    if hx.util.torch_available:
         import torch
         return isinstance(arg, torch.Tensor)
     else:
@@ -55,8 +55,8 @@ def is_torch_tensor(arg: Any) -> bool:
 def is_tensorflow_model(arg: Any) -> bool:
     """Checks if the object is a Tensorflow Model or path to Tensorflow model."""
     if isinstance(arg, str):
-        return sf.util.is_tensorflow_model_path(arg)
-    elif sf.util.tf_available:
+        return hx.util.is_tensorflow_model_path(arg)
+    elif hx.util.tf_available:
         import tensorflow as tf
         return isinstance(arg, tf.keras.models.Model)
     else:
@@ -66,8 +66,8 @@ def is_tensorflow_model(arg: Any) -> bool:
 def is_torch_model(arg: Any) -> bool:
     """Checks if the object is a PyTorch Module or path to PyTorch model."""
     if isinstance(arg, str):
-        return sf.util.is_torch_model_path(arg)
-    elif sf.util.torch_available:
+        return hx.util.is_torch_model_path(arg)
+    elif hx.util.torch_available:
         import torch
         return isinstance(arg, torch.nn.Module)
     else:
@@ -76,8 +76,8 @@ def is_torch_model(arg: Any) -> bool:
 
 def trainer_from_hp(*args, **kwargs):
     warnings.warn(
-        "sf.model.trainer_from_hp() is deprecated. Please use "
-        "sf.model.build_trainer().",
+        "hx.model.trainer_from_hp() is deprecated. Please use "
+        "hx.model.build_trainer().",
         DeprecationWarning
     )
     return build_trainer(*args, **kwargs)
@@ -166,7 +166,7 @@ def read_hp_sweep(
     if isinstance(models, list) and not list(set(models)) == models:
         raise ValueError("Duplicate model names provided.")
 
-    hp_list = sf.util.load_json(filename)
+    hp_list = hx.util.load_json(filename)
 
     # First, ensure all indicated models are in the batch train file
     if models:

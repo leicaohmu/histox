@@ -140,7 +140,7 @@ class VahadaneSklearnNormalizer:
         return stain_matrix
 
     def fit_preset(self, preset: str) -> Dict[str, np.ndarray]:
-        """Fit normalizer to a preset in sf.norm.utils.fit_presets.
+        """Fit normalizer to a preset in hx.norm.utils.fit_presets.
 
         Args:
             preset (str): Preset.
@@ -228,7 +228,7 @@ class VahadaneSpamsNormalizer(VahadaneSklearnNormalizer):
         self.set_fit(**ut.fit_presets[self.preset_tag]['v2'])  # type: ignore
 
     def fit_preset(self, preset: str) -> Dict[str, np.ndarray]:
-        """Fit normalizer to a preset in sf.norm.utils.fit_presets.
+        """Fit normalizer to a preset in hx.norm.utils.fit_presets.
 
         Args:
             preset (str): Preset.

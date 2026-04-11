@@ -32,7 +32,7 @@ from typing import (
 )
 
 import numpy as np
-import histox as sf
+import histox as hx
 from histox import errors
 from . import example_pb2, log_utils
 from .colors import *  # noqa F403,F401 - Here for compatibility
@@ -311,7 +311,7 @@ def about(console=None) -> None:
     """Print a summary of the histox version and active backends.
 
     Example
-        >>> sf.about()
+        >>> hx.about()
         ╭=======================╮
         │       Slideflow       │
         │    Version: 3.0.1     │
@@ -326,8 +326,8 @@ def about(console=None) -> None:
     """
     if console is None:
         console = Console()
-    col1 = 'yellow' if sf.backend() == 'tensorflow' else 'purple'
-    if sf.slide_backend() == 'libvips':
+    col1 = 'yellow' if hx.backend() == 'tensorflow' else 'purple'
+    if hx.slide_backend() == 'libvips':
         try:
             import pyvips
             _version = '{}.{}.{}'.format(
@@ -338,12 +338,12 @@ def about(console=None) -> None:
         col2 = 'cyan'
         slide_backend = 'libvips ({})'.format(_version)
     else:
-        slide_backend = sf.slide_backend()
+        slide_backend = hx.slide_backend()
         col2 = 'green'
     console.print(
         Panel(f"[white bold]Slideflow[/]"
-              f"\nVersion: {sf.__version__}"
-              f"\nBackend: [{col1}]{sf.backend()}[/]"
+              f"\nVersion: {hx.__version__}"
+              f"\nBackend: [{col1}]{hx.backend()}[/]"
               f"\nSlide Backend: [{col2}]{slide_backend}[/]"
               "\n[blue]https://histox.dev[/]",
               border_style='purple'),
@@ -471,11 +471,11 @@ def allow_gpu_memory_growth() -> None:
             pass
 
 def model_backend(model):
-    if sf.util.torch_available and 'torch' in sys.modules:
+    if hx.util.torch_available and 'torch' in sys.modules:
         import torch
         if isinstance(model, torch.nn.Module):
             return 'torch'
-    if sf.util.tf_available and 'tensorflow' in sys.modules:
+    if hx.util.tf_available and 'tensorflow' in sys.modules:
         import tensorflow as tf
         if isinstance(model, tf.keras.Model):
             return 'tensorflow'
@@ -566,7 +566,7 @@ def is_project(path: str) -> bool:
 def is_slide(path: str) -> bool:
     """Checks if the given path is a supported slide."""
     return (os.path.isfile(path)
-            and sf.util.path_to_ext(path).lower() in SUPPORTED_FORMATS)
+            and hx.util.path_to_ext(path).lower() in SUPPORTED_FORMATS)
 
 
 def is_tensorflow_model_path(path: str) -> bool:
@@ -579,7 +579,7 @@ def is_tensorflow_model_path(path: str) -> bool:
 def is_torch_model_path(path: str) -> bool:
     """Checks if the given path is a valid Slideflow/PyTorch model."""
     return (os.path.isfile(path)
-            and sf.util.path_to_ext(path).lower() == 'zip'
+            and hx.util.path_to_ext(path).lower() == 'zip'
             and exists(join(dirname(path), 'params.json')))
 
 
@@ -915,7 +915,7 @@ def log_manifest(
         if train_tfrecords:
             for tfrecord in train_tfrecords:
                 if remove_extension:
-                    slide = sf.util.path_to_name(tfrecord)
+                    slide = hx.util.path_to_name(tfrecord)
                 else:
                     slide = tfrecord
                 outcome_label = labels[slide] if has_labels else 'NA'
@@ -925,7 +925,7 @@ def log_manifest(
         if val_tfrecords:
             for tfrecord in val_tfrecords:
                 if remove_extension:
-                    slide = sf.util.path_to_name(tfrecord)
+                    slide = hx.util.path_to_name(tfrecord)
                 else:
                     slide = tfrecord
                 outcome_label = labels[slide] if has_labels else 'NA'
@@ -992,8 +992,8 @@ def get_model_config(model_path: str) -> Dict:
     elif exists(join(model_path, 'params.json')):
         config = load_json(join(model_path, 'params.json'))
     elif exists(model_path) and exists(join(dirname(model_path), 'params.json')):
-        if not (sf.util.torch_available
-                and sf.util.path_to_ext(model_path) == 'zip'):
+        if not (hx.util.torch_available
+                and hx.util.path_to_ext(model_path) == 'zip'):
             log.warning(
                 "Hyperparameters not in model directory; loading from parent"
                 " directory. Please move params.json into model folder."
@@ -1024,8 +1024,8 @@ def get_ensemble_model_config(model_path: str) -> Dict:
     if exists(join(model_path, 'ensemble_params.json')):
         config = load_json(join(model_path, 'ensemble_params.json'))
     elif exists(join(dirname(model_path), 'ensemble_params.json')):
-        if not (sf.util.torch_available
-                and sf.util.path_to_ext(model_path) == 'zip'):
+        if not (hx.util.torch_available
+                and hx.util.path_to_ext(model_path) == 'zip'):
             log.warning(
                 "Hyperparameters not in model directory; loading from parent"
                 " directory. Please move ensemble_params.json into model folder."
@@ -1047,10 +1047,10 @@ def get_ensemble_model_config(model_path: str) -> Dict:
 
 def get_model_normalizer(
     model_path: str
-) -> Optional["sf.norm.StainNormalizer"]:
+) -> Optional["hx.norm.StainNormalizer"]:
     """Loads and fits normalizer using configuration at a model path."""
 
-    config = sf.util.get_model_config(model_path)
+    config = hx.util.get_model_config(model_path)
     if is_torch_model_path(model_path):
         backend = 'torch'
     elif is_tensorflow_model_path(model_path):
@@ -1070,7 +1070,7 @@ def get_model_normalizer(
                  "and Vahadane algorithms were optimized in 1.2.3 and may "
                  "now yield slightly different results. ")
 
-    normalizer = sf.norm.autoselect(
+    normalizer = hx.norm.autoselect(
         config['hp']['normalizer'],
         config['hp']['normalizer_source'],
         backend=backend
@@ -1251,7 +1251,7 @@ def update_results_log(
 def map_values_to_slide_grid(
     locations: np.ndarray,
     values: np.ndarray,
-    wsi: "sf.WSI",
+    wsi: "hx.WSI",
     background: str = 'min',
     *,
     interpolation: Optional[str] = 'bicubic',
@@ -1331,7 +1331,7 @@ def map_values_to_slide_grid(
 def bin_values_to_slide_grid(
     locations: np.ndarray,
     values: np.ndarray,
-    wsi: "sf.WSI",
+    wsi: "hx.WSI",
     background: str = 'min',
 ) -> np.ndarray:
     """Bin heatmap values to a slide grid, using tile location information.
@@ -1447,7 +1447,7 @@ def location_heatmap(
 
     log.info(f'Generating heatmap for [green]{slide}[/]...')
     log.debug(f"Plotting {len(values)} values")
-    wsi = sf.WSI(slide, tile_px, tile_um, verbose=False)
+    wsi = hx.WSI(slide, tile_px, tile_um, verbose=False)
     stride = infer_stride(locations, wsi)
     if stride > 32:
         # Large inferred strides are likely due to unaligned grid.
@@ -1459,7 +1459,7 @@ def location_heatmap(
         log.debug(f"Failed sanity check for inferred stride ({stride})")
     elif stride != 1:
         log.debug(f"Inferred stride: {stride}")
-        wsi = sf.WSI(slide, tile_px, tile_um, stride_div=stride, verbose=False)
+        wsi = hx.WSI(slide, tile_px, tile_um, stride_div=stride, verbose=False)
 
     try:
         masked_grid = map_values_to_slide_grid(
@@ -1491,7 +1491,7 @@ def location_heatmap(
         ax.imshow(thumb, zorder=0)
 
         # Calculate overlay offset
-        extent = sf.heatmap.calculate_heatmap_extent(wsi, thumb, masked_grid)
+        extent = hx.heatmap.calculate_heatmap_extent(wsi, thumb, masked_grid)
 
         # Plot
         if norm == 'two_slope':
@@ -1539,7 +1539,7 @@ def tfrecord_heatmap(
         filename (str): Destination filename for heatmap.
 
     """
-    locations = sf.io.get_locations_from_tfrecord(tfrecord)
+    locations = hx.io.get_locations_from_tfrecord(tfrecord)
     if len(tile_dict) != len(locations):
         raise errors.TFRecordsError(
             f'tile_dict length ({len(tile_dict)}) != TFRecord length '

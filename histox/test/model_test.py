@@ -1,7 +1,7 @@
 import unittest
 import sys
 import numpy as np
-import histox as sf
+import histox as hx
 from packaging import version
 from parameterized import parameterized
 from histox.util import log
@@ -10,7 +10,7 @@ try:
     import tensorflow as tf
     if version.parse(tf.__version__) < version.parse("2.0"):
         raise ImportError
-    sf.util.allow_gpu_memory_growth()
+    hx.util.allow_gpu_memory_growth()
 
     from histox.model.tensorflow import ModelParams as TFModelParams
     from histox.model.tensorflow import Features as TFFeatures
@@ -35,8 +35,8 @@ class TestSlide(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         px = 299
-        cls._orig_logging_level = sf.getLoggingLevel()  # type: ignore
-        sf.setLoggingLevel(40)
+        cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
+        hx.setLoggingLevel(40)
         if 'tensorflow' in sys.modules:
             cls.img = tf.convert_to_tensor(np.random.random((2, px, px, 3)))
             cls.nasnet_img = tf.convert_to_tensor(np.random.random((2, 331, 331, 3)))
@@ -46,7 +46,7 @@ class TestSlide(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
-        sf.setLoggingLevel(cls._orig_logging_level)  # type: ignore
+        hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
         return super().tearDownClass()
 
     def _get_tensorflow_px(self, arch, include_top):

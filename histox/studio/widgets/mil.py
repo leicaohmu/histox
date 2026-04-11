@@ -1,6 +1,6 @@
 import imgui
 import numpy as np
-import histox as sf
+import histox as hx
 import histox.mil
 import threading
 import importlib
@@ -40,7 +40,7 @@ def _is_mil_model(path: str) -> bool:
 
 
 def _get_mil_params(path: str) -> Dict:
-    return sf.util.load_json(join(path, 'mil_params.json'))
+    return hx.util.load_json(join(path, 'mil_params.json'))
 
 
 def _draw_imgui_info(rows, viz):
@@ -85,7 +85,7 @@ def reshape_bags(masked_bags):
 
 class _AttentionHeatmapWrapper:
 
-    def __init__(self, attention: np.ndarray, slide: "sf.WSI"):
+    def __init__(self, attention: np.ndarray, slide: "hx.WSI"):
         self.attention = attention
         self.slide = slide
 
@@ -264,7 +264,7 @@ class MILWidget(Widget):
             # This is a temporary workaround until loading can be done in the renderer.
             from histox.model import torch_utils
             device = torch_utils.get_device()
-            self._model, config = sf.mil.utils.load_model_weights(path)
+            self._model, config = hx.mil.utils.load_model_weights(path)
             self._model.to(device)
             self.extractors = []
             self.normalizers = []
@@ -281,7 +281,7 @@ class MILWidget(Widget):
 
                 # Rebuild normalizer
                 if ext_c['normalizer'] is not None:
-                    normalizer = sf.norm.autoselect(
+                    normalizer = hx.norm.autoselect(
                         ext_c['normalizer']['method'],
                         backend=extractor.backend
                     )
@@ -301,8 +301,8 @@ class MILWidget(Widget):
         except Exception as e:
             if allow_errors:
                 self.viz.create_toast('Error loading MIL model', icon='error')
-                sf.log.error(e)
-                sf.log.error(traceback.format_exc())
+                hx.log.error(e)
+                hx.log.error(traceback.format_exc())
                 return False
             raise e
         return True
@@ -334,7 +334,7 @@ class MILWidget(Widget):
         try:
             # First, check if we need to switch the renderer.
             _params = _get_mil_params(path)
-            _cfg = sf.mil.mil_config(trainer=_params['trainer'], **_params['params'])
+            _cfg = hx.mil.mil_config(trainer=_params['trainer'], **_params['params'])
             is_multimodal = (_cfg.model_config.model == 'mm_attention_mil')
             is_new_renderer = is_multimodal != self.is_multimodal
 
@@ -353,8 +353,8 @@ class MILWidget(Widget):
         except Exception as e:
             if allow_errors:
                 self.viz.create_toast('Error loading MIL model', icon='error')
-                sf.log.error(e)
-                sf.log.error(traceback.format_exc())
+                hx.log.error(e)
+                hx.log.error(traceback.format_exc())
                 return False
             raise e
 
@@ -395,7 +395,7 @@ class MILWidget(Widget):
                 tile_px=params['tile_px'],
                 stride=self._multimodal_stride[i]
             )
-            sf.log.info("Loaded slide at tile_px={}, tile_um={}, stride_div={}".format(
+            hx.log.info("Loaded slide at tile_px={}, tile_um={}, stride_div={}".format(
                 wsi.tile_px, wsi.tile_um, wsi.stride_div
             ))
 
@@ -411,7 +411,7 @@ class MILWidget(Widget):
             orig_shape.append(ext_orig_shape)
             valid_indices.append(ext_valid_indices)
             grid_size.append(n_total)
-            sf.log.info("Generated feature bags for {} tiles".format(ext_bags.shape[1]))
+            hx.log.info("Generated feature bags for {} tiles".format(ext_bags.shape[1]))
 
         # Generate slide prediction & attention.
         self.predictions, self.attention = self.mil_config.predict(self.model, [bags], attention=True)
@@ -468,7 +468,7 @@ class MILWidget(Widget):
             bags = masked_bags
         bags = np.expand_dims(bags, axis=0).astype(np.float32)
 
-        sf.log.info("Generated feature bags for {} tiles".format(bags.shape[1]))
+        hx.log.info("Generated feature bags for {} tiles".format(bags.shape[1]))
 
         # Generate slide-level prediction and attention.
         self.predictions, self.attention = self._calculate_predictions(bags)
@@ -477,7 +477,7 @@ class MILWidget(Widget):
 
             # Only show prediction and attention for tiles with non-zero
             # attention values (tiles that passed the attention gate)
-            sf.log.debug("Masking {} zero-attention tiles:".format((self.attention == 0).sum()))
+            hx.log.debug("Masking {} zero-attention tiles:".format((self.attention == 0).sum()))
 
             # Handle multi-dimensional attention
             if len(self.attention.shape) < 2:
@@ -490,10 +490,10 @@ class MILWidget(Widget):
 
             if len(self.attention.shape) < 2:
                 self.attention = self.attention[att_mask]
-                sf.log.debug("Total tiles after masking: {}".format(len(self.attention)))
+                hx.log.debug("Total tiles after masking: {}".format(len(self.attention)))
             else:
                 self.attention = self.attention[:, att_mask]
-                sf.log.debug("Total tiles after masking: {}".format(self.attention.shape[1]))
+                hx.log.debug("Total tiles after masking: {}".format(self.attention.shape[1]))
         else:
             self.attention = None
 
@@ -546,7 +546,7 @@ class MILWidget(Widget):
         viz = self.viz
         mil_tile_um = self.extractor_params['tile_um']
         mil_tile_px = self.extractor_params['tile_px']
-        _compatible = sf.util.is_tile_size_compatible(
+        _compatible = hx.util.is_tile_size_compatible(
             viz.wsi.tile_px,
             viz.wsi.tile_um,
             mil_tile_px,
@@ -684,7 +684,7 @@ class MILWidget(Widget):
             if isinstance(outcome_labels, str):
                 outcome_labels = [outcome_labels]
             if len(outcome_labels) != len(prediction):
-                sf.log.warning("Unable to determine outcome label names from MIL model params.")
+                hx.log.warning("Unable to determine outcome label names from MIL model params.")
                 outcome_labels = [f"Outcome {i}" for i in range(len(prediction))]
 
         # Show prediction for each category.

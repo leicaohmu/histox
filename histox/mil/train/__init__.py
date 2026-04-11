@@ -2,7 +2,7 @@
 
 import os
 import numpy as np
-import histox as sf
+import histox as hx
 import pandas as pd
 from os.path import join, exists
 from typing import Union, List, Optional, TYPE_CHECKING
@@ -266,7 +266,7 @@ def build_multimodal_learner(
 
     # Write the slide manifest
     if outdir:
-        sf.util.log_manifest(
+        hx.util.log_manifest(
             train_slides,
             val_slides,
             labels=labels,
@@ -290,7 +290,7 @@ def build_multimodal_learner(
     # Print a detailed summary of each mode.
     for i, mode in enumerate(bags):
         try:
-            bags_config = sf.util.load_json(join(mode, 'bags_config.json'))
+            bags_config = hx.util.load_json(join(mode, 'bags_config.json'))
         except Exception:
             log.info(
                 "Mode {i}: "
@@ -379,7 +379,7 @@ def _train_mil(
     if isinstance(bags, str) or (isinstance(bags, list) and isdir(bags[0])):
         val_bags = val_dataset.get_bags(bags)
     else:
-        val_bags = np.array([b for b in bags if sf.util.path_to_name(b) in val_dataset.slides()])
+        val_bags = np.array([b for b in bags if hx.util.path_to_name(b) in val_dataset.slides()])
 
     # Build learner.
     learner, (n_in, n_out) = build_fastai_learner(
@@ -536,14 +536,14 @@ def _log_mil_params(config, outcomes, unique, bags, n_in, n_out, outdir=None):
     mil_params['input_shape'] = n_in
     mil_params['output_shape'] = n_out
     if isinstance(bags, str) and exists(join(bags, 'bags_config.json')):
-        mil_params['bags_extractor'] = sf.util.load_json(
+        mil_params['bags_extractor'] = hx.util.load_json(
             join(bags, 'bags_config.json')
         )
     elif isinstance(bags, list):
         mil_params['bags_extractor'] = {}
         for b in bags:
             if isdir(b) and exists(join(b, 'bags_config.json')):
-                mil_params['bags_extractor'][b] = sf.util.load_json(
+                mil_params['bags_extractor'][b] = hx.util.load_json(
                     join(b, 'bags_config.json')
                 )
             else:
@@ -551,5 +551,5 @@ def _log_mil_params(config, outcomes, unique, bags, n_in, n_out, outdir=None):
     else:
         mil_params['bags_extractor'] = None
     if outdir:
-        sf.util.write_json(mil_params, join(outdir, 'mil_params.json'))
+        hx.util.write_json(mil_params, join(outdir, 'mil_params.json'))
     return mil_params

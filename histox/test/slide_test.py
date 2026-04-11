@@ -2,7 +2,7 @@ import multiprocessing as mp
 import unittest
 
 import numpy as np
-import histox as sf
+import histox as hx
 from PIL import Image
 from histox import errors
 
@@ -13,7 +13,7 @@ class TestSlide(unittest.TestCase):
         self.wsi_path = path
         self.tile_px = tile_px
         self.kw = dict(tile_px=tile_px, tile_um=1208)
-        self.wsi = sf.WSI(self.wsi_path, roi_method='ignore', **self.kw)
+        self.wsi = hx.WSI(self.wsi_path, roi_method='ignore', **self.kw)
 
     def _assert_is_image(self, img: np.ndarray):
         self.assertTrue(isinstance(img, np.ndarray))
@@ -32,7 +32,7 @@ class TestSlide(unittest.TestCase):
         self.assertTrue(len(self.wsi.dimensions) == 2)
 
     def test_qc(self):
-        qc_wsi = sf.WSI(self.wsi_path, roi_method='ignore', **self.kw)
+        qc_wsi = hx.WSI(self.wsi_path, roi_method='ignore', **self.kw)
         qc_wsi.qc('both')
 
     def test_index(self):
@@ -45,15 +45,15 @@ class TestSlide(unittest.TestCase):
             self.wsi[0, self.wsi.shape[1]]
 
     def test_stride(self):
-        wsi_stride2 = sf.WSI(self.wsi_path, roi_method='ignore', stride_div=2, **self.kw)
+        wsi_stride2 = hx.WSI(self.wsi_path, roi_method='ignore', stride_div=2, **self.kw)
         self.assertTrue(abs(wsi_stride2.shape[0] - self.wsi.shape[0] * 2) <= 1)
         self.assertTrue(abs(wsi_stride2.shape[1] - self.wsi.shape[1] * 2) <= 1)
 
     def test_raises_roi_error(self):
         with self.assertRaises(errors.MissingROIError):
-            sf.WSI(self.wsi_path, roi_method='inside', **self.kw)
+            hx.WSI(self.wsi_path, roi_method='inside', **self.kw)
         with self.assertRaises(errors.MissingROIError):
-            sf.WSI(self.wsi_path, roi_method='outside', **self.kw)
+            hx.WSI(self.wsi_path, roi_method='outside', **self.kw)
 
     def test_thumb(self):
         self._assert_is_pil(self.wsi.thumb(mpp=4, low_res=True))

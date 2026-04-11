@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional, Tuple, Union
 
 import numpy as np
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.dataset import Dataset
 from histox.norm import StainNormalizer
@@ -178,7 +178,7 @@ class TensorflowStainNormalizer(StainNormalizer):
 
         # Fit to a preset
         elif (isinstance(arg1, str)
-              and arg1 in sf.norm.utils.fit_presets[self.n.preset_tag]):
+              and arg1 in hx.norm.utils.fit_presets[self.n.preset_tag]):
             self.n.fit_preset(arg1)
 
         elif isinstance(arg1, str):

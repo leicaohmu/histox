@@ -17,12 +17,12 @@ from ..gui.annotator import SlideAnnotationCapture
 from ..gui.viewer import SlideViewer
 from ..utils import LEFT_MOUSE_BUTTON, RIGHT_MOUSE_BUTTON
 
-import histox as sf
+import histox as hx
 
 #----------------------------------------------------------------------------
 
 class ROIWidget:
-    def __init__(self, viz: "sf.studio.Studio") -> None:
+    def __init__(self, viz: "hx.studio.Studio") -> None:
         """Widget for ROI processing control and information display.
 
         Args:
@@ -102,15 +102,15 @@ class ROIWidget:
             possible_rois = []
             for roi_id, roi_array in self.viz.viewer.scaled_rois_in_view.items():
                 try:
-                    roi_poly = sf.slide.ROI(None, roi_array).poly
-                except sf.errors.InvalidROIError:
+                    roi_poly = hx.slide.ROI(None, roi_array).poly
+                except hx.errors.InvalidROIError:
                     continue
                 try:
                     # Apply holes
                     for hole_array in self.viz.viewer.scaled_holes_in_view[roi_id].values():
                         try:
-                            hole_roi = sf.slide.ROI(None, hole_array)
-                        except sf.errors.InvalidROIError:
+                            hole_roi = hx.slide.ROI(None, hole_array)
+                        except hx.errors.InvalidROIError:
                             continue
                         else:
                             roi_poly = roi_poly.difference(hole_roi.poly)
@@ -162,7 +162,7 @@ class ROIWidget:
                 # Verify that the annotation is a valid polygon
                 try:
                     roi_idx = viz.wsi.load_roi_array(new_annotation)
-                except sf.errors.InvalidROIError:
+                except hx.errors.InvalidROIError:
                     viz.create_toast('Invalid shape, unable to add ROI.', icon='error')
                     return
                 # Simplify the ROI.
@@ -799,11 +799,11 @@ class ROIWidget:
             # Verify the line is non-intersecting.
             polygons = list(polygonize(unary_union(poly_to_subtract)))
             if len(polygons) == 0:
-                sf.log.error("Error subtracting from ROI: drawn polygon is self-intersecting.")
+                hx.log.error("Error subtracting from ROI: drawn polygon is self-intersecting.")
                 self.viz.create_toast('Error subtracting from ROI: drawn polygon is self-intersecting.', icon='error')
                 continue
             if poly.contains(poly_to_subtract):
-                roi = sf.slide.ROI(
+                roi = hx.slide.ROI(
                     self.viz.wsi.get_next_roi_name(),
                     roi_coords,
                     label=self.viz.wsi.rois[idx].label
@@ -814,7 +814,7 @@ class ROIWidget:
                 try:
                     poly_s = poly.difference(poly_to_subtract)
                 except Exception as e:
-                    sf.log.error("Error subtracting from ROI: {}".format(e))
+                    hx.log.error("Error subtracting from ROI: {}".format(e))
                     continue
                 if isinstance(poly_s, Polygon):
                     coords_s = np.stack(poly_s.exterior.coords.xy, axis=-1)
@@ -859,7 +859,7 @@ class ROIWidget:
             valid_polys = [p for p in merged_poly.geoms if p.geom_type == 'Polygon']
             if not valid_polys:
                 self.viz.create_toast('ROIs could not be merged.', icon='error')
-                sf.log.error(f"Error merging ROIs: merged polygon is of type {merged_poly.geom_type}.")
+                hx.log.error(f"Error merging ROIs: merged polygon is of type {merged_poly.geom_type}.")
                 return
             new_roi_coords = np.concatenate([
                 np.stack(p.exterior.coords.xy, axis=-1)
@@ -867,7 +867,7 @@ class ROIWidget:
             ])
         else:
             self.viz.create_toast('ROIs could not be merged.', icon='error')
-            sf.log.error(f"Error merging ROIs: merged polygon is of type {merged_poly.geom_type}.")
+            hx.log.error(f"Error merging ROIs: merged polygon is of type {merged_poly.geom_type}.")
             return
 
         # Infer the ROI label.
@@ -886,7 +886,7 @@ class ROIWidget:
                 new_roi_coords,
                 label=new_label,
             )
-        except sf.errors.InvalidROIError:
+        except hx.errors.InvalidROIError:
             self.viz.create_toast('ROIs could not be merged.', icon='error')
             return
         self._selected_rois = [roi_idx]
@@ -1288,7 +1288,7 @@ class ROIWidget:
 
 class VertexEditor:
 
-    def __init__(self, viz: "sf.studio.Studio", roi_id: int) -> None:
+    def __init__(self, viz: "hx.studio.Studio", roi_id: int) -> None:
         self.viz = viz
         self.wsi = viz.wsi
         self.roi_id = roi_id

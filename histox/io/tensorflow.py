@@ -13,7 +13,7 @@ from rich import print as richprint
 from typing import (TYPE_CHECKING, Any, Callable, Dict, Iterable, List,
                     Optional, Tuple, Union)
 
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.io import gaussian
 from histox.io.io_utils import detect_tfrecord_format
@@ -59,7 +59,7 @@ def read_and_return_record(
     Args:
         record (bytes): Raw TFRecord bytes (unparsed)
         parser (Callable): TFRecord parser, as returned by
-            :func:`sf.io.get_tfrecord_parser()`
+            :func:`hx.io.get_tfrecord_parser()`
         assign_slide (str, optional): Slide name to override the record with.
             Defaults to None.
 
@@ -105,7 +105,7 @@ def preprocess_uint8(
 
     Args:
         img (tf.Tensor): Batch of tensorflow images (uint8).
-        normalizer (sf.norm.StainNormalizer, optional): Normalizer.
+        normalizer (hx.norm.StainNormalizer, optional): Normalizer.
             Defaults to None.
         standardize (bool, optional): Standardize images. Defaults to True.
         resize_px (Optional[int], optional): Resize images. Defaults to None.
@@ -567,7 +567,7 @@ def interleave(
         pb.start()
     else:
         pb = None
-    with tf.device('cpu'), sf.util.cleanup_progress(pb):
+    with tf.device('cpu'), hx.util.cleanup_progress(pb):
         features_to_return = ['image_raw', 'slide']
         if incl_loc:
             features_to_return += ['loc_x', 'loc_y']
@@ -581,19 +581,19 @@ def interleave(
                 return tuple([record[f] for f in features_to_return])
 
             # Load slides and apply Otsu's thresholding
-            if pool is None and sf.slide_backend() == 'cucim':
+            if pool is None and hx.slide_backend() == 'cucim':
                 pool = mp.Pool(
-                    sf.util.num_cpu(default=8),
-                    initializer=sf.util.set_ignore_sigint
+                    hx.util.num_cpu(default=8),
+                    initializer=hx.util.set_ignore_sigint
                 )
             elif pool is None:
-                pool = mp.dummy.Pool(sf.util.num_cpu(default=16))
+                pool = mp.dummy.Pool(hx.util.num_cpu(default=16))
             wsi_list = []
             to_remove = []
             otsu_list = []
             for path in paths:
                 try:
-                    wsi = sf.WSI(
+                    wsi = hx.WSI(
                         path,
                         img_size,
                         tile_um,
@@ -638,7 +638,7 @@ def interleave(
                     grayspace_fraction=1,
                     incl_loc=incl_loc,
                 )
-                tfr = sf.util.path_to_name(tfr)
+                tfr = hx.util.path_to_name(tfr)
             else:
                 tf_dts = tf.data.TFRecordDataset(
                     tfr,
@@ -673,7 +673,7 @@ def interleave(
         )
         # ------- Apply normalization -----------------------------------------
         if normalizer:
-            if not isinstance(normalizer, sf.norm.StainNormalizer):
+            if not isinstance(normalizer, hx.norm.StainNormalizer):
                 raise ValueError(
                     f"Expected normalizer to be type StainNormalizer, got: {type(normalizer)}"
                 )
@@ -909,7 +909,7 @@ def split_tfrecord(tfrecord_file: str, output_folder: str) -> None:
     writers = {}  # type: ignore
     for record in dataset:
         slide = parser(record)  # type: ignore
-        shortname = sf.util._shortname(slide.decode('utf-8'))
+        shortname = hx.util._shortname(slide.decode('utf-8'))
         if shortname not in writers.keys():
             tfrecord_path = join(output_folder, f"{shortname}.tfrecords")
             writer = tf.io.TFRecordWriter(tfrecord_path)

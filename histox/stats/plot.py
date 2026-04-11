@@ -1,7 +1,7 @@
-import histox as sf
+import histox as hx
 import os
 import warnings
-import histox as sf
+import histox as hx
 from typing import TYPE_CHECKING, List, Optional, Union
 
 import numpy as np
@@ -38,7 +38,7 @@ def combined_roc(
     """
     import matplotlib.pyplot as plt
 
-    with sf.util.matplotlib_backend('Agg'):
+    with hx.util.matplotlib_backend('Agg'):
         plt.clf()
         plt.title(name)
         colors = ('b', 'g', 'r', 'c', 'm', 'y', 'k')
@@ -179,7 +179,7 @@ def scatter(
         yp_sub = y_pred
 
     # Perform scatter for each outcome
-    with sf.util.matplotlib_backend('Agg'):
+    with hx.util.matplotlib_backend('Agg'):
         for i in range(y_true.shape[1]):
             r_squared += [metrics.r2_score(y_true[:, i], y_pred[:, i])]
             with warnings.catch_warnings():

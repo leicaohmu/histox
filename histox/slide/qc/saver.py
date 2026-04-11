@@ -1,7 +1,7 @@
 """Functions for saving/loading QC masks."""
 
 import numpy as np
-import histox as sf
+import histox as hx
 from os.path import dirname, join, exists
 from typing import Optional
 
@@ -48,11 +48,11 @@ class Save:
             self.dest
         )
 
-    def __call__(self, wsi: "sf.WSI") -> None:
+    def __call__(self, wsi: "hx.WSI") -> None:
         """Save a QC mask for a given slide as a numpy file.
 
         Args:
-            wsi (sf.WSI): Whole-slide image.
+            wsi (hx.WSI): Whole-slide image.
 
         Returns:
             None
@@ -84,11 +84,11 @@ class Load:
             self.source
         )
 
-    def __call__(self, wsi: "sf.WSI") -> Optional[np.ndarray]:
+    def __call__(self, wsi: "hx.WSI") -> Optional[np.ndarray]:
         """Load a QC mask for a given slide from a numpy file.
 
         Args:
-            wsi (sf.WSI): Whole-slide image.
+            wsi (hx.WSI): Whole-slide image.
 
         Returns:
             Optional[np.ndarray]: Returns the QC mask if a {slide}_qc.npz file

@@ -5,8 +5,8 @@ def main(P):
 
     # Configure model parameters
     # --------------------------
-    # import histox as sf
-    # params = sf.ModelParams(
+    # import histox as hx
+    # params = hx.ModelParams(
     #    tile_px=299,
     #    tile_um=302,
     #    learning_rate=0.0001,

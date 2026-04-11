@@ -13,7 +13,7 @@ from PIL import Image
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename, askdirectory
 
-import histox as sf
+import histox as hx
 from histox import log
 
 from .gui import imgui_utils
@@ -307,15 +307,15 @@ class Studio(ImguiWindow):
                 pyvips_version = 'NA'
 
             imgui.open_popup('about_popup')
-            version_width = imgui.calc_text_size("Version: " + sf.__version__).x
+            version_width = imgui.calc_text_size("Version: " + hx.__version__).x
             width = max(200, version_width + self.spacing)
             height = 315
             imgui.set_next_window_content_size(width, 0)
             imgui.set_next_window_position(self.content_width/2 - width/2, self.content_height/2 - height/2)
 
-            about_text =  f"Version: {sf.__version__}\n"
+            about_text =  f"Version: {hx.__version__}\n"
             about_text += f"Python: {platform.python_version()}\n"
-            about_text += f"Slide Backend: {sf.slide_backend()}\n"
+            about_text += f"Slide Backend: {hx.slide_backend()}\n"
             about_text += f"Libvips: {libvips_version}\n"
             about_text += f"Pyvips: {pyvips_version}\n"
             about_text += f"OS: {platform.system()} {platform.release()}\n"
@@ -589,17 +589,17 @@ class Studio(ImguiWindow):
 
                 imgui.separator()
                 if imgui.menu_item('Release Notes')[1]:
-                    webbrowser.open(join(sf.__github__, 'releases/tag', sf.__version__))
+                    webbrowser.open(join(hx.__github__, 'releases/tag', hx.__version__))
                 if imgui.menu_item('Report Issue')[1]:
-                    webbrowser.open(join(sf.__github__, 'issues'))
+                    webbrowser.open(join(hx.__github__, 'issues'))
                 imgui.separator()
                 if imgui.menu_item('View License')[1]:
-                    webbrowser.open(join(sf.__github__, 'blob/master/LICENSE'))
+                    webbrowser.open(join(hx.__github__, 'blob/master/LICENSE'))
                 if imgui.menu_item('About')[1]:
                     self._show_about = True
                 imgui.end_menu()
 
-            version_text = f'histox {sf.__version__}'
+            version_text = f'histox {hx.__version__}'
             imgui_utils.right_aligned_text(version_text, spacing=self.spacing)
             imgui.end_main_menu_bar()
 
@@ -621,7 +621,7 @@ class Studio(ImguiWindow):
                                                         | imgui.WINDOW_NO_SCROLLBAR))
 
         # Backend
-        backend = sf.slide_backend()
+        backend = hx.slide_backend()
         if backend == 'cucim':
             tex = self.sidebar._button_tex[f'small_cucim'].gl_id
             imgui.image(tex, self.font_size, self.font_size)
@@ -854,7 +854,7 @@ class Studio(ImguiWindow):
         tile_px: Optional[int] = None,
         tile_um: Optional[Union[str, int]] = None,
         **kwargs
-    ) -> Optional[sf.WSI]:
+    ) -> Optional[hx.WSI]:
         """Load and return a Whole-Slide Image, with modified parameters.
 
         Args:
@@ -900,8 +900,8 @@ class Studio(ImguiWindow):
             roi_method, prior_rois, rois = None, None, None
 
         # Cap the number of workers in the CUCIM backend.
-        if sf.slide_backend() == 'cucim':
-            kwargs['num_workers'] = sf.util.num_cpu(default=4)
+        if hx.slide_backend() == 'cucim':
+            kwargs['num_workers'] = hx.util.num_cpu(default=4)
 
         # Tile size.
         if tile_px is None:
@@ -913,7 +913,7 @@ class Studio(ImguiWindow):
         qc_mask = None if not self.wsi else self.wsi.get_qc_mask(roi=False)
 
         try:
-            wsi = sf.WSI(
+            wsi = hx.WSI(
                 path,
                 tile_px=tile_px,
                 tile_um=tile_um,
@@ -932,11 +932,11 @@ class Studio(ImguiWindow):
                 roi_filter_method=roi_filter_method,
                 simplify_roi_tolerance=self.settings_widget.simplify_tolerance,
                 **kwargs)
-        except sf.errors.IncompatibleBackendError:
+        except hx.errors.IncompatibleBackendError:
             self.create_toast(
                 title="Incompatbile slide",
                 message='Slide type "{}" is incompatible with the {} backend.'.format(
-                    sf.util.path_to_ext(path), sf.slide_backend()),
+                    hx.util.path_to_ext(path), hx.slide_backend()),
                 icon='error'
             )
             return None
@@ -954,7 +954,7 @@ class Studio(ImguiWindow):
 
     def reload_wsi(
         self,
-        slide: Optional[Union[str, sf.WSI]] = None,
+        slide: Optional[Union[str, hx.WSI]] = None,
         stride: Optional[int] = None,
         use_rois: bool = True,
         tile_px: Optional[int] = None,
@@ -964,8 +964,8 @@ class Studio(ImguiWindow):
         """Reload the currently loaded Whole-Slide Image.
 
         Args:
-            path (str or sf.WSI, optional): Slide to reload. May be a path
-                or a sf.WSI object. If not provided, will reload the 
+            path (str or hx.WSI, optional): Slide to reload. May be a path
+                or a hx.WSI object. If not provided, will reload the 
                 currently loaded slide.
             stride (int, optional): Stride to use for the loaded slide. If not
                 provided, will use the stride value from the currently loaded
@@ -976,7 +976,7 @@ class Studio(ImguiWindow):
             bool: True if slide loaded successfully, False otherwise.
 
         """
-        if isinstance(slide, sf.WSI):
+        if isinstance(slide, hx.WSI):
             wsi = slide
         else:
             wsi = self._load_and_return_wsi(
@@ -1303,7 +1303,7 @@ class Studio(ImguiWindow):
 
     def ask_load_model(self):
         """Prompt user for location of a model and load."""
-        if sf.backend() == 'tensorflow':
+        if hx.backend() == 'tensorflow':
             model_path = askdirectory(title="Load model (directory)...")
         else:
             model_path = askopenfilename(title="Load model...", filetypes=[("zip", ".zip"), ("All files", ".*")])
@@ -1340,12 +1340,12 @@ class Studio(ImguiWindow):
             ignore_errors (bool): Gracefully handle errors.
 
         """
-        sf.log.info(f"Auto-loading [green]{path}[/]")
-        if sf.util.is_project(path):
+        hx.log.info(f"Auto-loading [green]{path}[/]")
+        if hx.util.is_project(path):
             self.load_project(path, ignore_errors=ignore_errors)
-        elif sf.util.is_slide(path):
+        elif hx.util.is_slide(path):
             self.load_slide(path, ignore_errors=ignore_errors)
-        elif sf.util.is_model(path) or path.endswith('tflite'):
+        elif hx.util.is_model(path) or path.endswith('tflite'):
             self.load_model(path, ignore_errors=ignore_errors)
         elif path.endswith('npz'):
             self.load_heatmap(path)
@@ -1353,7 +1353,7 @@ class Studio(ImguiWindow):
             # See if any widgets implement a drag_and_drop_hook() method
             handled = False
             for widget in self.widgets:
-                sf.log.info(f"Attempting load with widget {widget}")
+                hx.log.info(f"Attempting load with widget {widget}")
                 if hasattr(widget, 'drag_and_drop_hook'):
                     if widget.drag_and_drop_hook(path):
                         handled = True
@@ -1706,7 +1706,7 @@ class Studio(ImguiWindow):
         """Reset tile zoom level."""
         self.tile_zoom = 1
 
-    def load_heatmap(self, path: Union[str, "sf.Heatmap"]) -> None:
+    def load_heatmap(self, path: Union[str, "hx.Heatmap"]) -> None:
         """Load a saved heatmap (\*.npz).
 
         Args:
@@ -1756,8 +1756,8 @@ class Studio(ImguiWindow):
             self.model_widget.user_model = model
 
             # Read model configuration
-            config = sf.util.get_model_config(model)
-            normalizer = sf.util.get_model_normalizer(model)
+            config = hx.util.get_model_config(model)
+            normalizer = hx.util.get_model_normalizer(model)
             self.result.message = f'Loading {config["model_name"]}...'
             self.defer_rendering()
             self._use_model = True
@@ -1770,7 +1770,7 @@ class Studio(ImguiWindow):
             self.tile_um = config['tile_um']
             self.tile_px = config['tile_px']
             self._render_manager.load_model(model)
-            if sf.util.torch_available and sf.util.path_to_ext(model) == 'zip':
+            if hx.util.torch_available and hx.util.path_to_ext(model) == 'zip':
                 self.model_widget.backend = 'torch'
             else:
                 self.model_widget.backend = 'tensorflow'
@@ -1921,14 +1921,14 @@ class Studio(ImguiWindow):
         Overlay is a numpy array, and method is a flag indicating the
         method to use when showing the overlay.
 
-        If ``method`` is ``sf.studio.OVERLAY_WSI``, the array will be mapped
+        If ``method`` is ``hx.studio.OVERLAY_WSI``, the array will be mapped
         to the entire whole-slide image, without offsets.
 
-        If ``method`` is ``sf.studio.OVERLAY_GRID``, the array is interpreted
+        If ``method`` is ``hx.studio.OVERLAY_GRID``, the array is interpreted
         as having been generated from the slide's grid, meaning that an offset
         will be applied to ensure that the overlay is aligned properly.
 
-        If ``method`` is ``sf.studio.OVERLAY_VIEW``, the array is interpreted
+        If ``method`` is ``hx.studio.OVERLAY_VIEW``, the array is interpreted
         as an overlay that is applied only to the area of the slide
         currently in view.
 

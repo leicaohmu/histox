@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-import histox as sf
+import histox as hx
 from typing import Union, Optional, Callable
 
 from .utils import topleft_pad, make_tiles, average_tiles
@@ -261,7 +261,7 @@ class SegmentModel(pl.LightningModule):
 
         return tiled_preds
 
-    def run_slide_inference(self, slide: Union[str, "sf.WSI"], mpp=None):
+    def run_slide_inference(self, slide: Union[str, "hx.WSI"], mpp=None):
         """Run model inference on a slide thumbnail."""
 
         # Validation
@@ -270,15 +270,15 @@ class SegmentModel(pl.LightningModule):
                              "This can be done by setting the model .mpp parameter, "
                              "or by passing an mpp value to this function.")
         elif mpp is not None and mpp != self.mpp:
-            sf.log.warning("Overriding model mpp with mpp parameter.")
+            hx.log.warning("Overriding model mpp with mpp parameter.")
         else:
             mpp = self.mpp
-        if not isinstance(slide, (str, sf.WSI)):
-            raise TypeError("slide must be a string or sf.WSI object.")
+        if not isinstance(slide, (str, hx.WSI)):
+            raise TypeError("slide must be a string or hx.WSI object.")
 
         # Load the slide.
         if isinstance(slide, str):
-            slide = sf.WSI(slide, 299, 512)
+            slide = hx.WSI(slide, 299, 512)
 
         # Get the slide thumbnail.
         thumb = np.array(slide.thumb(mpp=mpp))

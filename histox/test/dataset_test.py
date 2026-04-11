@@ -4,7 +4,7 @@ import shutil
 import unittest
 
 import pandas as pd
-import histox as sf
+import histox as hx
 from histox.test.utils import TestConfig
 
 
@@ -12,14 +12,14 @@ class TestDataset(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls._orig_logging_level = sf.getLoggingLevel()  # type: ignore
-        sf.setLoggingLevel(40)
+        cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
+        hx.setLoggingLevel(40)
         cls.PROJECT = TestConfig().create_project(overwrite=True)  # type: ignore
 
     @classmethod
     def tearDownClass(cls) -> None:
         super().tearDownClass()
-        sf.setLoggingLevel(cls._orig_logging_level)  # type: ignore
+        hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
         if cls.PROJECT is not None:  # type: ignore
             shutil.rmtree(cls.PROJECT.root)  # type: ignore
 
@@ -44,7 +44,7 @@ class TestDataset(unittest.TestCase):
             'slide': pd.Series(['slide_test', 'slide_test'] + [f'slide{s}' for s in range(98)]),
             'continuous': pd.Series([random.random() for _ in range(100)])
         })
-        with self.assertRaises(sf.errors.DatasetError):
+        with self.assertRaises(hx.errors.DatasetError):
             dataset.load_annotations(ann_df)
 
     def test_load_faulty_annotations_without_patient(self):
@@ -53,7 +53,7 @@ class TestDataset(unittest.TestCase):
             'slide': pd.Series([f'slide{s}' for s in range(100)]),
             'continuous': pd.Series([random.random() for _ in range(100)])
         })
-        self.assertRaises(sf.errors.AnnotationsError, dataset.load_annotations, ann_df)
+        self.assertRaises(hx.errors.AnnotationsError, dataset.load_annotations, ann_df)
 
     def test_load_faulty_annotations_without_slide(self):
         dataset = self.PROJECT.dataset()
@@ -61,7 +61,7 @@ class TestDataset(unittest.TestCase):
             'patient': pd.Series([f'pt{p}' for p in range(100)]),
             'continuous': pd.Series([random.random() for _ in range(100)])
         })
-        self.assertRaises(sf.errors.AnnotationsError, dataset.load_annotations, ann_df)
+        self.assertRaises(hx.errors.AnnotationsError, dataset.load_annotations, ann_df)
 
     def test_properties(self):
         dataset = self.PROJECT.dataset()
@@ -75,7 +75,7 @@ class TestDataset(unittest.TestCase):
 
     def test_faulty_balance(self):
         dataset = self.PROJECT.dataset()
-        self.assertRaises(sf.errors.DatasetBalanceError, dataset.balance, 'category1')
+        self.assertRaises(hx.errors.DatasetBalanceError, dataset.balance, 'category1')
 
     def test_is_float(self):
         dataset = self.PROJECT.dataset()
@@ -89,8 +89,8 @@ class TestSplits(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls._orig_logging_level = sf.getLoggingLevel()  # type: ignore
-        sf.setLoggingLevel(40)
+        cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
+        hx.setLoggingLevel(40)
         cls.patients = [f'pt{p}' for p in range(200)]  # type: ignore
         cls.sites = [f'site{s}' for s in range(5)]  # type: ignore
         cls.outcomes = list(range(4))  # type: ignore
@@ -102,7 +102,7 @@ class TestSplits(unittest.TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         super().tearDownClass()
-        sf.setLoggingLevel(cls._orig_logging_level)  # type: ignore
+        hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
 
     def _test_split(self, splits):
         split_patients = [p for split in splits for p in split]
@@ -123,52 +123,52 @@ class TestSplits(unittest.TestCase):
         # Assert that sites are not shared between splits
         self.assertTrue(sorted(flattened_sites) == sorted(self.sites))
 
-    @unittest.skipIf(not sf.util.CPLEX_AVAILABLE, "CPLEX not installed")
+    @unittest.skipIf(not hx.util.CPLEX_AVAILABLE, "CPLEX not installed")
     def test_site_preserved_cplex_three_splits(self):
-        splits = sf.dataset.split_patients_preserved_site(
+        splits = hx.dataset.split_patients_preserved_site(
             self.patients_dict, n=3, balance='outcome', method='cplex'
         )
         self._test_site_split(splits)
 
-    @unittest.skipIf(not sf.util.CPLEX_AVAILABLE, "CPLEX not installed")
+    @unittest.skipIf(not hx.util.CPLEX_AVAILABLE, "CPLEX not installed")
     def test_site_preserved_cplex_five_splits(self):
-        splits = sf.dataset.split_patients_preserved_site(
+        splits = hx.dataset.split_patients_preserved_site(
             self.patients_dict, n=5, balance='outcome', method='cplex'
         )
         self._test_site_split(splits)
 
-    @unittest.skipIf(not sf.util.BONMIN_AVAILABLE, "Pyomo/Bonmin not installed")
+    @unittest.skipIf(not hx.util.BONMIN_AVAILABLE, "Pyomo/Bonmin not installed")
     def test_site_preserved_bonmin_three_splits(self):
-        splits = sf.dataset.split_patients_preserved_site(
+        splits = hx.dataset.split_patients_preserved_site(
             self.patients_dict, n=3, balance='outcome', method='bonmin'
         )
         self._test_site_split(splits)
 
-    @unittest.skipIf(not sf.util.BONMIN_AVAILABLE, "Pyomo/Bonmin not installed")
+    @unittest.skipIf(not hx.util.BONMIN_AVAILABLE, "Pyomo/Bonmin not installed")
     def test_site_preserved_bonmin_five_splits(self):
-        splits = sf.dataset.split_patients_preserved_site(
+        splits = hx.dataset.split_patients_preserved_site(
             self.patients_dict, n=5, balance='outcome', method='bonmin'
         )
         self._test_site_split(splits)
 
     def test_balanced_split_three_splits(self):
-        splits = sf.dataset.split_patients_balanced(
+        splits = hx.dataset.split_patients_balanced(
             self.patients_dict, n=3, balance='outcome'
         )
         self._test_split(splits)
 
     def test_balanced_split_five_splits(self):
-        splits = sf.dataset.split_patients_balanced(
+        splits = hx.dataset.split_patients_balanced(
             self.patients_dict, n=5, balance='outcome'
         )
         self._test_split(splits)
 
     def test_split_three_splits(self):
-        splits = sf.dataset.split_patients(self.patients_dict, n=3)
+        splits = hx.dataset.split_patients(self.patients_dict, n=3)
         self._test_split(splits)
 
     def test_split_five_splits(self):
-        splits = sf.dataset.split_patients(self.patients_dict, n=5)
+        splits = hx.dataset.split_patients(self.patients_dict, n=5)
         self._test_split(splits)
 
 
@@ -176,8 +176,8 @@ class TestLabels(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls._orig_logging_level = sf.getLoggingLevel()  # type: ignore
-        sf.setLoggingLevel(40)
+        cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
+        hx.setLoggingLevel(40)
         cls.PROJECT = TestConfig().create_project(overwrite=True)  # type: ignore
         cls.dataset = cls.PROJECT.dataset()  # type: ignore
         cls.num_slides = len(cls.dataset.slides())  # type: ignore
@@ -185,7 +185,7 @@ class TestLabels(unittest.TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         super().tearDownClass()
-        sf.setLoggingLevel(cls._orig_logging_level)  # type: ignore
+        hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
         if cls.PROJECT is not None:  # type: ignore
             shutil.rmtree(cls.PROJECT.root)  # type: ignore
 

@@ -16,7 +16,7 @@ from queue import Queue
 from typing import (TYPE_CHECKING, Any, Callable, Dict, Iterable, List,
                     Optional, Tuple, Union)
 
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.io import detect_tfrecord_format
 from histox.tfrecord.torch.dataset import MultiTFRecordDataset
@@ -142,7 +142,7 @@ class InterleaveIterator(torch.utils.data.IterableDataset):
             tfrecord_parser (Callable, optional): Custom parser for TFRecords.
                 Defaults to None.
         """
-        if normalizer is not None and not isinstance(normalizer, sf.norm.StainNormalizer):
+        if normalizer is not None and not isinstance(normalizer, hx.norm.StainNormalizer):
             raise ValueError(
                 f"Expected normalizer to be type StainNormalizer, got: {type(normalizer)}"
             )
@@ -287,8 +287,8 @@ class InterleaveIterator(torch.utils.data.IterableDataset):
                 # Load the original (full) indices
                 for index, tfr in zip(pool.imap(load_index, self.tfrecords), self.tfrecords):
                     tfr = tfr.decode('utf-8')
-                    slide = sf.util.path_to_name(tfr)
-                    loc = sf.io.get_locations_from_tfrecord(tfr)
+                    slide = hx.util.path_to_name(tfr)
+                    loc = hx.io.get_locations_from_tfrecord(tfr)
 
                     # Check which TFRecord indices are in the labels dataframe
                     in_df = np.array([f'{slide}-{x}-{y}' in self.labels.index for (x,y) in loc])
@@ -358,7 +358,7 @@ class StyleGAN2Interleaver(InterleaveIterator):
             raise ValueError("Must specify either crop, resize, or img_size.")
 
         if normalizer:
-            self.normalizer = sf.norm.autoselect(
+            self.normalizer = hx.norm.autoselect(
                 normalizer,
                 source=normalizer_source,
                 device='cpu',
@@ -470,7 +470,7 @@ def _apply_otsu(wsi):
 
 
 def multi_slide_loader(
-    slides: List["sf.WSI"],
+    slides: List["hx.WSI"],
     weights: Optional[Union[List[float], np.ndarray]] = None,
     shard: Optional[Tuple[int, int]] = None,
     infinite: bool = True,
@@ -539,7 +539,7 @@ def interleave(
     balancing if provided (requires manifest). Assumes TFRecord files are
     named by slide.
 
-    Different than tensorflow backend implementation (sf.io.tensorflow).
+    Different than tensorflow backend implementation (hx.io.tensorflow).
     Supports Pytorch. Use interleave_dataloader for the torch DataLoader class;
     use this function directly to get images from a generator with no PyTorch
     data processing.
@@ -633,13 +633,13 @@ def interleave(
             log.info(f"Reading {len(paths)} slides and thresholding...")
 
         # ---- Load slides and apply Otsu thresholding ------------------------
-        if pool is None and sf.slide_backend() == 'cucim':
+        if pool is None and hx.slide_backend() == 'cucim':
             pool = mp.Pool(
-                sf.util.num_cpu(default=8),
-                initializer=sf.util.set_ignore_sigint
+                hx.util.num_cpu(default=8),
+                initializer=hx.util.set_ignore_sigint
             )
         elif pool is None:
-            pool = mp.dummy.Pool(sf.util.num_cpu(default=16))
+            pool = mp.dummy.Pool(hx.util.num_cpu(default=16))
         wsi_list = []
         to_remove = []
         otsu_list = []
@@ -647,7 +647,7 @@ def interleave(
             if isinstance(path, bytes):
                 path= path.decode('utf-8')
             try:
-                wsi = sf.WSI(
+                wsi = hx.WSI(
                     path,
                     tile_px,
                     tile_um,

@@ -2,7 +2,7 @@ import re
 import numpy as np
 import pandas as pd
 import torch
-import histox as sf
+import histox as hx
 import os
 from typing import Union, List, Optional, Callable, Tuple, Any, Dict
 from os.path import join, dirname, exists
@@ -27,7 +27,7 @@ class MILFeatures:
         *,
         slides: Optional[list] = None,
         config: Optional[TrainerConfig] = None,
-        dataset: Optional["sf.Dataset"] = None,
+        dataset: Optional["hx.Dataset"] = None,
         attention_pooling: Optional[str] = 'avg',
         device: Optional[Any] = None
     ) -> None:
@@ -104,7 +104,7 @@ class MILFeatures:
     def _find_bags(
         self,
         bags: Union[np.ndarray, List[str], str],
-        dataset: Optional["sf.Dataset"],
+        dataset: Optional["hx.Dataset"],
         slides: Optional[List[str]]
     ) -> np.ndarray:
         """Find bags from path, dataset, or slides.
@@ -447,14 +447,14 @@ class MILFeatures:
         df['slide'] = df.index
         return df
 
-    def map_activations(self, **kwargs) -> "sf.SlideMap":
+    def map_activations(self, **kwargs) -> "hx.SlideMap":
         """Map activations with UMAP.
 
         Keyword args:
             ...
 
         Returns:
-            sf.SlideMap
+            hx.SlideMap
 
         """
-        return sf.SlideMap.from_features(self, **kwargs)
+        return hx.SlideMap.from_features(self, **kwargs)

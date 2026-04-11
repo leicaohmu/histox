@@ -17,7 +17,7 @@ from typing import (
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
-import histox as sf
+import histox as hx
 from rich.progress import track, Progress
 from histox import errors
 from histox.util import log, Labels, ImgBatchSpeedColumn, tfrecord2idx
@@ -52,7 +52,7 @@ class DatasetFeatures:
     def __init__(
         self,
         model: Union[str, "tf.keras.models.Model", "torch.nn.Module"],
-        dataset: "sf.Dataset",
+        dataset: "hx.Dataset",
         *,
         labels: Optional[Labels] = None,
         cache: Optional[str] = None,
@@ -119,32 +119,32 @@ class DatasetFeatures:
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
 
                     # Create a feature extractor
-                    retccl = sf.build_feature_extractor('retccl', resize=True)
+                    retccl = hx.build_feature_extractor('retccl', resize=True)
 
                     # Load a dataset
-                    P = sf.load_project(...)
+                    P = hx.load_project(...)
                     dataset = P.dataset(...)
 
                     # Calculate features
-                    dts_ftrs = sf.DatasetFeatures(retccl, dataset)
+                    dts_ftrs = hx.DatasetFeatures(retccl, dataset)
 
             Calculate features using a trained model (preferred).
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
 
                     # Create a feature extractor from the saved model.
-                    extractor = sf.build_feature_extractor(
+                    extractor = hx.build_feature_extractor(
                         '/path/to/trained_model.zip',
                         layers=['postconv']
                     )
 
                     # Calculate features across the dataset
-                    dts_ftrs = sf.DatasetFeatures(extractor, dataset)
+                    dts_ftrs = hx.DatasetFeatures(extractor, dataset)
 
             Calculate features using a trained model (legacy).
 
@@ -152,7 +152,7 @@ class DatasetFeatures:
 
                     # This method is deprecated, and will be removed in a
                     # future release. Please use the method above instead.
-                    dts_ftrs = sf.DatasetFeatures(
+                    dts_ftrs = hx.DatasetFeatures(
                         '/path/to/trained_model.zip',
                         dataset=dataset,
                         layers=['postconv']
@@ -163,13 +163,13 @@ class DatasetFeatures:
                 .. code-block:: python
 
                     import tensorflow as tf
-                    import histox as sf
+                    import histox as hx
 
                     # Load a model
                     model = tf.keras.models.load_model('/path/to/model.h5')
 
                     # Calculate features
-                    dts_ftrs = sf.DatasetFeatures(
+                    dts_ftrs = hx.DatasetFeatures(
                         model,
                         layers=['postconv'],
                         dataset
@@ -197,16 +197,16 @@ class DatasetFeatures:
             self.tile_px = None
             self.manifest = dict()
             self.tfrecords = []
-        self.slides = sorted([sf.util.path_to_name(t) for t in self.tfrecords])
+        self.slides = sorted([hx.util.path_to_name(t) for t in self.tfrecords])
 
         if labels is not None and annotations is not None:
             raise DeprecationWarning(
-                'Cannot supply both "labels" and "annotations" to sf.DatasetFeatures. '
+                'Cannot supply both "labels" and "annotations" to hx.DatasetFeatures. '
                 '"annotations" is deprecated and has been replaced with "labels".'
             )
         elif annotations is not None:
             warnings.warn(
-                'The "annotations" argument to sf.DatasetFeatures is deprecated.'
+                'The "annotations" argument to hx.DatasetFeatures is deprecated.'
                 'Please use the argument "labels" instead.',
                 DeprecationWarning
             )
@@ -339,7 +339,7 @@ class DatasetFeatures:
 
         """
         import torch
-        slides = [sf.util.path_to_name(b) for b in os.listdir(bags) if b.endswith('.pt')]
+        slides = [hx.util.path_to_name(b) for b in os.listdir(bags) if b.endswith('.pt')]
         obj = cls(None, None)
         obj.slides = slides
         for slide in slides:
@@ -357,7 +357,7 @@ class DatasetFeatures:
 
         For example, if ``df1`` is a DatasetFeatures object with 2048 features
         and ``df2`` is a DatasetFeatures object with 1024 features,
-        then ``sf.DatasetFeatures.concat([df1, df2])`` would return an object
+        then ``hx.DatasetFeatures.concat([df1, df2])`` would return an object
         with 3072.
 
         Vectors from DatasetFeatures objects are concatenated in the given order.
@@ -501,7 +501,7 @@ class DatasetFeatures:
                     or not self.uncertainty[s].size)
             ]
             if pool_sort and len(slides_to_sort) > 1:
-                pool = mp.Pool(sf.util.num_cpu())
+                pool = mp.Pool(hx.util.num_cpu())
                 imap_iterable = pool.imap(
                     self.dataset.get_tfrecord_locations, slides_to_sort
                 )
@@ -760,7 +760,7 @@ class DatasetFeatures:
         # Log the feature extraction configuration
         config = self.dump_config()
         if exists(join(outdir, 'bags_config.json')):
-            old_config = sf.util.load_json(join(outdir, 'bags_config.json'))
+            old_config = hx.util.load_json(join(outdir, 'bags_config.json'))
             if old_config != config:
                 log.warning(
                     "Feature extraction configuration does not match the "
@@ -769,7 +769,7 @@ class DatasetFeatures:
                     f"Current configuration:\n{config}"
                 )
         else:
-            sf.util.write_json(config, join(outdir, 'bags_config.json'))
+            hx.util.write_json(config, join(outdir, 'bags_config.json'))
 
         log_fn = log.info if verbose else log.debug
         log_fn(f'Activations exported in Torch format to {outdir}')
@@ -1078,24 +1078,24 @@ class DatasetFeatures:
             slide_predictions.update({slide: int(np.argmax(slide_perc))})
         return slide_predictions
 
-    def map_activations(self, **kwargs) -> "sf.SlideMap":
+    def map_activations(self, **kwargs) -> "hx.SlideMap":
         """Map activations with UMAP.
 
         Keyword args:
             ...
 
         Returns:
-            sf.SlideMap
+            hx.SlideMap
 
         """
-        return sf.SlideMap.from_features(self, **kwargs)
+        return hx.SlideMap.from_features(self, **kwargs)
 
     def map_predictions(
         self,
         x: int = 0,
         y: int = 0,
         **kwargs
-    ) -> "sf.SlideMap":
+    ) -> "hx.SlideMap":
         """Map tile predictions onto x/y coordinate space.
 
         Args:
@@ -1109,7 +1109,7 @@ class DatasetFeatures:
                 Defaults to None (caching disabled).
 
         Returns:
-            sf.SlideMap
+            hx.SlideMap
 
         """
         all_x, all_y, all_slides, all_tfr_idx = [], [], [], []
@@ -1123,7 +1123,7 @@ class DatasetFeatures:
         all_slides = np.concatenate(all_slides)
         all_tfr_idx = np.concatenate(all_tfr_idx)
 
-        return sf.SlideMap.from_xy(
+        return hx.SlideMap.from_xy(
             x=all_x,
             y=all_y,
             slides=all_slides,
@@ -1161,7 +1161,7 @@ class DatasetFeatures:
             del self.locations[slide]
         self.tfrecords = np.array([
             t for t in self.tfrecords
-            if sf.util.path_to_name(t) != slide
+            if hx.util.path_to_name(t) != slide
         ])
         if slide in self.slides:
             self.slides.remove(slide)
@@ -1217,12 +1217,12 @@ class DatasetFeatures:
                              total=tiles_per_feature,
                              description=f"Feature {f}"):
                 for tfr in self.tfrecords:
-                    if sf.util.path_to_name(tfr) == g['slide']:
+                    if hx.util.path_to_name(tfr) == g['slide']:
                         tfr_dir = tfr
                 if not tfr_dir:
                     log.warning("TFRecord location not found for "
                                 f"slide {g['slide']}")
-                slide, image = sf.io.get_tfrecord_by_index(tfr_dir, g['index'])
+                slide, image = hx.io.get_tfrecord_by_index(tfr_dir, g['index'])
                 tile_filename = (f"{i}-tfrecord{g['slide']}-{g['index']}"
                                  + f"-{g['val']:.2f}.jpg")
                 image_string = open(join(outdir, str(f), tile_filename), 'wb')
@@ -1381,7 +1381,7 @@ class _FeatureGenerator:
     def __init__(
         self,
         model: Union[str, "BaseFeatureExtractor", "tf.keras.models.Model", "torch.nn.Module"],
-        dataset: "sf.Dataset",
+        dataset: "hx.Dataset",
         *,
         layers: Union[str, List[str]] = 'postconv',
         include_preds: Optional[bool] = None,
@@ -1399,7 +1399,7 @@ class _FeatureGenerator:
             model (str, BaseFeatureExtractor, tf.keras.models.Model, torch.nn.Module):
                 Model to use for feature extraction. If str, must be a path to
                 a saved model.
-            dataset (sf.Dataset): Dataset to use for feature extraction.
+            dataset (hx.Dataset): Dataset to use for feature extraction.
 
         Keyword Args:
             augment (bool, str, optional): Whether to use data augmentation
@@ -1441,7 +1441,7 @@ class _FeatureGenerator:
         """
         self.model = model
         self.dataset = dataset
-        self.layers = sf.util.as_list(layers)
+        self.layers = hx.util.as_list(layers)
         self.batch_size = batch_size
         self.simclr_args = None
         self.num_workers = num_workers
@@ -1517,7 +1517,7 @@ class _FeatureGenerator:
             return self.generator(batch_img)
 
     def _process_out(self, model_out, batch_slides, batch_loc):
-        model_out = sf.util.as_list(model_out)
+        model_out = hx.util.as_list(model_out)
 
         # Process data if the output is Tensorflow (SimCLR or Tensorflow model)
         if self.is_tf():
@@ -1613,8 +1613,8 @@ class _FeatureGenerator:
             # feature extractor is not an instance of histox.model.Features.
             self.normalizer = self.model.normalizer
         elif isinstance(self.model, str):
-            model_config = sf.util.get_model_config(self.model)
-            hp = sf.ModelParams.from_dict(model_config['hp'])
+            model_config = hx.util.get_model_config(self.model)
+            hp = hx.ModelParams.from_dict(model_config['hp'])
             self.uq = hp.uq
             self.normalizer = hp.get_normalizer()
             if self.normalizer:
@@ -1636,7 +1636,7 @@ class _FeatureGenerator:
             else:
                 norm_src = None
             if isinstance(norm, str):
-                normalizer = sf.norm.autoselect(
+                normalizer = hx.norm.autoselect(
                     norm,
                     source=norm_src,
                     backend='tensorflow' if self.is_tf() else 'torch'
@@ -1699,7 +1699,7 @@ class _FeatureGenerator:
                 raise ValueError(
                     "include_preds must be True if include_uncertainty is True"
                 )
-            return sf.model.UncertaintyInterface(
+            return hx.model.UncertaintyInterface(
                 self.model,
                 layers=self.layers,
                 **kwargs
@@ -1707,7 +1707,7 @@ class _FeatureGenerator:
 
         # Generator is a path to a trained Slideflow model
         elif self.is_model_path():
-            return sf.model.Features(
+            return hx.model.Features(
                 self.model,
                 layers=self.layers,
                 include_preds=self.include_preds,
@@ -1716,7 +1716,7 @@ class _FeatureGenerator:
 
         # Generator is a loaded Tensorflow model
         elif self.is_tf():
-            return sf.model.Features.from_model(
+            return hx.model.Features.from_model(
                 self.model,
                 layers=self.layers,
                 include_preds=self.include_preds,
@@ -1725,7 +1725,7 @@ class _FeatureGenerator:
 
         # Generator is a loaded torch.nn.Module
         elif self.is_torch():
-            return sf.model.Features.from_model(
+            return hx.model.Features.from_model(
                 self.model.to(self.device),
                 tile_px=self.tile_px,
                 layers=self.layers,
@@ -1747,17 +1747,17 @@ class _FeatureGenerator:
         if self.is_extractor():
             return self.model.is_torch()
         else:
-            return sf.model.is_torch_model(self.model)
+            return hx.model.is_torch_model(self.model)
 
     def is_tf(self):
         if self.is_extractor():
             return self.model.is_tensorflow()
         else:
-            return sf.model.is_tensorflow_model(self.model)
+            return hx.model.is_tensorflow_model(self.model)
 
     def has_torch_gpu_normalizer(self):
         return (
-            isinstance(self.normalizer, sf.norm.StainNormalizer)
+            isinstance(self.normalizer, hx.norm.StainNormalizer)
             and self.normalizer.__class__.__name__ == 'TorchStainNormalizer'
             and self.normalizer.device != 'cpu'
         )
@@ -1858,7 +1858,7 @@ class _FeatureGenerator:
         if progress and not pb:
             pb = Progress(*Progress.get_default_columns(),
                         ImgBatchSpeedColumn(),
-                        transient=sf.getLoggingLevel()>20)
+                        transient=hx.getLoggingLevel()>20)
             task = pb.add_task("Generating...", total=estimated_tiles)
             pb.start()
         elif pb:
@@ -1866,7 +1866,7 @@ class _FeatureGenerator:
             progress = False
         else:
             pb = None
-        with sf.util.cleanup_progress((pb if progress else None)):
+        with hx.util.cleanup_progress((pb if progress else None)):
             for batch_img, _, batch_slides, batch_loc_x, batch_loc_y in dataset:
                 model_output = self._calculate_feature_batch(batch_img)
                 q.put((model_output, batch_slides, (batch_loc_x, batch_loc_y)))
@@ -1884,7 +1884,7 @@ class _FeatureGenerator:
 
 def _export_bags(
     model: Union[Callable, Dict],
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     slides: List[str],
     slide_batch_size: int,
     pb: Any,
@@ -1893,7 +1893,7 @@ def _export_bags(
     **dts_kwargs
 ) -> None:
     """Export bags for a given feature extractor."""
-    for slide_batch in sf.util.batch(slides, slide_batch_size):
+    for slide_batch in hx.util.batch(slides, slide_batch_size):
         try:
             _dataset = dataset.remove_filter(filters='slide')
         except errors.DatasetFilterError:
@@ -1902,14 +1902,14 @@ def _export_bags(
         n_tfrecords = len(_dataset.tfrecords())
         if not n_tfrecords:
             continue
-        df = sf.DatasetFeatures(model, _dataset, pb=pb, **dts_kwargs)
+        df = hx.DatasetFeatures(model, _dataset, pb=pb, **dts_kwargs)
         df.to_torch(outdir, verbose=False)
         pb.advance(slide_task, n_tfrecords)
 
 def _distributed_export(
     device: int,
     model_cfg: Dict,
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     slides: List[List[str]],
     slide_batch_size: int,
     pb: Any,
@@ -1920,7 +1920,7 @@ def _distributed_export(
     channels_last: Optional[bool] = None
 ) -> None:
     """Distributed export across multiple GPUs."""
-    model = sf.model.extractors.build_extractor_from_cfg(model_cfg, device=f'cuda:{device}')
+    model = hx.model.extractors.build_extractor_from_cfg(model_cfg, device=f'cuda:{device}')
     if mixed_precision is not None:
         model.mixed_precision = mixed_precision
     if channels_last is not None:

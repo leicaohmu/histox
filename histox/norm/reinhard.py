@@ -86,7 +86,7 @@ class ReinhardFastNormalizer:
         return means, stds
 
     def fit_preset(self, preset: str) -> Dict[str, np.ndarray]:
-        """Fit normalizer to a preset in sf.norm.utils.fit_presets.
+        """Fit normalizer to a preset in hx.norm.utils.fit_presets.
 
         Args:
             preset (str): Preset.
@@ -395,7 +395,7 @@ class ReinhardNormalizer(ReinhardFastNormalizer):
         return super().fit(target, mask=mask)
 
     def fit_preset(self, preset: str) -> Dict[str, np.ndarray]:
-        """Fit normalizer to a preset in sf.norm.utils.fit_presets.
+        """Fit normalizer to a preset in hx.norm.utils.fit_presets.
 
         Args:
             preset (str): Preset.

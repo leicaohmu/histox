@@ -4,7 +4,7 @@ import os
 from os.path import exists, join
 from typing import TYPE_CHECKING, List, Tuple, Union
 
-import histox as sf
+import histox as hx
 from PIL import Image
 from histox.stats import SlideMap
 from histox.test.utils import (handle_errors, test_multithread_throughput,
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 @handle_errors
 def activations_tester(
-    project: sf.Project,
+    project: hx.Project,
     verbosity: int,
     passed: "multiprocessing.managers.ValueProxy",
     model: str,
@@ -31,7 +31,7 @@ def activations_tester(
 
     Function must happen in an isolated process to free GPU memory when done.
     """
-    sf.setLoggingLevel(verbosity)
+    hx.setLoggingLevel(verbosity)
 
     # Test activations generation.
     dataset = project.dataset(tile_px, 1208)
@@ -89,7 +89,7 @@ def activations_tester(
 
 @handle_errors
 def feature_generator_tester(
-    project: sf.Project,
+    project: hx.Project,
     verbosity: int,
     passed: "multiprocessing.managers.ValueProxy",
     model: str,
@@ -98,7 +98,7 @@ def feature_generator_tester(
 
     Function must happen in an isolated process to free GPU memory when done.
     """
-    sf.setLoggingLevel(verbosity)
+    hx.setLoggingLevel(verbosity)
     outdir = join(project.root, 'mil')
     project.generate_feature_bags(
         model,
@@ -113,7 +113,7 @@ def evaluation_tester(project, verbosity, passed, **kwargs) -> None:
 
     Function must happen in an isolated process to free GPU memory when done.
     """
-    sf.setLoggingLevel(verbosity)
+    hx.setLoggingLevel(verbosity)
     project.evaluate(**kwargs)
 
 
@@ -123,7 +123,7 @@ def prediction_tester(project, verbosity, passed, **kwargs) -> None:
 
     Function must happen in an isolated process to free GPU memory when done.
     """
-    sf.setLoggingLevel(verbosity)
+    hx.setLoggingLevel(verbosity)
     project.predict(**kwargs)
 
 
@@ -195,7 +195,7 @@ def reader_tester(project, verbosity, passed, tile_px) -> None:
 
 @handle_errors
 def single_thread_normalizer_tester(
-    project: sf.Project,
+    project: hx.Project,
     verbosity: int,
     passed: "multiprocessing.managers.ValueProxy",
     methods: Union[List, Tuple],
@@ -205,17 +205,17 @@ def single_thread_normalizer_tester(
 
     Function must happen in an isolated process to free GPU memory when done.
     """
-    sf.setLoggingLevel(verbosity)
+    hx.setLoggingLevel(verbosity)
     if not len(methods):
-        methods = sf.norm.StainNormalizer.normalizers  # type: ignore
+        methods = hx.norm.StainNormalizer.normalizers  # type: ignore
     dataset = project.dataset(tile_px, 1208)
-    v = f'[bold]({sf.backend()}-native)[/]'
+    v = f'[bold]({hx.backend()}-native)[/]'
 
     dts_kw = {'standardize': False, 'infinite': True}
-    if sf.backend() == 'tensorflow':
+    if hx.backend() == 'tensorflow':
         dts = dataset.tensorflow(None, None, **dts_kw)
         raw_img = next(iter(dts))[0].numpy()
-    elif sf.backend() == 'torch':
+    elif hx.backend() == 'torch':
         dts = dataset.torch(None, None, **dts_kw)
         raw_img = next(iter(dts))[0].permute(1, 2, 0).numpy()
     Image.fromarray(raw_img).save(join(project.root, 'raw_img.png'))
@@ -223,8 +223,8 @@ def single_thread_normalizer_tester(
         if method in ('vahadane', 'vahadane_spams') and spams_loader is None:
             print("Skipping Vahadane (spams); SPAMS not installed.")
             continue
-        gen_norm = sf.norm.StainNormalizer(method)
-        vec_norm = sf.norm.autoselect(method)
+        gen_norm = hx.norm.StainNormalizer(method)
+        vec_norm = hx.norm.autoselect(method)
         st_msg = '[yellow]SINGLE-thread[/]'
 
         # Save example image
@@ -246,7 +246,7 @@ def single_thread_normalizer_tester(
 
 @handle_errors
 def multi_thread_normalizer_tester(
-    project: sf.Project,
+    project: hx.Project,
     verbosity: int,
     passed: "multiprocessing.managers.ValueProxy",
     methods: Union[List, Tuple],
@@ -256,18 +256,18 @@ def multi_thread_normalizer_tester(
 
     Function must happen in an isolated process to free GPU memory when done.
     """
-    sf.setLoggingLevel(verbosity)
+    hx.setLoggingLevel(verbosity)
     if not len(methods):
-        methods = sf.norm.StainNormalizer.normalizers  # type: ignore
+        methods = hx.norm.StainNormalizer.normalizers  # type: ignore
     dataset = project.dataset(tile_px, 1208)
-    v = f'[bold]({sf.backend()}-native)[/]'
+    v = f'[bold]({hx.backend()}-native)[/]'
 
     for method in methods:
         if 'vahadane' in method:
             print("Skipping Vahadane throughput testing.")
             continue
-        gen_norm = sf.norm.StainNormalizer(method)
-        vec_norm = sf.norm.autoselect(method)
+        gen_norm = hx.norm.StainNormalizer(method)
+        vec_norm = hx.norm.autoselect(method)
         mt_msg = '[magenta]MULTI-thread[/]'
         gen_tpt = test_multithread_throughput(dataset, gen_norm)
         dur = f"[blue][{gen_tpt:.1f} img/s][/]"
@@ -280,7 +280,7 @@ def multi_thread_normalizer_tester(
 
 @handle_errors
 def wsi_prediction_tester(
-    project: sf.Project,
+    project: hx.Project,
     verbosity: int,
     passed: "multiprocessing.managers.ValueProxy",
     model: str,
@@ -289,10 +289,10 @@ def wsi_prediction_tester(
 
     Function must happen in an isolated process to free GPU memory when done.
     """
-    sf.setLoggingLevel(verbosity)
+    hx.setLoggingLevel(verbosity)
     dataset = project.dataset()
     slide_paths = dataset.slide_paths(source='TEST')
-    patient_name = sf.util.path_to_name(slide_paths[0])
+    patient_name = hx.util.path_to_name(slide_paths[0])
     project.predict_wsi(
         model,
         join(project.root, 'wsi'),

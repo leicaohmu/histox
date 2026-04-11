@@ -8,7 +8,7 @@ from os.path import exists, join
 from typing import Optional
 from rich import print
 
-import histox as sf
+import histox as hx
 import histox.test.functional
 from histox import errors
 from histox.test import (dataset_test, slide_test, stats_test, norm_test,
@@ -55,9 +55,9 @@ class TestSuite:
             return
         else:
             detected_slides = [
-                sf.util.path_to_name(f)
+                hx.util.path_to_name(f)
                 for f in os.listdir(slides)
-                if sf.util.is_slide(join(slides, f))
+                if hx.util.is_slide(join(slides, f))
             ][:10]
             if not len(detected_slides):
                 print(f"[yellow]No slides found at {slides}; "
@@ -67,7 +67,7 @@ class TestSuite:
 
         # --- Set up project --------------------------------------------------
 
-        sf.setLoggingLevel(verbosity)
+        hx.setLoggingLevel(verbosity)
         if verbosity == logging.DEBUG:
             logging.getLogger('tensorflow').setLevel(logging.DEBUG)
             os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
@@ -90,11 +90,11 @@ class TestSuite:
         )
 
         # Check if GPU available
-        if sf.backend() == 'tensorflow':
+        if hx.backend() == 'tensorflow':
             import tensorflow as tf
             if not tf.config.list_physical_devices('GPU'):
                 log.error("GPU unavailable - tests may fail.")
-        elif sf.backend() == 'torch':
+        elif hx.backend() == 'torch':
             import torch
             if not torch.cuda.is_available():
                 log.error("GPU unavailable - tests may fail.")
@@ -120,7 +120,7 @@ class TestSuite:
             x for x in os.listdir(self.project.models_dir)
             if os.path.isdir(join(self.project.models_dir, x))
         ]
-        tail = '' if sf.backend() == 'tensorflow' else '.zip'
+        tail = '' if hx.backend() == 'tensorflow' else '.zip'
         for run in sorted(prev_run_dirs, reverse=True):
             if run[6:] == name:
                 model_name = join(
@@ -141,7 +141,7 @@ class TestSuite:
         normalizer: Optional[str] = 'reinhard_fast',
         uq: bool = False,
         balance: Optional[str] = 'patient',
-    ) -> sf.ModelParams:
+    ) -> hx.ModelParams:
         """Set up hyperparameters.
 
         Args:
@@ -151,21 +151,21 @@ class TestSuite:
             uq (bool, optional): Uncertainty quantification. Defaults to False.
 
         Returns:
-            sf.ModelParams: Hyperparameter object.
+            hx.ModelParams: Hyperparameter object.
         """
 
         assert self.project is not None
         if model_type == 'classification':
             loss = ('sparse_categorical_crossentropy'
-                    if sf.backend() == 'tensorflow'
+                    if hx.backend() == 'tensorflow'
                     else 'CrossEntropy')
         elif model_type == 'regression':
             loss = ('mean_squared_error'
-                    if sf.backend() == 'tensorflow'
+                    if hx.backend() == 'tensorflow'
                     else 'MSE')
         elif model_type == 'survival':
             loss = ('negative_log_likelihood'
-                    if sf.backend() == 'tensorflow'
+                    if hx.backend() == 'tensorflow'
                     else 'NLL')
 
         # Create batch train file
@@ -197,7 +197,7 @@ class TestSuite:
             )
 
         # Create single hyperparameter combination
-        hp = sf.ModelParams(
+        hp = hx.ModelParams(
             tile_px=self.tile_px,
             tile_um=1208,
             epochs=1,
@@ -275,7 +275,7 @@ class TestSuite:
         if single:
             with TaskWrapper("Testing normalization single-thread throughput...") as test:
                 passed = process_isolate(
-                    sf.test.functional.single_thread_normalizer_tester,
+                    hx.test.functional.single_thread_normalizer_tester,
                     project=self.project,
                     methods=args,
                     tile_px=self.tile_px
@@ -285,7 +285,7 @@ class TestSuite:
         if multi:
             with TaskWrapper("Testing normalization multi-thread throughput...") as test:
                 passed = process_isolate(
-                    sf.test.functional.multi_thread_normalizer_tester,
+                    hx.test.functional.multi_thread_normalizer_tester,
                     project=self.project,
                     methods=args,
                     tile_px=self.tile_px
@@ -309,7 +309,7 @@ class TestSuite:
                 test.skip()
                 return
             passed = process_isolate(
-                sf.test.functional.reader_tester,
+                hx.test.functional.reader_tester,
                 project=self.project,
                 tile_px=self.tile_px
             )
@@ -382,7 +382,7 @@ class TestSuite:
             if k not in train_kwargs:
                 train_kwargs[k] = self.train_kwargs[k]
         # Disable checkpoints for tensorflow backend, to save disk space
-        if (sf.backend() == 'tensorflow'
+        if (hx.backend() == 'tensorflow'
            and 'save_checkpoints' not in train_kwargs):
             train_kwargs['save_checkpoints'] = False
 
@@ -395,7 +395,7 @@ class TestSuite:
             with TaskWrapper("Training with resume...") as test:
                 try:
                     to_resume = self._get_model('category1-manual_hp-TEST-HPSweep1-kfold1')
-                    if sf.backend() == 'tensorflow':
+                    if hx.backend() == 'tensorflow':
                         resume_kw = dict(
                             resume_training=to_resume,
                         )
@@ -516,7 +516,7 @@ class TestSuite:
 
         if survival:
             with TaskWrapper("Training a survival model...") as test:
-                if sf.backend() == 'tensorflow':
+                if hx.backend() == 'tensorflow':
                     try:
                         results = self.project.train(
                             exp_label='survival',
@@ -536,7 +536,7 @@ class TestSuite:
 
         if multi_survival:
             with TaskWrapper("Training a multi-input survival model...") as test:
-                if sf.backend() == 'tensorflow':
+                if hx.backend() == 'tensorflow':
                     try:
                         results = self.project.train(
                             exp_label='multi_survival',
@@ -581,7 +581,7 @@ class TestSuite:
 
         with TaskWrapper("Testing classification model predictions...") as test:
             passed = process_isolate(
-                sf.test.functional.prediction_tester,
+                hx.test.functional.prediction_tester,
                 project=self.project,
                 model=model,
                 **predict_kwargs
@@ -602,7 +602,7 @@ class TestSuite:
         # with sequential model loading/testing
         with TaskWrapper("Testing classification model evaluation...") as test:
             passed = process_isolate(
-                sf.test.functional.evaluation_tester,
+                hx.test.functional.evaluation_tester,
                 project=self.project,
                 model=f_model,
                 outcomes='category1',
@@ -615,7 +615,7 @@ class TestSuite:
         with TaskWrapper("Testing classification UQ model evaluation...") as test:
             uq_model = self._get_model('category1-UQ-HP0-kfold1')
             passed = process_isolate(
-                sf.test.functional.evaluation_tester,
+                hx.test.functional.evaluation_tester,
                 project=self.project,
                 model=uq_model,
                 outcomes='category1',
@@ -627,7 +627,7 @@ class TestSuite:
 
         with TaskWrapper("Testing multi-classification model evaluation...") as test:
             passed = process_isolate(
-                sf.test.functional.evaluation_tester,
+                hx.test.functional.evaluation_tester,
                 project=self.project,
                 model=multi_cat_model,
                 outcomes=['category1', 'category2'],
@@ -639,7 +639,7 @@ class TestSuite:
 
         with TaskWrapper("Testing multi-outcome regression model evaluation...") as test:
             passed = process_isolate(
-                sf.test.functional.evaluation_tester,
+                hx.test.functional.evaluation_tester,
                 project=self.project,
                 model=multi_lin_model,
                 outcomes=['regression1', 'regression2'],
@@ -651,7 +651,7 @@ class TestSuite:
 
         with TaskWrapper("Testing multi-input model evaluation...") as test:
             passed = process_isolate(
-                sf.test.functional.evaluation_tester,
+                hx.test.functional.evaluation_tester,
                 project=self.project,
                 model=multi_inp_model,
                 outcomes='category1',
@@ -662,10 +662,10 @@ class TestSuite:
                 test.fail()
 
         with TaskWrapper("Testing survival model evaluation...") as test:
-            if sf.backend() == 'tensorflow':
+            if hx.backend() == 'tensorflow':
                 survival_model = self._get_model('time-survival-HP0-kfold1')
                 passed = process_isolate(
-                    sf.test.functional.evaluation_tester,
+                    hx.test.functional.evaluation_tester,
                     project=self.project,
                     model=survival_model,
                     outcomes='time',
@@ -689,7 +689,7 @@ class TestSuite:
                 if slide.lower() == 'auto':
                     dataset = self.project.dataset()
                     slide_paths = dataset.slide_paths(source='TEST')
-                    patient_name = sf.util.path_to_name(slide_paths[0])
+                    patient_name = hx.util.path_to_name(slide_paths[0])
                 self.project.generate_heatmaps(
                     model,
                     filters={'patient': [patient_name]},
@@ -709,7 +709,7 @@ class TestSuite:
         assert exists(model), "Model has not yet been trained."
         with TaskWrapper("Testing activations and mosaic...") as test:
             passed = process_isolate(
-                sf.test.functional.activations_tester,
+                hx.test.functional.activations_tester,
                 project=self.project,
                 model=model,
                 tile_px=self.tile_px,
@@ -726,7 +726,7 @@ class TestSuite:
         assert exists(model), "Model has not yet been trained."
         with TaskWrapper("Testing WSI prediction...") as test:
             passed = process_isolate(
-                sf.test.functional.wsi_prediction_tester,
+                hx.test.functional.wsi_prediction_tester,
                 project=self.project,
                 model=model
             )
@@ -752,7 +752,7 @@ class TestSuite:
                 test.skip()
             else:
                 passed = process_isolate(
-                    sf.test.functional.feature_generator_tester,
+                    hx.test.functional.feature_generator_tester,
                     project=self.project,
                     model=model
                 )
@@ -767,7 +767,7 @@ class TestSuite:
                     dataset = self.project.dataset(self.tile_px, 1208)
                     train_dts, val_dts = dataset.split(val_fraction=0.3)
                     import histox.mil
-                    config = sf.mil.mil_config('attention_mil', epochs=5, lr=1e-4, drop_last=False)
+                    config = hx.mil.mil_config('attention_mil', epochs=5, lr=1e-4, drop_last=False)
                     self.project.train_mil(
                         config,
                         train_dts,
@@ -833,7 +833,7 @@ class TestSuite:
 
         try:
             import tensorflow as tf
-            sf.util.allow_gpu_memory_growth()
+            hx.util.allow_gpu_memory_growth()
         except ImportError:
             pass
 

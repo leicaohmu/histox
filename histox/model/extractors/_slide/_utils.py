@@ -1,7 +1,7 @@
 """Utility functions for slide feature extraction."""
 
 import numpy as np
-import histox as sf
+import histox as hx
 from histox import log
 
 # -----------------------------------------------------------------------------

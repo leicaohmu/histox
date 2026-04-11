@@ -6,7 +6,7 @@ Requires: libvips (https://libvips.github.io/libvips/)
 import re
 import cv2
 import numpy as np
-import histox as sf
+import histox as hx
 import xml.etree.ElementTree as ET
 from types import SimpleNamespace
 from PIL import Image, UnidentifiedImageError
@@ -189,7 +189,7 @@ def detect_mpp(
         return float(loaded_image.get(OPS_MPP_X))
 
     # Search for MPP using SCN format
-    if (sf.util.path_to_ext(path).lower() == 'svs'
+    if (hx.util.path_to_ext(path).lower() == 'svs'
             and 'image-description' in vips_fields):
         img_des = loaded_image.get('image-description')
         _mpp_matches = re.findall(r'(?<=MPP\s\=\s)0\.\d+', img_des)
@@ -202,7 +202,7 @@ def detect_mpp(
             return float(_mpp)
 
     # Search for MPP via TIFF EXIF field
-    if (sf.util.path_to_ext(path).lower() in ('tif', 'tiff')
+    if (hx.util.path_to_ext(path).lower() in ('tif', 'tiff')
             and 'xres' in vips_fields):
         xres = loaded_image.get('xres')  # 4000.0
         if (xres == 4000.0
@@ -920,7 +920,7 @@ class _VIPSReader:
         try:
             return vips2numpy(thumbnail)
         except vips.error.Error as e:
-            raise sf.errors.SlideLoadError(f"Error loading slide thumbnail: {e}")
+            raise hx.errors.SlideLoadError(f"Error loading slide thumbnail: {e}")
 
 
 class _MultiPageVIPSReader(_VIPSReader):
@@ -1065,7 +1065,7 @@ class _OmeTiffVIPSReader(_VIPSReader):
             thumb = vips2numpy(thumbnail)
             return thumb
         except vips.error.Error as e:
-            raise sf.errors.SlideLoadError(f"Error loading slide thumbnail: {e}")
+            raise hx.errors.SlideLoadError(f"Error loading slide thumbnail: {e}")
 
     def read_level(
         self,

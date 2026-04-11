@@ -1,6 +1,6 @@
 """PyTorch-based feature extraction from whole-slide images."""
 
-import histox as sf
+import histox as hx
 import numpy as np
 import torch
 import torchvision
@@ -41,7 +41,7 @@ class _SlideIterator(torch.utils.data.IterableDataset):
 
 def features_from_slide_torch(
     extractor: "BaseFeatureExtractor",
-    slide: "sf.WSI",
+    slide: "hx.WSI",
     *,
     img_format: str = 'numpy',
     batch_size: int = 32,
@@ -65,7 +65,7 @@ def features_from_slide_torch(
 
     _log_normalizer(normalizer)
     opencv_norm = (isinstance(normalizer, str)
-                   or (isinstance(normalizer, sf.norm.StainNormalizer)
+                   or (isinstance(normalizer, hx.norm.StainNormalizer)
                        and normalizer.__class__ == 'StainNormalizer'))
 
     # Build the tile generator
@@ -94,7 +94,7 @@ def features_from_slide_torch(
             if preprocess_fn:
                 batch_images = preprocess_fn(batch_images)
         batch_images = batch_images.to(extractor.device)
-        model_out = sf.util.as_list(extractor(batch_images))
+        model_out = hx.util.as_list(extractor(batch_images))
 
         # Flatten the output, relevant when
         # there are multiple outcomes / classifier heads

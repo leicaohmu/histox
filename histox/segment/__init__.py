@@ -10,7 +10,7 @@ on a histox dataset.
 
 import os
 import torch
-import histox as sf
+import histox as hx
 import numpy as np
 import multiprocessing as mp
 import pandas as pd
@@ -37,13 +37,13 @@ from .utils import topleft_pad, center_square_pad, outlines_list
 # -----------------------------------------------------------------------------
 
 def generate_rois(
-    wsi: "sf.WSI",
+    wsi: "hx.WSI",
     model: str
 ) -> List[np.ndarray]:
     """Generate ROIs for a single slide using a U-Net model.
 
     Args:
-        wsi (sf.WSI): Slideflow WSI object.
+        wsi (hx.WSI): Slideflow WSI object.
         model (str): Path to '.pth' model file, as generated via :func:``histox.segment.train``.
 
     Returns:
@@ -77,14 +77,14 @@ def generate_rois(
     for outline in outlines:
         try:
             wsi.load_roi_array(outline, process=False)
-        except sf.errors.InvalidROIError:
+        except hx.errors.InvalidROIError:
             continue
     wsi.process_rois()
 
 # -----------------------------------------------------------------------------
 
 def export_thumbs_and_masks(
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     mpp: float,
     dest: str,
     *,
@@ -96,7 +96,7 @@ def export_thumbs_and_masks(
     """Export thumbnails and segmentation masks (from ROIs) for a dataset.
 
     Args:
-        dataset (sf.Dataset): Slideflow dataset.
+        dataset (hx.Dataset): Slideflow dataset.
         mpp (float): MPP to use for thumbnail generation.
         dest (str): Path to directory where thumbnails and masks will be saved.
 
@@ -112,7 +112,7 @@ def export_thumbs_and_masks(
 
     """
     # Parameter validation.
-    if not isinstance(dataset, sf.Dataset):
+    if not isinstance(dataset, hx.Dataset):
         raise ValueError("dataset must be a histox Dataset.")
     if mode not in ('binary', 'multiclass', 'multilabel'):
         raise ValueError(
@@ -124,7 +124,7 @@ def export_thumbs_and_masks(
         os.makedirs(dest)
 
     # Write configuration.
-    sf.util.write_json(dict(
+    hx.util.write_json(dict(
         mpp=mpp,
         mode=mode,
         labels=labels,
@@ -176,7 +176,7 @@ def export_thumbs_and_masks(
         skip_missing=skip_missing_roi
     )
     total = 0
-    with ctx.Pool(sf.util.num_cpu()) as pool:
+    with ctx.Pool(hx.util.num_cpu()) as pool:
         for success in track(pool.imap(fn, slides),
                        description="Exporting...",
                        total=len(slides)):
@@ -187,7 +187,7 @@ def export_thumbs_and_masks(
 
 def _export(s, kw, mpp, dest, roi_labels, skip_missing):
     try:
-        wsi = sf.WSI(s, roi_filter_method=0.1, **kw)
+        wsi = hx.WSI(s, roi_filter_method=0.1, **kw)
 
     except Exception:
         return None
@@ -200,7 +200,7 @@ def _export(s, kw, mpp, dest, roi_labels, skip_missing):
                 skip_missing=skip_missing
             )
         except Exception as e:
-            sf.log.error("Error generating thumbnail/mask: {}".format(e))
+            hx.log.error("Error generating thumbnail/mask: {}".format(e))
         else:
             if out is not None:
                 torch.save(out, join(dest, f"{wsi.name}.pt"))
@@ -309,7 +309,7 @@ class SegmentConfig:
             SegmentConfig: SegmentConfig object.
 
         """
-        data = sf.util.load_json(path)
+        data = hx.util.load_json(path)
         params = data['params'].copy()
         del data['params']
         return cls(**data, **params)
@@ -339,7 +339,7 @@ class SegmentConfig:
             epochs=self.epochs,
             labels=self.labels,
         )
-        sf.util.write_json(data, path)
+        hx.util.write_json(data, path)
 
     def build_model(self) -> SegmentModel:
         """Build a segmentation model from this configuration."""
@@ -391,8 +391,8 @@ def load_model_and_config(path: str):
 
 def train(
     config: SegmentConfig,
-    dataset: "sf.Dataset",
-    val_dataset: Optional["sf.Dataset"] = None,
+    dataset: "hx.Dataset",
+    val_dataset: Optional["hx.Dataset"] = None,
     data_source: Optional[str] = None,
     *,
     num_workers: int = 4,
@@ -404,8 +404,8 @@ def train(
 
     Args:
         config (SegmentConfig): Model configuration.
-        dataset (sf.Dataset): Slideflow dataset.
-        val_dataset (sf.Dataset): Slideflow dataset for validation.
+        dataset (hx.Dataset): Slideflow dataset.
+        val_dataset (hx.Dataset): Slideflow dataset for validation.
         data_source (str): Path to directory containing thumbnails and masks.
             If not provided, thumbnails and masks will be generated from the
             dataset.
@@ -426,16 +426,16 @@ def train(
     import pytorch_lightning as pl  # type: ignore
 
     # Parameter validation.
-    if not isinstance(dataset, sf.Dataset):
+    if not isinstance(dataset, hx.Dataset):
         raise ValueError("dataset must be a histox Dataset.")
-    if val_dataset is not None and not isinstance(val_dataset, sf.Dataset):
+    if val_dataset is not None and not isinstance(val_dataset, hx.Dataset):
         raise ValueError("val_dataset must be a histox Dataset.")
     if not isinstance(config, SegmentConfig):
         raise ValueError("config must be a SegmentConfig.")
 
     # Filter dataset to exclude slides with missing or empty ROIs.
     if skip_missing_roi:
-        slides_with_rois = [sf.util.path_to_name(r) for r in dataset.rois() if len(pd.read_csv(r))]
+        slides_with_rois = [hx.util.path_to_name(r) for r in dataset.rois() if len(pd.read_csv(r))]
         print("Using {} slides with non-empty ROIs.".format(len(slides_with_rois)))
         dataset = dataset.filter({'slide': slides_with_rois})
 
@@ -445,11 +445,11 @@ def train(
         if not exists(data_source):
             raise ValueError(f"Data source '{data_source}' does not exist.")
         if not exists(join(data_source, 'mask_config.json')):
-            sf.log.warning("Data source does not contain a mask_config.json file, "
+            hx.log.warning("Data source does not contain a mask_config.json file, "
                         "unable to perform validation.")
         else:
             # Validate the mask configuration.
-            mask_config = sf.util.load_json(join(data_source, 'mask_config.json'))
+            mask_config = hx.util.load_json(join(data_source, 'mask_config.json'))
             if mask_config['mpp'] != config.mpp:
                 raise ValueError(
                     "Mismatch between mask_config.json mpp ({!r}) and "

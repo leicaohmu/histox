@@ -1,5 +1,5 @@
 import numpy as np
-import histox as sf
+import histox as hx
 import tensorflow as tf
 from typing import Optional
 from histox.util import no_scope
@@ -31,7 +31,7 @@ class TensorflowFeatureExtractor(BaseFeatureExtractor):
     def __call__(self, obj, **kwargs):
         """Generate features for a batch of images or a WSI."""
         import tensorflow as tf
-        if isinstance(obj, sf.WSI):
+        if isinstance(obj, hx.WSI):
             # Returns masked array of features
             return features_from_slide(self, obj, preprocess_fn=self.transform, **kwargs)
         elif kwargs:

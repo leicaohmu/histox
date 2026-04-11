@@ -3,7 +3,7 @@
 import math
 import torch
 import numpy as np
-import histox as sf
+import histox as hx
 from typing import Callable, Dict, List, Optional
 from histox.util import Labels, log
 
@@ -129,15 +129,15 @@ def interleave_dataloader(
         raise ValueError("Option `from_wsi=True` incompatible with "
                          "num_workers > 0")
 
-    if num_workers is None and sf.util.num_cpu():
-        num_workers = max(sf.util.num_cpu() // 4, 1)  # type: ignore
+    if num_workers is None and hx.util.num_cpu():
+        num_workers = max(hx.util.num_cpu() // 4, 1)  # type: ignore
     elif num_workers is None:
         num_workers = 8
     log.debug(f"Using num_workers={num_workers}")
     torch.multiprocessing.set_sharing_strategy('file_system')
 
-    if 'num_threads' not in kwargs and sf.util.num_cpu():
-        n_cpu = sf.util.num_cpu() or 8
+    if 'num_threads' not in kwargs and hx.util.num_cpu():
+        n_cpu = hx.util.num_cpu() or 8
         kwargs['num_threads'] = int(math.ceil(n_cpu / max(num_workers, 1)))
         log.debug(f"Threads per worker={kwargs['num_threads']}")
     dataset = InterleaveIterator(

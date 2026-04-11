@@ -1,6 +1,6 @@
 import os
 import torch
-import histox as sf
+import histox as hx
 import imgui
 import glfw
 import segmentation_models_pytorch as smp
@@ -78,7 +78,7 @@ class TissueSegWidget(Widget):
     # --- Properties ---
 
     @property
-    def cfg(self) -> sf.segment.SegmentConfig:
+    def cfg(self) -> hx.segment.SegmentConfig:
         seg = self._segment
         return None if seg is None else seg.cfg
 
@@ -123,7 +123,7 @@ class TissueSegWidget(Widget):
 
     def drag_and_drop_hook(self, path, ignore_errors=False) -> bool:
         """Handle file paths provided via drag-and-drop."""
-        if (sf.util.path_to_ext(path).lower() == 'pth'):
+        if (hx.util.path_to_ext(path).lower() == 'pth'):
             if exists(join(dirname(path), 'segment_params.json')):
                 self.load(path, ignore_errors=ignore_errors)
                 return True
@@ -144,7 +144,7 @@ class TissueSegWidget(Widget):
             title="Export model (choose directory)..."
         )
         if destination:
-            model_path = sf.util.get_new_model_dir(destination, 'segment')
+            model_path = hx.util.get_new_model_dir(destination, 'segment')
             self.export(model_path)
         return model_path
 
@@ -174,12 +174,12 @@ class TissueSegWidget(Widget):
 
     def _load_model(self, path, ignore_errors=False):
         try:
-            self._segment = sf.slide.qc.StridedSegment(path)
+            self._segment = hx.slide.qc.StridedSegment(path)
             self._segment.model.to(get_device())
         except Exception as e:
             if self._load_toast is not None:
                 self._load_toast.done()
-            sf.log.error(f"Error loading segment model: {e}")
+            hx.log.error(f"Error loading segment model: {e}")
             self.viz.create_toast(f"Error loading segment model: {e}", icon="error")
             self._segment = None
         else:
@@ -294,7 +294,7 @@ class TissueSegWidget(Widget):
         )
 
         # Set the configuration.
-        config = sf.segment.SegmentConfig(
+        config = hx.segment.SegmentConfig(
             arch=self.arch,
             encoder_name=self.encoder,
             epochs=self.max_epochs,  # 100
@@ -331,7 +331,7 @@ class TissueSegWidget(Widget):
         model.to(get_device())
 
         # Create the segment object.
-        self._segment = sf.slide.qc.StridedSegment.from_model(model, config)
+        self._segment = hx.slide.qc.StridedSegment.from_model(model, config)
 
         # Cleanup.
         self._training_toast.done()
@@ -359,7 +359,7 @@ class TissueSegWidget(Widget):
         )
 
         # Set the configuration.
-        config = sf.segment.SegmentConfig(
+        config = hx.segment.SegmentConfig(
             arch=self.arch,
             encoder_name=self.encoder,
             epochs=self.max_epochs,  # 100
@@ -468,7 +468,7 @@ class TissueSegWidget(Widget):
                     imgui.text("No project loaded.")
                 else:
                     for slide_path in self.viz.project_widget.slide_paths:
-                        name = sf.util.path_to_name(slide_path)
+                        name = hx.util.path_to_name(slide_path)
                         with self.viz.bold_font(self.viz.wsi is not None and slide_path == self.viz.wsi.path):
                             _clicked, self._selected_slides[name] = imgui.selectable(name, self._selected_slides[name])
                             if _clicked:
@@ -487,7 +487,7 @@ class TissueSegWidget(Widget):
         imgui.same_line()
         if imgui_utils.button('With ROIs'):
             changed = True
-            _rois = [sf.util.path_to_name(r) for r in self.viz.P.dataset().rois()]
+            _rois = [hx.util.path_to_name(r) for r in self.viz.P.dataset().rois()]
             for name in self._selected_slides:
                 if name in _rois:
                     self._selected_slides[name] = True

@@ -1,5 +1,5 @@
 import numpy as np
-import histox as sf
+import histox as hx
 
 from typing import Optional, Tuple
 from .gaussian import Gaussian, blur_burden
@@ -35,10 +35,10 @@ class GaussianV2(_StridedQC_V2):
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
                     from histox.slide import qc
 
-                    wsi = sf.WSI(...)
+                    wsi = hx.WSI(...)
                     gaussian = qc.GaussianV2()
                     wsi.qc(gaussian)
 
@@ -97,7 +97,7 @@ class GaussianV2(_StridedQC_V2):
         """Apply the QC algorithm to an image tile."""
         return self._gaussian_qc(image)
 
-    def get_slide_and_mpp(self, wsi: "sf.WSI") -> Tuple["sf.WSI", float]:
+    def get_slide_and_mpp(self, wsi: "hx.WSI") -> Tuple["hx.WSI", float]:
         """Get a WSI object with the proper tile extraction size and stride."""
         if self.mpp is None:
             mpp = (wsi.tile_um/wsi.tile_px) * 4
@@ -105,7 +105,7 @@ class GaussianV2(_StridedQC_V2):
             mpp = self.mpp
         tile_um = int(mpp * self.tile_px)
         stride_div = self.tile_px / (self.tile_px - self.overlap*2)
-        qc_wsi = sf.WSI(
+        qc_wsi = hx.WSI(
             wsi.path,
             tile_px=self.tile_px,
             tile_um=tile_um,
@@ -119,7 +119,7 @@ class GaussianV2(_StridedQC_V2):
 
     def __call__(
         self,
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
         mask: Optional[np.ndarray] = None
     ) -> Optional[np.ndarray]:
         """Apply Gaussian blur filtering to a slide."""
@@ -127,11 +127,11 @@ class GaussianV2(_StridedQC_V2):
 
         # Assign blur burden value
         existing_qc_mask = mask
-        if mask is None and isinstance(wsi, sf.WSI):
+        if mask is None and isinstance(wsi, hx.WSI):
             existing_qc_mask = wsi.qc_mask
-        if existing_qc_mask is not None and isinstance(wsi, sf.WSI):
+        if existing_qc_mask is not None and isinstance(wsi, hx.WSI):
             wsi.blur_burden = blur_burden(blur_mask, existing_qc_mask)
-            sf.log.debug(f"Blur burden: {wsi.blur_burden}")
+            hx.log.debug(f"Blur burden: {wsi.blur_burden}")
 
         return blur_mask
 

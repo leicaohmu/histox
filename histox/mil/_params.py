@@ -3,7 +3,7 @@
 import numpy as np
 import os
 import torch
-import histox as sf
+import histox as hx
 import pandas as pd
 from torch import nn
 from typing import Optional, Union, Callable, List, Tuple, Any, TYPE_CHECKING
@@ -104,7 +104,7 @@ class TrainerConfig:
         if isinstance(model, str):
             self.model_config = build_model_config(model, **kwargs)
         else:
-            sf.log.info("Attempting to load custom model class for MIL training.")
+            hx.log.info("Attempting to load custom model class for MIL training.")
             from histox.mil import MILModelConfig
             self.model_config = MILModelConfig(model, **kwargs)
         self.model_config.verify_trainer(self)
@@ -215,7 +215,7 @@ class TrainerConfig:
         if outdir:
             if not os.path.exists(outdir):
                 os.makedirs(outdir)
-            outdir = sf.util.create_new_model_dir(outdir, exp_label)
+            outdir = hx.util.create_new_model_dir(outdir, exp_label)
         return outdir
 
     def build_model(self, n_in: int, n_out: int, **kwargs):
@@ -357,7 +357,7 @@ class TrainerConfig:
 
         # Use training data as validation if no validation set is provided
         if val_dataset is None:
-            sf.log.info(
+            hx.log.info(
                 "Training without validation; metrics will be calculated on training data."
             )
             val_dataset = train_dataset
@@ -403,7 +403,7 @@ class TrainerConfig:
 
         Args:
             model (torch.nn.Module): Loaded PyTorch MIL model.
-            dataset (sf.Dataset): Dataset to evaluation.
+            dataset (hx.Dataset): Dataset to evaluation.
             outcomes (str, list(str)): Outcomes.
             bags (str, list(str)): Path to bags, or list of bag file paths.
                 Each bag should contain PyTorch array of features from all tiles in
@@ -665,7 +665,7 @@ class MILModelConfig:
         """MIL model architecture (class/module)."""
         if not isinstance(self.model, str):
             return self.model
-        return sf.mil.get_model(self.model)
+        return hx.mil.get_model(self.model)
 
     @property
     def loss_fn(self):
@@ -896,9 +896,9 @@ class MILModelConfig:
 
         """
         if self.is_classification():
-            sf.stats.metrics.classification_metrics(df, level=level, data_dir=outdir)
+            hx.stats.metrics.classification_metrics(df, level=level, data_dir=outdir)
         else:
-            sf.stats.metrics.regression_metrics(df, level=level, data_dir=outdir)
+            hx.stats.metrics.regression_metrics(df, level=level, data_dir=outdir)
 
 # -----------------------------------------------------------------------------
 

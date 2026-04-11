@@ -1,7 +1,7 @@
 """Factory for building PyTorch feature extractors."""
 
 import inspect
-import histox as sf
+import histox as hx
 from tqdm import tqdm
 from typing import Tuple, Generator, Optional, TYPE_CHECKING
 from histox import errors
@@ -156,7 +156,7 @@ class TorchFeatureExtractor(BaseFeatureExtractor):
         from histox.model.torch import autocast
         from histox.io.torch import as_cwh
 
-        if isinstance(obj, sf.WSI):
+        if isinstance(obj, hx.WSI):
             # Returns masked array of features
             return features_from_slide(self, obj, **kwargs)
         elif isinstance(obj, str) and obj.endswith('.tfrecords'):
@@ -299,14 +299,14 @@ class TorchFeatureExtractor(BaseFeatureExtractor):
         import torch
         from torch.utils.data import DataLoader
 
-        tfr = sf.TFRecord(tfrecord_path, decode_images=True)
+        tfr = hx.TFRecord(tfrecord_path, decode_images=True)
         tfr_dl = DataLoader(
             tfr,
             batch_size=batch_size,
             num_workers=num_workers
         )
         for batch in tqdm(tfr_dl, desc="Generating...", disable=not show_progress):
-            features = self(sf.io.torch.whc_to_cwh(batch['image_raw']))
+            features = self(hx.io.torch.whc_to_cwh(batch['image_raw']))
             locations = torch.stack([batch['loc_x'], batch['loc_y']], dim=1)
             yield features, locations
 

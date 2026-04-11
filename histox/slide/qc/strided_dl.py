@@ -6,7 +6,7 @@ from typing import Callable, Union, Optional, TYPE_CHECKING
 from .strided_qc import _StridedQC, _StridedQC_V2
 
 if TYPE_CHECKING:
-    import histox as sf
+    import histox as hx
 
 
 class StridedDL(_StridedQC):
@@ -35,7 +35,7 @@ class StridedDL(_StridedQC):
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
                     from histox.slide.qc import strided_dl
                     from deepfocus import deepfocus_v3
 
@@ -45,7 +45,7 @@ class StridedDL(_StridedQC):
                         tile_px=64,
                         tile_um='40x'
                     )
-                    wsi = sf.WSI(...)
+                    wsi = hx.WSI(...)
                     wsi.qc(deepfocus)
 
 
@@ -53,7 +53,7 @@ class StridedDL(_StridedQC):
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
                     from histox.slide.qc import strided_dl
                     from deepfocus import deepfocus_v3
 
@@ -70,7 +70,7 @@ class StridedDL(_StridedQC):
                                 tile_um='40x'
                             )
 
-                    wsi = sf.WSI(...)
+                    wsi = hx.WSI(...)
                     deepfocus = DeepFocus()
                     wsi.qc(deepfocus)
 
@@ -146,7 +146,7 @@ class StridedDL(_StridedQC):
 
     def __call__(
         self,
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
         threshold: Optional[Union[bool, float]] = None
     ) -> Optional[np.ndarray]:
 
@@ -208,7 +208,7 @@ class StridedDL_V2(_StridedQC_V2):
         mask = self.apply(image)
         return mask, (grid_i, grid_j)
 
-    def build_masks(self, wsi: "sf.WSI"):
+    def build_masks(self, wsi: "hx.WSI"):
         """Return empty arrays for storing QC mask and the average (taper) mask."""
         dim = (wsi.dimensions[1], wsi.dimensions[0])
         px_ratio = wsi.tile_px / wsi.full_extract_px
@@ -221,7 +221,7 @@ class StridedDL_V2(_StridedQC_V2):
         avg_mask = np.zeros(target_dim, np.float32)
         return qc_mask, avg_mask
 
-    def get_tile_bounds(self, wsi: "sf.WSI", i: int, j: int):
+    def get_tile_bounds(self, wsi: "hx.WSI", i: int, j: int):
         """Return the bounds of a tile."""
         fy, fx = wsi.grid_to_coord(i, j, anchor="topleft")
         px_ratio = wsi.tile_px / wsi.full_extract_px
@@ -233,7 +233,7 @@ class StridedDL_V2(_StridedQC_V2):
 
     def __call__(
         self,
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
     ) -> Optional[np.ndarray]:
         """Apply QC filtering to a slide."""
 

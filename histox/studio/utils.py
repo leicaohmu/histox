@@ -4,16 +4,16 @@ from typing import Any, List
 
 import imgui
 import os
-import histox as sf
+import histox as hx
 import numpy as np
 from os.path import join, exists
 from histox import log
 from typing import Tuple, Optional
 
-if sf.util.tf_available:
+if hx.util.tf_available:
     import tensorflow as tf
-    sf.util.allow_gpu_memory_growth()
-if sf.util.torch_available:
+    hx.util.allow_gpu_memory_growth()
+if hx.util.torch_available:
     import histox.model.torch
 
 #----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ def _load_umap_encoders(path, model) -> EasyDict:
 
     layers = [d for d in os.listdir(path) if os.path.isdir(join(path, d))]
     log.debug("Layers found at path {} in _load_umap_encoders: {}".format(path, layers))
-    features = sf.model.Features.from_model(
+    features = hx.model.Features.from_model(
         model,
         include_preds=True,
         layers=layers,
@@ -102,26 +102,26 @@ def _load_model_and_saliency(model_path, device=None):
     _saliency = None
 
     # Load a PyTorch model
-    if sf.util.torch_available and sf.util.path_to_ext(model_path) == 'zip':
+    if hx.util.torch_available and hx.util.path_to_ext(model_path) == 'zip':
         import histox.model.torch
-        _device = sf.model.torch.torch_utils.get_device()
-        _model = sf.model.torch.load(model_path)
+        _device = hx.model.torch.torch_utils.get_device()
+        _model = hx.model.torch.load(model_path)
         _model.to(_device)
         _model.eval()
         if device is not None:
             _model = _model.to(device)
-        _saliency = sf.grad.SaliencyMap(_model, class_idx=0)  #TODO: auto-update from heatmaps logit
+        _saliency = hx.grad.SaliencyMap(_model, class_idx=0)  #TODO: auto-update from heatmaps logit
 
     # Load a TFLite model
-    elif sf.util.tf_available and sf.util.path_to_ext(model_path) == 'tflite':
+    elif hx.util.tf_available and hx.util.path_to_ext(model_path) == 'tflite':
         interpreter = tf.lite.Interpreter(model_path)
         _model = interpreter.get_signature_runner()
 
     # Load a Tensorflow model
-    elif sf.util.tf_available:
+    elif hx.util.tf_available:
         import histox.model.tensorflow
-        _model = sf.model.tensorflow.load(model_path, method='weights')
-        _saliency = sf.grad.SaliencyMap(_model, class_idx=0)  #TODO: auto-update from heatmaps logit
+        _model = hx.model.tensorflow.load(model_path, method='weights')
+        _saliency = hx.grad.SaliencyMap(_model, class_idx=0)  #TODO: auto-update from heatmaps logit
         if exists(join(model_path, 'umap_encoders')):
             _umap_encoders = _load_umap_encoders(join(model_path, 'umap_encoders'), _model)
     else:

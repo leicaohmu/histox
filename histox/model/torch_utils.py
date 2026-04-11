@@ -6,7 +6,7 @@ from typing import Dict, Generator, Iterable, List, Tuple, Union, Optional
 
 import torch
 import numpy as np
-import histox as sf
+import histox as hx
 import contextlib
 from packaging import version
 from pandas.core.frame import DataFrame
@@ -289,7 +289,7 @@ def eval_from_model(
                         *Progress.get_default_columns(),
                         TimeElapsedColumn(),
                         ImgBatchSpeedColumn(),
-                        transient=sf.getLoggingLevel()>20 or verbosity == 'quiet')
+                        transient=hx.getLoggingLevel()>20 or verbosity == 'quiet')
                     task = pb.add_task(
                         pb_label,
                         total=dataset.num_tiles if not steps else steps*batch_size)  # type: ignore

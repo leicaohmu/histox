@@ -61,7 +61,7 @@ class OpenCVCamera:
                 self._active_frame = frame
 
     def _alignment_tracker(self):
-        import histox as sf
+        import histox as hx
         while not self.should_stop:
             if self._last_img is not None and self._active_frame is not None:
                 last = center_crop(self._last_img, 512, 512)
@@ -71,10 +71,10 @@ class OpenCVCamera:
                 last = cv2.resize(last, (int(last.shape[1]/l_r), 256), interpolation=cv2.INTER_LANCZOS4)
                 now = cv2.resize(now, (int(now.shape[1]/n_r), 256), interpolation=cv2.INTER_LANCZOS4)
                 try:
-                    alignment = sf.slide.utils.align_by_translation(now, last, h=50, search_window=53)
+                    alignment = hx.slide.utils.align_by_translation(now, last, h=50, search_window=53)
                     self._align_x += alignment[0]
                     self._align_y += alignment[1]
-                except sf.errors.AlignmentError:
+                except hx.errors.AlignmentError:
                     print("Unable to align.")
                     self._align_x = 500
                     self._align_y = 500

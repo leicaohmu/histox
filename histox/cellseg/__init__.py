@@ -7,7 +7,7 @@ import numpy as np
 import cellpose
 import cellpose.models
 import logging
-import histox as sf
+import histox as hx
 import zarr
 import torch
 import shapely.affinity as sa
@@ -41,7 +41,7 @@ class Segmentation:
         self,
         masks: np.ndarray,
         *,
-        slide: Optional[sf.WSI] = None,
+        slide: Optional[hx.WSI] = None,
         flows: Optional[np.ndarray] = None,
         styles: Optional[np.ndarray] = None,
         diams: Optional[np.ndarray] = None,
@@ -241,7 +241,7 @@ class Segmentation:
             A generator which yields a numpy array, with shape
                 ``(tile_px, tile_px, 3)``, at each mask centroid.
         """
-        reader = sf.slide.wsi_reader(slide)
+        reader = hx.slide.wsi_reader(slide)
         factor = reader.dimensions[1] / self.masks.shape[0]
 
         def generator():
@@ -459,7 +459,7 @@ def tile_processor(slide, q, batch_size, nchan):
 
 
 def segment_slide(
-    slide: Union[sf.WSI, str],
+    slide: Union[hx.WSI, str],
     model: Union["cellpose.models.Cellpose", str] = 'cyto2',
     *,
     diam_um: Optional[float] = None,
@@ -493,12 +493,12 @@ def segment_slide(
         diam_um (float, optional): Cell diameter to detect, in microns.
             Determines tile extraction microns-per-pixel resolution to match
             the given pixel diameter specified by `diam_mean`. Not used if
-            `slide` is a `sf.WSI` object.
+            `slide` is a `hx.WSI` object.
         diam_mean (int, optional): Cell diameter to detect, in pixels (without
             image resizing). If None, uses Cellpose defaults (17 for the
             'nuclei' model, 30 for all others).
         window_size (int): Window size, in pixels, at which to segment cells.
-            Not used if slide is a `sf.WSI` object.
+            Not used if slide is a `hx.WSI` object.
         downscale (float): Factor by which to downscale generated masks after
             calculation. Defaults to None (keep masks at original size).
         batch_size (int): Batch size for cell segmentation. Defaults to 8.
@@ -537,10 +537,10 @@ def segment_slide(
         assert diam_um is not None, "Must supply diam_um if slide is a path to a slide"
         assert window_size is not None, "Must supply window_size if slide is a path to a slide"
         tile_um = int(window_size * (diam_um / diam_mean))
-        slide = sf.WSI(slide, tile_px=window_size, tile_um=tile_um, verbose=False)
+        slide = hx.WSI(slide, tile_px=window_size, tile_um=tile_um, verbose=False)
     elif window_size is not None or diam_um is not None:
         raise ValueError("Invalid argument: cannot provide window_size or diam_um "
-                         "when slide is a sf.WSI object")
+                         "when slide is a hx.WSI object")
     else:
         window_size = slide.tile_px
         diam_um = diam_mean * (slide.tile_um/slide.tile_px)
@@ -601,16 +601,16 @@ def segment_slide(
     ctx = mp.get_context('spawn')
     fork_pool = mp.Pool(
         batch_size,
-        initializer=sf.util.set_ignore_sigint
+        initializer=hx.util.set_ignore_sigint
     )
     if spawn_workers:
         spawn_pool = ctx.Pool(
             4,
-            initializer=sf.util.set_ignore_sigint
+            initializer=hx.util.set_ignore_sigint
         )
     else:
         spawn_pool = mp.dummy.Pool(4)
-    proc_fn = mp.Process if sf.slide_backend() != 'libvips' else threading.Thread
+    proc_fn = mp.Process if hx.slide_backend() != 'libvips' else threading.Thread
     tile_process = proc_fn(
         target=tile_processor,
         args=(slide, tile_q, batch_size, cp.nchan)

@@ -4,7 +4,7 @@ import importlib.util
 import sys
 import os
 import numpy as np
-import histox as sf
+import histox as hx
 from io import BytesIO
 from PIL import Image
 import cv2
@@ -29,8 +29,8 @@ class TestSlide(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.px = 71  # type: ignore
-        cls._orig_logging_level = sf.getLoggingLevel()  # type: ignore
-        sf.setLoggingLevel(40)
+        cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
+        hx.setLoggingLevel(40)
         float_img = np.random.random((cls.px, cls.px, 3))  # type: ignore
         cls.img = (float_img * 255).clip(0, 255).astype(np.uint8)  # type: ignore
         with BytesIO() as output:
@@ -50,7 +50,7 @@ class TestSlide(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
-        sf.setLoggingLevel(cls._orig_logging_level)  # type: ignore
+        hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
         return super().tearDownClass()
 
     def _assert_valid_reinhard_fit(self, fit):
@@ -207,32 +207,32 @@ class TestSlide(unittest.TestCase):
             self._test_tf_to_tf(norm)
 
     def test_reinhard_numpy(self):
-        norm = sf.norm.StainNormalizer('reinhard')
+        norm = hx.norm.StainNormalizer('reinhard')
         self._test_transforms(norm)
         self._test_reinhard_fit_to_numpy(norm)
         self._test_reinhard_fit_to_path(norm)
         self._test_reinhard_set_fit(norm)
 
     def test_reinhard_fast_numpy(self):
-        norm = sf.norm.StainNormalizer('reinhard_fast')
+        norm = hx.norm.StainNormalizer('reinhard_fast')
         self._test_transforms(norm)
         self._test_reinhard_fit_to_numpy(norm)
         self._test_reinhard_fit_to_path(norm)
         self._test_reinhard_set_fit(norm)
 
     def test_reinhard_mask_numpy(self):
-        norm = sf.norm.StainNormalizer('reinhard_mask')
+        norm = hx.norm.StainNormalizer('reinhard_mask')
         self._test_transforms(norm)
         self._test_reinhard_fit_to_numpy(norm)
         self._test_reinhard_fit_to_path(norm)
         self._test_reinhard_set_fit(norm)
 
     def test_augment_numpy(self):
-        norm = sf.norm.StainNormalizer('reinhard_mask')
+        norm = hx.norm.StainNormalizer('reinhard_mask')
         self._test_transforms(norm)
 
     def test_macenko_numpy(self):
-        norm = sf.norm.StainNormalizer('macenko')
+        norm = hx.norm.StainNormalizer('macenko')
         self._test_transforms(norm)
         self._test_macenko_fit_to_numpy(norm)
         self._test_macenko_fit_to_path(norm)
@@ -240,14 +240,14 @@ class TestSlide(unittest.TestCase):
 
     @unittest.skipIf(spams_loader is None, "SPAMS not installed")
     def test_vahadane_numpy(self):
-        norm = sf.norm.StainNormalizer('vahadane')
+        norm = hx.norm.StainNormalizer('vahadane')
         self._test_transforms(norm)
         self._test_vahadane_fit_to_numpy(norm)
         self._test_vahadane_fit_to_path(norm)
         self._test_vahadane_set_fit(norm)
 
     def test_vahadane_sklearn_numpy(self):
-        norm = sf.norm.StainNormalizer('vahadane_sklearn')
+        norm = hx.norm.StainNormalizer('vahadane_sklearn')
         self._test_transforms(norm)
         self._test_vahadane_fit_to_numpy(norm)
         self._test_vahadane_fit_to_path(norm)
@@ -255,7 +255,7 @@ class TestSlide(unittest.TestCase):
 
     @unittest.skipIf(spams_loader is None, "SPAMS not installed")
     def test_vahadane_spams_numpy(self):
-        norm = sf.norm.StainNormalizer('vahadane_spams')
+        norm = hx.norm.StainNormalizer('vahadane_spams')
         self._test_transforms(norm)
         self._test_vahadane_fit_to_numpy(norm)
         self._test_vahadane_fit_to_path(norm)

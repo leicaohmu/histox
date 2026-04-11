@@ -111,7 +111,7 @@ import shapely.geometry as sg
 from rich.progress import track, Progress
 from tqdm import tqdm
 
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.slide import WSI, ExtractionReport, SlideReport
 from histox.util import (log, Labels, _shortname, path_to_name,
@@ -134,10 +134,10 @@ def _prepare_slide(
     wsi_kwargs: Dict,
     qc: Optional[str],
     qc_kwargs: Dict,
-) -> Optional["sf.WSI"]:
+) -> Optional["hx.WSI"]:
 
     try:
-        slide = sf.WSI(path, **wsi_kwargs)
+        slide = hx.WSI(path, **wsi_kwargs)
         if qc:
             slide.qc(method=qc, **qc_kwargs)
         return slide
@@ -151,8 +151,8 @@ def _prepare_slide(
                   'SF_SLIDE_BACKEND. See https://histox.dev/installation/#cucim-vs-libvips '
                   'for more information.'.format(
                     path,
-                    sf.util.path_to_ext(path).upper(),
-                    sf.slide_backend()
+                    hx.util.path_to_ext(path).upper(),
+                    hx.slide_backend()
                   ))
     except errors.SlideLoadError as e:
         log.error(f'Error loading slide {path}: {e}. Skipping')
@@ -208,7 +208,7 @@ def _tile_extractor(
         tiles_dir (str): Path to tiles directory (loose format).
         reports (dict): Multiprocessing-enabled dict.
         qc (bool): Quality control method.
-        wsi_kwargs (dict): Keyword arguments for sf.WSI.
+        wsi_kwargs (dict): Keyword arguments for hx.WSI.
         generator_kwargs (dict): Keyword arguments for WSI.extract_tiles()
         qc_kwargs(dict): Keyword arguments for quality control.
     """
@@ -312,7 +312,7 @@ def _get_tile_df(
     roi_method: str
 ) -> pd.DataFrame:
     try:
-        wsi = sf.WSI(
+        wsi = hx.WSI(
         slide_path,
         tile_px,
         tile_um,
@@ -438,7 +438,7 @@ def split_patients_balanced(
     ]
     # Then, for each sublist, split into n components
     pt_by_outcome_by_n = [
-        list(sf.util.split_list(sub_l, n)) for sub_l in pt_by_outcome
+        list(hx.util.split_list(sub_l, n)) for sub_l in pt_by_outcome
     ]
     # Print splitting as a table
     log.info(
@@ -469,7 +469,7 @@ def split_patients(patients_dict: Dict[str, Dict], n: int) -> List[List[str]]:
     """
     patient_list = list(patients_dict.keys())
     shuffle(patient_list)
-    return list(sf.util.split_list(patient_list, n))
+    return list(hx.util.split_list(patient_list, n))
 
 # -----------------------------------------------------------------------------
 
@@ -573,7 +573,7 @@ class Dataset:
                 in the dataset config.
         """
         if isinstance(tile_um, str):
-            sf.util.assert_is_mag(tile_um)
+            hx.util.assert_is_mag(tile_um)
             tile_um = tile_um.lower()
 
         self.tile_px = tile_px
@@ -582,7 +582,7 @@ class Dataset:
         if filter_blank is None:
             self._filter_blank = []
         else:
-            self._filter_blank = sf.util.as_list(filter_blank)
+            self._filter_blank = hx.util.as_list(filter_blank)
         self._min_tiles = min_tiles
         self._clip = {}  # type: Dict[str, int]
         self.prob_weights = None  # type: Optional[Dict]
@@ -604,7 +604,7 @@ class Dataset:
 
         if isinstance(config, str):
             self._config = config
-            loaded_config = sf.util.load_json(config)
+            loaded_config = hx.util.load_json(config)
         else:
             self._config = "<dict>"
             loaded_config = config
@@ -629,7 +629,7 @@ class Dataset:
             )
         # Create labels for each source based on tile size
         if (tile_px is not None) and (tile_um is not None):
-            label = sf.util.tile_size_label(tile_px, tile_um)
+            label = hx.util.tile_size_label(tile_px, tile_um)
         else:
             label = None
         for source in self.sources:
@@ -694,7 +694,7 @@ class Dataset:
                         raise IndexError(
                             f"Filter header {filter_key} not in annotations."
                         )
-                    filter_vals = sf.util.as_list(self.filters[filter_key])
+                    filter_vals = hx.util.as_list(self.filters[filter_key])
                     f_ann = f_ann.loc[f_ann[filter_key].isin(filter_vals)]
 
             # Filter out slides that are blank in a given annotation
@@ -706,7 +706,7 @@ class Dataset:
                             f"Header {fb} not found in annotations."
                         )
                     f_ann = f_ann.loc[f_ann[fb].notna()]
-                    f_ann = f_ann.loc[~f_ann[fb].isin(sf.util.EMPTY)]
+                    f_ann = f_ann.loc[~f_ann[fb].isin(hx.util.EMPTY)]
 
             # Filter out slides that do not meet minimum number of tiles
             if self.min_tiles:
@@ -761,7 +761,7 @@ class Dataset:
         if isinstance(hp, dict):
             hp_px = hp['tile_px']
             hp_um = hp['tile_um']
-        elif isinstance(hp, sf.ModelParams):
+        elif isinstance(hp, hx.ModelParams):
             hp_px = hp.tile_px
             hp_um = hp.tile_um
         else:
@@ -926,7 +926,7 @@ class Dataset:
             if headers is None:
                 raise ValueError('Category balancing requires headers.')
             # Ensure that header is not type 'float'
-            headers = sf.util.as_list(headers)
+            headers = hx.util.as_list(headers)
             if any(ret.is_float(h) for h in headers) and not force:
                 raise errors.DatasetBalanceError(
                     f"Headers {','.join(headers)} appear to be `float`. "
@@ -940,7 +940,7 @@ class Dataset:
             tfr_cats = {}  # type: Dict[str, str]
             for tfrecord in tfrecords:
                 slide = path_to_name(tfrecord)
-                balance_cat = sf.util.as_list(labels[slide])
+                balance_cat = hx.util.as_list(labels[slide])
                 balance_cat_str = '-'.join(map(str, balance_cat))
                 tfr_cats[tfrecord] = balance_cat_str
                 tiles = totals[tfrecord]
@@ -983,7 +983,7 @@ class Dataset:
             None
         """
         if num_workers is None:
-            num_workers = min(sf.util.num_cpu(), 16)
+            num_workers = min(hx.util.num_cpu(), 16)
         if force:
             index_to_update = self.tfrecords()
             # Remove existing indices
@@ -998,7 +998,7 @@ class Dataset:
                 if not index:
                     index_to_update.append(tfr)
                 elif (not tfrecord2idx.index_has_locations(index)
-                      and sf.io.tfrecord_has_locations(tfr)):
+                      and hx.io.tfrecord_has_locations(tfr)):
                     os.remove(index)
                     index_to_update.append(tfr)
             if not index_to_update:
@@ -1014,8 +1014,8 @@ class Dataset:
             # Multiprocessing.
             index_fn = partial(_create_index, force=force)
             pool = mp.Pool(
-                sf.util.num_cpu(),
-                initializer=sf.util.set_ignore_sigint
+                hx.util.num_cpu(),
+                initializer=hx.util.set_ignore_sigint
             )
             for _ in track(pool.imap_unordered(index_fn, index_to_update),
                         description=f'Updating index files...',
@@ -1099,7 +1099,7 @@ class Dataset:
             slide_list = [
                 s for s in slide_list
                 if not exists(
-                    join(dest, sf.util.path_to_name(s)+'-masks.zip')
+                    join(dest, hx.util.path_to_name(s)+'-masks.zip')
                 )
             ]
             n_skipped = n_all - len(slide_list)
@@ -1131,13 +1131,13 @@ class Dataset:
             thread.start()
 
         pb.start()
-        with sf.util.cleanup_progress(pb):
+        with hx.util.cleanup_progress(pb):
             while True:
                 slide_path = q.get()
                 if slide_path is None:
                     q.task_done()
                     break
-                wsi = sf.WSI(
+                wsi = hx.WSI(
                     slide_path,
                     tile_px=window_size,
                     tile_um=tile_um,
@@ -1351,7 +1351,7 @@ class Dataset:
             tfr_cats = {}
             for tfrecord in tfrecords:
                 slide = path_to_name(tfrecord)
-                balance_category = sf.util.as_list(labels[slide])
+                balance_category = hx.util.as_list(labels[slide])
                 balance_cat_str = '-'.join(map(str, balance_category))
                 tfr_cats[tfrecord] = balance_cat_str
                 tiles = totals[tfrecord]
@@ -1387,7 +1387,7 @@ class Dataset:
                     )
                 for xml in xml_list:
                     try:
-                        sf.slide.utils.xml_to_csv(xml)
+                        hx.slide.utils.xml_to_csv(xml)
                     except errors.ROIError as e:
                         log.warning(f"Failed to convert XML roi {xml}: {e}")
                     else:
@@ -1413,7 +1413,7 @@ class Dataset:
 
         """
         df = None
-        with mp.Pool(4, initializer=sf.util.set_ignore_sigint) as pool:
+        with mp.Pool(4, initializer=hx.util.set_ignore_sigint) as pool:
             fn = partial(
                 _get_tile_df,
                 tile_px=self.tile_px,
@@ -1647,7 +1647,7 @@ class Dataset:
                 "Dataset tile_px and tile_um must be != 0 to extract tiles"
             )
         if source:
-            sources = sf.util.as_list(source)  # type: List[str]
+            sources = hx.util.as_list(source)  # type: List[str]
         else:
             sources = list(self.sources.keys())
         all_reports = []
@@ -1657,13 +1657,13 @@ class Dataset:
             artifact_labels = [artifact_labels]
 
         # Log the active slide reading backend
-        col = 'green' if sf.slide_backend() == 'cucim' else 'cyan'
-        log.info(f"Slide reading backend: [{col}]{sf.slide_backend()}[/]")
+        col = 'green' if hx.slide_backend() == 'cucim' else 'cyan'
+        log.info(f"Slide reading backend: [{col}]{hx.slide_backend()}[/]")
 
         # Set up kwargs for tile extraction generator and quality control
         qc_kwargs = {k[3:]: v for k, v in kwargs.items() if k[:3] == 'qc_'}
         kwargs = {k: v for k, v in kwargs.items() if k[:3] != 'qc_'}
-        sf.slide.log_extraction_params(**kwargs)
+        hx.slide.log_extraction_params(**kwargs)
 
         for source in sources:
             log.info(f'Working on dataset source [bold]{source}[/]...')
@@ -1729,7 +1729,7 @@ class Dataset:
             if len(slide_list):
                 q = Queue()  # type: Queue
                 # Forking incompatible with some libvips configurations
-                ptype = 'spawn' if sf.slide_backend() == 'libvips' else 'fork'
+                ptype = 'spawn' if hx.slide_backend() == 'libvips' else 'fork'
                 ctx = mp.get_context(ptype)
                 manager = ctx.Manager()
                 reports = manager.dict()
@@ -1737,17 +1737,17 @@ class Dataset:
 
                 # Use a single shared multiprocessing pool
                 if 'num_threads' not in kwargs:
-                    num_threads = sf.util.num_cpu()
+                    num_threads = hx.util.num_cpu()
                     if num_threads is None:
                         num_threads = 8
-                    if sf.slide_backend() == 'libvips':
+                    if hx.slide_backend() == 'libvips':
                         num_threads = min(num_threads, 32)
                 else:
                     num_threads = kwargs['num_threads']
                 if num_threads != 1:
                     pool = kwargs['pool'] = ctx.Pool(
                         num_threads,
-                        initializer=sf.util.set_ignore_sigint
+                        initializer=hx.util.set_ignore_sigint
                     )
                     qc_kwargs['pool'] = pool
                 else:
@@ -1791,7 +1791,7 @@ class Dataset:
                     'render_thumb': (buffer is not None)
                 }
                 pb.start()
-                with sf.util.cleanup_progress(pb):
+                with hx.util.cleanup_progress(pb):
                     if buffer:
                         # Start the worker threads
                         thread = threading.Thread(
@@ -1840,7 +1840,7 @@ class Dataset:
                     num_slides = len(slide_list)
                     img_kwargs = defaultdict(lambda: None)  # type: Dict
                     img_kwargs.update(kwargs)
-                    img_kwargs = sf.slide.utils._update_kw_with_defaults(img_kwargs)
+                    img_kwargs = hx.slide.utils._update_kw_with_defaults(img_kwargs)
                     report_meta = types.SimpleNamespace(
                         tile_px=self.tile_px,
                         tile_um=self.tile_um,
@@ -1905,7 +1905,7 @@ class Dataset:
                 log.error(f"tiles directory not set for source {source}")
                 continue
             for tfr in to_extract_tfrecords:
-                sf.io.extract_tiles(tfr, tiles_dir)
+                hx.io.extract_tiles(tfr, tiles_dir)
 
     def filter(self, *args: Any, **kwargs: Any) -> "Dataset":
         """Return a filtered dataset.
@@ -2127,18 +2127,18 @@ class Dataset:
                 :class:`histox.DatasetFeatures`.
 
         """
-        if not sf.util.torch_available:
+        if not hx.util.torch_available:
             raise RuntimeError(
                 "Pytorch is required for generating feature bags. "
                 "Please install Pytorch and try again."
             )
 
         # Interpret model argument.
-        if isinstance(model, str) and sf.model.is_extractor(model):
+        if isinstance(model, str) and hx.model.is_extractor(model):
             # Model is a architecture name (for Imagenet pretrained model)
             log.info(f"Building feature extractor: [green]{model}[/]")
             layer_kw = dict(layers=kwargs['layers']) if 'layers' in kwargs else dict()
-            model = sf.build_feature_extractor(model, **layer_kw)
+            model = hx.build_feature_extractor(model, **layer_kw)
 
         elif isinstance(model, str) and exists(model):
             # Model is a path to a trained histox model
@@ -2148,7 +2148,7 @@ class Dataset:
             # Model is a string but not a path to a saved model
             raise ValueError(
                 f"'{model}' is neither a path to a saved model nor the name "
-                "of a valid feature extractor (use sf.model.list_extractors() "
+                "of a valid feature extractor (use hx.model.list_extractors() "
                 "for a list of all available feature extractors).")
 
         elif not isinstance(model, str):
@@ -2157,7 +2157,7 @@ class Dataset:
             if not isinstance(model, BaseFeatureExtractor):
                 raise ValueError(
                     f"'{model}' is neither a path to a saved model nor the name "
-                    "of a valid feature extractor (use sf.model.list_extractors() "
+                    "of a valid feature extractor (use hx.model.list_extractors() "
                     "for a list of all available feature extractors).")
             log.info(f"Using feature extractor: [green]{model.tag}[/]")
 
@@ -2168,7 +2168,7 @@ class Dataset:
         # Detect already generated pt files
         done = [
             path_to_name(f) for f in os.listdir(outdir)
-            if sf.util.path_to_ext(join(outdir, f)) == 'pt'
+            if hx.util.path_to_ext(join(outdir, f)) == 'pt'
         ]
 
         # Work from this dataset.
@@ -2202,7 +2202,7 @@ class Dataset:
         dataset.build_index(False)
 
         # Set up progress bar.
-        pb = sf.util.FeatureExtractionProgress()
+        pb = hx.util.FeatureExtractionProgress()
         pb.add_task(
             "Speed: ",
             progress_type="speed",
@@ -2227,9 +2227,9 @@ class Dataset:
 
         # Set up activations interface.
         # Calculate features one slide at a time to reduce memory consumption.
-        with sf.util.cleanup_progress(pb):
+        with hx.util.cleanup_progress(pb):
             if not num_gpus > 1:
-                sf.model.features._export_bags(
+                hx.model.features._export_bags(
                     model,
                     dataset,
                     slides=dataset.slides(),
@@ -2249,7 +2249,7 @@ class Dataset:
                         "feature extractor."
                     )
                 import torch
-                model_cfg = sf.model.extractors.extractor_to_config(model)
+                model_cfg = hx.model.extractors.extractor_to_config(model)
 
                 # Mixed precision and channels_last config
                 if hasattr(model, "mixed_precision"):
@@ -2263,7 +2263,7 @@ class Dataset:
 
                 with MultiprocessProgress(pb) as mp_pb:
                     torch.multiprocessing.spawn(
-                        sf.model.features._distributed_export,
+                        hx.model.features._distributed_export,
                         args=(
                             model_cfg,
                             dataset,
@@ -2303,7 +2303,7 @@ class Dataset:
         """
 
         # Load the model configuration.
-        segment = sf.slide.qc.StridedSegment(model)
+        segment = hx.slide.qc.StridedSegment(model)
 
         for slide in track(self.slide_paths(), description='Generating...'):
 
@@ -2332,7 +2332,7 @@ class Dataset:
             # Load the slide and remove any existing auto-loaded ROIs.
             log.info("Working on {}...".format(slide))
             try:
-                wsi = sf.WSI(slide, 299, 512, verbose=False)
+                wsi = hx.WSI(slide, 299, 512, verbose=False)
                 wsi.rois = []
 
                 # Generate and apply ROIs.
@@ -2376,14 +2376,14 @@ class Dataset:
             raise errors.TFRecordsError(
                 f"Could not find associated TFRecord for slide '{slide}'"
             )
-        tfr_idx = sf.util.tfrecord2idx.find_index(tfr)
+        tfr_idx = hx.util.tfrecord2idx.find_index(tfr)
         if not tfr_idx:
             _create_index(tfr)
         elif tfr_idx.endswith('index'):
             log.info(f"Updating index for {tfr}...")
             os.remove(tfr_idx)
             _create_index(tfr)
-        return sf.io.get_locations_from_tfrecord(tfr)
+        return hx.io.get_locations_from_tfrecord(tfr)
 
     def harmonize_labels(
         self,
@@ -2539,7 +2539,7 @@ class Dataset:
                 "Cannot generate labels: dataset is empty after filtering."
             )
         results = {}  # type: Dict
-        headers = sf.util.as_list(headers)
+        headers = hx.util.as_list(headers)
         unique_labels = {}
         filtered_pts = self.filtered_annotations.patient
         filtered_slides = self.filtered_annotations.slide
@@ -2626,12 +2626,12 @@ class Dataset:
 
             # Assemble results dictionary
             for slide, lbl in zip(filtered_slides, filtered_labels):
-                if slide in sf.util.EMPTY:
+                if slide in hx.util.EMPTY:
                     continue
                 if not header_is_float:
                     lbl = _process_cat_label(lbl)
                 if slide in results:
-                    results[slide] = sf.util.as_list(results[slide])
+                    results[slide] = hx.util.as_list(results[slide])
                     results[slide] += [lbl]
                 elif header_is_float:
                     results[slide] = [lbl]
@@ -2693,10 +2693,10 @@ class Dataset:
             manifest_path = join(tfrecord_dir, "manifest.json")
             if not exists(manifest_path):
                 log.debug(f"No manifest at {tfrecord_dir}; creating now")
-                sf.io.update_manifest_at_dir(tfrecord_dir)
+                hx.io.update_manifest_at_dir(tfrecord_dir)
 
             if exists(manifest_path):
-                relative_manifest = sf.util.load_json(manifest_path)
+                relative_manifest = hx.util.load_json(manifest_path)
             else:
                 relative_manifest = {}
             global_manifest = {}
@@ -2799,7 +2799,7 @@ class Dataset:
                     f"({patient}, {result[slide]})"
                 )
             else:
-                if slide not in sf.util.EMPTY:
+                if slide not in hx.util.EMPTY:
                     result[slide] = patient
         return result
 
@@ -2879,7 +2879,7 @@ class Dataset:
                 "is deprecated and will be removed in a future version. In the "
                 "future, all records will be decoded."
             )
-        return sf.io.get_tfrecord_by_location(tfr, loc, decode=decode)
+        return hx.io.get_tfrecord_by_location(tfr, loc, decode=decode)
 
     def remove_filter(self, **kwargs: Any) -> "Dataset":
         """Remove a specific filter from the active filters.
@@ -2912,7 +2912,7 @@ class Dataset:
                 else:
                     del ret._filters[f]
         if 'filter_blank' in kwargs:
-            kwargs['filter_blank'] = sf.util.as_list(kwargs['filter_blank'])
+            kwargs['filter_blank'] = hx.util.as_list(kwargs['filter_blank'])
             for f in kwargs['filter_blank']:
                 if f not in ret._filter_blank:
                     raise errors.DatasetFilterError(
@@ -2943,7 +2943,7 @@ class Dataset:
             tile_px (int): Target pixel size for resizing TFRecord images.
 
         """
-        if not sf.util.tf_available:
+        if not hx.util.tf_available:
             raise NotImplementedError(
                 "Dataset.resize_tfrecords() requires Tensorflow, which is "
                 "not installed.")
@@ -2952,7 +2952,7 @@ class Dataset:
         tfrecords_list = self.tfrecords()
         log.info(f'Resizing {len(tfrecords_list)} tfrecords')
         for tfr in tfrecords_list:
-            sf.io.tensorflow.transform_tfrecord(
+            hx.io.tensorflow.transform_tfrecord(
                 tfr,
                 tfr+'.transformed',
                 resize=tile_px
@@ -3023,15 +3023,15 @@ class Dataset:
             otsu_task = pb.add_task("Otsu thresholding...", total=len(paths))
         pb.start()
         pool = mp.Pool(
-            sf.util.num_cpu(default=16),
-            initializer=sf.util.set_ignore_sigint
+            hx.util.num_cpu(default=16),
+            initializer=hx.util.set_ignore_sigint
         )
         wsi_list = []
         to_remove = []
         counts = []
         for path in paths:
             try:
-                wsi = sf.WSI(
+                wsi = hx.WSI(
                     path,
                     self.tile_px,
                     self.tile_um,
@@ -3088,14 +3088,14 @@ class Dataset:
                 log.warning(f"slides path not set for source {source}")
                 return []
             else:
-                paths = sf.util.get_slide_paths(self.sources[source]['slides'])
+                paths = hx.util.get_slide_paths(self.sources[source]['slides'])
         else:
             paths = []
             for src in self.sources:
                 if not self._slides_set(src):
                     log.warning(f"slides path not set for source {src}")
                 else:
-                    paths += sf.util.get_slide_paths(
+                    paths += hx.util.get_slide_paths(
                         self.sources[src]['slides']
                     )
 
@@ -3122,7 +3122,7 @@ class Dataset:
                 f"{'slide'} not found in annotations file."
             )
         ann = self.filtered_annotations
-        ann = ann.loc[~ann.slide.isin(sf.util.EMPTY)]
+        ann = ann.loc[~ann.slide.isin(hx.util.EMPTY)]
         slides = ann.slide.unique().tolist()
         return slides
 
@@ -3252,7 +3252,7 @@ class Dataset:
             skip_tfr_verification = True
         else:
             tfr_dir_list_names = [
-                sf.util.path_to_name(tfr) for tfr in tfr_dir_list
+                hx.util.path_to_name(tfr) for tfr in tfr_dir_list
             ]
         patients_dict = {}
         num_warned = 0
@@ -3335,7 +3335,7 @@ class Dataset:
             if (not splits_file or not exists(splits_file)):
                 loaded_splits = []
             else:
-                loaded_splits = sf.util.load_json(splits_file)
+                loaded_splits = hx.util.load_json(splits_file)
             for split_id, split in enumerate(loaded_splits):
                 # First, see if strategy is the same
                 if split['strategy'] != val_strategy:
@@ -3440,7 +3440,7 @@ class Dataset:
                 # Write the new split to log
                 loaded_splits += [new_split]
                 if not read_only and splits_file:
-                    sf.util.write_json(loaded_splits, splits_file)
+                    hx.util.write_json(loaded_splits, splits_file)
             else:
                 # Use existing split
                 if val_strategy == 'fixed':
@@ -3559,7 +3559,7 @@ class Dataset:
             except errors.SlideLoadError as e:
                 log.error(e)
                 continue
-            parser = sf.io.get_tfrecord_parser(
+            parser = hx.io.get_tfrecord_parser(
                 tfr,
                 decode_images=False,
                 to_numpy=True
@@ -3567,15 +3567,15 @@ class Dataset:
             if parser is None:
                 log.error(f"Could not read TFRecord {tfr}; skipping")
                 continue
-            reader = sf.io.TFRecordDataset(tfr)
+            reader = hx.io.TFRecordDataset(tfr)
             if not exists(join(destination, 'inside')):
                 os.makedirs(join(destination, 'inside'))
             if not exists(join(destination, 'outside')):
                 os.makedirs(join(destination, 'outside'))
             in_path = join(destination, 'inside', f'{slidename}.tfrecords')
             out_path = join(destination, 'outside', f'{slidename}.tfrecords')
-            inside_roi_writer = sf.io.TFRecordWriter(in_path)
-            outside_roi_writer = sf.io.TFRecordWriter(out_path)
+            inside_roi_writer = hx.io.TFRecordWriter(in_path)
+            outside_roi_writer = hx.io.TFRecordWriter(out_path)
             for record in track(reader, total=manifest[tfr]['total']):
                 parsed = parser(record)
                 loc_x, loc_y = parsed['loc_x'], parsed['loc_y']
@@ -3601,11 +3601,11 @@ class Dataset:
         slides_with_roi = {}
         patients_with_roi = defaultdict(bool)
         for r in self.rois():
-            s = sf.util.path_to_name(r)
+            s = hx.util.path_to_name(r)
             with open(r, 'r') as f:
                 has_rois[s] = len(f.read().split('\n')) > 2
         for sp in self.slide_paths():
-            s = sf.util.path_to_name(sp)
+            s = hx.util.path_to_name(sp)
             slides_with_roi[s] = has_rois[s]
         for s in self.slides():
             p = patients[s]
@@ -3789,8 +3789,8 @@ class Dataset:
         log.info('Generating TFRecords report...')
         # Get images for report
         for tfr in track(tfrecord_list, description='Generating report...'):
-            dataset = sf.io.TFRecordDataset(tfr)
-            parser = sf.io.get_tfrecord_parser(
+            dataset = hx.io.TFRecordDataset(tfr)
+            parser = hx.io.get_tfrecord_parser(
                 tfr,
                 ('image_raw',),
                 to_numpy=True,
@@ -3821,7 +3821,7 @@ class Dataset:
             timestring = datetime.now().strftime('%Y%m%d-%H%M%S')
             if exists(dest) and isdir(dest):
                 filename = join(dest, f'tfrecord_report-{timestring}.pdf')
-            elif sf.util.path_to_ext(dest) == 'pdf':
+            elif hx.util.path_to_ext(dest) == 'pdf':
                 filename = join(dest)
             else:
                 raise ValueError(f"Could not find destination directory {dest}.")
@@ -3850,17 +3850,17 @@ class Dataset:
 
         """
         slide_paths = {
-            sf.util.path_to_name(sp): sp for sp in self.slide_paths()
+            hx.util.path_to_name(sp): sp for sp in self.slide_paths()
         }
         if not self.tile_px or not self.tile_um:
             raise errors.DatasetError(
                 "Dataset tile_px & tile_um must be set to create TFRecords."
             )
-        for tfr in sf.util.as_list(tfrecord):
-            name = sf.util.path_to_name(tfr)
+        for tfr in hx.util.as_list(tfrecord):
+            name = hx.util.path_to_name(tfr)
             if name not in slide_paths:
                 raise errors.SlideNotFoundError(f'Unable to find slide {name}')
-            sf.util.tfrecord_heatmap(
+            hx.util.tfrecord_heatmap(
                 tfrecord=tfr,
                 slide=slide_paths[name],
                 tile_px=self.tile_px,
@@ -4013,7 +4013,7 @@ class Dataset:
             if not exists(tiles_dir):
                 log.warn(f'No tiles found for source [bold]{source}')
                 continue
-            sf.io.write_tfrecords_multi(tiles_dir, tfrecord_dir)
+            hx.io.write_tfrecords_multi(tiles_dir, tfrecord_dir)
             self.update_manifest()
             if delete_tiles:
                 shutil.rmtree(tiles_dir)
@@ -4022,7 +4022,7 @@ class Dataset:
         """Check if TFRecords have associated tile location information."""
         for tfr in self.tfrecords():
             try:
-                tfr_has_loc = sf.io.tfrecord_has_locations(tfr)
+                tfr_has_loc = hx.io.tfrecord_has_locations(tfr)
             except errors.TFRecordsError:
                 # Encountered when the TFRecord is empty.
                 continue
@@ -4122,7 +4122,7 @@ class Dataset:
             if not exists(tfr_dest):
                 os.makedirs(tfr_dest)
             for tfr in self.tfrecords(source=source):
-                sf.io.tensorflow.transform_tfrecord(
+                hx.io.tensorflow.transform_tfrecord(
                     tfr,
                     join(tfr_dest, basename(tfr)),
                     **kwargs
@@ -4280,7 +4280,7 @@ class Dataset:
         """
         tfrecords_folders = self.tfrecords_folders()
         for tfr_folder in tfrecords_folders:
-            sf.io.update_manifest_at_dir(
+            hx.io.update_manifest_at_dir(
                 directory=tfr_folder,
                 force_update=force_update
             )
@@ -4299,7 +4299,7 @@ class Dataset:
             annotations_file (str): Path to annotations file.
 
         """
-        header, _ = sf.util.read_annotations(annotations_file)
+        header, _ = hx.util.read_annotations(annotations_file)
         slide_list = self.slide_paths(apply_filters=False)
 
         # First, load all patient names from the annotations file
@@ -4421,11 +4421,11 @@ class Dataset:
         # identify the slide.
         tfrecords = self.tfrecords()
         if len(tfrecords):
-            tfrecord_names = [sf.util.path_to_name(tfr) for tfr in tfrecords]
+            tfrecord_names = [hx.util.path_to_name(tfr) for tfr in tfrecords]
             if not len(set(tfrecord_names)) == len(tfrecord_names):
                 duplicate_tfrs = [
                     tfr for tfr in tfrecords
-                    if tfrecord_names.count(sf.util.path_to_name(tfr)) > 1
+                    if tfrecord_names.count(hx.util.path_to_name(tfr)) > 1
                 ]
                 raise errors.AnnotationsError(
                     "Multiple TFRecords with the same names detected: {}".format(
@@ -4452,11 +4452,11 @@ class Dataset:
         """
         tfrecords = self.tfrecords()
         if len(tfrecords):
-            with mp.Pool(sf.util.num_cpu(),
-                         initializer=sf.util.set_ignore_sigint) as pool:
+            with mp.Pool(hx.util.num_cpu(),
+                         initializer=hx.util.set_ignore_sigint) as pool:
                 img_formats = []
                 mapped = pool.imap_unordered(
-                    sf.io.detect_tfrecord_format,
+                    hx.io.detect_tfrecord_format,
                     tfrecords
                 )
                 if progress:
@@ -4495,7 +4495,7 @@ class Dataset:
                 file names.
 
         Raises:
-            sf.errors.MismatchedSlideNamesError: If any slide names inside
+            hx.errors.MismatchedSlideNamesError: If any slide names inside
                 TFRecords do not match the TFRecord file names,
                 and allow_errors=False.
 
@@ -4508,8 +4508,8 @@ class Dataset:
                 transient=True
             )
             for tfr in pb:
-                first_record = sf.io.get_tfrecord_by_index(tfr, 0)
-                if first_record['slide'] == sf.util.path_to_name(tfr):
+                first_record = hx.io.get_tfrecord_by_index(tfr, 0)
+                if first_record['slide'] == hx.util.path_to_name(tfr):
                     continue
                 elif allow_errors:
                     return False
@@ -4518,7 +4518,7 @@ class Dataset:
                         "Mismatched slide name in TFRecord {}: expected slide "
                         "name {} based on filename, but found {}. ".format(
                             tfr,
-                            sf.util.path_to_name(tfr),
+                            hx.util.path_to_name(tfr),
                             first_record['slide']
                         )
                 )

@@ -5,7 +5,7 @@ from typing import (Generator, List, Optional, Tuple, Union,
 import warnings
 import numpy as np
 import pandas as pd
-import histox as sf
+import histox as hx
 import json
 from os.path import join, dirname, exists
 from PIL import Image
@@ -77,7 +77,7 @@ class StyleGAN2Interpolator:
                 _gan_px = opt['histox_kwargs']['tile_px']
                 _gan_um = opt['histox_kwargs']['tile_um']
                 if gan_px != gan_px or _gan_um != _gan_um:
-                    sf.log.warn("Provided GAN tile size (gan_px={}, gan_um={}) does "
+                    hx.log.warn("Provided GAN tile size (gan_px={}, gan_um={}) does "
                                 "not match training_options.json (gan_px={}, "
                                 "gan_um={})".format(gan_px, gan_um, _gan_px, _gan_um))
                 if gan_px is None:
@@ -103,7 +103,7 @@ class StyleGAN2Interpolator:
         self.embeddings = embedding.get_embeddings(self.G, device=device)
         self.embed0 = self.embeddings[start]
         self.embed1 = self.embeddings[end]
-        self.features = None  # type: Optional[sf.model.Features]
+        self.features = None  # type: Optional[hx.model.Features]
         self.normalizer = None
         self.target_px = target_px
         self.crop_kw = dict(
@@ -111,7 +111,7 @@ class StyleGAN2Interpolator:
             gan_px=gan_px,
             target_um=target_um,
         )
-        self._classifier_backend = sf.backend()
+        self._classifier_backend = hx.backend()
 
     def _crop_and_convert_to_uint8(self, img: "torch.Tensor") -> Any:
         """Convert a batch of GAN images to a resized/cropped uint8 tensor.
@@ -133,8 +133,8 @@ class StyleGAN2Interpolator:
             raise errors.UnrecognizedBackendError
         img = crop(img, **self.crop_kw)  # type: ignore
         img = (img * 127.5 + 128).clamp(0, 255).to(torch.uint8)
-        img = sf.io.torch.preprocess_uint8(img, standardize=False, resize_px=self.target_px)
-        return sf.io.convert_dtype(img, dtype)
+        img = hx.io.torch.preprocess_uint8(img, standardize=False, resize_px=self.target_px)
+        return hx.io.convert_dtype(img, dtype)
 
     def _preprocess_from_uint8(
         self,
@@ -156,12 +156,12 @@ class StyleGAN2Interpolator:
         """
         normalizer = self.normalizer if normalize else None
         if self._classifier_backend == 'tensorflow':
-            return sf.io.tensorflow.preprocess_uint8(
+            return hx.io.tensorflow.preprocess_uint8(
                 img,
                 normalizer=normalizer,
                 standardize=standardize)['tile_image']
         elif self._classifier_backend == 'torch':
-            return sf.io.torch.preprocess_uint8(
+            return hx.io.torch.preprocess_uint8(
                 img,
                 normalizer=normalizer,
                 standardize=standardize)
@@ -179,10 +179,10 @@ class StyleGAN2Interpolator:
         """
         if self._classifier_backend == 'tensorflow':
             import tensorflow as tf
-            return sf.io.convert_dtype(img, tf.float32)
+            return hx.io.convert_dtype(img, tf.float32)
         elif self._classifier_backend == 'torch':
             import torch
-            return sf.io.convert_dtype(img, torch.float32)
+            return hx.io.convert_dtype(img, torch.float32)
         else:
             raise errors.UnrecognizedBackendError
 
@@ -204,7 +204,7 @@ class StyleGAN2Interpolator:
             dts = tf.data.Dataset.from_generator(generator, output_signature=sig)
             return dts.map(
                 partial(
-                    sf.io.tensorflow.preprocess_uint8,
+                    hx.io.tensorflow.preprocess_uint8,
                     normalizer=self.normalizer),
                 num_parallel_calls=tf.data.AUTOTUNE,
                 deterministic=True
@@ -212,7 +212,7 @@ class StyleGAN2Interpolator:
         elif self._classifier_backend == 'torch':
             return map(
                 partial(
-                    sf.io.torch.preprocess_uint8,
+                    hx.io.torch.preprocess_uint8,
                     normalizer=self.normalizer),
                 generator())
         else:
@@ -260,7 +260,7 @@ class StyleGAN2Interpolator:
                 calculate activations for interpolated images.
                 Defaults to None.
         """
-        if sf.util.is_tensorflow_model_path(path):
+        if hx.util.is_tensorflow_model_path(path):
             from histox.model.tensorflow import Features
             import histox.io.tensorflow
             self.features = Features(
@@ -270,7 +270,7 @@ class StyleGAN2Interpolator:
                 **kwargs)
             self.normalizer = self.features.wsi_normalizer  # type: ignore
             self._classifier_backend = 'tensorflow'
-        elif sf.util.is_torch_model_path(path):
+        elif hx.util.is_torch_model_path(path):
             from histox.model.torch import Features
             import histox.io.torch
             self.features = Features(
@@ -322,7 +322,7 @@ class StyleGAN2Interpolator:
         # --- GAN-Classifier pipeline ---------------------------------------------
         def gan_generator(embedding):
             def generator():
-                for seed_batch in sf.util.batch(seeds, batch_size):
+                for seed_batch in hx.util.batch(seeds, batch_size):
                     z = torch.stack([
                         noise_tensor(s, z_dim=self.E_G.z_dim)[0]
                         for s in seed_batch]
@@ -339,7 +339,7 @@ class StyleGAN2Interpolator:
         # Calculation happens in batches to improve computational efficiency.
         # noise + embedding -> GAN -> Classifier -> Predictions, Features
         seeds_and_embeddings = zip(
-            sf.util.batch(seeds, batch_size),
+            hx.util.batch(seeds, batch_size),
             gan_embed0_dts,
             gan_embed1_dts
         )
@@ -441,8 +441,8 @@ class StyleGAN2Interpolator:
             _img = self._crop_and_convert_to_uint8(_img)
             _img = self._preprocess_from_uint8(_img, standardize=False, normalize=False)
             if self._classifier_backend == 'torch':
-                _img = sf.io.torch.cwh_to_whc(_img)
-            return Image.fromarray(sf.io.convert_dtype(_img[0], np.uint8))
+                _img = hx.io.torch.cwh_to_whc(_img)
+            return Image.fromarray(hx.io.convert_dtype(_img[0], np.uint8))
 
         scale = 5
         fig, ax = plt.subplots(len(seeds), 2, figsize=(2 * scale, len(seeds) * scale))
@@ -523,7 +523,7 @@ class StyleGAN2Interpolator:
         img = self.generate(seed, embedding)
         img = (img * 127.5 + 128).clamp(0, 255).to(torch.uint8)[0]
         img = img.permute(1, 2, 0)
-        return sf.io.convert_dtype(img, np.uint8)
+        return hx.io.convert_dtype(img, np.uint8)
 
     def generate_np_start(self, seed: int) -> np.ndarray:
         """Generate a numpy image from the starting class.
@@ -697,7 +697,7 @@ class StyleGAN2Interpolator:
             img = self._crop_and_convert_to_uint8(img)
             img = self._preprocess_from_uint8(img, standardize=False, normalize=True)
             processed_img = self._standardize(img)
-            img = sf.io.convert_dtype(img, np.float32)[0]
+            img = hx.io.convert_dtype(img, np.float32)[0]
 
             if self.features is not None:
                 pred = self.features(processed_img)[-1]

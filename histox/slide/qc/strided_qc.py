@@ -1,7 +1,7 @@
 import os
 import threading
 import numpy as np
-import histox as sf
+import histox as hx
 import multiprocessing as mp
 
 from queue import Queue
@@ -74,14 +74,14 @@ class _StridedQC:
 
     def __call__(
         self,
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
     ) -> Optional[np.ndarray]:
         """Apply QC function to a whole-slide image."""
 
         # Initialize whole-slide reader.
         b = self.buffer
         k = self.kernel
-        qc_wsi = sf.WSI(wsi.path, tile_px=(k * b), tile_um=self.tile_um, verbose=False)
+        qc_wsi = hx.WSI(wsi.path, tile_px=(k * b), tile_um=self.tile_um, verbose=False)
         existing_mask = wsi.qc_mask
         if existing_mask is not None:
             qc_wsi.apply_qc_mask(existing_mask)
@@ -94,7 +94,7 @@ class _StridedQC:
             grayspace_fraction=self.gs_fraction,
             **self.wsi_kwargs)
         if generator is None:
-            sf.log.warning(
+            hx.log.warning(
                 "Unable to apply QC {} to slide {}; no tiles extracted.".format(
                     self.__class__.__name__,
                     qc_wsi.name
@@ -236,8 +236,8 @@ class _StridedQC_V2:
         if self._tile_pool is not None:
             return self._tile_pool
         else:
-            n_threads = max(int(sf.util.num_cpu(default=8) // 2), 1)
-            sf.log.debug("Creating tile pool (n_threads={})".format(
+            n_threads = max(int(hx.util.num_cpu(default=8) // 2), 1)
+            hx.log.debug("Creating tile pool (n_threads={})".format(
                 n_threads
             ))
             self._tile_pool = mp.dummy.Pool()
@@ -249,7 +249,7 @@ class _StridedQC_V2:
         if self._filter_pool is not None:
             return self._filter_pool
         elif self.filter_threads:
-            sf.log.debug("Creating filter pool (n_threads={})".format(
+            hx.log.debug("Creating filter pool (n_threads={})".format(
                 self.filter_threads
             ))
             self._filter_pool = mp.dummy.Pool(self.filter_threads)
@@ -257,7 +257,7 @@ class _StridedQC_V2:
 
     def close_pools(self):
         """Close multithreading pools."""
-        sf.log.debug("Closing tile and filter pools")
+        hx.log.debug("Closing tile and filter pools")
         if self._filter_pool is not None:
             self._filter_pool.close()
             self._filter_pool = None
@@ -280,11 +280,11 @@ class _StridedQC_V2:
         )
         return mask[:dim[1], :dim[0]]
 
-    def build_mask(self, wsi: "sf.WSI"):
+    def build_mask(self, wsi: "hx.WSI"):
         """Return an empty array for storing masks."""
         return np.ones((wsi.grid.shape[1], wsi.grid.shape[0]), dtype=object)  # type: ignore
 
-    def build_tile_generator(self, wsi: "sf.WSI"):
+    def build_tile_generator(self, wsi: "hx.WSI"):
         """Build a tile generator from a slide."""
         generator = wsi.build_generator(
             shuffle=False,
@@ -294,7 +294,7 @@ class _StridedQC_V2:
             pool=self.tile_pool,
             **self.wsi_kwargs)
         if generator is None:
-            sf.log.warning(
+            hx.log.warning(
                 "Unable to apply QC {} to slide {}; no tiles extracted.".format(
                     self.__class__.__name__,
                     wsi.name
@@ -344,10 +344,10 @@ class _StridedQC_V2:
         g_mask = g_mask.astype(bool)
         return g_mask
 
-    def get_slide_and_mpp(self, wsi: "sf.WSI") -> Tuple["sf.WSI", float]:
+    def get_slide_and_mpp(self, wsi: "hx.WSI") -> Tuple["hx.WSI", float]:
         """Get a WSI object with the proper tile extraction size and stride."""
         stride_div = self.tile_px / (self.tile_px - self.overlap*2)
-        qc_wsi = sf.WSI(
+        qc_wsi = hx.WSI(
             wsi.path,
             tile_px=self.tile_px,
             tile_um=self.tile_um,
@@ -362,7 +362,7 @@ class _StridedQC_V2:
 
     def __call__(
         self,
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
     ) -> Optional[np.ndarray]:
         """Apply QC filtering to a slide."""
 

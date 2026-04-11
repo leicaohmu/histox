@@ -12,15 +12,15 @@ from os.path import exists, join
 from typing import Any, Callable, Dict, List, Optional
 from rich.progress import Progress, TimeElapsedColumn, SpinnerColumn
 
-import histox as sf
+import histox as hx
 from histox.util import colors as col
 from histox.util import log, ImgBatchSpeedColumn, download_from_tcga
 
 
-def process_isolate(func: Callable, project: sf.Project, **kwargs) -> bool:
+def process_isolate(func: Callable, project: hx.Project, **kwargs) -> bool:
     ctx = multiprocessing.get_context('spawn')
     passed = ctx.Manager().Value(bool, True)
-    verbosity = sf.getLoggingLevel()
+    verbosity = hx.getLoggingLevel()
     process = ctx.Process(
         target=func,
         args=(project, verbosity, passed),
@@ -77,9 +77,9 @@ def random_annotations(
 ) -> List[List]:
     if slides_path:
         slides = [
-            sf.util.path_to_name(f)
+            hx.util.path_to_name(f)
             for f in os.listdir(slides_path)
-            if sf.util.is_slide(join(slides_path, f))
+            if hx.util.is_slide(join(slides_path, f))
         ][:10]
     else:
         slides = [f'slide{i}' for i in range(10)]
@@ -108,7 +108,7 @@ def _assert_valid_results(results):
 
 def test_throughput(
     dts: Any,
-    normalizer: Optional[sf.norm.StainNormalizer] = None,
+    normalizer: Optional[hx.norm.StainNormalizer] = None,
     s: int = 5,
 ) -> float:
     """Tests throughput of image normalization with a single thread.
@@ -128,16 +128,16 @@ def test_throughput(
     task = pb.add_task("Testing...", total=None)  # type: ignore
 
     for img, slide in dts:
-        if sf.backend() == 'torch':
+        if hx.backend() == 'torch':
             if len(img.shape) == 3:
                 img = img.permute(1, 2, 0)
             else:
                 img = img.permute(0, 2, 3, 1)
 
         #n.transform(img)
-        if sf.backend() == 'tensorflow' and normalizer is not None:
+        if hx.backend() == 'tensorflow' and normalizer is not None:
             normalizer.tf_to_tf(img)
-        if sf.backend() == 'torch' and normalizer is not None:
+        if hx.backend() == 'torch' and normalizer is not None:
             normalizer.torch_to_torch(img)
         if start == -1:
             start = time.time()
@@ -159,7 +159,7 @@ def test_throughput(
 
 def test_multithread_throughput(
     dataset: Any,
-    normalizer: sf.norm.StainNormalizer,
+    normalizer: hx.norm.StainNormalizer,
     s: int = 5,
     batch_size: int = 8
 ) -> float:
@@ -168,7 +168,7 @@ def test_multithread_throughput(
     Returns:
         float: images/sec.
     """
-    if sf.backend() == 'tensorflow':
+    if hx.backend() == 'tensorflow':
         dts = dataset.tensorflow(
             None,
             batch_size,
@@ -176,7 +176,7 @@ def test_multithread_throughput(
             infinite=True,
             normalizer=normalizer
         )
-    elif sf.backend() == 'torch':
+    elif hx.backend() == 'torch':
         dts = dataset.torch(
             None,
             batch_size,
@@ -287,9 +287,9 @@ class TestConfig:
             tcga_slides = get_tcga_slides()
             with TaskWrapper("Downloading slides..."):
                 existing = [
-                    sf.util.path_to_name(f)
+                    hx.util.path_to_name(f)
                     for f in os.listdir(slides_path)
-                    if sf.util.is_slide(join(slides_path, f))
+                    if hx.util.is_slide(join(slides_path, f))
                 ]
                 for slide in [s for s in tcga_slides if s not in existing]:
                     download_from_tcga(
@@ -305,7 +305,7 @@ class TestConfig:
         self,
         path: str = 'test_project',
         overwrite: bool = False
-    ) -> "sf.Project":
+    ) -> "hx.Project":
         """Creates a test project.
 
         Args:
@@ -314,14 +314,14 @@ class TestConfig:
                 present. Defaults to False.
 
         Returns:
-            sf.Project: Test project.
+            hx.Project: Test project.
         """
-        if sf.util.is_project(path) and overwrite:
+        if hx.util.is_project(path) and overwrite:
             shutil.rmtree(path)
-        if sf.util.is_project(path):
-            self.project = sf.Project(path, create=True)
+        if hx.util.is_project(path):
+            self.project = hx.Project(path, create=True)
         else:
-            self.project = sf.Project(path, **self.project_settings, create=True)
+            self.project = hx.Project(path, **self.project_settings, create=True)
         self.project.save()
         self.configure_sources()
         self.configure_annotations()
@@ -344,7 +344,7 @@ class TestConfig:
             csv_writer = csv.writer(csv_outfile, delimiter=',')
             for an in self.annotations:
                 csv_writer.writerow(an)
-        project_dataset = sf.Dataset(
+        project_dataset = hx.Dataset(
             tile_px=299,
             tile_um=302,
             sources='TEST',

@@ -2,7 +2,7 @@
 
 from typing import Any, Callable, Dict, Optional
 
-import histox as sf
+import histox as hx
 import numpy as np
 import saliency.core as saliency
 from functools import partial
@@ -61,7 +61,7 @@ class SaliencyMap:
 
     @property
     def model_backend(self):
-        return sf.util.model_backend(self.model)
+        return hx.util.model_backend(self.model)
 
     @property
     def device(self):
@@ -81,7 +81,7 @@ class SaliencyMap:
 
         if self.model_backend == 'tensorflow':
             import tensorflow as tf
-            flattened = sf.model.tensorflow_utils.flatten(self.model)
+            flattened = hx.model.tensorflow_utils.flatten(self.model)
             conv_layer = flattened.get_layer(layer)
             self.feature_model = tf.keras.models.Model([flattened.inputs], [conv_layer.output, flattened.output])
         else:

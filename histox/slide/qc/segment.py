@@ -1,7 +1,7 @@
 """QC algorithm for applying tissue segmentation (via U-Net-like models)."""
 
 import cv2
-import histox as sf
+import histox as hx
 import numpy as np
 import shapely.geometry as sg
 
@@ -56,10 +56,10 @@ class Segment:
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
                     from histox.slide import qc
 
-                    wsi = sf.WSI(...)
+                    wsi = hx.WSI(...)
                     segment = qc.Segment('/path/to/model.pth)
                     wsi.qc(segment)
 
@@ -81,7 +81,7 @@ class Segment:
 
         self.model_path = model
         self.class_idx = class_idx
-        self.model, self.cfg = sf.segment.load_model_and_config(model)
+        self.model, self.cfg = hx.segment.load_model_and_config(model)
         self.model.to(get_device())
         self.model.eval()
         self.threshold_direction = threshold_direction
@@ -94,8 +94,8 @@ class Segment:
     @classmethod
     def from_model(
         cls,
-        model: "sf.segment.SegmentModel",
-        config: "sf.segment.SegmentConfig",
+        model: "hx.segment.SegmentModel",
+        config: "hx.segment.SegmentConfig",
         class_idx: Optional[int] = None,
         threshold_direction: str = 'less'
     ):
@@ -110,7 +110,7 @@ class Segment:
 
     def generate_rois(
         self,
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
         apply: bool = True,
         *,
         sq_mm_threshold: Optional[float] = 0.01,
@@ -119,7 +119,7 @@ class Segment:
         """Generate and apply ROIs to a slide using the loaded segmentation model.
 
         Args:
-            wsi (sf.WSI): Slideflow WSI object.
+            wsi (hx.WSI): Slideflow WSI object.
             apply (bool): Whether to apply the generated ROIs to the slide.
                 Defaults to True.
 
@@ -193,7 +193,7 @@ class Segment:
             for o, outline in enumerate(outlines):
                 # Verify that the annotation has enough vertices.
                 if len(outline) < 4:
-                    sf.log.warning("Polygon with fewer than 3 vertices detected, skipping: {}".format(o))
+                    hx.log.warning("Polygon with fewer than 3 vertices detected, skipping: {}".format(o))
                     continue
 
                 # Convert to shapely polygon.
@@ -205,7 +205,7 @@ class Segment:
                     area_um = area_pixels * (wsi.mpp ** 2)
                     area_mm = area_um / 1e6
                     if area_mm < sq_mm_threshold:
-                        sf.log.debug("Skipping small ROI with area < {} mm^2: {} ({:.2f} mm^2)".format(
+                        hx.log.debug("Skipping small ROI with area < {} mm^2: {} ({:.2f} mm^2)".format(
                             sq_mm_threshold, o, area_mm
                         ))
                         continue
@@ -218,25 +218,25 @@ class Segment:
                         label=(None if labels is None else labels[o]),
                         simplify_tolerance=simplify_tolerance
                     )
-                except sf.errors.InvalidROIError:
+                except hx.errors.InvalidROIError:
                     continue
             wsi.process_rois()
 
         return outlines
 
-    def get_slide_preds(self, wsi: "sf.WSI") -> np.ndarray:
+    def get_slide_preds(self, wsi: "hx.WSI") -> np.ndarray:
         """Get the predictions for a slide using the loaded segmentation model."""
         return self.model.run_slide_inference(wsi)
 
     def __call__(
         self,
-        wsi: Union["sf.WSI", np.ndarray],
+        wsi: Union["hx.WSI", np.ndarray],
         threshold: Optional[float] = 0
     ) -> np.ndarray:
         """Perform tissue segmentation on the given slide or image.
 
         Args:
-            wsi (sf.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
+            wsi (hx.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
                 with shape (h, w, c) and type np.uint8.
             threshold (float, optional): If None, return the raw
                 predictions (binary or multilabel models) or post-softmax predictions
@@ -247,7 +247,7 @@ class Segment:
             np.ndarray: Boolean mask, where True = filtered out (less than threshold).
 
         """
-        if isinstance(wsi, sf.WSI):
+        if isinstance(wsi, hx.WSI):
             preds = self.get_slide_preds(wsi)
         else:
             preds = self.model.run_tiled_inference(wsi)
@@ -294,8 +294,8 @@ class StridedSegment(Segment):
     @classmethod
     def from_model(
         cls,
-        model: "sf.segment.SegmentModel",
-        config: "sf.segment.SegmentConfig",
+        model: "hx.segment.SegmentModel",
+        config: "hx.segment.SegmentConfig",
         class_idx: Optional[int] = None,
         threshold_direction: str = 'less',
         overlap: int = 128
@@ -321,13 +321,13 @@ class StridedSegment(Segment):
         import torch
         with torch.inference_mode():
             tensor = torch.from_numpy(image).unsqueeze(0).to(self.model.device)
-            tensor = sf.io.torch.as_cwh(tensor)
+            tensor = hx.io.torch.as_cwh(tensor)
             tensor = self.model.forward(tensor).squeeze(dim=0)
             if self.cfg.mode == 'binary':
                 tensor = tensor.squeeze(dim=0)
             return tensor.cpu().numpy()
 
-    def get_slide_preds(self, wsi: "sf.WSI") -> np.ndarray:
+    def get_slide_preds(self, wsi: "hx.WSI") -> np.ndarray:
         """Get the predictions for a slide using the loaded segmentation model."""
         return self._strided_qc(wsi)
 

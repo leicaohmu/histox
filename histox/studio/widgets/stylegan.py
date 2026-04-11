@@ -1,7 +1,7 @@
 import sys
 import time
 import traceback
-import histox as sf
+import histox as hx
 import imgui
 import numpy as np
 import json
@@ -154,7 +154,7 @@ class StyleGANWidget(Widget):
             if not ignore_errors:
                 raise
         try:
-            self.viz._gan_config = sf.util.get_gan_config(pkl)
+            self.viz._gan_config = hx.util.get_gan_config(pkl)
         except Exception:
             self.viz._gan_config = None
         self.viz._tex_obj = None

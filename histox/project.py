@@ -28,7 +28,7 @@ from types import SimpleNamespace
 from typing import (TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple,
                     Union)
 
-import histox as sf
+import histox as hx
 from . import errors, project_utils
 from .util import log, path_to_name, path_to_ext
 from .dataset import Dataset
@@ -65,14 +65,14 @@ class Project:
 
         .. code-block:: python
 
-            import histox as sf
-            P = sf.Project('/project/path', name=..., ...)
+            import histox as hx
+            P = hx.Project('/project/path', name=..., ...)
 
         *Load an existing project:*
 
         .. code-block:: python
 
-            P = sf.Project('/project/path')
+            P = hx.Project('/project/path')
 
         Args:
             root (str): Path to project directory.
@@ -96,9 +96,9 @@ class Project:
 
         """
         self.root = root
-        if sf.util.is_project(root) and kwargs:
+        if hx.util.is_project(root) and kwargs:
             raise errors.ProjectError(f"Project already exists at {root}")
-        elif sf.util.is_project(root):
+        elif hx.util.is_project(root):
             self._load(root)
         elif create:
             log.info(f"Creating project at {root}...")
@@ -137,7 +137,7 @@ class Project:
             root (str): Path to project directory.
 
         """
-        if not sf.util.is_project(root):
+        if not hx.util.is_project(root):
             log.info(f'Setting up new project at "{root}"')
             project_utils.interactive_project_setup(root)
         obj = cls(root, **kwargs)
@@ -153,7 +153,7 @@ class Project:
     @property
     def verbosity(self) -> int:
         """Current logging verbosity level."""
-        return sf.getLoggingLevel()
+        return hx.getLoggingLevel()
 
     @property
     def annotations(self) -> str:
@@ -267,8 +267,8 @@ class Project:
 
     def _load(self, path: str) -> None:
         """Load a saved and pre-configured project from the specified path."""
-        if sf.util.is_project(path):
-            self._settings = sf.util.load_json(join(path, 'settings.json'))
+        if hx.util.is_project(path):
+            self._settings = hx.util.load_json(join(path, 'settings.json'))
         else:
             raise errors.ProjectError('Unable to find settings.json.')
 
@@ -292,7 +292,7 @@ class Project:
 
     def _read_relative_path(self, path: str) -> str:
         """Convert relative path within project directory to global path."""
-        return sf.util.relative_path(path, self.root)
+        return hx.util.relative_path(path, self.root)
 
     def _setup_labels(
         self,
@@ -416,7 +416,7 @@ class Project:
             raise ValueError('`eval_k_fold` invalid when predicting.')
 
         # Load hyperparameters from saved model
-        config = sf.util.get_model_config(model)
+        config = hx.util.get_model_config(model)
         hp = ModelParams()
         hp.load_dict(config['hp'])
         model_name = f"eval-{basename(model)}"
@@ -427,7 +427,7 @@ class Project:
             outcomes = config['outcomes']
 
         assert outcomes is not None
-        outcomes = sf.util.as_list(outcomes)
+        outcomes = hx.util.as_list(outcomes)
 
         # Filter out slides that are blank in the outcome label,
         # or blank in any of the input_header categories
@@ -445,7 +445,7 @@ class Project:
             )
         else:
             eval_dts = dataset
-            if sf.backend() == 'torch':
+            if hx.backend() == 'torch':
                 labels = config['outcome_labels']
             else:
                 labels = {}
@@ -477,7 +477,7 @@ class Project:
         else:
             outcome_labels = None
 
-        model_dir = sf.util.get_new_model_dir(self.eval_dir, model_name)
+        model_dir = hx.util.get_new_model_dir(self.eval_dir, model_name)
 
         # Set missing validation keys to NA
         for v_end in ('strategy', 'fraction', 'k_fold'):
@@ -486,10 +486,10 @@ class Project:
                 config[val_key] = 'NA'
 
         eval_config = {
-            'histox_version': sf.__version__,
+            'histox_version': hx.__version__,
             'project': self.name,
-            'backend': sf.backend(),
-            'git_commit': sf.__gitcommit__,
+            'backend': hx.backend(),
+            'git_commit': hx.__gitcommit__,
             'model_name': model_name,
             'model_path': model,
             'stage': 'evaluation',
@@ -522,7 +522,7 @@ class Project:
 
         # Build a model using the slide list as input
         # and the annotations dictionary as output labels
-        trainer = sf.model.build_trainer(
+        trainer = hx.model.build_trainer(
             hp,
             outdir=model_dir,
             labels=labels,
@@ -550,7 +550,7 @@ class Project:
         outcomes: List[str],
         val_settings: SimpleNamespace,
         ctx: multiprocessing.context.BaseContext,
-        dataset: Optional[sf.Dataset],
+        dataset: Optional[hx.Dataset],
         filters: Optional[Dict],
         filter_blank: Optional[Union[str, List[str]]],
         input_header: Optional[Union[str, List[str]]],
@@ -611,7 +611,7 @@ class Project:
         if dataset is None:
             dataset = self.dataset(hp.tile_px, hp.tile_um)
         else:
-            _compatible = sf.util.is_tile_size_compatible(
+            _compatible = hx.util.is_tile_size_compatible(
                 dataset.tile_px,
                 dataset.tile_um,
                 hp.tile_px,
@@ -728,7 +728,7 @@ class Project:
                 if mi not in results_dict or 'epochs' not in results_dict[mi]:
                     log.error(f'Training failed for model {model_name}')
                 else:
-                    sf.util.update_results_log(
+                    hx.util.update_results_log(
                         results_log_path,
                         mi,
                         results_dict[mi]['epochs']
@@ -756,7 +756,7 @@ class Project:
         k_msg = ''
         if s_args.k is not None:
             k_msg = f' ({val_settings.strategy} #{s_args.k})'
-        if sf.getLoggingLevel() <= 20:
+        if hx.getLoggingLevel() <= 20:
             print()
         log.info(f'Training model [bold]{s_args.model_name}[/]{k_msg}...')
         log.info(f'Hyperparameters: {hp}')
@@ -925,14 +925,14 @@ class Project:
         full_name = s_args.model_name
         if s_args.k is not None:
             full_name += f'-kfold{s_args.k}'
-        model_dir = sf.util.get_new_model_dir(self.models_dir, full_name)
+        model_dir = hx.util.get_new_model_dir(self.models_dir, full_name)
 
         # Log model settings and hyperparameters
         config = {
-            'histox_version': sf.__version__,
+            'histox_version': hx.__version__,
             'project': self.name,
-            'backend': sf.backend(),
-            'git_commit': sf.__gitcommit__,
+            'backend': hx.backend(),
+            'git_commit': hx.__gitcommit__,
             'model_name': s_args.model_name,
             'full_model_name': full_name,
             'stage': 'training',
@@ -1205,7 +1205,7 @@ class Project:
                 full_params['epochs'] = kwargs['epochs']
             mp = ModelParams(**full_params)
             hp_list += [{f'{label}HPSweep{i}': mp.to_dict()}]
-        sf.util.write_json(hp_list, os.path.join(self.root, filename))
+        hx.util.write_json(hp_list, os.path.join(self.root, filename))
         log.info(f'Wrote hp sweep (len {len(sweep)}) to [green]{filename}')
 
     @auto_dataset
@@ -1598,7 +1598,7 @@ class Project:
         Examples
             Train StyleGAN2 from a Slideflow dataset.
 
-                >>> P = sf.Project('/project/path')
+                >>> P = hx.Project('/project/path')
                 >>> dataset = P.dataset(tile_px=512, tile_um=400)
                 >>> P.gan_train(dataset=dataset, exp_label="MyExperiment", ...)
 
@@ -1707,7 +1707,7 @@ class Project:
             os.makedirs(gan_root)
         if exp_label is None:
             exp_label = 'gan_experiment'
-        gan_dir = sf.util.get_new_model_dir(gan_root, exp_label)
+        gan_dir = hx.util.get_new_model_dir(gan_root, exp_label)
 
         # Write GAN configuration
         config_loc = join(gan_dir, 'histox_config.json')
@@ -1729,7 +1729,7 @@ class Project:
                 normalizer=normalizer,
                 normalizer_source=normalizer_source
             )
-        sf.util.write_json(config, config_loc)
+        hx.util.write_json(config, config_loc)
 
         # Train the GAN
         network.train.train(
@@ -1828,7 +1828,7 @@ class Project:
         max_tiles: int = 0,
         outcomes: Optional[List[str]] = None,
         **kwargs: Any
-    ) -> sf.DatasetFeatures:
+    ) -> hx.DatasetFeatures:
         """Calculate layer activations.
 
         See :ref:`Layer activations <dataset_features>` for more information.
@@ -1881,7 +1881,7 @@ class Project:
             labels = dataset.labels(outcomes, format='name')[0]
         else:
             labels = None
-        df = sf.DatasetFeatures(model=model,
+        df = hx.DatasetFeatures(model=model,
                                 dataset=dataset,
                                 annotations=labels,
                                 **kwargs)
@@ -1951,7 +1951,7 @@ class Project:
         # Check if the model exists and has a valid parameters file
         if isinstance(model, str) and exists(model) and dataset is None:
             log.debug(f"Auto-building dataset from provided model {model}")
-            config = sf.util.get_model_config(model)
+            config = hx.util.get_model_config(model)
             dataset = self.dataset(
                 tile_px=config['tile_px'],
                 tile_um=config['tile_um'],
@@ -1972,11 +1972,11 @@ class Project:
         if outdir.lower() == 'auto':
             # Check if the model is an architecture name
             # (for using an Imagenet pretrained model)
-            if isinstance(model, str) and sf.model.is_extractor(model):
+            if isinstance(model, str) and hx.model.is_extractor(model):
                 outdir = join(self.root, 'pt_files', model)
             # Check if the model is a trained model
             elif isinstance(model, str) and exists(model):
-                config = sf.util.get_model_config(model)
+                config = hx.util.get_model_config(model)
                 if 'k_fold_i' in config:
                     _end = f"_kfold{config['k_fold_i']}"
                 else:
@@ -2091,7 +2091,7 @@ class Project:
         del args.self
 
         # Prepare dataset
-        config = sf.util.get_model_config(model)
+        config = hx.util.get_model_config(model)
         args.rois = dataset.rois()
 
         # Set resolution / stride
@@ -2159,7 +2159,7 @@ class Project:
         use_norm: bool = True,
         umap_kwargs: Dict = {},
         **kwargs: Any
-    ) -> sf.Mosaic:
+    ) -> hx.Mosaic:
         """Generate a mosaic map.
 
         See :ref:`Mosaic maps <mosaic_map>` for more information.
@@ -2220,13 +2220,13 @@ class Project:
 
         # Prepare dataset & model
         if isinstance(df.model, str):
-            config = sf.util.get_model_config(df.model)
+            config = hx.util.get_model_config(df.model)
         else:
             raise ValueError(
                 "Unable to auto-create Mosaic from DatasetFeatures created "
                 "from a loaded Tensorflow/PyTorch model. Please use a "
                 "DatasetFeatures object created from a saved Slideflow model, "
-                "or manually create a mosaic with `sf.Mosaic`.")
+                "or manually create a mosaic with `hx.Mosaic`.")
         if dataset is None:
             tile_px, tile_um = config['hp']['tile_px'], config['hp']['tile_um']
             dataset = self.dataset(tile_px=tile_px, tile_um=tile_um)
@@ -2262,7 +2262,7 @@ class Project:
             log.info(f'Loaded pred labels found at [green]{df.model}')
 
         # Create mosaic map from UMAP of layer activations
-        umap = sf.SlideMap.from_features(
+        umap = hx.SlideMap.from_features(
             df,
             map_slide=map_slide,
             low_memory=low_memory,
@@ -2327,7 +2327,7 @@ class Project:
             umap.label('predictions', translate=outcome_labels)
         umap.filter(dataset.slides())
 
-        mosaic = sf.Mosaic(
+        mosaic = hx.Mosaic(
             umap,
             tfrecords=dataset.tfrecords(),
             normalizer=(df.normalizer if use_norm else None),
@@ -2348,7 +2348,7 @@ class Project:
         cache: Optional[str] = None,
         batch_size: int = 32,
         **kwargs: Any
-    ) -> sf.Mosaic:
+    ) -> hx.Mosaic:
         """Generate a mosaic map with manually supplied x/y coordinates.
 
         Slides are mapped with slide-level annotations, with x-axis determined
@@ -2416,16 +2416,16 @@ class Project:
         elif use_optimal_tile:
             # Calculate most representative tile in each TFRecord for display
             assert model is not None
-            df = sf.DatasetFeatures(model=model,
+            df = hx.DatasetFeatures(model=model,
                                     dataset=dataset,
                                     batch_size=batch_size,
                                     cache=cache)
-            opt_ind, _ = sf.stats.calculate_centroid(df.activations)
+            opt_ind, _ = hx.stats.calculate_centroid(df.activations)
 
             # Restrict mosaic to only slides that had enough tiles to
             # calculate an optimal index from centroid
             success_slides = list(opt_ind.keys())
-            sf.util.multi_warn(
+            hx.util.multi_warn(
                 slides,
                 lambda x: x not in success_slides,
                 'Unable to calculate optimal tile for {}, skipping'
@@ -2447,7 +2447,7 @@ class Project:
             umap_slides = np.array(slides)
             umap_tfr_idx = np.zeros(len(slides))
 
-        umap = sf.SlideMap.from_xy(
+        umap = hx.SlideMap.from_xy(
             x=umap_x,
             y=umap_y,
             slides=umap_slides,
@@ -2457,7 +2457,7 @@ class Project:
             slide_to_category, _ = dataset.labels(outcomes, format='name')
             umap.label_by_slide(slide_to_category)
 
-        mosaic = sf.Mosaic(
+        mosaic = hx.Mosaic(
             umap,
             tfrecords=dataset.tfrecords(),
             tile_select='centroid' if use_optimal_tile else 'first',
@@ -2495,14 +2495,14 @@ class Project:
         """
         dataset = self.dataset(tile_px=tile_px, tile_um=tile_um)
         if filename is None:
-            filename = join(self.root, sf.util.path_to_name(tfrecord) + '.png')
+            filename = join(self.root, hx.util.path_to_name(tfrecord) + '.png')
         dataset.tfrecord_heatmap(tfrecord, tile_dict, filename)
 
     def inspect_tfrecords(self):
         """Inspect TFRecords in the project dataset configuration."""
         from rich import print as rprint
 
-        config = sf.util.load_json(self.dataset_config)
+        config = hx.util.load_json(self.dataset_config)
         rprint("[b]Dataset sources:[/]")
         for source in self.sources:
             rprint(". {}".format(source))
@@ -2744,10 +2744,10 @@ class Project:
         if not exists(model):
             raise OSError(f"Path {model} not found")
 
-        config = sf.util.get_ensemble_model_config(model)
+        config = hx.util.get_ensemble_model_config(model)
         outcomes = f"{'-'.join(config['outcomes'])}"
         model_name = f"eval-ensemble-{outcomes}"
-        main_eval_dir = sf.util.get_new_model_dir(self.eval_dir, model_name)
+        main_eval_dir = hx.util.get_new_model_dir(self.eval_dir, model_name)
 
         member_paths = sorted([
             join(model, x) for x in os.listdir(model)
@@ -2768,7 +2768,7 @@ class Project:
                 prediction_path = get_first_nested_directory(_k_path)
 
             # Update the current evaluation directory.
-            member_eval_dir = sf.util.get_new_model_dir(
+            member_eval_dir = hx.util.get_new_model_dir(
                 main_eval_dir,
                 f"ensemble_{member_id+1}"
             )
@@ -2777,17 +2777,17 @@ class Project:
                 # If this is the first ensemble member, copy the slide manifest
                 # and params.json file into the ensemble prediction folder.
                 if member_id == 0:
-                    _, path = sf.util.get_valid_model_dir(self.eval_dir)
+                    _, path = hx.util.get_valid_model_dir(self.eval_dir)
                     shutil.copyfile(
                         join(self.eval_dir, path[0], "slide_manifest.csv"),
                         join(main_eval_dir, "slide_manifest.csv")
                     )
-                    params = sf.util.load_json(
+                    params = hx.util.load_json(
                         join(self.eval_dir, path[0], "params.json")
                     )
                     params['ensemble_epochs'] = params['hp']['epochs']
                     del params['hp']
-                    sf.util.write_json(
+                    hx.util.write_json(
                         params,
                         join(main_eval_dir, "ensemble_params.json")
                     )
@@ -2885,7 +2885,7 @@ class Project:
             os.makedirs(outdir)
 
         if source:
-            sources = sf.util.as_list(source)
+            sources = hx.util.as_list(source)
         else:
             sources = self.sources
         if dataset.tile_px is None or dataset.tile_um is None:
@@ -2894,11 +2894,11 @@ class Project:
             )
         # Prepare dataset & model
         if img_format == 'auto':
-            config = sf.util.get_model_config(model)
+            config = hx.util.get_model_config(model)
             img_format = config['img_format']
 
         # Log extraction parameters
-        sf.slide.log_extraction_params(**kwargs)
+        hx.slide.log_extraction_params(**kwargs)
 
         for source in sources:
             log.info(f'Working on dataset source [bold]{source}')
@@ -2917,7 +2917,7 @@ class Project:
             from rich.progress import track
             for slide_path in track(slide_list, transient=True):
                 try:
-                    slide = sf.WSI(slide_path,
+                    slide = hx.WSI(slide_path,
                                    dataset.tile_px,
                                    dataset.tile_um,
                                    stride_div,
@@ -2937,7 +2937,7 @@ class Project:
             for slide_path in slide_list:
                 log.info(f'Working on slide {path_to_name(slide_path)}')
                 try:
-                    wsi = sf.WSI(slide_path,
+                    wsi = hx.WSI(slide_path,
                                  dataset.tile_px,
                                  dataset.tile_um,
                                  stride_div,
@@ -2952,7 +2952,7 @@ class Project:
                     log.error(e)
                     continue
                 try:
-                    interface = sf.model.Features(model, include_preds=False)
+                    interface = hx.model.Features(model, include_preds=False)
                     wsi_grid = interface(wsi, img_format=img_format)
 
                     with open(join(outdir, wsi.name+'.pkl'), 'wb') as file:
@@ -2965,12 +2965,12 @@ class Project:
 
     def save(self) -> None:
         """Save current project configuration as ``settings.json``."""
-        sf.util.write_json(self._settings, join(self.root, 'settings.json'))
+        hx.util.write_json(self._settings, join(self.root, 'settings.json'))
 
     def _get_smac_runner(
         self,
         outcomes: Union[str, List[str]],
-        params: sf.ModelParams,
+        params: hx.ModelParams,
         metric: Union[str, Callable],
         n_replicates: int,
         train_kwargs: Any
@@ -2979,7 +2979,7 @@ class Project:
 
         Args:
             outcomes (str, List[str]): Outcome label annotation header(s).
-            params (sf.ModelParams): Model parameters for training.
+            params (hx.ModelParams): Model parameters for training.
             metric (str or Callable): Metric to monitor for optimization.
                 May be callable function or a str. If a callable function, must
                 accept the epoch results dict and return a float value. If
@@ -3012,14 +3012,14 @@ class Project:
                 pretty = json.dumps(c, indent=2)
                 log.info(f"Training model with config={pretty}")
                 params.load_dict(c)
-                _prior_logging_level = sf.getLoggingLevel()
-                sf.setLoggingLevel(40)
+                _prior_logging_level = hx.getLoggingLevel()
+                hx.setLoggingLevel(40)
                 results = self.train(
                     outcomes=outcomes,
                     params=params,
                     **train_kwargs
                 )
-                sf.setLoggingLevel(_prior_logging_level)
+                hx.setLoggingLevel(_prior_logging_level)
 
                 # Interpret results.
                 model_name = list(results.keys())[0]
@@ -3109,7 +3109,7 @@ class Project:
         from smac.scenario.scenario import Scenario
 
         # Perform SMAC search in a single model folder.
-        smac_path = sf.util.get_new_model_dir(self.models_dir, exp_label)
+        smac_path = hx.util.get_new_model_dir(self.models_dir, exp_label)
         _initial_models_dir = self.models_dir
         self.models_dir = smac_path
 
@@ -3168,7 +3168,7 @@ class Project:
                       List[ModelParams],
                       Dict[str, ModelParams]],
         *,
-        dataset: Optional[sf.Dataset] = None,
+        dataset: Optional[hx.Dataset] = None,
         exp_label: Optional[str] = None,
         filters: Optional[Dict] = None,
         filter_blank: Optional[Union[str, List[str]]] = None,
@@ -3197,17 +3197,17 @@ class Project:
 
             Method 2 (manually specified hyperparameters):
 
-                >>> hp = sf.ModelParams(...)
+                >>> hp = hx.ModelParams(...)
                 >>> P.train('outcome', params=hp, ...)
 
             Method 3 (list of hyperparameters):
 
-                >>> hp = [sf.ModelParams(...), sf.ModelParams(...)]
+                >>> hp = [hx.ModelParams(...), hx.ModelParams(...)]
                 >>> P.train('outcome', params=hp, ...)
 
             Method 4 (dict of hyperparameters):
 
-                >>> hp = {'HP0': sf.ModelParams(...), ...}
+                >>> hp = {'HP0': hx.ModelParams(...), ...}
                 >>> P.train('outcome', params=hp, ...)
 
         Args:
@@ -3326,9 +3326,9 @@ class Project:
         # Prepare hyperparameters
         if isinstance(params, str):
             if exists(params):
-                hp_dict = sf.model.read_hp_sweep(params)
+                hp_dict = hx.model.read_hp_sweep(params)
             elif exists(join(self.root, params)):
-                hp_dict = sf.model.read_hp_sweep(join(self.root, params))
+                hp_dict = hx.model.read_hp_sweep(join(self.root, params))
             else:
                 raise errors.ModelParamsError(f"Unable to find file {params}")
         elif isinstance(params, ModelParams):
@@ -3336,7 +3336,7 @@ class Project:
         elif isinstance(params, list):
             if not all([isinstance(hp, ModelParams) for hp in params]):
                 raise errors.ModelParamsError(
-                    'If params is a list, items must be sf.ModelParams'
+                    'If params is a list, items must be hx.ModelParams'
                 )
             hp_dict = {f'HP{i}': hp for i, hp in enumerate(params)}
         elif isinstance(params, dict):
@@ -3347,7 +3347,7 @@ class Project:
             all_hp = params.values()
             if not all([isinstance(hp, ModelParams) for hp in all_hp]):
                 raise errors.ModelParamsError(
-                    'If params is a dict, values must be sf.ModelParams'
+                    'If params is a dict, values must be hx.ModelParams'
                 )
             hp_dict = params
         else:
@@ -3463,7 +3463,7 @@ class Project:
             ensemble_name = f"{'-'.join(outcomes)}-ensemble"
         else:
             ensemble_name = f"{outcomes}-ensemble"
-        ensemble_path = sf.util.get_new_model_dir(
+        ensemble_path = hx.util.get_new_model_dir(
             self.models_dir, ensemble_name
         )
         ensemble_results = []
@@ -3480,7 +3480,7 @@ class Project:
             hyper_deep = True
             if not all([isinstance(hp, ModelParams) for hp in params]):
                 raise errors.ModelParamsError(
-                    'If params is a list, items must be sf.ModelParams'
+                    'If params is a list, items must be hx.ModelParams'
                 )
             hp_list = params
             n_ensembles = len(hp_list)
@@ -3493,7 +3493,7 @@ class Project:
             all_hp = params.values()
             if not all([isinstance(hp, ModelParams) for hp in all_hp]):
                 raise errors.ModelParamsError(
-                    'If params is a dict, values must be sf.ModelParams'
+                    'If params is a dict, values must be hx.ModelParams'
                 )
             hp_list = [hp for hp in params.values()]
             n_ensembles = len(hp_list)
@@ -3522,8 +3522,8 @@ class Project:
             print(f"Training Ensemble {i+1} of {n_ensembles}")
             # Create the ensemble member folder, which will hold each
             # k-fold model for the given ensemble member.
-            with sf.util.logging_level(30):
-                member_path = sf.util.get_new_model_dir(
+            with hx.util.logging_level(30):
+                member_path = hx.util.get_new_model_dir(
                     ensemble_path,
                     f"ensemble_{i+1}")
                 if hyper_deep:
@@ -3540,20 +3540,20 @@ class Project:
 
         # Copy the slide manifest and params.json file
         # into the parent ensemble folder.
-        _, member_models = sf.util.get_valid_model_dir(member_path)
+        _, member_models = hx.util.get_valid_model_dir(member_path)
         if len(member_models):
             try:
                 shutil.copyfile(
                     join(member_path, member_models[0], "slide_manifest.csv"),
                     join(ensemble_path, "slide_manifest.csv"))
 
-                params_data = sf.util.load_json(
+                params_data = hx.util.load_json(
                     join(member_path, member_models[0], "params.json")
                 )
                 params_data['ensemble_epochs'] = params_data['hp']['epochs']
                 del params_data['hp']
                 params_data['hyper_deep_ensemble'] = hyper_deep
-                sf.util.write_json(
+                hx.util.write_json(
                     params_data, join(ensemble_path, "ensemble_params.json")
                 )
 
@@ -3580,7 +3580,7 @@ class Project:
         exp_label: Optional[str] = None,
         outcomes: Optional[Union[str, List[str]]] = None,
         dataset_kwargs: Optional[Dict[str, Any]] = None,
-        normalizer: Optional[Union[str, "sf.norm.StainNormalizer"]] = None,
+        normalizer: Optional[Union[str, "hx.norm.StainNormalizer"]] = None,
         normalizer_source: Optional[str] = None,
         **kwargs
     ) -> None:
@@ -3615,7 +3615,7 @@ class Project:
             exp_label = 'simclr'
         if not exists(join(self.root, 'simclr')):
             os.makedirs(join(self.root, 'simclr'))
-        outdir = sf.util.create_new_model_dir(
+        outdir = hx.util.create_new_model_dir(
             join(self.root, 'simclr'), exp_label
         )
 
@@ -3736,9 +3736,9 @@ def create(
 
     .. code-block:: python
 
-        import histox as sf
+        import histox as hx
 
-        P = sf.create_project(
+        P = hx.create_project(
             root='path',
             annotations='file.csv',
             slides='path',
@@ -3750,9 +3750,9 @@ def create(
     Alternatively, you can create a project using a prespecified configuration,
     of which there are three available:
 
-    - ``sf.project.LungAdenoSquam()``
-    - ``sf.project.ThyroidBRS()``
-    - ``sf.project.BreastER()``
+    - ``hx.project.LungAdenoSquam()``
+    - ``hx.project.ThyroidBRS()``
+    - ``hx.project.BreastER()``
 
     When creating a project from a configuration, setting ``download=True``
     will download the annoations file and slides from The Cancer Genome Atlas
@@ -3760,11 +3760,11 @@ def create(
 
     .. code-block:: python
 
-        import histox as sf
+        import histox as hx
 
-        project = sf.create_project(
+        project = hx.create_project(
             root='path',
-            cfg=sf.project.LungAdenoSquam(),
+            cfg=hx.project.LungAdenoSquam(),
             download=True
         )
 
@@ -3809,13 +3809,13 @@ def create(
     kwargs = {k: v for k, v in kwargs.items() if k in cfg_names}
 
     # Initial verification
-    if sf.util.is_project(root):
+    if hx.util.is_project(root):
         raise OSError(f"A project already exists at {root}")
     if isinstance(cfg, dict):
-        cfg = sf.util.EasyDict(cfg)
+        cfg = hx.util.EasyDict(cfg)
     if isinstance(cfg, str):
         cfg_path = cfg
-        cfg = sf.util.EasyDict(sf.util.load_json(cfg))
+        cfg = hx.util.EasyDict(hx.util.load_json(cfg))
 
         # Resolve relative paths in configuration file
         if 'annotations' in cfg and exists(join(dirname(cfg_path),
@@ -3824,9 +3824,9 @@ def create(
         if 'rois' in cfg and exists(join(dirname(cfg_path), cfg.rois)):
             cfg.rois = join(dirname(cfg_path), cfg.rois)
     elif cfg is None:
-        cfg = sf.util.EasyDict(kwargs)
+        cfg = hx.util.EasyDict(kwargs)
     elif issubclass(type(cfg), project_utils._ProjectConfig):
-        cfg = sf.util.EasyDict(cfg.to_dict())
+        cfg = hx.util.EasyDict(cfg.to_dict())
 
     if 'name' not in cfg:
         cfg.name = "MyProject"
@@ -3849,14 +3849,14 @@ def create(
         else:
             proj_kwargs['annotations'] = join(root, basename(cfg.annotations))
 
-    P = sf.Project(root, **proj_kwargs, create=True)
+    P = hx.Project(root, **proj_kwargs, create=True)
 
     # Download annotations, if a URL.
     if 'annotations' in cfg and cfg.annotations.startswith('http'):
         log.info(f"Downloading {cfg.annotations}")
         r = requests.get(cfg.annotations)
         open(proj_kwargs['annotations'], 'wb').write(r.content)
-        if cfg.annotations_md5 != sf.util.md5(proj_kwargs['annotations']):
+        if cfg.annotations_md5 != hx.util.md5(proj_kwargs['annotations']):
             raise errors.ChecksumError(
                 "Remote annotations URL failed MD5 checksum."
             )
@@ -3870,7 +3870,7 @@ def create(
 
     source_already_exists = False
     if 'sources' in proj_kwargs and exists(P.dataset_config):
-        _dataset_config = sf.util.load_json(P.dataset_config)
+        _dataset_config = hx.util.load_json(P.dataset_config)
         if isinstance(proj_kwargs['sources'], str):
             source_already_exists = proj_kwargs['sources'] in _dataset_config
         else:
@@ -3916,29 +3916,28 @@ def create(
 
     # Download slides from GDC (TCGA), if specified.
     if download:
-        import ipdb;ipdb.set_trace()
-        df = sf.util.get_gdc_manifest()
+        df = hx.util.get_gdc_manifest()
         slide_manifest = dict(zip(df.filename.values, df.id.values))
         if not exists(cfg.slides):
             os.makedirs(cfg.slides)
         to_download = [s for s in P.dataset().slides()
                        if not exists(join(cfg.slides, f'{s}.svs'))]
         for i, slide in enumerate(to_download):
-            sf.util.download_from_tcga(
+            hx.util.download_from_tcga(
                 slide_manifest[slide+".svs"],
                 dest=cfg.slides,
                 message=f"Downloading {i+1} of {len(to_download)}...")
 
     # Perform MD5 hash verification of slides using the GDC manifest.
     if md5:
-        df = sf.util.get_gdc_manifest()
+        df = hx.util.get_gdc_manifest()
         md5_manifest = dict(zip(df.filename.values, df.md5.values))
 
         slides_with_md5 = [s for s in os.listdir(cfg.slides)
                            if s in md5_manifest]
         failed_md5 = []
         for slide in tqdm(slides_with_md5):
-            if sf.util.md5(join(cfg.slides, slide)) != md5_manifest[slide]:
+            if hx.util.md5(join(cfg.slides, slide)) != md5_manifest[slide]:
                 log.info(f"Slide {slide} failed MD5 verification")
                 failed_md5 += [slide]
         if not failed_md5:

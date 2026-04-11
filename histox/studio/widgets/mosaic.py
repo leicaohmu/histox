@@ -2,7 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 import imgui
-import histox as sf
+import histox as hx
 import multiprocessing as mp
 import matplotlib.pyplot as plt
 import matplotlib.image as mpl_image
@@ -119,7 +119,7 @@ class MosaicWidget(Widget):
             except Exception:
                 self.viz.create_toast("Failed to load mosaic map.", icon='error')
                 return
-        elif isinstance(obj, sf.SlideMap):
+        elif isinstance(obj, hx.SlideMap):
             self.load_umap_from_slidemap(obj, **kwargs)
         else:
             raise ValueError(f"Unrecognized argument: {obj}")
@@ -145,7 +145,7 @@ class MosaicWidget(Widget):
                 idx = np.random.choice(self.coords.shape[0], subsample)
                 self.coords = self.coords[idx]
             self._plot_coords()
-            self.slidemap = sf.SlideMap.load(path)
+            self.slidemap = hx.SlideMap.load(path)
             log.info(f"Loaded UMAP; displaying {self.coords.shape[0]} points.")
         else:
             raise ValueError(f"Could not find UMAP as path {path}")
@@ -162,7 +162,7 @@ class MosaicWidget(Widget):
         if tfrecords is None:
             tfrecords = self.slidemap.tfrecords
         if self.pool is None:
-            self.pool = mp.dummy.Pool(sf.util.num_cpu(default=4))
+            self.pool = mp.dummy.Pool(hx.util.num_cpu(default=4))
         self.mosaic = OpenGLMosaic(
             self.slidemap,
             tfrecords=tfrecords,

@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple, Union
 
 import cv2
 import numpy as np
-import histox as sf
+import histox as hx
 from PIL import Image
 from contextlib import contextmanager
 from rich.progress import Progress
@@ -79,8 +79,8 @@ class StainNormalizer:
         Examples
             Normalize a numpy image using the default fit.
 
-                >>> import histox as sf
-                >>> macenko = sf.norm.StainNormalizer('macenko')
+                >>> import histox as hx
+                >>> macenko = hx.norm.StainNormalizer('macenko')
                 >>> macenko.transform(image)
 
             Fit the normalizer to a target image (numpy or path).
@@ -93,7 +93,7 @@ class StainNormalizer:
 
             Fit the normalizer to all images in a Dataset.
 
-                >>> dataset = sf.Dataset(...)
+                >>> dataset = hx.Dataset(...)
                 >>> macenko.fit(dataset)
 
             Normalize an image and convert from Tensor to numpy array (RGB).
@@ -102,7 +102,7 @@ class StainNormalizer:
 
             Normalize images during DataLoader pre-processing.
 
-                >>> dataset = sf.Dataset(...)
+                >>> dataset = hx.Dataset(...)
                 >>> dataloader = dataset.torch(..., normalizer=macenko)
                 >>> dts = dataset.tensorflow(..., normalizer=macenko)
 
@@ -222,20 +222,20 @@ class StainNormalizer:
         if isinstance(arg1, Dataset):
             # Set up thread pool
             if num_threads == 'auto':
-                num_threads = sf.util.num_cpu(default=8)  # type: ignore
+                num_threads = hx.util.num_cpu(default=8)  # type: ignore
             log.debug(f"Setting up pool (size={num_threads}) for norm fitting")
             log.debug(f"Using normalizer batch size of {batch_size}")
             pool = mp.dummy.Pool(num_threads)  # type: ignore
 
             dataset = arg1
-            if sf.backend() == 'tensorflow':
+            if hx.backend() == 'tensorflow':
                 dts = dataset.tensorflow(
                     None,
                     batch_size,
                     standardize=False,
                     infinite=False
                 )
-            elif sf.backend() == 'torch':
+            elif hx.backend() == 'torch':
                 dts = dataset.torch(
                     None,
                     batch_size,
@@ -249,7 +249,7 @@ class StainNormalizer:
             pb.start()
             with cleanup_progress(pb):
                 for img_batch, slide in dts:
-                    if sf.model.is_torch_tensor(img_batch):
+                    if hx.model.is_torch_tensor(img_batch):
                         img_batch = img_batch.permute(0, 2, 3, 1)  # BCWH -> BWHC
 
                     mapped = pool.imap(lambda x: self.n.fit(x.numpy()), img_batch)
@@ -268,7 +268,7 @@ class StainNormalizer:
 
         # Fit to a preset
         elif (isinstance(arg1, str)
-              and arg1 in sf.norm.utils.fit_presets[self.n.preset_tag]):
+              and arg1 in hx.norm.utils.fit_presets[self.n.preset_tag]):
             self.n.fit_preset(arg1, **kwargs)
 
         # Fit to a path to an image
@@ -684,7 +684,7 @@ class StainNormalizer:
     @contextmanager
     def context(
         self,
-        context: Union[str, "sf.WSI", np.ndarray, "tf.Tensor", "torch.Tensor"]
+        context: Union[str, "hx.WSI", np.ndarray, "tf.Tensor", "torch.Tensor"]
     ):
         """Set the whole-slide context for the stain normalizer.
 
@@ -704,7 +704,7 @@ class StainNormalizer:
             with normalizer.context(slide):
                 normalizer.transform(target)
 
-        If a slide (``sf.WSI``) is used for context, any existing QC filters
+        If a slide (``hx.WSI``) is used for context, any existing QC filters
         and regions of interest will be used to mask out background as white
         pixels, and the masked thumbnail will be used for creating the
         normalizer context. If no QC has been applied to the slide and the
@@ -713,7 +713,7 @@ class StainNormalizer:
         to the thumbnail for masking.
 
         Args:
-            I (np.ndarray, sf.WSI): Context to use for normalization, e.g.
+            I (np.ndarray, hx.WSI): Context to use for normalization, e.g.
                 a whole-slide image thumbnail, optionally masked with masked
                 areas set to (255, 255, 255).
 
@@ -724,7 +724,7 @@ class StainNormalizer:
 
     def set_context(
         self,
-        context: Union[str, "sf.WSI", np.ndarray, "tf.Tensor", "torch.Tensor"]
+        context: Union[str, "hx.WSI", np.ndarray, "tf.Tensor", "torch.Tensor"]
     ) -> bool:
         """Set the whole-slide context for the stain normalizer.
 
@@ -736,7 +736,7 @@ class StainNormalizer:
         When calculating max concentrations from the image context,
         white pixels (255) will be masked.
 
-        If a slide (``sf.WSI``) is used for context, any existing QC filters
+        If a slide (``hx.WSI``) is used for context, any existing QC filters
         and regions of interest will be used to mask out background as white
         pixels, and the masked thumbnail will be used for creating the
         normalizer context. If no QC has been applied to the slide and the
@@ -745,15 +745,15 @@ class StainNormalizer:
         to the thumbnail for masking.
 
         Args:
-            I (np.ndarray, sf.WSI): Context to use for normalization, e.g.
+            I (np.ndarray, hx.WSI): Context to use for normalization, e.g.
                 a whole-slide image thumbnail, optionally masked with masked
                 areas set to (255, 255, 255).
 
         """
         if hasattr(self.n, 'set_context'):
             if isinstance(context, str):
-                image = np.asarray(sf.WSI(context, 500, 500).thumb(mpp=4))
-            elif isinstance(context, sf.WSI):
+                image = np.asarray(hx.WSI(context, 500, 500).thumb(mpp=4))
+            elif isinstance(context, hx.WSI):
                 image = context.masked_thumb(mpp=4, background='white')
             else:
                 image = context  # type: ignore
@@ -800,13 +800,13 @@ def autoselect(
         StainNormalizer:    Initialized StainNormalizer.
     """
     if backend is None:
-        backend = sf.backend()
+        backend = hx.backend()
     if backend == 'tensorflow':
         import histox.norm.tensorflow
-        BackendNormalizer = sf.norm.tensorflow.TensorflowStainNormalizer
+        BackendNormalizer = hx.norm.tensorflow.TensorflowStainNormalizer
     elif backend == 'torch':
         import histox.norm.torch
-        BackendNormalizer = sf.norm.torch.TorchStainNormalizer  # type: ignore
+        BackendNormalizer = hx.norm.torch.TorchStainNormalizer  # type: ignore
     elif backend == 'opencv':
         BackendNormalizer = StainNormalizer
     else:

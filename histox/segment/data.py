@@ -1,5 +1,5 @@
 import torch
-import histox as sf
+import histox as hx
 import rasterio
 import numpy as np
 import shapely.affinity as sa
@@ -21,7 +21,7 @@ class ThumbMaskDataset(torch.utils.data.Dataset):
 
     def __init__(
         self,
-        dataset: "sf.Dataset",
+        dataset: "hx.Dataset",
         mpp: float,
         roi_labels: List[str],
         *,
@@ -30,7 +30,7 @@ class ThumbMaskDataset(torch.utils.data.Dataset):
         """Dataset that generates thumbnails and ROI masks.
 
         Args:
-            dataset (sf.Dataset): The dataset to use.
+            dataset (hx.Dataset): The dataset to use.
             mpp (float): The target microns per pixel. The thumbnail will be
                 scaled to this resolution.
             roi_labels (List[str]): The ROI labels to include in the mask.
@@ -71,7 +71,7 @@ class ThumbMaskDataset(torch.utils.data.Dataset):
 
         # Load the image and mask.
         path = self.paths[index]
-        wsi = sf.WSI(path, 299, 512, rois=self.rois, roi_filter_method=0.1, verbose=False)
+        wsi = hx.WSI(path, 299, 512, rois=self.rois, roi_filter_method=0.1, verbose=False)
         output = get_thumb_and_mask(wsi, self.mpp, self.roi_labels, skip_missing=False)
         if output is None:
             return None
@@ -102,7 +102,7 @@ class RandomCropDataset(ThumbMaskDataset):
         a square size of `size` pixels.
 
         Args:
-            dataset (sf.Dataset): The dataset to use.
+            dataset (hx.Dataset): The dataset to use.
             mpp (float): The target microns per pixel. The thumbnail will be
                 scaled to this resolution.
             roi_labels (List[str]): The ROI labels to include in the mask.
@@ -125,11 +125,11 @@ class RandomCropDataset(ThumbMaskDataset):
 
 class BufferedMaskDataset(torch.utils.data.Dataset):
 
-    def __init__(self, dataset: "sf.Dataset", source: str, *, mode: str = 'binary'):
+    def __init__(self, dataset: "hx.Dataset", source: str, *, mode: str = 'binary'):
         """Dataset that loads buffered image and mask pairs.
 
         Args:
-            dataset (sf.Dataset): The dataset to use.
+            dataset (hx.Dataset): The dataset to use.
             source (str): The directory containing the buffered image/mask pairs.
 
         Keyword Args:
@@ -192,7 +192,7 @@ class BufferedRandomCropDataset(BufferedMaskDataset):
         a square size of `size` pixels.
 
         Args:
-            dataset (sf.Dataset): The dataset to use.
+            dataset (hx.Dataset): The dataset to use.
             source (str): The directory containing the buffered image/mask pairs.
             size (int, optional): The size of the random crop. Defaults to 1024.
 
@@ -218,7 +218,7 @@ class TileMaskDataset(torch.utils.data.Dataset):
 
     def __init__(
         self,
-        dataset: "sf.Dataset",
+        dataset: "hx.Dataset",
         tile_px: int,
         tile_um: Union[int, str],
         *,
@@ -231,7 +231,7 @@ class TileMaskDataset(torch.utils.data.Dataset):
         """Dataset that generates tiles and ROI masks from slides.
 
         Args:
-            dataset (sf.Dataset): The dataset to use.
+            dataset (hx.Dataset): The dataset to use.
             tile_px (int): The size of the tiles (in pixels).
             tile_um (Union[int, str]): The size of the tiles (in microns).
 
@@ -270,11 +270,11 @@ class TileMaskDataset(torch.utils.data.Dataset):
         self.all_extract_px = dict()
         for slide in track(slides, description="Loading slides"):
             name = path_to_name(slide)
-            wsi = sf.WSI(slide, **kw)
+            wsi = hx.WSI(slide, **kw)
             try:
-                wsi_with_rois = sf.WSI(slide, roi_filter_method=0.1, rois=rois, **kw)
+                wsi_with_rois = hx.WSI(slide, roi_filter_method=0.1, rois=rois, **kw)
             except Exception as e:
-                sf.log.error("Failed to load slide {}: {}".format(slide, e))
+                hx.log.error("Failed to load slide {}: {}".format(slide, e))
                 raise e
 
             # Filter ROIs to only include the specified labels.
@@ -285,7 +285,7 @@ class TileMaskDataset(torch.utils.data.Dataset):
             if not len(wsi_with_rois.rois):
                 continue
             if filter_method == 'roi':
-                wsi_inner = sf.WSI(slide, roi_filter_method=0.9, rois=rois, **kw)
+                wsi_inner = hx.WSI(slide, roi_filter_method=0.9, rois=rois, **kw)
                 if self.roi_labels:
                     wsi_inner.rois = [roi for roi in wsi_with_rois.rois if roi.label in self.roi_labels]
                     wsi_inner.process_rois()
@@ -462,7 +462,7 @@ def random_crop_and_rotate(img, mask, size):
 # -----------------------------------------------------------------------------
 
 def get_thumb_and_mask(
-    wsi: "sf.WSI",
+    wsi: "hx.WSI",
     mpp: float,
     roi_labels: Optional[List[str]] = None,
     skip_missing: bool = False
@@ -478,7 +478,7 @@ def get_thumb_and_mask(
     level = wsi.slide.best_level_for_downsample(ds)
     level_dim = wsi.slide.level_dimensions[level]
     if any([d > 10000 for d in level_dim]):
-        sf.log.warning("Large thumbnail found ({}) at level={} for {}".format(
+        hx.log.warning("Large thumbnail found ({}) at level={} for {}".format(
             level_dim, level, wsi.path
         ))
 

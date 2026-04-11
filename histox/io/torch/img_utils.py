@@ -84,7 +84,7 @@ def preprocess_uint8(
 
     Args:
         img (tf.Tensor): Batch of tensorflow images (uint8).
-        normalizer (sf.norm.StainNormalizer, optional): Normalizer.
+        normalizer (hx.norm.StainNormalizer, optional): Normalizer.
             Defaults to None.
         standardize (bool, optional): Standardize images. Defaults to True.
         resize_px (Optional[int], optional): Resize images. Defaults to None.
@@ -122,7 +122,7 @@ def decode_image(
 ) -> torch.Tensor:
     """Decodes image string/bytes to Tensor (W x H x C).
 
-    Torch implementation; different than sf.io.tensorflow.
+    Torch implementation; different than hx.io.tensorflow.
 
     Args:
         image (Union[bytes, str, torch.Tensor]): Image to decode.

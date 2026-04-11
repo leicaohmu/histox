@@ -3,7 +3,7 @@
 from typing import Iterable, Optional, Tuple
 
 import numpy as np
-import histox as sf
+import histox as hx
 import tensorflow as tf
 import torch
 from functools import partial
@@ -18,7 +18,7 @@ class EmbeddingSearch:
     def __init__(
         self,
         E_G: torch.nn.Module,
-        classifier_features: sf.model.Features,
+        classifier_features: hx.model.Features,
         pca: PCA,
         device: torch.device,
         embed_first: torch.Tensor,
@@ -27,7 +27,7 @@ class EmbeddingSearch:
         gan_px: int,
         target_um: int,
         target_px: int,
-        normalizer: Optional[sf.norm.StainNormalizer] = None,
+        normalizer: Optional[hx.norm.StainNormalizer] = None,
         pca_method: str = 'delta',
         gan_kwargs: Optional[dict] = None,
     ) -> None:
@@ -39,7 +39,7 @@ class EmbeddingSearch:
         Args:
             E_G (torch.nn.Module): GAN generator which accepts (z, e) as input,
                 where z is a noise vector and e is the class embedding vector.
-            classifier_features (sf.model.Features): Function which accepts an
+            classifier_features (hx.model.Features): Function which accepts an
                 image and returns a vector of features from a classifier layer.
             pca (sklearn.decomposition.PCA): Fit PCA.
             device (torch.device): PyTorch device.
@@ -166,8 +166,8 @@ class EmbeddingSearch:
 
         start_img_batch = self.E_G(z, embedding, **self.gan_kwargs)
         start_img_batch = crop(start_img_batch, **self.crop_kw)  # type: ignore
-        start_img_batch = sf.io.convert_dtype(start_img_batch, tf.uint8)
-        start_img_batch = sf.io.tensorflow.preprocess_uint8(
+        start_img_batch = hx.io.convert_dtype(start_img_batch, tf.uint8)
+        start_img_batch = hx.io.tensorflow.preprocess_uint8(
             start_img_batch,
             normalizer=self.normalizer,
             resize_px=self.target_px
@@ -247,7 +247,7 @@ class EmbeddingSearch:
         dts = tf.data.Dataset.from_generator(generator, output_signature=sig)
         return dts.map(
             partial(
-                sf.io.tensorflow.preprocess_uint8,
+                hx.io.tensorflow.preprocess_uint8,
                 normalizer=self.normalizer,
                 resize_px=self.target_px),
             num_parallel_calls=tf.data.AUTOTUNE,
@@ -301,11 +301,11 @@ class EmbeddingSearch:
 
         # GAN generator.
         def gan_generator():
-            for mask_batch in sf.util.batch(masks, batch_size):
+            for mask_batch in hx.util.batch(masks, batch_size):
                 embed_batch = self._embedding_from_mask(np.stack(mask_batch))
                 img_batch = self.E_G(z.expand(len(mask_batch), -1), embed_batch, **self.gan_kwargs)
                 cropped = crop(img_batch, **self.crop_kw)
-                yield sf.io.convert_dtype(cropped, tf.uint8)
+                yield hx.io.convert_dtype(cropped, tf.uint8)
 
         # Input data stream.
         gan_end_dts = self._build_gan_dataset(gan_generator)
@@ -364,7 +364,7 @@ class EmbeddingSearch:
 
         # GAN generator.
         def gan_generator():
-            for mask_batch in sf.util.batch(masks, batch_size):
+            for mask_batch in hx.util.batch(masks, batch_size):
                 embed_batch = self._embedding_from_mask(np.stack(mask_batch))
                 img_batch = self.E_G(
                     z.expand(len(mask_batch), -1),
@@ -372,7 +372,7 @@ class EmbeddingSearch:
                     **self.gan_kwargs
                 )
                 cropped = crop(img_batch, **self.crop_kw)
-                yield sf.io.convert_dtype(cropped, tf.uint8)
+                yield hx.io.convert_dtype(cropped, tf.uint8)
 
         # Input data stream.
         gan_end_dts = self._build_gan_dataset(gan_generator)

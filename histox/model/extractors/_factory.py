@@ -1,7 +1,7 @@
 """Factory for building feature extractors."""
 
 import importlib
-import histox as sf
+import histox as hx
 from os.path import join, exists
 from typing import Optional, Tuple, Dict, Any, TYPE_CHECKING
 from histox import errors
@@ -58,9 +58,9 @@ def build_feature_extractor(
 
             .. code-block:: python
 
-                import histox as sf
+                import histox as hx
 
-                extractor = sf.build_feature_extractor(
+                extractor = hx.build_feature_extractor(
                     'resnet50_imagenet'
                 )
 
@@ -69,7 +69,7 @@ def build_feature_extractor(
 
             .. code-block:: python
 
-                extractor = sf.build_feature_extractor(
+                extractor = hx.build_feature_extractor(
                     'resnet50_imagenet',
                     layers='conv4_block4_2_relu
                 )
@@ -78,25 +78,25 @@ def build_feature_extractor(
 
             .. code-block:: python
 
-                extractor = sf.build_feature_extractor('ctranspath')
+                extractor = hx.build_feature_extractor('ctranspath')
 
         Use an extractor to calculate layer activations for an entire dataset.
 
             .. code-block:: python
 
-                import histox as sf
+                import histox as hx
 
                 # Load a project and dataset
-                P = sf.load_project(...)
+                P = hx.load_project(...)
                 dataset = P.dataset(...)
 
                 # Create a feature extractor
-                resnet = sf.build_feature_extractor(
+                resnet = hx.build_feature_extractor(
                     'resnet50_imagenet'
                 )
 
                 # Calculate features for the entire dataset
-                features = sf.DatasetFeatures(
+                features = hx.DatasetFeatures(
                     resnet,
                     dataset=dataset
                 )
@@ -105,13 +105,13 @@ def build_feature_extractor(
 
             .. code-block:: python
 
-                import histox as sf
+                import histox as hx
 
                 # Load a slide
-                wsi = sf.WSI(...)
+                wsi = hx.WSI(...)
 
                 # Create a feature extractor
-                retccl = sf.build_feature_extractor(
+                retccl = hx.build_feature_extractor(
                     'retccl',
                     resize=True
                 )
@@ -126,16 +126,16 @@ def build_feature_extractor(
         raise ValueError(f"Invalid backend: {backend}")
 
     # Build a feature extractor from a finetuned model
-    if sf.util.is_tensorflow_model_path(name):
-        model_config = sf.util.get_model_config(name)
+    if hx.util.is_tensorflow_model_path(name):
+        model_config = hx.util.get_model_config(name)
         if model_config['hp']['uq']:
             from histox.model.tensorflow import UncertaintyInterface
             return UncertaintyInterface(name, **kwargs)
         else:
             from histox.model.tensorflow import Features
             return Features(name, **kwargs)
-    elif sf.util.is_torch_model_path(name):
-        model_config = sf.util.get_model_config(name)
+    elif hx.util.is_torch_model_path(name):
+        model_config = hx.util.get_model_config(name)
         if model_config['hp']['uq']:
             from histox.model.torch import UncertaintyInterface
             return UncertaintyInterface(name, **kwargs)
@@ -157,10 +157,10 @@ def build_feature_extractor(
 
     # Auto-build feature extractor according to available backends
     if is_tensorflow_extractor(name) and is_torch_extractor(name):
-        sf.log.info(
+        hx.log.info(
             f"Feature extractor {name} available in both Tensorflow and "
-            f"PyTorch backends; using active backend {sf.backend()}")
-        if sf.backend() == 'tensorflow':
+            f"PyTorch backends; using active backend {hx.backend()}")
+        if hx.backend() == 'tensorflow':
             return build_tensorflow_feature_extractor(name, **kwargs)
         else:
             return build_torch_feature_extractor(name, **kwargs)
@@ -215,9 +215,9 @@ def rebuild_extractor(
                 f'{bags_or_model}.'
             )
     if is_bag_config:
-        bags_config = sf.util.load_json(bags_or_model)
+        bags_config = hx.util.load_json(bags_or_model)
     elif is_model_dir:
-        mil_config = sf.util.load_json(join(bags_or_model, 'mil_params.json'))
+        mil_config = hx.util.load_json(join(bags_or_model, 'mil_params.json'))
         if 'bags_extractor' not in mil_config:
             if allow_errors:
                 return None, None
@@ -229,7 +229,7 @@ def rebuild_extractor(
                 )
         bags_config = mil_config['bags_extractor']
     else:
-        bags_config = sf.util.load_json(join(bags_or_model, 'bags_config.json'))
+        bags_config = hx.util.load_json(join(bags_or_model, 'bags_config.json'))
     if ('extractor' not in bags_config
        or any(n not in bags_config['extractor'] for n in ['class', 'kwargs'])):
         if allow_errors:
@@ -265,7 +265,7 @@ def rebuild_extractor(
 
     # Rebuild stain normalizer
     if bags_config['normalizer'] is not None:
-        normalizer = sf.norm.autoselect(
+        normalizer = hx.norm.autoselect(
             bags_config['normalizer']['method'],
             backend=(extractor.backend if native_normalizer else 'opencv')
         )
@@ -275,7 +275,7 @@ def rebuild_extractor(
     if (hasattr(extractor, 'normalizer')
        and extractor.normalizer is not None
        and normalizer is not None):
-        sf.log.warning(
+        hx.log.warning(
             'Extractor already has a stain normalizer. Overwriting with '
             'normalizer from bags configuration.'
         )

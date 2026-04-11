@@ -14,7 +14,7 @@ import cv2
 import numpy as np
 from rich.progress import track
 
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.stats import SlideMap, get_centroid_index
 from histox.util import log
@@ -33,10 +33,10 @@ def process_tile_image(args, decode_kwargs):
         return None, None, None, None
     if isinstance(image, tuple):
         tfr, tfr_idx = image
-        image = sf.io.get_tfrecord_by_index(tfr, tfr_idx)['image_raw']
+        image = hx.io.get_tfrecord_by_index(tfr, tfr_idx)['image_raw']
     if image is None:
         return point_index, None, None, None
-    if sf.model.is_tensorflow_tensor(image):
+    if hx.model.is_tensorflow_tensor(image):
         image = image.numpy()
     image = decode_image(image, **decode_kwargs)
     extent = [
@@ -143,16 +143,16 @@ class Mosaic:
                     tuples = [(tfr, idx) for tfr, i in zip(paths, idx)]
 
                     # Generate mosaic map
-                    mosaic = sf.Mosaic(tuples, coords)
+                    mosaic = hx.Mosaic(tuples, coords)
 
             Generate a mosaic map from a SlideMap and list of TFRecord paths.
 
                 .. code-block:: python
 
                     # Prepare a SlideMap from a project
-                    P = sf.Project('/project/path')
+                    P = hx.Project('/project/path')
                     ftrs = P.generate_features('/path/to/model')
-                    slide_map = sf.SlideMap.from_features(ftrs)
+                    slide_map = hx.SlideMap.from_features(ftrs)
 
                     # Generate mosaic
                     mosaic = Mosaic(slide_map, tfrecords=ftrs.tfrecords)
@@ -216,14 +216,14 @@ class Mosaic:
 
         # Detect tfrecord image format
         if self.tfrecords is not None:
-            _, self.img_format = sf.io.detect_tfrecord_format(self.tfrecords[0])
+            _, self.img_format = hx.io.detect_tfrecord_format(self.tfrecords[0])
         else:
             self.img_format = 'numpy'
 
         # Setup normalization
         if isinstance(normalizer, str):
             log.info(f'Using realtime {normalizer} normalization')
-            self.normalizer = sf.norm.autoselect(
+            self.normalizer = hx.norm.autoselect(
                 method=normalizer,
                 source=normalizer_source
             )  # type: Optional[StainNormalizer]
@@ -283,7 +283,7 @@ class Mosaic:
                 'global_index': i,
                 'category': 'none',
                 'slide': (tfr if self.tfrecords is not None
-                          else sf.util.path_to_name(tfr)),
+                          else hx.util.path_to_name(tfr)),
                 'tfrecord': (tfr if self.tfrecords is None
                              else self._get_tfrecords_from_slide(tfr)),
                 'tfrecord_index': idx,
@@ -298,7 +298,7 @@ class Mosaic:
             if not tfr:
                 log.error(f"TFRecord {tfr} not found in slide_map")
                 return None
-            image = sf.io.get_tfrecord_by_index(tfr, tfr_idx)['image_raw']
+            image = hx.io.get_tfrecord_by_index(tfr, tfr_idx)['image_raw']
         else:
             image = self.images[index]
         return image
@@ -307,7 +307,7 @@ class Mosaic:
         """Using the internal list of TFRecord paths, returns the path to a
         TFRecord for a given corresponding slide."""
         for tfr in self.tfrecords:
-            if sf.util.path_to_name(tfr) == slide:
+            if hx.util.path_to_name(tfr) == slide:
                 return tfr
         log.error(f'Unable to find TFRecord path for slide [green]{slide}')
         return None
@@ -459,7 +459,7 @@ class Mosaic:
         elif tile_select in ('nearest', 'centroid'):
             self.points['selected'] = False
             dist_fn = partial(select_nearest_points)
-            pool = DPool(sf.util.num_cpu())
+            pool = DPool(hx.util.num_cpu())
             for i, _ in track(enumerate(pool.imap_unordered(dist_fn, range(len(self.grid_idx))), 1), total=len(self.grid_idx)):
                 pass
             pool.close()
@@ -469,7 +469,7 @@ class Mosaic:
                 f'Unrecognized value for tile_select: "{tile_select}"'
             )
         end = time.time()
-        if sf.getLoggingLevel() <= 20:
+        if hx.getLoggingLevel() <= 20:
             sys.stdout.write('\r\033[K')
         log.debug(f'Tile image selection complete ({end - start:.1f} sec)')
 
@@ -489,7 +489,7 @@ class Mosaic:
             tfr = self.tfrecords
         else:
             tfr = list(self.tfrecords)
-        sf.util.write_json(tfr, join(path, 'tfrecords.json'))
+        hx.util.write_json(tfr, join(path, 'tfrecords.json'))
         log.info(f"Mosaic configuration exported to {path}")
 
     def plot(
@@ -508,10 +508,10 @@ class Mosaic:
 
         .. code-block::
 
-            import histox as sf
+            import histox as hx
             import matplotlib.pyplot as plt
 
-            heatmap = sf.Heatmap(...)
+            heatmap = hx.Heatmap(...)
             heatmap.plot()
             plt.show()
 
@@ -564,7 +564,7 @@ class Mosaic:
             to_map.append((idx, point.grid_x * self.tile_size, point.grid_y * self.tile_size, point.display_size, point.alpha, image))
 
         if pool is None:
-            pool = DPool(sf.util.num_cpu())
+            pool = DPool(hx.util.num_cpu())
             should_close_pool = True
         for i, (point_idx, image, extent, alpha) in track(enumerate(pool.imap(partial(process_tile_image, decode_kwargs=self.decode_kwargs), to_map)), total=len(selected_points)):
             if point_idx is not None:
@@ -594,7 +594,7 @@ class Mosaic:
             focus (list, optional): List of tfrecords (paths) to highlight on
                 the mosaic.
         """
-        with sf.util.matplotlib_backend('Agg'):
+        with hx.util.matplotlib_backend('Agg'):
             import matplotlib.pyplot as plt
 
             self.plot(**kwargs)

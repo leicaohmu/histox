@@ -3,7 +3,7 @@ import unittest
 from types import SimpleNamespace
 
 import numpy as np
-import histox as sf
+import histox as hx
 
 
 class TestSlideMap(unittest.TestCase):
@@ -13,10 +13,10 @@ class TestSlideMap(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls._orig_logging_level = sf.getLoggingLevel()  # type: ignore
-        sf.setLoggingLevel(40)
+        cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
+        hx.setLoggingLevel(40)
         cls.slides = [f'slide{s}' for s in range(cls.n_slides)]  # type: ignore
-        ftrs = sf.DatasetFeatures(None, None)
+        ftrs = hx.DatasetFeatures(None, None)
         ftrs.slides = cls.slides
         ftrs.predictions = {s: np.random.rand(cls.n_tiles, 2) for s in cls.slides}
         ftrs.activations = {s: np.random.rand(cls.n_tiles, 10) for s in cls.slides}
@@ -26,21 +26,21 @@ class TestSlideMap(unittest.TestCase):
         ftrs.feature_generator = SimpleNamespace(uq=True)
         cls.DummyDatasetFeatures = ftrs
         cls.umap_kw = dict(n_neighbors=5)
-        cls.slidemap = sf.SlideMap.from_features(
+        cls.slidemap = hx.SlideMap.from_features(
             cls.DummyDatasetFeatures,  # type:ignore
             **cls.umap_kw
         )
 
     @classmethod
     def tearDownClass(cls) -> None:
-        sf.setLoggingLevel(cls._orig_logging_level)  # type: ignore
+        hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
         return super().tearDownClass()
 
     def test_init_from_features(self):
         self.assertEqual(len(self.slidemap.activations()), self.n_tiles * self.n_slides)
 
     def test_init_from_features_centroid(self):
-        slidemap = sf.SlideMap.from_features(
+        slidemap = hx.SlideMap.from_features(
             self.DummyDatasetFeatures,
             map_slide='centroid',
             **self.umap_kw
@@ -48,7 +48,7 @@ class TestSlideMap(unittest.TestCase):
         self.assertEqual(len(slidemap.activations()), self.n_slides)
 
     def test_init_from_features_average(self):
-        slidemap = sf.SlideMap.from_features(
+        slidemap = hx.SlideMap.from_features(
             self.DummyDatasetFeatures,
             map_slide='average',
             **self.umap_kw
@@ -81,8 +81,8 @@ class TestMetrics(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls._orig_logging_level = sf.getLoggingLevel()  # type: ignore
-        sf.setLoggingLevel(40)
+        cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
+        hx.setLoggingLevel(40)
 
         cls.patients_arr = np.array([f'patient{p}' for p in range(cls.n_patients)])  # type: ignore
         cls.is_multi_slide = np.random.random(cls.n_patients) < cls.multi_slide_chance  # type: ignore
@@ -116,7 +116,7 @@ class TestMetrics(unittest.TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         super().tearDownClass()
-        sf.setLoggingLevel(cls._orig_logging_level)  # type: ignore
+        hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
 
     def _get_single_categorical_data(self):
         tile_to_slides = np.random.choice(self.slides, size=self.n_total)
@@ -171,7 +171,7 @@ class TestMetrics(unittest.TestCase):
         return y_true, y_pred, y_std, tile_to_slides
 
     def _group_reduce(self, df):
-        dfs = sf.stats.group_reduce(df, patients=self.patients)
+        dfs = hx.stats.group_reduce(df, patients=self.patients)
         self.assertIn('tile', dfs)
         self.assertIn('slide', dfs)
         self.assertIn('patient', dfs)
@@ -207,31 +207,31 @@ class TestMetrics(unittest.TestCase):
         self.assertIsInstance(metrics['c_index'], float)
 
     def test_single_categorical(self):
-        tile_df = sf.stats.df_from_pred(
+        tile_df = hx.stats.df_from_pred(
             *self._get_single_categorical_data()
         )
         dfs = self._group_reduce(tile_df)
         for level, _df in dfs.items():
-            metrics = sf.stats.metrics.classification_metrics(_df, level=level)
+            metrics = hx.stats.metrics.classification_metrics(_df, level=level)
             self._assert_categorical_metrics(metrics, ['out0'], [self.n_labels1])
 
     def test_single_categorical_named(self):
-        tile_df = sf.stats.df_from_pred(
+        tile_df = hx.stats.df_from_pred(
             *self._get_single_categorical_data()
         )
-        tile_df = sf.stats.name_columns(tile_df, 'classification', 'Named1')
+        tile_df = hx.stats.name_columns(tile_df, 'classification', 'Named1')
         dfs = self._group_reduce(tile_df)
         for level, _df in dfs.items():
-            metrics = sf.stats.metrics.classification_metrics(_df, level=level)
+            metrics = hx.stats.metrics.classification_metrics(_df, level=level)
             self._assert_categorical_metrics(metrics, ['Named1'], [self.n_labels1])
 
     def test_multi_categorical(self):
-        tile_df = sf.stats.df_from_pred(
+        tile_df = hx.stats.df_from_pred(
             *self._get_multi_categorical_data()
         )
         dfs = self._group_reduce(tile_df)
         for level, _df in dfs.items():
-            metrics = sf.stats.metrics.classification_metrics(_df, level=level)
+            metrics = hx.stats.metrics.classification_metrics(_df, level=level)
             self._assert_categorical_metrics(
                 metrics,
                 ['out0', 'out1'],
@@ -239,17 +239,17 @@ class TestMetrics(unittest.TestCase):
             )
 
     def test_multi_categorical_named(self):
-        tile_df = sf.stats.df_from_pred(
+        tile_df = hx.stats.df_from_pred(
             *self._get_multi_categorical_data()
         )
-        tile_df = sf.stats.name_columns(
+        tile_df = hx.stats.name_columns(
             tile_df,
             'classification',
             ['Named1', 'Named2']
         )
         dfs = self._group_reduce(tile_df)
         for level, _df in dfs.items():
-            metrics = sf.stats.metrics.classification_metrics(_df, level=level)
+            metrics = hx.stats.metrics.classification_metrics(_df, level=level)
             self._assert_categorical_metrics(
                 metrics,
                 ['Named1', 'Named2'],
@@ -257,37 +257,37 @@ class TestMetrics(unittest.TestCase):
             )
 
     def test_single_continuous(self):
-        tile_df = sf.stats.df_from_pred(
+        tile_df = hx.stats.df_from_pred(
             *self._get_single_continuous_data()
         )
-        tile_df = sf.stats.name_columns(tile_df, 'regression', ['NamedContinuous1'])
+        tile_df = hx.stats.name_columns(tile_df, 'regression', ['NamedContinuous1'])
         dfs = self._group_reduce(tile_df)
         for level, _df in dfs.items():
-            metrics = sf.stats.metrics.regression_metrics(_df, level=level)
+            metrics = hx.stats.metrics.regression_metrics(_df, level=level)
             self._assert_regression_metrics(metrics, 1)
 
     def test_multi_continuous(self):
-        tile_df = sf.stats.df_from_pred(
+        tile_df = hx.stats.df_from_pred(
             *self._get_multi_continuous_data()
         )
-        tile_df = sf.stats.name_columns(
+        tile_df = hx.stats.name_columns(
             tile_df,
             'regression',
             ['NamedContinuous1', 'NamedContinuous2']
         )
         dfs = self._group_reduce(tile_df)
         for level, _df in dfs.items():
-            metrics = sf.stats.metrics.regression_metrics(_df, level=level)
+            metrics = hx.stats.metrics.regression_metrics(_df, level=level)
             self._assert_regression_metrics(metrics, 2)
 
     def test_survival(self):
-        tile_df = sf.stats.df_from_pred(
+        tile_df = hx.stats.df_from_pred(
             *self._get_survival_data()
         )
-        tile_df = sf.stats.name_columns(tile_df, 'survival')
+        tile_df = hx.stats.name_columns(tile_df, 'survival')
         dfs = self._group_reduce(tile_df)
         for level, _df in dfs.items():
-            metrics = sf.stats.metrics.survival_metrics(_df, level=level)
+            metrics = hx.stats.metrics.survival_metrics(_df, level=level)
             self._assert_survival_metrics(metrics)
 
 # -----------------------------------------------------------------------------# -----------------------------------------------------------------------------

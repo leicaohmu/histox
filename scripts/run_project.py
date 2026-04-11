@@ -11,10 +11,10 @@ set up an experiment which extracts tiles from slides then trains a model
 to the outcome variable 'is_tumor', modify the file as follows:
 
     def main(P):
-        import histox as sf
+        import histox as hx
 
         P.extract_tiles(tile_px=299, tile_um=302)
-        hp = sf.ModelParams(
+        hp = hx.ModelParams(
             tile_px=299,
             tile_um=302,
             model='xception',
@@ -36,7 +36,7 @@ a regular package in scripts, Jupyter notebooks, or an interactive shell.
 
 import os
 import sys
-import histox as sf
+import histox as hx
 import argparse
 import logging
 import multiprocessing
@@ -70,10 +70,10 @@ if __name__=='__main__':
         os.environ['HDF5_USE_FILE_LOCKING'] = 'FALSE'
         print("Set environmental variable 'HDF5_USE_FILE_LOCKING'='FALSE'")
     if args.debug:
-        sf.setLoggingLevel(logging.DEBUG)
+        hx.setLoggingLevel(logging.DEBUG)
 
-    sf.about()
-    P = sf.Project.from_prompt(args.project, use_neptune=args.neptune)
+    hx.about()
+    P = hx.Project.from_prompt(args.project, use_neptune=args.neptune)
     P.associate_slide_names()
 
     sys.path.insert(0, args.project)

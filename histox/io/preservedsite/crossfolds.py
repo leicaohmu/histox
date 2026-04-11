@@ -2,7 +2,7 @@ from typing import List
 
 import numpy as np
 import pandas as pd
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.util import log
 
@@ -39,7 +39,7 @@ def generate(*args, method='auto', **kwargs):
         indicating the assigned crossfold
     """
     if method == 'auto':
-        if not sf.util.CPLEX_AVAILABLE:
+        if not hx.util.CPLEX_AVAILABLE:
             log.info("CPLEX solver not found; falling back to pyomo/bonmin.")
             method = 'bonmin'
         else:
@@ -82,7 +82,7 @@ def _generate_bonmin(
     .. _Preserved-site cross-validation:
         https://doi.org/10.1038/s41467-021-24698-1
     """
-    if not sf.util.BONMIN_AVAILABLE:
+    if not hx.util.BONMIN_AVAILABLE:
         raise errors.SolverNotFoundError("Unable to find pyomo/bonmin solver.")
 
     import pyomo.environ as pyo
@@ -194,7 +194,7 @@ def _generate_cplex(
     .. _Preserved-site cross-validation:
         https://doi.org/10.1038/s41467-021-24698-1
     """
-    if not sf.util.CPLEX_AVAILABLE:
+    if not hx.util.CPLEX_AVAILABLE:
         raise errors.SolverNotFoundError("CPLEX solver not found.")
 
     import cvxpy as cp

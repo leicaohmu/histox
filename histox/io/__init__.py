@@ -11,7 +11,7 @@ from os.path import exists, isdir, isfile, join
 from random import shuffle
 from typing import Any, Dict, Optional, Tuple, Union, List
 
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.io.io_utils import detect_tfrecord_format, convert_dtype
 from histox.util import log, tfrecord2idx
@@ -20,7 +20,7 @@ from rich.progress import Progress
 
 # --- Backend-specific imports and configuration ------------------------------
 
-if sf.backend() == 'tensorflow':
+if hx.backend() == 'tensorflow':
     from histox.io.tensorflow import (
         get_tfrecord_parser, read_and_return_record, serialized_record
     )
@@ -28,7 +28,7 @@ if sf.backend() == 'tensorflow':
     from tensorflow.data import TFRecordDataset
     from tensorflow.io import TFRecordWriter
 
-elif sf.backend() == 'torch':
+elif hx.backend() == 'torch':
     from histox.io.torch import (
         get_tfrecord_parser, read_and_return_record, serialized_record,
         decode_image
@@ -55,10 +55,10 @@ def update_manifest_at_dir(
     if not exists(manifest_path):
         manifest = {}
     else:
-        manifest = sf.util.load_json(manifest_path)
+        manifest = hx.util.load_json(manifest_path)
     prior_manifest = copy.deepcopy(manifest)
     try:
-        rel_paths = sf.util.get_relative_tfrecord_paths(directory)
+        rel_paths = hx.util.get_relative_tfrecord_paths(directory)
     except FileNotFoundError:
         log.debug(f"Failed to update manifest {directory}; no TFRecords")
         return None
@@ -91,13 +91,13 @@ def update_manifest_at_dir(
         return rel_tfr_manifest
 
     pool = DPool(8)
-    if sf.getLoggingLevel() <= 20:
+    if hx.getLoggingLevel() <= 20:
         pb = Progress(transient=True)
         task = pb.add_task("Updating tfrecord manifest...", total=len(rel_paths))
         pb.start()
     else:
         pb = None
-    with sf.util.cleanup_progress(pb):
+    with hx.util.cleanup_progress(pb):
         for m in pool.imap(process_tfr, rel_paths):
             if pb is not None:
                 pb.advance(task)
@@ -106,7 +106,7 @@ def update_manifest_at_dir(
             manifest.update(m)
     # Write manifest file
     if (manifest != prior_manifest) or (manifest == {}):
-        sf.util.write_json(manifest, manifest_path)
+        hx.util.write_json(manifest, manifest_path)
     pool.close()
     return manifest
 
@@ -159,7 +159,7 @@ def get_tfrecord_by_location(
             return False, False
         record = tfrecord2idx.get_tfrecord_by_index(tfrecord, idx, index_array=index_array)
         slide = record['slide']
-        image = sf.io.decode_image(record['image_raw']) if decode else record['image_raw']
+        image = hx.io.decode_image(record['image_raw']) if decode else record['image_raw']
         return slide, image
 
     else:
@@ -243,7 +243,7 @@ def write_tfrecords_single(
     files = [
         f for f in os.listdir(input_directory)
         if ((isfile(join(input_directory, f)))
-            and (sf.util.path_to_ext(f) in ("jpg", "jpeg", "png", "tif", "tiff")))
+            and (hx.util.path_to_ext(f) in ("jpg", "jpeg", "png", "tif", "tiff")))
     ]
     for tile in files:
         image_labels.update({
@@ -263,7 +263,7 @@ def write_tfrecords_single(
         record = serialized_record(label, image_string, 0, 0)
         writer.write(record)
     writer.close()
-    log.info(f"Wrote {len(keys)} images to {sf.util.green(tfrecord_path)}")
+    log.info(f"Wrote {len(keys)} images to {hx.util.green(tfrecord_path)}")
     return len(keys)
 
 
@@ -298,7 +298,7 @@ def write_tfrecords_merge(
         files = [
             f for f in os.listdir(directory)
             if ((isfile(join(directory, f)))
-                and (sf.util.path_to_ext(f) in ("jpg", "jpeg", "png")))
+                and (hx.util.path_to_ext(f) in ("jpg", "jpeg", "png")))
             ]
         for tile in files:
             tgt = join(input_directory, slide_dir, tile)
@@ -314,7 +314,7 @@ def write_tfrecords_merge(
         record = serialized_record(label, image_string, 0, 0)
         writer.write(record)
     writer.close()
-    log.info(f"Wrote {len(keys)} images to {sf.util.green(tfrecord_path)}")
+    log.info(f"Wrote {len(keys)} images to {hx.util.green(tfrecord_path)}")
     return len(keys)
 
 
@@ -328,8 +328,8 @@ def extract_tiles(tfrecord: str, destination: str) -> None:
     """
     if not exists(destination):
         os.makedirs(destination)
-    log.info(f"Extracting tiles from tfrecord {sf.util.green(tfrecord)}")
-    log.info(f"Saving tiles to directory {sf.util.green(destination)}")
+    log.info(f"Extracting tiles from tfrecord {hx.util.green(tfrecord)}")
+    log.info(f"Saving tiles to directory {hx.util.green(destination)}")
 
     dataset = TFRecordDataset(tfrecord)
     _, img_type = detect_tfrecord_format(tfrecord)
@@ -361,8 +361,8 @@ def get_locations_from_tfrecord(filename: str) -> List[Tuple[int, int]]:
 
     # Otherwise, read the TFRecord manually.
     out_list = []
-    for i in range(sf.io.get_tfrecord_length(filename)):
-        record = sf.io.get_tfrecord_by_index(filename, i)
+    for i in range(hx.io.get_tfrecord_length(filename)):
+        record = hx.io.get_tfrecord_by_index(filename, i)
         loc_x = record['loc_x']
         loc_y = record['loc_y']
         out_list.append((loc_x, loc_y))
@@ -380,5 +380,5 @@ def tfrecord_has_locations(
         if check_y:
             return np.load(index)['locations'].shape[1] == 2
         return True
-    record = sf.io.get_tfrecord_by_index(filename, 0)
+    record = hx.io.get_tfrecord_by_index(filename, 0)
     return (((not check_x) or 'loc_x' in record ) and ((not check_y) or 'loc_y' in record ))

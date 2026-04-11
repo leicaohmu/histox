@@ -9,7 +9,7 @@ from .._renderer import CapturedException
 from ..gui import imgui_utils
 from ..utils import EasyDict, LEFT_MOUSE_BUTTON, RIGHT_MOUSE_BUTTON
 
-import histox as sf
+import histox as hx
 
 #----------------------------------------------------------------------------
 
@@ -59,14 +59,14 @@ class ProjectWidget:
         for source in config:
             if 'roi' not in config[source]:
                 config[source]['roi'] = os.path.join(
-                    sf.util.relative_path(
+                    hx.util.relative_path(
                         './roi', self._new_project_path
                     ),
                     source
                 )
             if 'tfrecords' not in config[source]:
                 config[source]['tfrecords'] = os.path.join(
-                    sf.util.relative_path(
+                    hx.util.relative_path(
                         './tfrecords', self._new_project_path
                     ),
                     source
@@ -86,13 +86,13 @@ class ProjectWidget:
         )
         if _path:
             try:
-                self._dataset_config.update(sf.util.load_json(_path))
+                self._dataset_config.update(hx.util.load_json(_path))
             except Exception as e:
                 self.viz.create_toast(
                     f"Unable to load dataset configuration at {_path}",
                     icon="error"
                 )
-                sf.log.error(f"Unable to load dataset configuration at {_path}: {e}")
+                hx.log.error(f"Unable to load dataset configuration at {_path}: {e}")
                 raise
 
     def reset_new_project(self) -> None:
@@ -120,7 +120,7 @@ class ProjectWidget:
         """Recalculate and update the estimated patients/slides in the selected dataset source(s)."""
         self._new_project_n_slides = 0
         for source in self._new_project_sources:
-            self._new_project_n_slides += len(sf.util.get_slide_paths(
+            self._new_project_n_slides += len(hx.util.get_slide_paths(
                 self._dataset_config[source]['slides']
             ))
 
@@ -174,8 +174,8 @@ class ProjectWidget:
         try:
             self.project_path = project
             viz.defer_rendering()
-            sf.log.debug("Loading project at {}...".format(project))
-            self.P = sf.Project(project)
+            hx.log.debug("Loading project at {}...".format(project))
+            self.P = hx.Project(project)
             self.slide_paths = sorted(self.P.dataset().slide_paths())
             self.filtered_slide_paths = self.slide_paths
             self.viz.create_toast(f"Loaded project at {project}", icon="success")
@@ -364,7 +364,7 @@ class ProjectWidget:
         if self.viz.sidebar.full_button('Create', width=button_w, enabled=is_enabled):
             if self._new_project_path:
                 try:
-                    sf.create_project(
+                    hx.create_project(
                         self._new_project_path,
                         annotations=(self._new_annotations_path or None),
                         sources=self._new_project_sources,
@@ -377,7 +377,7 @@ class ProjectWidget:
                         f"Unable to create project at {self._new_project_path}",
                         icon="error"
                     )
-                    sf.log.error(f"Unable to create project at {self._new_project_path}: {e}")
+                    hx.log.error(f"Unable to create project at {self._new_project_path}: {e}")
                     raise
 
     def draw_add_source_popup(self) -> None:
@@ -410,7 +410,7 @@ class ProjectWidget:
                     self._add_source_slides = _path
                     _slides_changed = True
             if _slides_changed and os.path.exists(self._add_source_slides) and os.path.isdir(self._add_source_slides):
-                self._add_source_n_slides = len(sf.util.get_slide_paths(self._add_source_slides))
+                self._add_source_n_slides = len(hx.util.get_slide_paths(self._add_source_slides))
 
             # ROIs.
             with imgui_utils.item_width(self.label_width):
@@ -543,13 +543,13 @@ class ProjectWidget:
 
             # Update the filter
             if updated:
-                rois = [sf.util.path_to_name(roi) for roi in self.P.dataset().rois()]
+                rois = [hx.util.path_to_name(roi) for roi in self.P.dataset().rois()]
                 self.filtered_slide_paths = [
                     path for path in self.slide_paths
                     if (self.slide_search.lower() in path.lower()
                         and (self._filter_by_has_roi is None
-                             or (self._filter_by_has_roi is True and sf.util.path_to_name(path) in rois)
-                             or (self._filter_by_has_roi is False and sf.util.path_to_name(path) not in rois)))
+                             or (self._filter_by_has_roi is True and hx.util.path_to_name(path) in rois)
+                             or (self._filter_by_has_roi is False and hx.util.path_to_name(path) not in rois)))
                 ]
 
             # Hide menu if we click elsewhere
@@ -565,7 +565,7 @@ class ProjectWidget:
         """Draws the list of slides in the project."""
         for path in self.filtered_slide_paths:
             with self.viz.bold_font(self.viz.wsi is not None and path == self.viz.wsi.path):
-                if imgui.menu_item(imgui_utils.ellipsis_clip(sf.util.path_to_name(path), 33))[0]:
+                if imgui.menu_item(imgui_utils.ellipsis_clip(hx.util.path_to_name(path), 33))[0]:
                     self.viz.load_slide(path)
             if imgui.is_item_hovered():
                 imgui.set_tooltip(path)

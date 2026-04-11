@@ -3,7 +3,7 @@
 import os
 import inspect
 import pandas as pd
-import histox as sf
+import histox as hx
 import numpy as np
 
 from rich.progress import Progress, track
@@ -48,7 +48,7 @@ def eval_mil(
 
     Args:
         weights (str): Path to model weights to load.
-        dataset (sf.Dataset): Dataset to evaluation.
+        dataset (hx.Dataset): Dataset to evaluation.
         outcomes (str, list(str)): Outcomes.
         bags (str, list(str)): Path to bags, or list of bag file paths.
             Each bag should contain PyTorch array of features from all tiles in
@@ -85,7 +85,7 @@ def eval_mil(
         'model_path': weights,
         'eval_bags': bags,
         'eval_filters': dataset._filters,
-        'mil_params': sf.util.load_json(join(weights, 'mil_params.json'))
+        'mil_params': hx.util.load_json(join(weights, 'mil_params.json'))
     }
     return config.eval(
         model,
@@ -103,7 +103,7 @@ def eval_mil(
 
 def predict_mil(
     model: Union[str, Callable],
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     outcomes: Union[str, List[str]],
     bags: Union[str, np.ndarray, List[str]],
     *,
@@ -116,7 +116,7 @@ def predict_mil(
 
     Args:
         model (torch.nn.Module): Model from which to generate predictions.
-        dataset (sf.Dataset): Dataset from which to generation predictions.
+        dataset (hx.Dataset): Dataset from which to generation predictions.
         outcomes (str, list(str)): Outcomes.
         bags (str, list(str)): Path to bags, or list of bag file paths.
             Each bag should contain PyTorch array of features from all tiles in
@@ -219,7 +219,7 @@ def predict_mil(
 
 def predict_multimodal_mil(
     model: Union[str, Callable],
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     outcomes: Union[str, List[str]],
     bags: Union[np.ndarray, List[List[str]]],
     *,
@@ -232,7 +232,7 @@ def predict_multimodal_mil(
 
     Args:
         model (torch.nn.Module): Model from which to generate predictions.
-        dataset (sf.Dataset): Dataset from which to generation predictions.
+        dataset (hx.Dataset): Dataset from which to generation predictions.
         outcomes (str, list(str)): Outcomes.
         bags (str, list(str)): Path to bags, or list of bag file paths.
             Each bag should contain PyTorch array of features from all tiles in
@@ -319,7 +319,7 @@ def predict_multimodal_mil(
 
 def predict_slide(
     model: str,
-    slide: Union[str, sf.WSI],
+    slide: Union[str, hx.WSI],
     extractor: Optional["BaseFeatureExtractor"] = None,
     *,
     normalizer: Optional["StainNormalizer"] = None,
@@ -371,7 +371,7 @@ def predict_slide(
     """
     # Try to auto-determine the extractor
     if native_normalizer is None:
-        native_normalizer = (sf.slide_backend() == 'cucim')
+        native_normalizer = (hx.slide_backend() == 'cucim')
     if extractor is None:
         extractor, detected_normalizer = rebuild_extractor(
             model, allow_errors=True, native_normalizer=native_normalizer
@@ -397,7 +397,7 @@ def predict_slide(
     # Load model
     model_fn, config = utils.load_model_weights(model, config)
     model_fn.eval()
-    mil_params = sf.util.load_json(join(model, 'mil_params.json'))
+    mil_params = hx.util.load_json(join(model, 'mil_params.json'))
     if 'bags_extractor' not in mil_params:
         raise ValueError(
             "Unable to determine extractor used for model {}. "
@@ -413,19 +413,19 @@ def predict_slide(
                 "Either slide must be a histox.WSI object, or tile_px and "
                 "tile_um must be specified in mil_params.json.".format(slide)
             )
-        slide = sf.WSI(
+        slide = hx.WSI(
             slide,
             tile_px=bags_params['tile_px'],
             tile_um=bags_params['tile_um']
         )
-    elif not isinstance(slide, sf.WSI):
+    elif not isinstance(slide, hx.WSI):
         raise ValueError("slide must either be a str (path to a slide) or a "
                          "WSI object.")
 
     # Verify that the slide has the same tile size as the bags
     if 'tile_px' in bags_params and 'tile_um' in bags_params:
         bag_px, bag_um = bags_params['tile_px'], bags_params['tile_um']
-        if not sf.util.is_tile_size_compatible(slide.tile_px, slide.tile_um, bag_px, bag_um):
+        if not hx.util.is_tile_size_compatible(slide.tile_px, slide.tile_um, bag_px, bag_um):
             log.error(f"Slide tile size (px={slide.tile_px}, um={slide.tile_um}) does not match the tile size "
                       f"used for bags (px={bag_px}, um={bag_um}). Predictions may be unreliable.")
 
@@ -444,7 +444,7 @@ def predict_slide(
         bags = masked_bags
     bags = np.expand_dims(bags, axis=0).astype(np.float32)
 
-    sf.log.info("Generated feature bags for {} tiles".format(bags.shape[1]))
+    hx.log.info("Generated feature bags for {} tiles".format(bags.shape[1]))
 
     # Generate predictions.
     y_pred, raw_att = config.predict(model_fn, bags, attention=attention, **kwargs)
@@ -757,7 +757,7 @@ def run_eval(
 
     Args:
         model (torch.nn.Module): Loaded PyTorch MIL model.
-        dataset (sf.Dataset): Dataset to evaluation.
+        dataset (hx.Dataset): Dataset to evaluation.
         outcomes (str, list(str)): Outcomes.
         bags (str, list(str)): Path to bags, or list of bag file paths.
             Each bag should contain PyTorch array of features from all tiles in
@@ -803,9 +803,9 @@ def run_eval(
     if outdir:
         if not exists(outdir):
             os.makedirs(outdir)
-        model_dir = sf.util.get_new_model_dir(outdir, config.model_config.model)
+        model_dir = hx.util.get_new_model_dir(outdir, config.model_config.model)
         if params is not None:
-            sf.util.write_json(params, join(model_dir, 'mil_params.json'))
+            hx.util.write_json(params, join(model_dir, 'mil_params.json'))
         pred_out = join(model_dir, 'predictions.parquet')
         df.to_parquet(pred_out)
         log.info(f"Predictions saved to [green]{pred_out}[/]")
@@ -846,7 +846,7 @@ def run_eval(
 
 def get_mil_tile_predictions(
     weights: str,
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     bags: Union[str, np.ndarray, List[str]],
     *,
     config: Optional[TrainerConfig] = None,
@@ -1029,7 +1029,7 @@ def get_mil_tile_predictions(
 
 def save_mil_tile_predictions(
     weights: str,
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     bags: Union[str, np.ndarray, List[str]],
     config: Optional[TrainerConfig] = None,
     outcomes: Union[str, List[str]] = None,
@@ -1049,7 +1049,7 @@ def save_mil_tile_predictions(
 
 def generate_mil_features(
     weights: str,
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     bags: Union[str, np.ndarray, List[str]],
     *,
     config: Optional[TrainerConfig] = None,
@@ -1097,7 +1097,7 @@ def generate_mil_features(
 
 def generate_attention_heatmaps(
     outdir: str,
-    dataset: "sf.Dataset",
+    dataset: "hx.Dataset",
     bags: Union[List[str], np.ndarray],
     attention: Union[np.ndarray, List[np.ndarray]],
     **kwargs
@@ -1106,7 +1106,7 @@ def generate_attention_heatmaps(
 
     Args:
         outdir (str): Path at which to save heatmap images.
-        dataset (sf.Dataset): Dataset.
+        dataset (hx.Dataset): Dataset.
         bags (str, list(str)): List of bag file paths.
             Each bag should contain PyTorch array of features from all tiles in
             a slide, with the shape ``(n_tiles, n_features)``.
@@ -1132,10 +1132,10 @@ def generate_attention_heatmaps(
     pb = Progress(transient=True)
     task = pb.add_task('Generating heatmaps...', total=len(bags))
     pb.start()
-    with sf.util.cleanup_progress(pb):
+    with hx.util.cleanup_progress(pb):
         for i, bag in enumerate(bags):
             pb.advance(task)
-            slidename = sf.util.path_to_name(bag)
+            slidename = hx.util.path_to_name(bag)
             slide_path = dataset.find_slide(slide=slidename)
             locations_file = join(dirname(bag), f'{slidename}.index.npz')
             npy_loc_file = locations_file[:-1] + 'y'
@@ -1162,9 +1162,9 @@ def generate_attention_heatmaps(
             )
             if (len(attention[i].shape) < 2) or (attention[i].shape[0] == 1):
                 # If there is a single attention value, create a single map.
-                sf.util.location_heatmap(
+                hx.util.location_heatmap(
                     values=attention[i],
-                    filename=join(outdir, f'{sf.util.path_to_name(slide_path)}_attn.png'),
+                    filename=join(outdir, f'{hx.util.path_to_name(slide_path)}_attn.png'),
                     **heatmap_kwargs
                 )
             else:
@@ -1172,14 +1172,14 @@ def generate_attention_heatmaps(
                 # as well as a heatmap reduced by mean.
                 # The attention values are assumed to have the shape (n_attention, n_tiles).
                 for att_idx in range(attention[i].shape[0]):
-                    sf.util.location_heatmap(
+                    hx.util.location_heatmap(
                         values=attention[i][att_idx, :],
-                        filename=join(outdir, f'{sf.util.path_to_name(slide_path)}_attn-{att_idx}.png'),
+                        filename=join(outdir, f'{hx.util.path_to_name(slide_path)}_attn-{att_idx}.png'),
                         **heatmap_kwargs
                     )
-                sf.util.location_heatmap(
+                hx.util.location_heatmap(
                         values=np.mean(attention[i], axis=0),
-                        filename=join(outdir, f'{sf.util.path_to_name(slide_path)}_attn-avg.png'),
+                        filename=join(outdir, f'{hx.util.path_to_name(slide_path)}_attn-avg.png'),
                         **heatmap_kwargs
                     )
 

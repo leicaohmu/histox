@@ -1,7 +1,7 @@
 import time
 import numpy as np
 import imgui
-import histox as sf
+import histox as hx
 from histox import log
 from typing import Optional, Tuple
 from histox.slide import wsi_reader
@@ -12,7 +12,7 @@ from ...utils import EasyDict
 
 # -----------------------------------------------------------------------------
 
-class OpenGLMosaic(sf.mosaic.Mosaic):
+class OpenGLMosaic(hx.mosaic.Mosaic):
     def __init__(self, *args, **kwargs):
         """Mosaic map designed for display using OpenGL."""
         super().__init__(*args, **kwargs)
@@ -48,7 +48,7 @@ class MosaicViewer(Viewer):
         self.zoomed = False
         self.size = 0
         if slides is not None:
-            self.slides = {sf.util.path_to_name(s): s for s in slides}
+            self.slides = {hx.util.path_to_name(s): s for s in slides}
         else:
             self.slides = {}
         self._hovering_index = None

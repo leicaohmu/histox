@@ -1,4 +1,4 @@
-import histox as sf
+import histox as hx
 import traceback
 import numpy as np
 import imgui
@@ -20,7 +20,7 @@ class ExtensionsWidget:
 
     def __init__(
         self,
-        viz: "sf.studio.Studio",
+        viz: "hx.studio.Studio",
         autoload: Union[bool, Tuple[str], str] = ('mil', 'segment')
     ) -> None:
 

@@ -31,7 +31,7 @@ from os.path import exists, join, abspath
 from types import SimpleNamespace
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union, Sequence
 
-import histox as sf
+import histox as hx
 import histox.slide.qc
 from histox.util import log, path_to_name  # noqa F401
 from .report import SlideReport
@@ -120,8 +120,8 @@ class WSI:
             ignore_missing_mpp (bool, optional): If a slide does not have
                 microns-per-pixel (MPP) information stored in EXIF data
                 (key 65326), set the MPP to a default value
-                (``sf.slide.DEFAULG_JPG_MPP``). If False and MPP data is
-                missing, raises ``sf.errors.SlideMissingMPPError``.
+                (``hx.slide.DEFAULG_JPG_MPP``). If False and MPP data is
+                missing, raises ``hx.errors.SlideMissingMPPError``.
             use_bounds (bool): If True, use the slide bounds to determine
                 the slide dimensions. This will crop out unscanned white space.
                 If a tuple of int, interprets the bounds as ``(top_left_x,
@@ -144,13 +144,13 @@ class WSI:
         # Initialize calculated variables
         self.pb = pb
         self.name = path_to_name(path)
-        self.shortname = sf.util._shortname(self.name)
+        self.shortname = hx.util._shortname(self.name)
         self.tile_px = tile_px
         self.enable_downsample = enable_downsample
         self.thumb_image = None  # type: Optional[Image.Image]
         self.stride_div = stride_div
         self.path = path
-        self.filetype = sf.util.path_to_ext(path)
+        self.filetype = hx.util.path_to_ext(path)
         self.blur_burden = None  # type: Optional[float]
         self.roi_method = None  # type: Optional[str]
         self.extracted_x_size = 0  # type: int
@@ -203,14 +203,14 @@ class WSI:
         # Initiate supported slide reader
         if not os.path.exists(path):
             raise errors.SlideNotFoundError(f"Could not find slide {path}.")
-        if self.filetype.lower() not in sf.util.SUPPORTED_FORMATS:
+        if self.filetype.lower() not in hx.util.SUPPORTED_FORMATS:
             raise errors.SlideLoadError(
                 f"{self.name}: unsupported filetype '{self.filetype}'"
             )
         if self.filetype.lower() not in backend_formats():
             raise errors.IncompatibleBackendError(
                 f"{self.name}: filetype '{self.filetype}' is not supported "
-                f"by the current backend, {sf.slide_backend()}"
+                f"by the current backend, {hx.slide_backend()}"
             )
 
         # Collect basic slide information
@@ -684,14 +684,14 @@ class WSI:
         """
         # Calculate downsample by magnification
         if isinstance(tile_um, str):
-            sf.util.assert_is_mag(tile_um)
+            hx.util.assert_is_mag(tile_um)
             _mag_lvl = 10 / (np.array(self.slide.level_downsamples) * self.mpp)
             mag_levels = _mag_lvl.tolist()
             closest_mag = min(
                 mag_levels,
-                key=lambda x: abs(x - sf.util.to_mag(tile_um))  # type: ignore
+                key=lambda x: abs(x - hx.util.to_mag(tile_um))  # type: ignore
             )
-            if abs(closest_mag - sf.util.to_mag(tile_um)) > 2:
+            if abs(closest_mag - hx.util.to_mag(tile_um)) > 2:
                 raise errors.SlideLoadError(
                     f"{self.name}: Could not find magnification level "
                     f"matching {tile_um} (closest: {closest_mag:.1f})"
@@ -909,7 +909,7 @@ class WSI:
             mask = self.qc_mask
         else:
             log.debug("Applying Otsu thresholding to identify tissue regions.")
-            mask = sf.slide.qc.Otsu()(self)
+            mask = hx.slide.qc.Otsu()(self)
 
         # Next, fill holes and remove small peaks through gaussian blur,
         # thresholding, and morphological closing.
@@ -954,8 +954,8 @@ class WSI:
         if normalizer is not None:
             log.debug("Aligning with stain normalization: {}".format(normalizer))
             if isinstance(normalizer, str):
-                norm = sf.norm.autoselect(normalizer, backend='opencv')
-            elif isinstance(normalizer, sf.norm.StainNormalizer):
+                norm = hx.norm.autoselect(normalizer, backend='opencv')
+            elif isinstance(normalizer, hx.norm.StainNormalizer):
                 norm = normalizer
             else:
                 raise ValueError("normalizer must be a str or instance of StainNormalizer")
@@ -1031,7 +1031,7 @@ class WSI:
                 their_region = norm.transform(their_region[:, :, 0:3])
 
             try:
-                rough_alignment = sf.slide.utils._find_translation_matrix(their_region, our_region, h=50, search_window=53)
+                rough_alignment = hx.slide.utils._find_translation_matrix(their_region, our_region, h=50, search_window=53)
             except cv2.error:
                 rough_alignment = None
                 log.debug("Initial rough alignment failed at mpp={}".format(finetune_mpp))
@@ -1131,8 +1131,8 @@ class WSI:
         # Stain normalizer.
         if normalizer is not None:
             if isinstance(normalizer, str):
-                normalizer = sf.norm.autoselect(normalizer, backend='opencv')
-            elif not isinstance(normalizer, sf.norm.StainNormalizer):
+                normalizer = hx.norm.autoselect(normalizer, backend='opencv')
+            elif not isinstance(normalizer, hx.norm.StainNormalizer):
                 raise ValueError("normalizer must be a str or instance of StainNormalizer")
 
         # Perform coarse alignment.
@@ -1143,8 +1143,8 @@ class WSI:
         # Finetune alignment at each tile location.
         from tqdm import tqdm
 
-        ctx = mp.get_context('spawn') if sf.slide_backend() == 'libvips' else mp.get_context('fork')
-        pool = ctx.Pool(num_workers or sf.util.num_cpu())
+        ctx = mp.get_context('spawn') if hx.slide_backend() == 'libvips' else mp.get_context('fork')
+        pool = ctx.Pool(num_workers or hx.util.num_cpu())
 
         alignment_coords = np.zeros((self.coord.shape[0], 2))
         half_extract_px = int(np.round(self.full_extract_px/2))
@@ -1445,7 +1445,7 @@ class WSI:
 
     def apply_segmentation(
         self,
-        segmentation: "sf.cellseg.Segmentation",
+        segmentation: "hx.cellseg.Segmentation",
         apply_rois: bool = True
     ) -> None:
         """Apply cell segmentation to the slide.
@@ -1632,9 +1632,9 @@ class WSI:
             filter_downsample_ratio = 1
 
         # Prepare stain normalization
-        if normalizer and not isinstance(normalizer, sf.norm.StainNormalizer):
-            if sf.slide_backend() == 'cucim':
-                normalizer = sf.norm.autoselect(  # type: ignore
+        if normalizer and not isinstance(normalizer, hx.norm.StainNormalizer):
+            if hx.slide_backend() == 'cucim':
+                normalizer = hx.norm.autoselect(  # type: ignore
                     method=normalizer,
                     source=normalizer_source
                 )
@@ -1642,12 +1642,12 @@ class WSI:
                 # Libvips with spawn multiprocessing
                 # is not compatible with Tensorflow-native stain normalization
                 # due to GPU memory issues
-                normalizer = sf.norm.StainNormalizer(normalizer)  # type: ignore
+                normalizer = hx.norm.StainNormalizer(normalizer)  # type: ignore
                 if normalizer_source is not None:
                     normalizer.fit(normalizer_source)  # type: ignore
 
         if normalizer and context_normalize:
-            assert isinstance(normalizer, sf.norm.StainNormalizer)
+            assert isinstance(normalizer, hx.norm.StainNormalizer)
             log.debug("Preparing whole-slide context for normalizer")
             normalizer.set_context(self)
 
@@ -1727,8 +1727,8 @@ class WSI:
                     #   to reduce memory utilization.
                     # In the Libvips backend, a multiprocessing pool is default
                     #   to significantly improve performance.
-                    n_cores = sf.util.num_cpu(default=8)
-                    if sf.slide_backend() == 'libvips':
+                    n_cores = hx.util.num_cpu(default=8)
+                    if hx.slide_backend() == 'libvips':
                         num_processes = max(int(n_cores/2), 1)
                     else:
                         num_threads = n_cores
@@ -1737,13 +1737,13 @@ class WSI:
                     pool = mp.dummy.Pool(processes=num_threads)
                     should_close = True
                 elif num_processes is not None and num_processes > 1:
-                    ptype = 'spawn' if sf.slide_backend() == 'libvips' else 'fork'
+                    ptype = 'spawn' if hx.slide_backend() == 'libvips' else 'fork'
                     log.debug(f"Building generator with Pool({num_processes}), "
                               f"type={ptype}")
                     ctx = mp.get_context(ptype)
                     pool = ctx.Pool(
                         processes=num_processes,
-                        initializer=sf.util.set_ignore_sigint,
+                        initializer=hx.util.set_ignore_sigint,
                     )
                     should_close = True
                 else:
@@ -1755,7 +1755,7 @@ class WSI:
             else:
                 log.debug("Building generator with a shared pool")
             if show_progress:
-                pbar = Progress(transient=sf.getLoggingLevel() > 20)
+                pbar = Progress(transient=hx.getLoggingLevel() > 20)
                 task = pbar.add_task('Extracting...', total=self.estimated_num_tiles)
                 pbar.start()
             else:
@@ -1768,7 +1768,7 @@ class WSI:
                         batch_size = min(pool._processes, max_tiles)
                     else:
                         batch_size = pool._processes
-                    batched_coord = sf.util.batch(non_roi_coord, batch_size)
+                    batched_coord = hx.util.batch(non_roi_coord, batch_size)
                     def _generator():
                         for batch in batched_coord:
                             yield from map_fn(
@@ -1786,7 +1786,7 @@ class WSI:
                         chunksize=csize
                     )
 
-            with sf.util.cleanup_progress(pbar):
+            with hx.util.cleanup_progress(pbar):
                 for e, result in enumerate(i_mapped):
                     if show_progress:
                         pbar.advance(task, 1)
@@ -1805,7 +1805,7 @@ class WSI:
 
             # Reset stain normalizer context
             if normalizer and context_normalize:
-                assert isinstance(normalizer, sf.norm.StainNormalizer)
+                assert isinstance(normalizer, hx.norm.StainNormalizer)
                 normalizer.clear_context()
 
             name_msg = f'[green]{self.shortname}[/]'
@@ -2303,7 +2303,7 @@ class WSI:
             with open(unfinished_marker, 'w') as marker_file:
                 marker_file.write(' ')
         if tfrecord_dir and not dry_run:
-            writer = sf.io.TFRecordWriter(join(
+            writer = hx.io.TFRecordWriter(join(
                 tfrecord_dir,
                 self.name+".tfrecords"
             ))
@@ -2362,7 +2362,7 @@ class WSI:
                                 ann[3]
                             ))
             if tfrecord_dir:
-                record = sf.io.serialized_record(slide_bytes, img_str, x, y)
+                record = hx.io.serialized_record(slide_bytes, img_str, x, y)
                 writer.write(record)
                 num_wrote_to_tfr += 1
         if tfrecord_dir and not dry_run:
@@ -2539,7 +2539,7 @@ class WSI:
 
                 >>> from histox.cellseg import seg_utils, Segmentation
                 >>> segmentation = Segmentation(...)
-                >>> wsi = sf.WSI(...)
+                >>> wsi = hx.WSI(...)
                 >>> wsi.apply_segmentation(segmentation)
                 >>> sparse_mask = seg_utils.sparse_mask(segmentation.masks)
                 >>> wsi.get_tile_mask(0, sparse_mask)
@@ -2801,7 +2801,7 @@ class WSI:
             # Apply Otsu's threshold to background area
             # to prevent whitespace from interfering with normalization
             from histox.slide.qc import Otsu, GaussianV2
-            sf.log.debug(
+            hx.log.debug(
                 "Applying Otsu's thresholding & Gaussian blur filter "
                 "to stain norm context"
             )
@@ -2869,8 +2869,8 @@ class WSI:
         """
         from histox import Heatmap
 
-        config = sf.util.get_model_config(model)
-        _compatible = sf.util.is_tile_size_compatible(
+        config = hx.util.get_model_config(model)
+        _compatible = hx.util.is_tile_size_compatible(
             config['tile_px'],
             config['tile_um'],
             self.tile_px,
@@ -3046,7 +3046,7 @@ class WSI:
         Args:
             method (str, Callable, list(Callable)): Quality control method(s).
                 If a string, may be 'blur', 'otsu', or 'both'.
-                If a callable (or list of callables), each must accept a sf.WSI
+                If a callable (or list of callables), each must accept a hx.WSI
                 object and return a np.ndarray (dtype=np.bool).
             blur_radius (int, optional): Blur radius. Only used if method is
                 'blur' or 'both'.
@@ -3078,13 +3078,13 @@ class WSI:
         if 'blur' in method:
             idx = method.index('blur')  # type: ignore
             method.remove('blur')       # type: ignore
-            method.insert(idx, sf.slide.qc.GaussianV2(mpp=blur_mpp,
+            method.insert(idx, hx.slide.qc.GaussianV2(mpp=blur_mpp,
                                                       sigma=blur_radius,
                                                       threshold=blur_threshold))
         if 'otsu' in method:
             idx = method.index('otsu')  # type: ignore
             method.remove('otsu')       # type: ignore
-            method.insert(idx, sf.slide.qc.Otsu())
+            method.insert(idx, hx.slide.qc.Otsu())
 
         starttime = time.time()
         img = None
@@ -3315,7 +3315,7 @@ class WSI:
                         zipped = list(zip(x.tolist(), y.tolist()))
                         draw.line(zipped, joint='curve', fill=color, width=linewidth)
                 else:
-                    sf.log.error(f"Unable to plot ROI {i}, unknown geometry type: {poly.geom_type}")
+                    hx.log.error(f"Unable to plot ROI {i}, unknown geometry type: {poly.geom_type}")
             return thumb
         else:
             return thumb

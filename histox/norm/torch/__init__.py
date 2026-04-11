@@ -3,7 +3,7 @@ from typing import Dict, Optional, Tuple, Union, Any
 import torch
 import numpy as np
 import torchvision
-import histox as sf
+import histox as hx
 from rich.progress import Progress
 
 from histox.dataset import Dataset
@@ -155,7 +155,7 @@ class TorchStainNormalizer(StainNormalizer):
 
         # Fit to a preset
         elif (isinstance(arg1, str)
-              and arg1 in sf.norm.utils.fit_presets[self.n.preset_tag]):
+              and arg1 in hx.norm.utils.fit_presets[self.n.preset_tag]):
             self.n.fit_preset(arg1)
 
         elif isinstance(arg1, str):

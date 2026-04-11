@@ -118,7 +118,7 @@ def read_and_return_record(
     Args:
         record (bytes): Raw TFRecord bytes (unparsed)
         parser (Callable): TFRecord parser, as returned by
-            :func:`sf.io.get_tfrecord_parser()`
+            :func:`hx.io.get_tfrecord_parser()`
         assign_slide (str, optional): Slide name to override the record with.
             Defaults to None.
 
@@ -162,7 +162,7 @@ def get_tfrecord_parser(
 ) -> Callable:
 
     """Gets tfrecord parser using dareblopy reader. Torch implementation;
-    different than sf.io.tensorflow
+    different than hx.io.tensorflow
 
     Args:
         tfrecord_path (str): Path to tfrecord to parse.

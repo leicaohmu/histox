@@ -1,5 +1,5 @@
 import numpy as np
-import histox as sf
+import histox as hx
 from typing import Optional
 from rich import print
 
@@ -8,11 +8,11 @@ from histox.model.extractors import rebuild_extractor
 
 # -----------------------------------------------------------------------------
 
-if sf.util.tf_available:
+if hx.util.tf_available:
     import tensorflow as tf
     import histox.io.tensorflow
-    sf.util.allow_gpu_memory_growth()
-if sf.util.torch_available:
+    hx.util.allow_gpu_memory_growth()
+if hx.util.torch_available:
     import torch
     import torchvision
     import histox.io.torch
@@ -31,18 +31,18 @@ class MILRenderer(Renderer):
             self.load_model(mil_model_path)
 
     def load_model(self, mil_model_path: str, device: Optional[str] = None) -> None:
-        sf.log.info("Loading MIL model at {}".format(mil_model_path))
+        hx.log.info("Loading MIL model at {}".format(mil_model_path))
         if device is None:
             from histox.model import torch_utils
             device = torch_utils.get_device()
         self.device = device
         self.extractor, self.normalizer = rebuild_extractor(
-            mil_model_path, native_normalizer=(sf.slide_backend()=='cucim')
+            mil_model_path, native_normalizer=(hx.slide_backend()=='cucim')
         )
-        self.mil_model, self.mil_config = sf.mil.utils.load_model_weights(mil_model_path)
+        self.mil_model, self.mil_config = hx.mil.utils.load_model_weights(mil_model_path)
         self.mil_model.to(self.device)
         self._model = self.mil_model
-        sf.log.info("Model loading successful")
+        hx.log.info("Model loading successful")
 
     def _convert_img_to_bag(self, img, res):
         """Convert an image into bag format."""
@@ -51,15 +51,15 @@ class MILRenderer(Renderer):
         else:
             dtype = tf.uint8
         img = np.expand_dims(img, 0)
-        img = sf.io.convert_dtype(img, dtype=dtype)
+        img = hx.io.convert_dtype(img, dtype=dtype)
         if self.normalizer:
             img  = self.normalizer.transform(img)
             if self.extractor.backend == 'torch':
                 img = img.to(torch.uint8)
-                res.normalized = sf.io.torch.as_whc(img[0]).cpu().numpy()
+                res.normalized = hx.io.torch.as_whc(img[0]).cpu().numpy()
             else:
                 img = tf.cast(img, tf.uint8)
-                res.normalized = sf.io.convert_dtype(img[0], np.uint8)
+                res.normalized = hx.io.convert_dtype(img[0], np.uint8)
         if self.extractor.backend == 'torch':
             img = img.to(self.device)
         bag = self.extractor(img)
@@ -69,7 +69,7 @@ class MILRenderer(Renderer):
         """Generate MIL predictions from bag."""
 
         # Convert to torch tensor
-        if sf.util.tf_available and isinstance(bag, tf.Tensor):
+        if hx.util.tf_available and isinstance(bag, tf.Tensor):
             bag = bag.numpy()
         if isinstance(bag, np.ndarray):
             bag = torch.from_numpy(bag)

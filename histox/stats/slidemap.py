@@ -4,7 +4,7 @@ import os
 import pickle
 import numpy as np
 import pandas as pd
-import histox as sf
+import histox as hx
 import warnings
 from os.path import join, exists, isdir
 from pandas.core.frame import DataFrame
@@ -45,8 +45,8 @@ class SlideMap:
 
                 .. code-block:: python
 
-                    dts_ftrs = sf.DatasetFeatures(model, dataset)
-                    slidemap = sf.SlideMap.from_features(dts_ftrs)
+                    dts_ftrs = hx.DatasetFeatures(model, dataset)
+                    slidemap = hx.SlideMap.from_features(dts_ftrs)
 
             Build a SlideMap from prespecified coordinates
 
@@ -55,7 +55,7 @@ class SlideMap:
                     x = np.array(...)
                     y = np.array(...)
                     slides = ['slide1', 'slide1', 'slide5', ...]
-                    slidemap = sf.SlideMap.from_xy(
+                    slidemap = hx.SlideMap.from_xy(
                         x=x, y=y, slides=slides
                     )
 
@@ -63,7 +63,7 @@ class SlideMap:
 
                 .. code-block:: python
 
-                    slidemap = sf.SlideMap.load('map.parquet')
+                    slidemap = hx.SlideMap.load('map.parquet')
 
         Args:
             slides (list(str)): List of slide names
@@ -93,7 +93,7 @@ class SlideMap:
                 .. code-block:: python
 
                     slidemap.save('/directory/')
-                    new_slidemap = sf.SlideMap.load('/directory/')
+                    new_slidemap = hx.SlideMap.load('/directory/')
 
         Args:
             path (str): Directory from which to load a previously saved UMAP.
@@ -124,7 +124,7 @@ class SlideMap:
                 log.warn("Could not find range_clip.npz; results from "
                          "umap_transform() will not be normalized.")
             if exists(join(path, 'tfrecords.json')):
-                obj.tfrecords = sf.util.load_json(join(path, 'tfrecords.json'))
+                obj.tfrecords = hx.util.load_json(join(path, 'tfrecords.json'))
         elif path.endswith('.parquet'):
             obj.load_coordinates(path)
         else:
@@ -272,8 +272,8 @@ class SlideMap:
     def from_precalculated(cls, *args, **kwargs) -> "SlideMap":
         """Deprecated class initializer."""
         warnings.warn(
-            "sf.SlideMap.from_precalculated() deprecated. Please use "
-            "sf.SlideMap.from_xy() instead.",
+            "hx.SlideMap.from_precalculated() deprecated. Please use "
+            "hx.SlideMap.from_xy() instead.",
             DeprecationWarning
         )
         return cls.from_xy(*args, **kwargs)
@@ -336,7 +336,7 @@ class SlideMap:
             ])
             data_dict['location'] = pd.Series([l for l in locations]).astype(object)
 
-        if self.ftrs.predictions and isinstance(self.ftrs, sf.DatasetFeatures):
+        if self.ftrs.predictions and isinstance(self.ftrs, hx.DatasetFeatures):
             predictions = np.concatenate([
                 self.ftrs.predictions[slide] for slide in self.slides
             ])
@@ -469,7 +469,7 @@ class SlideMap:
         self,
         tfrecords: Optional[List[str]] = None,
         **kwargs
-    ) -> "sf.Mosaic":
+    ) -> "hx.Mosaic":
         """Build a mosaic map.
 
         Args:
@@ -514,9 +514,9 @@ class SlideMap:
         elif (tfrecords is None
              and self.ftrs is not None
              and len(self.ftrs.tfrecords)):
-            return sf.Mosaic(self, tfrecords=self.ftrs.tfrecords, **kwargs)
+            return hx.Mosaic(self, tfrecords=self.ftrs.tfrecords, **kwargs)
         else:
-            return sf.Mosaic(self, tfrecords=tfrecords, **kwargs)
+            return hx.Mosaic(self, tfrecords=tfrecords, **kwargs)
 
     def cluster(self, n_clusters: int) -> None:
         """Performs K-means clustering on data and adds to metadata labels.
@@ -661,7 +661,7 @@ class SlideMap:
             fn = umap.UMAP if not self.parametric_umap else umap.ParametricUMAP
             self.umap = fn(
                 n_components=dim,
-                verbose=(sf.getLoggingLevel() <= 20),
+                verbose=(hx.getLoggingLevel() <= 20),
                 n_neighbors=n_neighbors,
                 min_dist=min_dist,
                 metric=metric,
@@ -916,7 +916,7 @@ class SlideMap:
         """Save UMAP, plot, coordinates, and normalization values to a directory.
 
         The UMAP, plot, coordinates, and normalization values can all be
-        loaded from this directory after saving with ``sf.SlideMap.load(path)``.
+        loaded from this directory after saving with ``hx.SlideMap.load(path)``.
 
         Args:
             path (str): Directory in which to save the plot and UMAP.
@@ -984,7 +984,7 @@ class SlideMap:
         """
         import matplotlib.pyplot as plt
 
-        with sf.util.matplotlib_backend('Agg'):
+        with hx.util.matplotlib_backend('Agg'):
             self.plot(**kwargs)
             plt.savefig(filename, bbox_inches='tight', dpi=dpi)
             plt.close()
@@ -1014,7 +1014,7 @@ class SlideMap:
         """
         import matplotlib.pyplot as plt
 
-        with sf.util.matplotlib_backend('Agg'):
+        with hx.util.matplotlib_backend('Agg'):
             self.plot_3d(**kwargs)
             plt.savefig(filename, bbox_inches='tight', dpi=dpi)
             plt.close()
@@ -1068,7 +1068,7 @@ class SlideMap:
             dest (str): Destination directory.
 
         """
-        if sf.util.zip_allowed():
+        if hx.util.zip_allowed():
             np.savez(
                 dest + 'range_clip.npz',
                 range=self._umap_normalized_range,

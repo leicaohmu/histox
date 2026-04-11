@@ -1,6 +1,6 @@
 import os
 import click
-import histox as sf
+import histox as hx
 from PIL import Image
 
 from histox.slide import TIF_EXIF_KEY_MPP
@@ -21,7 +21,7 @@ def main(
     Reads JPEG files from a source directory, writes the given microns-per-pixel
     value, and saves to a destination directory.
     """
-    source_jpgs = [f for f in os.listdir(src) if sf.util.path_to_ext(f).lower() in ['jpeg', 'jpg']]
+    source_jpgs = [f for f in os.listdir(src) if hx.util.path_to_ext(f).lower() in ['jpeg', 'jpg']]
     if not len(source_jpgs):
         print("No source jpg/jpeg images found.")
     for src_jpg in source_jpgs:

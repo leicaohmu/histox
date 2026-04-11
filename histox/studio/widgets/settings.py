@@ -1,5 +1,5 @@
 import imgui
-import histox as sf
+import histox as hx
 
 from ..gui import imgui_utils, theme
 
@@ -13,7 +13,7 @@ class SettingsWidget:
         self.use_vsync      = True
         self.ignore_jpg     = viz._use_model_img_fmt
         self.low_memory     = viz.low_memory
-        self.use_bounds     = sf.slide_backend() == 'libvips'
+        self.use_bounds     = hx.slide_backend() == 'libvips'
         self.themes         = theme.list_themes()
         self._simplify_tolerance = True
         self._theme_idx     = self.themes.index("Studio Dark")
@@ -56,13 +56,13 @@ class SettingsWidget:
             if imgui.is_item_hovered():
                 imgui.set_tooltip("Simplify ROIs when loading a slide.\nMay improve performance and stability.")
 
-            with imgui_utils.grayed_out(sf.slide_backend() != 'libvips'):
+            with imgui_utils.grayed_out(hx.slide_backend() != 'libvips'):
                 _clicked, _new_val = imgui.checkbox('Use slide bounding boxes', self.use_bounds)
-            if _clicked and sf.slide_backend() == 'libvips':
+            if _clicked and hx.slide_backend() == 'libvips':
                 self.use_bounds = _new_val
                 viz.reload_wsi()
             if imgui.is_item_hovered():
-                if sf.slide_backend() == 'libvips':
+                if hx.slide_backend() == 'libvips':
                     imgui.set_tooltip("Use slide bounding boxes, if present, to crop the slide images.")
                 else:
                     imgui.set_tooltip("Slide bounding boxes requires libvips.")

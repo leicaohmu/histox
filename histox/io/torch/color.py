@@ -2,7 +2,7 @@ import cv2
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
-import histox as sf
+import histox as hx
 
 from typing import Union, Tuple, Optional
 from . import cwh_to_whc, whc_to_cwh, is_whc
@@ -18,7 +18,7 @@ class ColorProfile:
 
     @classmethod
     def build(cls, arg1, arg2, apply_loess: bool = True):
-        if isinstance(arg1, sf.WSI):
+        if isinstance(arg1, hx.WSI):
             obj = cls.build_from_slide(arg1, arg2)
         else:
             obj = cls.build_from_img(arg1, arg2)
@@ -29,8 +29,8 @@ class ColorProfile:
     @classmethod
     def build_from_slide(
         cls,
-        wsi: "sf.WSI",
-        wsi_reference: "sf.WSI",
+        wsi: "hx.WSI",
+        wsi_reference: "hx.WSI",
         n: int = 100
     ):
         """Build a color profile from a slide and a reference slide."""

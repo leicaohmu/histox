@@ -2,7 +2,7 @@
 
 import importlib
 import numpy as np
-import histox as sf
+import histox as hx
 from histox import errors
 
 from ._slide import features_from_slide
@@ -143,7 +143,7 @@ class TensorflowImagenetLayerExtractor(BaseFeatureExtractor):
 
     def __call__(self, obj, **kwargs):
         """Generate features for a batch of images or a WSI."""
-        if isinstance(obj, sf.WSI):
+        if isinstance(obj, hx.WSI):
             # Returns masked array of features
             return features_from_slide(self, obj, preprocess_fn=self.transform, **kwargs)
         elif kwargs:

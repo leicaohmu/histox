@@ -1,6 +1,6 @@
-import histox as sf
+import histox as hx
 import tensorflow as tf
-sf.util.allow_gpu_memory_growth()
+hx.util.allow_gpu_memory_growth()
 
 from typing import Optional
 from histox import simclr

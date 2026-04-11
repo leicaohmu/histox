@@ -1,5 +1,5 @@
 import zarr
-import histox as sf
+import histox as hx
 import imgui
 import numpy as np
 import cellpose
@@ -154,7 +154,7 @@ class CellSegWidget(Widget):
 
     def drag_and_drop_hook(self, path, ignore_errors=False) -> bool:
         """Handle file paths provided via drag-and-drop."""
-        if (sf.util.path_to_ext(path).lower() == 'zip'):
+        if (hx.util.path_to_ext(path).lower() == 'zip'):
             try:
                 z = zarr.open(path)
             except Exception as e:
@@ -291,7 +291,7 @@ class CellSegWidget(Widget):
             return self._segment_view()
 
         # Otherwise, segment using whole-slide image interface
-        wsi = sf.WSI(
+        wsi = hx.WSI(
             self.viz.wsi.path,
             tile_px=self.tile_px,
             tile_um=self.tile_um,

@@ -3,7 +3,7 @@ import cv2
 import time
 import traceback
 import numpy as np
-import histox as sf
+import histox as hx
 import histox.grad
 from scipy.special import softmax
 from typing import Optional
@@ -14,7 +14,7 @@ from .utils import EasyDict, _load_model_and_saliency
 
 # -----------------------------------------------------------------------------
 
-if sf.util.tf_available:
+if hx.util.tf_available:
     import tensorflow as tf
     import histox.io.tensorflow
     gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -23,7 +23,7 @@ if sf.util.tf_available:
             tf.config.experimental.set_memory_growth(gpu, True)
         except RuntimeError:
             pass
-if sf.util.torch_available:
+if hx.util.torch_available:
     import torch
     import torchvision
     import histox.io.torch
@@ -116,7 +116,7 @@ def _prepare_args(args, kwargs):
 
 def _is_classification(model_path):
     try:
-        config = sf.util.get_model_config(model_path)
+        config = hx.util.get_model_config(model_path)
         if config.get('model_type') in ('categorical', 'classification'):
             return True
         return False
@@ -166,7 +166,7 @@ class Renderer:
     def enable_deepfocus(self):
         if self._deepfocus is None:
             print("Setting up DeepFocus model...")
-            self._deepfocus = sf.slide.qc.DeepFocus().model
+            self._deepfocus = hx.slide.qc.DeepFocus().model
             print("...done")
 
     def _image_in_focus(self, img, method='laplacian') -> bool:
@@ -203,18 +203,18 @@ class Renderer:
         if self.model_type in ('tensorflow', 'tflite'):
             return x.numpy()
         else:
-            if sf.io.torch.is_cwh(x):
-                x = sf.io.torch.cwh_to_whc(x)
+            if hx.io.torch.is_cwh(x):
+                x = hx.io.torch.cwh_to_whc(x)
             return x.cpu().detach().numpy()
 
     def add_renderer(self, renderer):
         """Add a renderer to the rendering pipeline."""
-        sf.log.debug(f"Adding renderer: {renderer}")
+        hx.log.debug(f"Adding renderer: {renderer}")
         self._addl_renderers += [renderer]
 
     def remove_renderer(self, renderer):
         """Remove a renderer from the rendering pipeline."""
-        sf.log.debug(f"Removing renderer: {renderer}")
+        hx.log.debug(f"Removing renderer: {renderer}")
         idx = self._addl_renderers.index(renderer)
         del self._addl_renderers[idx]
 
@@ -237,7 +237,7 @@ class Renderer:
     def load_model(self, model_path: str, device: Optional[str] = None) -> None:
         """Load a model."""
         _model, _saliency, _umap_encoders = _load_model_and_saliency(model_path, device=device)
-        self.set_model(_model, uq=sf.util.is_uq_model(model_path))
+        self.set_model(_model, uq=hx.util.is_uq_model(model_path))
         self.set_saliency(_saliency)
         self.set_umap_encoders(_umap_encoders)
         self.apply_softmax = (self.model_type == 'torch' and _is_classification(model_path))
@@ -246,7 +246,7 @@ class Renderer:
         """Set a loaded model to the active model."""
         self._model = model
         if uq and ENABLE_EXPERIMENTAL_UQ:
-            self._uq_model = sf.model.tensorflow.build_uq_model(model)
+            self._uq_model = hx.model.tensorflow.build_uq_model(model)
 
     def set_saliency(self, saliency):
         """Set a loaded saliency model to the active saliency model."""
@@ -346,10 +346,10 @@ class Renderer:
         if use_jpeg:
             img = _decode_jpeg(img, self.model_type)
             if self.model_type == 'torch':
-                result_img = sf.io.torch.cwh_to_whc(img).cpu().numpy()
+                result_img = hx.io.torch.cwh_to_whc(img).cpu().numpy()
             else:
                 result_img = img.numpy()
-            img = sf.io.convert_dtype(img, dtype)
+            img = hx.io.convert_dtype(img, dtype)
         else:
             result_img = img
 
@@ -380,7 +380,7 @@ class Renderer:
         if self.model_type in ('tensorflow', 'tflite') and isinstance(img, np.ndarray):
             proc_img = tf.convert_to_tensor(img)
         elif isinstance(img, np.ndarray):
-            proc_img = sf.io.torch.whc_to_cwh(torch.from_numpy(img)).to(self.device)
+            proc_img = hx.io.torch.whc_to_cwh(torch.from_numpy(img)).to(self.device)
         else:
             proc_img = img
 
@@ -390,16 +390,16 @@ class Renderer:
             proc_img = normalizer.transform(proc_img)
             if not isinstance(proc_img, np.ndarray):
                 if self.model_type == 'torch':
-                    res.normalized = sf.io.torch.cwh_to_whc(proc_img).cpu().numpy().astype(np.uint8)
+                    res.normalized = hx.io.torch.cwh_to_whc(proc_img).cpu().numpy().astype(np.uint8)
                 else:
                     res.normalized = proc_img.numpy().astype(np.uint8)
             else:
                 res.normalized = proc_img.astype(np.uint8)
             res.norm_time = time.time() - _norm_start
         if self.model_type in ('tensorflow', 'tflite'):
-            proc_img = sf.io.tensorflow.preprocess_uint8(proc_img, standardize=True)['tile_image']
+            proc_img = hx.io.tensorflow.preprocess_uint8(proc_img, standardize=True)['tile_image']
         elif self.model_type == 'torch':
-            proc_img = sf.io.torch.preprocess_uint8(proc_img, standardize=True)
+            proc_img = hx.io.torch.preprocess_uint8(proc_img, standardize=True)
             if self.device is not None:
                 proc_img = proc_img.to(self.device)
 
@@ -407,9 +407,9 @@ class Renderer:
         if use_saliency:
             mask = self._saliency.get(self.to_numpy(proc_img, as_whc=True), method=saliency_method)
             if saliency_overlay:
-                res.image = sf.grad.plot_utils.overlay(res.image, mask)
+                res.image = hx.grad.plot_utils.overlay(res.image, mask)
             else:
-                res.image = sf.grad.plot_utils.inferno(mask)
+                res.image = hx.grad.plot_utils.inferno(mask)
             if res.image.shape[-1] == 4:
                 res.image = res.image[:, :, 0:3]
 

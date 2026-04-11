@@ -1,5 +1,5 @@
 import multiprocessing
-import histox as sf
+import histox as hx
 from typing import Optional
 
 from ._renderer import Renderer, CapturedException
@@ -29,7 +29,7 @@ class AsyncRenderManager:
 
     def _set_device(self) -> None:
         """Set the device for the renderer."""
-        if sf.util.torch_available:
+        if hx.util.torch_available:
             from histox.model import torch_utils
             self.device = torch_utils.get_device()
         else:
@@ -232,7 +232,7 @@ class AsyncRenderManager:
         model_path: Optional[str] = None,
         live_updates: bool = False
     ):
-        if sf.util.torch_available:
+        if hx.util.torch_available:
             from histox.model import torch_utils
             device = torch_utils.get_device()
         else:

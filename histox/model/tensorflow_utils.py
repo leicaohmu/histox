@@ -6,7 +6,7 @@ from typing import (TYPE_CHECKING, Any, Dict, List, Tuple, Union, Optional,
                     Callable)
 
 import numpy as np
-import histox as sf
+import histox as hx
 from pandas.core.frame import DataFrame
 from histox.stats import df_from_pred
 from histox.util import log, ImgBatchSpeedColumn
@@ -29,7 +29,7 @@ def log_summary(
         model (tf.keras.Model): Tensorflow/Keras model.
         neptune_run (neptune.Run, optional): Neptune run. Defaults to None.
     """
-    if sf.getLoggingLevel() <= 20:
+    if hx.getLoggingLevel() <= 20:
         print()
         model.summary()
     if neptune_run:
@@ -379,7 +379,7 @@ def eval_from_model(
                         *Progress.get_default_columns(),
                         TimeElapsedColumn(),
                         ImgBatchSpeedColumn(),
-                        transient=sf.getLoggingLevel()>20 or verbosity == 'quiet')
+                        transient=hx.getLoggingLevel()>20 or verbosity == 'quiet')
                     task = pb.add_task(
                         pb_label,
                         total=num_tiles if not steps else steps*batch_size)

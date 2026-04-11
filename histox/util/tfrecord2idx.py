@@ -6,7 +6,7 @@ import os
 import struct
 import sys
 import numpy as np
-import histox as sf
+import histox as hx
 from typing import Optional, Dict, Tuple
 from os.path import dirname, join, exists
 from histox import errors
@@ -109,7 +109,7 @@ def create_index(
     """
     if index_file is None:
         index_file = join(dirname(tfrecord_file),
-                          sf.util.path_to_name(tfrecord_file) + '.index')
+                          hx.util.path_to_name(tfrecord_file) + '.index')
     start_bytes, locations = _build_index_from_tfrecord(tfrecord_file)
     return save_index(start_bytes, index_file, locations=locations)
 
@@ -120,7 +120,7 @@ def save_index(
     locations: Optional[np.ndarray] = None
 ) -> str:
     """Save an array as an index file."""
-    if sf.util.zip_allowed():
+    if hx.util.zip_allowed():
         loc_kw = dict()
         if locations is not None:
             loc_kw['locations'] = locations
@@ -137,7 +137,7 @@ def save_index(
 
 def find_index(tfrecord: str) -> Optional[str]:
     """Find the index file for a TFRecord."""
-    name = sf.util.path_to_name(tfrecord)
+    name = hx.util.path_to_name(tfrecord)
     if exists(join(dirname(tfrecord), name+'.index')):
         return join(dirname(tfrecord), name+'.index')
     elif exists(join(dirname(tfrecord), name+'.index.npz')):
@@ -232,7 +232,7 @@ def read_tfrecord_length(tfrecord: str) -> int:
             infile.read(4)
             num_records += 1
         except Exception:
-            sf.log.error(f"Failed to parse TFRecord at {tfrecord}")
+            hx.log.error(f"Failed to parse TFRecord at {tfrecord}")
             infile.close()
             return 0
     infile.close()
@@ -351,9 +351,9 @@ def process_record_from_bytes(bytes_view):
 def process_record(record, description=None):
     if description is None:
         description = FEATURE_DESCRIPTION
-    example = sf.util.example_pb2.Example()
+    example = hx.util.example_pb2.Example()
     example.ParseFromString(record)
-    return sf.util.extract_feature_dict(
+    return hx.util.extract_feature_dict(
         example.features,
         description,
         TYPENAME_MAPPING)

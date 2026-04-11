@@ -11,12 +11,12 @@ from .._renderer import CapturedException
 from ..utils import EasyDict, LEFT_MOUSE_BUTTON, RIGHT_MOUSE_BUTTON
 from ..gui import imgui_utils, gl_utils
 
-import histox as sf
+import histox as hx
 
 #----------------------------------------------------------------------------
 
 def stride_capture(
-    viz: "sf.studio.Studio",
+    viz: "hx.studio.Studio",
     current_val: int,
     capturing: Optional[int],
     label: str = '0',
@@ -59,7 +59,7 @@ def stride_capture(
 #----------------------------------------------------------------------------
 
 class SlideWidget:
-    def __init__(self, viz: "sf.studio.Studio") -> None:
+    def __init__(self, viz: "hx.studio.Studio") -> None:
         """Widget for slide processing control and information display.
 
         Args:
@@ -93,10 +93,10 @@ class SlideWidget:
         self.apply_tile_filter      = False
         self.show_tile_filter       = False
         self.show_slide_filter      = False
-        self.gs_fraction            = sf.slide.DEFAULT_GRAYSPACE_FRACTION
-        self.gs_threshold           = sf.slide.DEFAULT_GRAYSPACE_THRESHOLD
-        self.ws_fraction            = sf.slide.DEFAULT_WHITESPACE_FRACTION
-        self.ws_threshold           = sf.slide.DEFAULT_WHITESPACE_THRESHOLD
+        self.gs_fraction            = hx.slide.DEFAULT_GRAYSPACE_FRACTION
+        self.gs_threshold           = hx.slide.DEFAULT_GRAYSPACE_THRESHOLD
+        self.ws_fraction            = hx.slide.DEFAULT_WHITESPACE_FRACTION
+        self.ws_threshold           = hx.slide.DEFAULT_WHITESPACE_THRESHOLD
 
         # Tile extraction preview
         self.preview_tiles          = False
@@ -128,8 +128,8 @@ class SlideWidget:
         self._normalizer_methods_str = self._all_normalizer_methods_str
         self._tile_colors       = ['Black', 'White', 'Red', 'Green', 'Blue']
         self._tile_colors_rgb   = [0, 1, (1, 0, 0), (0, 1, 0), (0, 0, 1)]
-        self._gaussian          = sf.slide.qc.GaussianV2()
-        self._otsu              = sf.slide.qc.Otsu()
+        self._gaussian          = hx.slide.qc.GaussianV2()
+        self._otsu              = hx.slide.qc.Otsu()
         self._use_otsu          = True
         self._use_gaussian      = False
         self._use_segment       = False
@@ -188,11 +188,11 @@ class SlideWidget:
             # Optimize the multiprocessing/multithreading method
             # based on the slide reading backend and whether we are operating
             # in low memory mode.
-            if self.viz.low_memory and sf.slide_backend() == 'cucim':
+            if self.viz.low_memory and hx.slide_backend() == 'cucim':
                 mp_kw = dict(lazy_iter=True, num_threads=os.cpu_count())
             elif self.viz.low_memory:
                 mp_kw = dict(lazy_iter=True, num_processes=1)
-            elif sf.slide_backend() == 'cucim':
+            elif hx.slide_backend() == 'cucim':
                 mp_kw = dict(num_processes=os.cpu_count())
             else:
                 mp_kw = dict(num_processes=min(32, os.cpu_count()))
@@ -201,9 +201,9 @@ class SlideWidget:
             # whitespace and grayspace fractions.
             generator = self.viz.wsi.build_generator(
                 img_format='numpy',
-                grayspace_fraction=sf.slide.FORCE_CALCULATE_GRAYSPACE,
+                grayspace_fraction=hx.slide.FORCE_CALCULATE_GRAYSPACE,
                 grayspace_threshold=self.gs_threshold,
-                whitespace_fraction=sf.slide.FORCE_CALCULATE_WHITESPACE,
+                whitespace_fraction=hx.slide.FORCE_CALCULATE_WHITESPACE,
                 whitespace_threshold=self.ws_threshold,
                 shuffle=False,
                 dry_run=True,
@@ -240,7 +240,7 @@ class SlideWidget:
                         self._update_tile_coords()
                 except TypeError:
                     # Occurs when the _ws_grid is reset, e.g. the slide was re-loaded.
-                    sf.log.debug("Aborting tile filter calculation")
+                    hx.log.debug("Aborting tile filter calculation")
                     self.viz.clear_message(self._rendering_message)
                     return
             self.viz.clear_message(self._rendering_message)
@@ -420,7 +420,7 @@ class SlideWidget:
 
     def load(
         self,
-        slide: Union[str, sf.WSI],
+        slide: Union[str, hx.WSI],
         stride: Optional[int] = None,
         ignore_errors: bool = False,
         mpp: Optional[float] = None,
@@ -429,8 +429,8 @@ class SlideWidget:
         """Load a slide.
 
         Args:
-            slide (str, sf.WSI): The slide to load. May be a slide path or 
-                ``sf.WSI`` object.
+            slide (str, hx.WSI): The slide to load. May be a slide path or 
+                ``hx.WSI`` object.
             stride (int, optional): The stride to use when extracting tiles.
                 If a slide is currently loaded and this value is not None, this
                 will override the current stride. Defaults to None.
@@ -466,7 +466,7 @@ class SlideWidget:
             
             if isinstance(slide, str):
                 slide_path = slide
-            elif isinstance(slide, sf.WSI):
+            elif isinstance(slide, hx.WSI):
                 slide_path = slide.path
             else:
                 raise ValueError(
@@ -479,7 +479,7 @@ class SlideWidget:
             self.user_slide = slide_path
             name = slide_path.replace('\\', '/').split('/')[-1]
             viz.set_message(f'Loading {name}...')
-            sf.log.debug(f"Loading slide {slide_path}...")
+            hx.log.debug(f"Loading slide {slide_path}...")
             viz.defer_rendering()
             if stride is not None:
                 self.stride = stride
@@ -495,7 +495,7 @@ class SlideWidget:
                 )
                 if not success:
                     return
-            except sf.errors.SlideMissingMPPError:
+            except hx.errors.SlideMissingMPPError:
                 self.cur_slide = None
                 self.user_slide = slide_path
                 self._show_mpp_popup = True
@@ -534,7 +534,7 @@ class SlideWidget:
             self.user_slide = slide
             viz.clear_message()
             viz.result = EasyDict(error=CapturedException())
-            sf.log.warn(f"Error loading slide {slide}: {e}")
+            hx.log.warn(f"Error loading slide {slide}: {e}")
             viz.create_toast(f"Error loading slide {slide}", icon="error")
             if not ignore_errors:
                 raise
@@ -955,9 +955,9 @@ class SlideWidget:
             # Update the normalizer
             method = self._normalizer_methods[self.norm_idx]
             if method == 'model':
-                self.viz._normalizer = sf.util.get_model_normalizer(self.viz._model_path)
+                self.viz._normalizer = hx.util.get_model_normalizer(self.viz._model_path)
             else:
-                self.viz._normalizer = sf.norm.autoselect(method, source='v3')
+                self.viz._normalizer = hx.norm.autoselect(method, source='v3')
             viz._refresh_view = True
 
         # Show slide-level filtering

@@ -70,7 +70,7 @@ class MacenkoNormalizer:
         return HE, maxC
 
     def fit_preset(self, preset: str) -> Dict[str, np.ndarray]:
-        """Fit normalizer to a preset in sf.norm.utils.fit_presets.
+        """Fit normalizer to a preset in hx.norm.utils.fit_presets.
 
         Args:
             preset (str): Preset.

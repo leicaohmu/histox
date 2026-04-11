@@ -2,7 +2,7 @@ import os
 import cv2
 import numpy as np
 import multiprocessing as mp
-import histox as sf
+import histox as hx
 from os.path import dirname, join, exists, isfile
 from typing import Optional
 from functools import partial
@@ -45,7 +45,7 @@ def fast_outlines_list(masks, num_threads=None):
     by multithreading for large images.
     """
     if num_threads is None:
-        num_threads = sf.util.num_cpu()
+        num_threads = hx.util.num_cpu()
 
     def get_mask_outline(mask_id):
         mn = (masks == mask_id)
@@ -80,7 +80,7 @@ def get_sparse_chunk_centroid(sparse_mask, shape):
 
 
 def get_sparse_centroid(mask, sparse_mask):
-    n_proc = sf.util.num_cpu(default=8)
+    n_proc = hx.util.num_cpu(default=8)
     with mp.Pool(n_proc) as pool:
         return np.concatenate(
             pool.map(
@@ -107,13 +107,13 @@ class ApplySegmentation:
         Examples
             Apply saved segmentation mask to a slide.
 
-                >>> wsi = sf.WSI(...)
+                >>> wsi = hx.WSI(...)
                 >>> segment = ApplySegmentation('.../masks.zip')
                 >>> wsi.qc(segment)
 
             Search for masks in a folder, and apply if matching mask found.
 
-                >>> wsi = sf.WSI(...)
+                >>> wsi = hx.WSI(...)
                 >>> segment = ApplySegmentation('.../masks_folder/')
                 >>> wsi.qc(segment)
 
@@ -130,11 +130,11 @@ class ApplySegmentation:
             self.source
         )
 
-    def __call__(self, wsi: "sf.WSI") -> None:
+    def __call__(self, wsi: "hx.WSI") -> None:
         """Applies a segmentation mask to a given slide from a saved npz file.
 
         Args:
-            wsi (sf.WSI): Whole-slide image.
+            wsi (hx.WSI): Whole-slide image.
 
         Returns:
             None
@@ -150,7 +150,7 @@ class ApplySegmentation:
         elif exists(join(source, wsi.name+'-masks.zip')):
             mask_path = join(source, wsi.name+'-masks.zip')
         else:
-            raise sf.errors.QCError("Segmentation mask not found.")
+            raise hx.errors.QCError("Segmentation mask not found.")
         seg = Segmentation.load(mask_path)
         wsi.apply_segmentation(seg)
         return None

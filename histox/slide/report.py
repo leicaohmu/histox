@@ -16,7 +16,7 @@ from os.path import join, exists
 from types import SimpleNamespace
 from typing import Any, Dict, List, Optional, Union, TYPE_CHECKING
 
-import histox as sf
+import histox as hx
 from histox.util import log, path_to_name  # noqa F401
 
 if TYPE_CHECKING:
@@ -183,14 +183,14 @@ class SlideReport:
 
     def calc_thumb(self) -> None:
         try:
-            wsi = sf.WSI(
+            wsi = hx.WSI(
                 self.path,
                 tile_px=self.tile_px,
                 tile_um=self.tile_um,
                 verbose=False,
             )
-        except sf.errors.SlideMissingMPPError:
-            wsi = sf.WSI(
+        except hx.errors.SlideMissingMPPError:
+            wsi = hx.WSI(
                 self.path,
                 tile_px=self.tile_px,
                 tile_um=self.tile_um,
@@ -273,7 +273,7 @@ class ExtractionPDF(FPDF):
         self.cell(20, 10, f'Generated: {datestring}', 0, 1)
         self.y = top
         self.cell(150)
-        self.cell(40, 10, sf.__version__, align='R')
+        self.cell(40, 10, hx.__version__, align='R')
         self.ln(15)
 
     def footer(self) -> None:
@@ -329,7 +329,7 @@ class ExtractionReport:
                 if b is not None and b > self.bb_threshold:
                     self.warn_txt += f'{slide},{b}\n'
 
-            with sf.util.matplotlib_backend('Agg'):
+            with hx.util.matplotlib_backend('Agg'):
                 if np.any(n_tiles) and self.num_tiles_chart(n_tiles):
                     with tempfile.NamedTemporaryFile(suffix='.png') as temp:
                         plt.savefig(temp.name)
@@ -382,7 +382,7 @@ class ExtractionReport:
             pdf.set_font('Arial')
             for m in (meta.gs_frac, meta.gs_thresh, meta.ws_frac,
                       meta.ws_thresh, meta.normalizer, meta.img_format,
-                      sf.slide_backend()):
+                      hx.slide_backend()):
                 pdf.cell(75)
                 pdf.cell(20, 4, str(m), new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             pdf.ln(20)
@@ -462,7 +462,7 @@ class ExtractionReport:
         import matplotlib.pyplot as plt
         import seaborn as sns
         if np.any(num_tiles):
-            with sf.util.matplotlib_backend('Agg'):
+            with hx.util.matplotlib_backend('Agg'):
                 plt.rc('font', size=14)
                 sns.histplot(num_tiles, bins=20)
                 plt.title('Number of tiles extracted')
@@ -485,7 +485,7 @@ class ExtractionReport:
                 log_b = np.log(blur_arr)
             log_b = log_b[np.isfinite(log_b)]
 
-            with sf.util.matplotlib_backend('Agg'):
+            with hx.util.matplotlib_backend('Agg'):
                 plt.rc('font', size=14)
                 sns.histplot(log_b, bins=20)
                 plt.title('Quality Control: Blur Burden'+warn_txt)
@@ -536,8 +536,8 @@ class ExtractionReport:
             'normalizer':   pd.Series([self.meta.normalizer for r in self.reports]),
             'img_format':   pd.Series([self.meta.img_format for r in self.reports]),
             'date':         pd.Series([r.timestamp for r in self.reports]),
-            'backend':      pd.Series([sf.slide_backend() for r in self.reports]),
-            'histox_version': pd.Series([sf.__version__ for r in self.reports])
+            'backend':      pd.Series([hx.slide_backend() for r in self.reports]),
+            'histox_version': pd.Series([hx.__version__ for r in self.reports])
         })
         df.set_index('slide')
         if ex_df is not None:

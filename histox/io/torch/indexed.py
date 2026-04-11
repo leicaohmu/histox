@@ -1,6 +1,6 @@
 """Indexable, map-style multi-TFRecord dataset & weighted sampler."""
 
-import histox as sf
+import histox as hx
 import multiprocessing as mp
 import numpy as np
 import pandas as pd
@@ -260,8 +260,8 @@ class IndexedInterleaver(IndexedMultiTFRecordDataset):
             for index, tfr in zip(pool.imap(load_index, self.tfrecords), self.tfrecords):
                 orig_n_tiles += len(index)
                 tfr = tfr.decode('utf-8')
-                slide = sf.util.path_to_name(tfr)
-                loc = sf.io.get_locations_from_tfrecord(tfr)
+                slide = hx.util.path_to_name(tfr)
+                loc = hx.io.get_locations_from_tfrecord(tfr)
 
                 # Check which TFRecord indices are in the labels dataframe
                 in_df = np.array([f'{slide}-{x}-{y}' in self.labels.index for (x,y) in loc])

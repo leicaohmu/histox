@@ -1,6 +1,6 @@
 import imgui
 import numpy as np
-import histox as sf
+import histox as hx
 import histox.grad as grad
 from typing import Union, List, Optional, Tuple
 from array import array

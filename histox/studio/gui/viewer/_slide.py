@@ -16,7 +16,7 @@ from ._viewer import Viewer
 from .. import gl_utils, text_utils
 from ...utils import EasyDict
 
-import histox as sf
+import histox as hx
 
 if TYPE_CHECKING:
     import pyvips
@@ -30,7 +30,7 @@ class SlideViewer(Viewer):
     movable = True
     live    = False
 
-    def __init__(self, wsi: sf.WSI, *args, **kwargs) -> None:
+    def __init__(self, wsi: hx.WSI, *args, **kwargs) -> None:
 
         super().__init__(*args, **kwargs)
 
@@ -114,7 +114,7 @@ class SlideViewer(Viewer):
         """
         if region.bands == 4:
             region = region.flatten()
-        return sf.slide.backends.vips.vips2numpy(region)
+        return hx.slide.backends.vips.vips2numpy(region)
 
     def get_scaled_roi_vertices(self, roi_id: int) -> Optional[np.ndarray]:
         """Get the scaled ROI of the given ID.
@@ -433,13 +433,13 @@ class SlideViewer(Viewer):
             # Keep what we can from the old image
             old_slice = self.view[old_y_start:old_y_end, old_x_start:old_x_end, :]
             new_view[new_y_start:new_y_end, new_x_start:new_x_end, :] = old_slice
-            if sf.slide_backend() == 'libvips':
+            if hx.slide_backend() == 'libvips':
                 new_view = self._fast_refresh_libvips(new_view, p=p, view_params=view_params)
-            elif sf.slide_backend() == 'cucim':
+            elif hx.slide_backend() == 'cucim':
                 new_view = self._fast_refresh_cucim(new_view, p=p, view_params=view_params)
             else:
                 raise ValueError("Unrecognized slide backend {}".format(
-                    sf.slide_backend()
+                    hx.slide_backend()
                 ))
 
             # Finalize
@@ -538,13 +538,13 @@ class SlideViewer(Viewer):
         def get_polygon(roi_id: int) -> Optional[Polygon]:
             roi_coords = self.scaled_rois_in_view[roi_id]
             try:
-                poly = sf.slide.ROI(None, roi_coords).poly
-            except sf.errors.InvalidROIError:
+                poly = hx.slide.ROI(None, roi_coords).poly
+            except hx.errors.InvalidROIError:
                 return None
             for hole_coord in self.scaled_holes_in_view[roi_id].values():
                 try:
-                    hole_poly = sf.slide.ROI(None, hole_coord).poly
-                except sf.errors.InvalidROIError:
+                    hole_poly = hx.slide.ROI(None, hole_coord).poly
+                except hx.errors.InvalidROIError:
                     continue
                 poly = poly.difference(hole_poly)
             return poly
@@ -849,12 +849,12 @@ class SlideViewer(Viewer):
 
     def set_tile_px(self, tile_px: int):
         if tile_px != self.tile_px:
-            sf.log.error("Attempted to set tile_px={}, existing={}".format(tile_px, self.tile_px))
+            hx.log.error("Attempted to set tile_px={}, existing={}".format(tile_px, self.tile_px))
             raise NotImplementedError
 
     def set_tile_um(self, tile_um: int):
         if tile_um != self.tile_um:
-            sf.log.error("Attempted to set tile_um={}, existing={}".format(tile_um, self.tile_um))
+            hx.log.error("Attempted to set tile_um={}, existing={}".format(tile_um, self.tile_um))
             raise NotImplementedError
 
     def update(self, width: int, height: int, x_offset: int, y_offset: int, **kwargs) -> None:
@@ -942,7 +942,7 @@ def log_vips_error(left_edge, top_edge, extract_w, extract_h):
     try:
         yield
     except Exception:
-        sf.log.error(
+        hx.log.error(
             "Error attempting to crop pyvips image, with "
             "top/left (x,y) = ({}, {}) and width/height = ({}, {})".format(
                 left_edge,

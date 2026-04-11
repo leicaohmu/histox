@@ -8,7 +8,7 @@ import shapely.geometry as sg
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset, zoomed_inset_axes
 from threading import Thread
 
-import histox as sf
+import histox as hx
 from histox import errors
 from histox.slide import WSI
 from histox.util import log
@@ -63,27 +63,27 @@ class Heatmap:
                 .. code-block:: python
 
                     model_path = 'path/to/saved_model'
-                    heatmap = sf.Heatmap('slide.svs', model_path)
+                    heatmap = hx.Heatmap('slide.svs', model_path)
 
             Create a heatmap, with grayspace filtering disabled.
 
                 .. code-block:: python
 
-                    heatmap = sf.Heatmap(..., grayspace_fraction=1)
+                    heatmap = hx.Heatmap(..., grayspace_fraction=1)
 
-            Create a heatmap from a ``sf.WSI`` object.
+            Create a heatmap from a ``hx.WSI`` object.
 
                 .. code-block:: python
 
                     # Load a slide
-                    wsi = sf.WSI(tile_px=299, tile_um=302)
+                    wsi = hx.WSI(tile_px=299, tile_um=302)
 
                     # Apply Otsu's thresholding to the slide,
                     # so heatmap is only generated on areas with tissue.
                     wsi.qc('otsu')
 
                     # Generate the heatmap
-                    heatmap = sf.Heatmap(wsi, model_path)
+                    heatmap = hx.Heatmap(wsi, model_path)
 
         Args:
             slide (str): Path to slide.
@@ -134,7 +134,7 @@ class Heatmap:
                              "num_processes and num_threads")
         self.insets = []  # type: List[Inset]
 
-        model_config = sf.util.get_model_config(model)
+        model_config = hx.util.get_model_config(model)
         self.uq = model_config['hp']['uq']
         if img_format == 'auto' and 'img_format' not in model_config:
             raise errors.HeatmapError(
@@ -145,7 +145,7 @@ class Heatmap:
         else:
             self.img_format = img_format
 
-        if sf.util.is_torch_model_path(model):
+        if hx.util.is_torch_model_path(model):
             int_kw = {'device': device}
         else:
             int_kw = {}
@@ -153,20 +153,20 @@ class Heatmap:
             int_kw.update(dict(load_method=load_method))
 
         if self.uq:
-            if sf.util.is_torch_model_path(model):
+            if hx.util.is_torch_model_path(model):
                 import histox.model.torch
-                interface_fn = sf.model.torch.UncertaintyInterface
+                interface_fn = hx.model.torch.UncertaintyInterface
             else:
                 import histox.model.tensorflow
-                interface_fn = sf.model.tensorflow.UncertaintyInterface  # type: ignore
+                interface_fn = hx.model.tensorflow.UncertaintyInterface  # type: ignore
             self.interface = interface_fn(model, **int_kw)
         else:
-            if sf.util.is_torch_model_path(model):
+            if hx.util.is_torch_model_path(model):
                 import histox.model.torch
-                interface_fn = sf.model.torch.Features
+                interface_fn = hx.model.torch.Features
             else:
                 import histox.model.tensorflow
-                interface_fn = sf.model.tensorflow.Features  # type: ignore
+                interface_fn = hx.model.tensorflow.Features  # type: ignore
             self.interface = interface_fn(  # type: ignore
                 model,
                 layers=None,
@@ -613,10 +613,10 @@ class Heatmap:
 
         .. code-block::
 
-            import histox as sf
+            import histox as hx
             import matplotlib.pyplot as plt
 
-            heatmap = sf.Heatmap(...)
+            heatmap = hx.Heatmap(...)
             heatmap.plot()
             plt.show()
 
@@ -743,7 +743,7 @@ class Heatmap:
                 Defaults to 1.
 
         """
-        with sf.util.matplotlib_backend('Agg'):
+        with hx.util.matplotlib_backend('Agg'):
             import matplotlib.pyplot as plt
 
             if self.predictions is None:
@@ -837,7 +837,7 @@ class ModelHeatmap(Heatmap):
         tile_px: Optional[int] = None,
         tile_um: Optional[int] = None,
         stride_div: Optional[int] = None,
-        normalizer: Optional[sf.norm.StainNormalizer] = None,
+        normalizer: Optional[hx.norm.StainNormalizer] = None,
         batch_size: int = 32,
         num_threads: Optional[int] = None,
         num_processes: Optional[int] = None,
@@ -923,7 +923,7 @@ class ModelHeatmap(Heatmap):
         if generator_kwargs is None:
             generator_kwargs = {}
         if apply_softmax is not None:
-            if sf.util.model_backend(model) == 'tensorflow':
+            if hx.util.model_backend(model) == 'tensorflow':
                 raise ValueError("Keyword argument 'apply_softmax' is invalid "
                                  "for Tensorflow models.")
 
@@ -971,21 +971,21 @@ class ModelHeatmap(Heatmap):
         else:
             raise ValueError(f"Unrecognized value {slide} for argument slide")
 
-        if uq and sf.util.model_backend(model) == 'tensorflow':
+        if uq and hx.util.model_backend(model) == 'tensorflow':
             import histox.model.tensorflow
-            interface_class = sf.model.tensorflow.UncertaintyInterface  # type: ignore
+            interface_class = hx.model.tensorflow.UncertaintyInterface  # type: ignore
             interface_kw = {}  # type: Dict[str, Any]
-        elif uq and sf.util.model_backend(model) == 'torch':
+        elif uq and hx.util.model_backend(model) == 'torch':
             import histox.model.torch
-            interface_class = sf.model.torch.UncertaintyInterface  # type: ignore
+            interface_class = hx.model.torch.UncertaintyInterface  # type: ignore
             interface_kw = dict(tile_px=self.tile_px, apply_softmax=apply_softmax)
-        elif sf.util.model_backend(model) == 'tensorflow':
+        elif hx.util.model_backend(model) == 'tensorflow':
             import histox.model.tensorflow
-            interface_class = sf.model.tensorflow.Features  # type: ignore
+            interface_class = hx.model.tensorflow.Features  # type: ignore
             interface_kw = dict(include_preds=True)
-        elif sf.util.model_backend(model) == 'torch':
+        elif hx.util.model_backend(model) == 'torch':
             import histox.model.torch
-            interface_class = sf.model.torch.Features  # type: ignore
+            interface_class = hx.model.torch.Features  # type: ignore
             interface_kw = dict(
                 include_preds=True,
                 tile_px=self.tile_px,
@@ -1026,7 +1026,7 @@ class ModelHeatmap(Heatmap):
 # -----------------------------------------------------------------------------
 
 def calculate_heatmap_extent(
-        wsi: "sf.WSI",
+        wsi: "hx.WSI",
         thumbnail: "Image",
         grid: np.ndarray
 ) -> Tuple[float, float, float, float]:

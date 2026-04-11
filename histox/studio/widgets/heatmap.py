@@ -4,7 +4,7 @@ import threading
 from typing import Union, Optional
 from ..gui import imgui_utils
 
-import histox as sf
+import histox as hx
 
 #----------------------------------------------------------------------------
 
@@ -99,9 +99,9 @@ class HeatmapWidget:
             mp_kw = dict(num_threads=1, batch_size=4)
         else:
             mp_kw = dict()
-        if sf.util.model_backend(self.viz.model) == 'torch':
+        if hx.util.model_backend(self.viz.model) == 'torch':
             mp_kw['apply_softmax'] = viz.model_widget.is_classification()
-        viz.heatmap = sf.heatmap.ModelHeatmap(
+        viz.heatmap = hx.heatmap.ModelHeatmap(
             viz.wsi,
             viz.model,
             img_format=viz._model_config['img_format'],
@@ -116,7 +116,7 @@ class HeatmapWidget:
             try:
                 self.load(path)
             except Exception:
-                sf.log.debug(f"Unable to load {path} as heatmap.")
+                hx.log.debug(f"Unable to load {path} as heatmap.")
                 if not ignore_errors:
                     raise
 
@@ -133,7 +133,7 @@ class HeatmapWidget:
             **sw.get_tile_filter_params(),
         )
 
-    def load(self, obj: Union[str, "sf.Heatmap"]):
+    def load(self, obj: Union[str, "hx.Heatmap"]):
         """Load a heatmap from a saved *.npz file."""
         if isinstance(obj, str) and self.viz._model_config:
             if self.viz.heatmap is None:

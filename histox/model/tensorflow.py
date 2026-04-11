@@ -19,7 +19,7 @@ from typing import (
 )
 from tensorflow.keras import applications as kapps
 
-import histox as sf
+import histox as hx
 import histox.model.base as _base
 import histox.util.neptune_utils
 from histox import errors
@@ -30,14 +30,14 @@ from .base import log_manifest, BaseFeatureExtractor
 from .tensorflow_utils import unwrap, flatten, eval_from_model, build_uq_model  # type: ignore
 
 # Set the tensorflow logger
-if sf.getLoggingLevel() == logging.DEBUG:
+if hx.getLoggingLevel() == logging.DEBUG:
     logging.getLogger('tensorflow').setLevel(logging.DEBUG)
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
 else:
     logging.getLogger('tensorflow').setLevel(logging.ERROR)
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-sf.util.allow_gpu_memory_growth()
+hx.util.allow_gpu_memory_growth()
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -686,7 +686,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
             self.neptune_run['metrics/train/batch/loss'].log(
                 logs['loss'],
                 step=self.global_step)
-            sf.util.neptune_utils.list_log(
+            hx.util.neptune_utils.list_log(
                 self.neptune_run,
                 'metrics/train/batch/accuracy',
                 logs['accuracy'],
@@ -719,7 +719,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
         """Log the end-of-epoch evaluation to CSV, Tensorboard, and Neptune."""
         epoch = self.epoch_count
         run = self.neptune_run
-        sf.util.update_results_log(
+        hx.util.update_results_log(
             self.cb_args.results_log,
             'trained_model',
             {f'epoch{epoch}': epoch_results}
@@ -742,7 +742,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
         if run:
             # Training epoch metrics
             run['metrics/train/epoch/loss'].log(logs['loss'], step=epoch)
-            sf.util.neptune_utils.list_log(
+            hx.util.neptune_utils.list_log(
                 run,
                 'metrics/train/epoch/accuracy',
                 logs['accuracy'],
@@ -750,7 +750,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
             )
             # Validation epoch metrics
             run['metrics/val/epoch/loss'].log(loss, step=epoch)
-            sf.util.neptune_utils.list_log(
+            hx.util.neptune_utils.list_log(
                 run,
                 'metrics/val/epoch/accuracy',
                 accuracy,
@@ -776,19 +776,19 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
                     # If only one value for a metric, log to .../[metric]
                     # If more than one value for a metric (e.g. AUC for each
                     # category), log to .../[metric]/[i]
-                    sf.util.neptune_utils.list_log(
+                    hx.util.neptune_utils.list_log(
                         run,
                         metric_label('tile'),
                         tile_metric,
                         step=epoch
                     )
-                    sf.util.neptune_utils.list_log(
+                    hx.util.neptune_utils.list_log(
                         run,
                         metric_label('slide'),
                         slide_metric,
                         step=epoch
                     )
-                    sf.util.neptune_utils.list_log(
+                    hx.util.neptune_utils.list_log(
                         run,
                         metric_label('patient'),
                         patient_metric,
@@ -799,7 +799,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
         self,
         epoch_label: str,
     ) -> Tuple[Dict, float, float]:
-        return sf.stats.metrics_from_dataset(
+        return hx.stats.metrics_from_dataset(
             self.model,
             model_type=self.hp.model_type(),
             patients=self.parent.patients,
@@ -815,7 +815,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
         )
 
     def on_epoch_end(self, epoch: int, logs={}) -> None:
-        if sf.getLoggingLevel() <= 20:
+        if hx.getLoggingLevel() <= 20:
             print('\r\033[K', end='')
         self.epoch_count += 1
         if (self.epoch_count in [e for e in self.hp.epochs]
@@ -839,9 +839,9 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
                     try:
                         config_path = join(dirname(model_path), 'params.json')
                         if self.neptune_run:
-                            config = sf.util.load_json(config_path)
+                            config = hx.util.load_json(config_path)
                             config['neptune_id'] = self.neptune_run['sys/id'].fetch()
-                            sf.util.write_json(config, config_path)
+                            hx.util.write_json(config, config_path)
 
                         shutil.copy(config_path, params_dest)
                         shutil.copy(
@@ -925,7 +925,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
                     for v in logs
                     if 'accuracy' in v
                 ])
-            if sf.getLoggingLevel() <= 20:
+            if hx.getLoggingLevel() <= 20:
                 print('\r\033[K', end='')
             self.moving_average += [early_stop_value]
 
@@ -1002,7 +1002,7 @@ class _PredictionAndEvaluationCallback(tf.keras.callbacks.Callback):
         self.global_step += 1
 
     def on_train_end(self, logs={}) -> None:
-        if sf.getLoggingLevel() <= 20:
+        if hx.getLoggingLevel() <= 20:
             print('\r\033[K')
         if self.neptune_run:
             self.neptune_run['sys/tags'].add('training_complete')
@@ -1164,7 +1164,7 @@ class Trainer:
                 f'Outcome {i}'
                 for i in range(outcome_labels.shape[1])
             ]
-        outcome_names = sf.util.as_list(outcome_names)
+        outcome_names = hx.util.as_list(outcome_names)
         if labels and (len(outcome_names) != outcome_labels.shape[1]):
             num_names = len(outcome_names)
             num_outcomes = outcome_labels.shape[1]
@@ -1207,9 +1207,9 @@ class Trainer:
         # Log parameters
         if config is None:
             config = {
-                'histox_version': sf.__version__,
-                'backend': sf.backend(),
-                'git_commit': sf.__gitcommit__,
+                'histox_version': hx.__version__,
+                'backend': hx.backend(),
+                'git_commit': hx.__gitcommit__,
                 'model_name': self.name,
                 'full_model_name': self.name,
                 'outcomes': self.outcome_names,
@@ -1222,7 +1222,7 @@ class Trainer:
                 'input_feature_labels': None,
                 'hp': self.hp.to_dict()
             }
-        sf.util.write_json(config, join(self.outdir, 'params.json'))
+        hx.util.write_json(config, join(self.outdir, 'params.json'))
         self.config = config
         self.img_format = config['img_format'] if 'img_format' in config else None
 
@@ -1232,7 +1232,7 @@ class Trainer:
             if neptune_api is None or neptune_workspace is None:
                 raise ValueError("If using Neptune, must supply values "
                                  "neptune_api and neptune_workspace.")
-            self.neptune_logger = sf.util.neptune_utils.NeptuneLog(
+            self.neptune_logger = hx.util.neptune_utils.NeptuneLog(
                 neptune_api,
                 neptune_workspace
             )
@@ -1352,7 +1352,7 @@ class Trainer:
         toplayer_model = self.model.fit(
             train_data,
             epochs=epochs,
-            verbose=(sf.getLoggingLevel() <= 20),
+            verbose=(hx.getLoggingLevel() <= 20),
             steps_per_epoch=steps_per_epoch,
             callbacks=callbacks
         )
@@ -1394,12 +1394,12 @@ class Trainer:
         )
         return vars(args)
 
-    def _verify_img_format(self, dataset, *datasets: Optional["sf.Dataset"]) -> str:
+    def _verify_img_format(self, dataset, *datasets: Optional["hx.Dataset"]) -> str:
         """Verify that the image format of the dataset matches the model config.
 
         Args:
-            dataset (sf.Dataset): Dataset to check.
-            *datasets (sf.Dataset): Additional datasets to check. May be None.
+            dataset (hx.Dataset): Dataset to check.
+            *datasets (hx.Dataset): Additional datasets to check. May be None.
 
         Returns:
             str: Image format, either 'png' or 'jpg', if a consistent image
@@ -1436,7 +1436,7 @@ class Trainer:
 
     def predict(
         self,
-        dataset: "sf.Dataset",
+        dataset: "hx.Dataset",
         batch_size: Optional[int] = None,
         norm_fit: Optional[NormFit] = None,
         format: str = 'parquet',
@@ -1525,7 +1525,7 @@ class Trainer:
             )
         # Generate predictions
         log.info('Generating predictions...')
-        dfs = sf.stats.predict_dataset(
+        dfs = hx.stats.predict_dataset(
             model=self.model,
             dataset=tf_dts_w_slidenames,
             model_type=self._model_type,
@@ -1536,12 +1536,12 @@ class Trainer:
             reduce_method=reduce_method,
         )
         # Save predictions
-        sf.stats.metrics.save_dfs(dfs, format=format, outdir=self.outdir)
+        hx.stats.metrics.save_dfs(dfs, format=format, outdir=self.outdir)
         return dfs
 
     def evaluate(
         self,
-        dataset: "sf.Dataset",
+        dataset: "hx.Dataset",
         batch_size: Optional[int] = None,
         save_predictions: Union[bool, str] = 'parquet',
         reduce_method: Union[str, Callable] = 'average',
@@ -1645,7 +1645,7 @@ class Trainer:
             num_tiles=dataset.num_tiles,
             label='eval'
         )
-        metrics, acc, loss = sf.stats.metrics_from_dataset(
+        metrics, acc, loss = hx.stats.metrics_from_dataset(
             save_predictions=save_predictions,
             reduce_method=reduce_method,
             loss=self.hp.get_loss(),
@@ -1672,7 +1672,7 @@ class Trainer:
         for m in val_metrics:
             log.info(f'{m}: {val_metrics[m]}')
         results['eval'].update(val_metrics)
-        sf.util.update_results_log(results_log, 'eval_model', results)
+        hx.util.update_results_log(results_log, 'eval_model', results)
 
         # Update neptune log
         if self.neptune_run:
@@ -1683,8 +1683,8 @@ class Trainer:
 
     def train(
         self,
-        train_dts: "sf.Dataset",
-        val_dts: Optional["sf.Dataset"],
+        train_dts: "hx.Dataset",
+        val_dts: Optional["hx.Dataset"],
         log_frequency: int = 100,
         validate_on_batch: int = 0,
         validation_batch_size: int = None,
@@ -1780,7 +1780,7 @@ class Trainer:
         img_format = self._verify_img_format(train_dts, val_dts)
         if img_format and self.config['img_format'] is None:
             self.config['img_format'] = img_format
-            sf.util.write_json(self.config, join(self.outdir, 'params.json'))
+            hx.util.write_json(self.config, join(self.outdir, 'params.json'))
 
         # Clear prior Tensorflow graph to free memory
         tf.keras.backend.clear_session()
@@ -1796,20 +1796,20 @@ class Trainer:
             config_path = join(self.outdir, 'params.json')
             if not exists(config_path):
                 config = {
-                    'histox_version': sf.__version__,
+                    'histox_version': hx.__version__,
                     'hp': self.hp.to_dict(),
-                    'backend': sf.backend()
+                    'backend': hx.backend()
                 }
             else:
-                config = sf.util.load_json(config_path)
+                config = hx.util.load_json(config_path)
             config['norm_fit'] = self.normalizer.get_fit(as_list=True)
-            sf.util.write_json(config, config_path)
+            hx.util.write_json(config, config_path)
 
         # Prepare multiprocessing pool if from_wsi=True
         if from_wsi:
             pool = mp.Pool(
-                sf.util.num_cpu(default=8),
-                initializer=sf.util.set_ignore_sigint
+                hx.util.num_cpu(default=8),
+                initializer=hx.util.set_ignore_sigint
             )
         else:
             pool = None
@@ -1981,7 +1981,7 @@ class Trainer:
                 cp_callback = tf.keras.callbacks.ModelCheckpoint(
                     os.path.join(self.outdir, 'cp.ckpt'),
                     save_weights_only=True,
-                    verbose=(sf.getLoggingLevel() <= 20)
+                    verbose=(hx.getLoggingLevel() <= 20)
                 )
                 callbacks += [cp_callback]
             if use_tensorboard:
@@ -2017,7 +2017,7 @@ class Trainer:
                     train_data,
                     steps_per_epoch=steps_per_epoch,
                     epochs=total_epochs,
-                    verbose=(sf.getLoggingLevel() <= 20),
+                    verbose=(hx.getLoggingLevel() <= 20),
                     initial_epoch=self.hp.toplayer_epochs,
                     callbacks=callbacks
                 )
@@ -2214,7 +2214,7 @@ class Features(BaseFeatureExtractor):
 
         .. code-block:: python
 
-            slide = sf.WSI(...)
+            slide = hx.WSI(...)
             interface = Features('/model/path', layers='postconv')
             # Returns shape:
             # (slide.grid.shape[0], slide.grid.shape[1], num_features)
@@ -2275,10 +2275,10 @@ class Features(BaseFeatureExtractor):
         self._include_preds = None
         if path is not None:
             self._model = load(self.path, method=load_method)  # type: ignore
-            config = sf.util.get_model_config(path)
+            config = hx.util.get_model_config(path)
             if 'img_format' in config:
                 self.img_format = config['img_format']
-            self.hp = sf.ModelParams()
+            self.hp = hx.ModelParams()
             self.hp.load_dict(config['hp'])
             self.wsi_normalizer = self.hp.get_normalizer()
             if 'norm_fit' in config and config['norm_fit'] is not None:
@@ -2340,7 +2340,7 @@ class Features(BaseFeatureExtractor):
 
     def __call__(
         self,
-        inp: Union[tf.Tensor, "sf.WSI"],
+        inp: Union[tf.Tensor, "hx.WSI"],
         **kwargs
     ) -> Optional[Union[np.ndarray, tf.Tensor]]:
         """Process a given input and return features and/or predictions.
@@ -2350,14 +2350,14 @@ class Features(BaseFeatureExtractor):
         :meth:`histox.WSI.build_generator()`.
 
         """
-        if isinstance(inp, sf.WSI):
+        if isinstance(inp, hx.WSI):
             return self._predict_slide(inp, **kwargs)
         else:
             return self._predict(inp)
 
     def _predict_slide(
         self,
-        slide: "sf.WSI",
+        slide: "hx.WSI",
         *,
         img_format: str = 'auto',
         batch_size: int = 32,
@@ -2366,7 +2366,7 @@ class Features(BaseFeatureExtractor):
         shuffle: bool = False,
         show_progress: bool = True,
         callback: Optional[Callable] = None,
-        normalizer: Optional[Union[str, "sf.norm.StainNormalizer"]] = None,
+        normalizer: Optional[Union[str, "hx.norm.StainNormalizer"]] = None,
         normalizer_source: Optional[str] = None,
         **kwargs
     ) -> Optional[np.ndarray]:
@@ -2382,7 +2382,7 @@ class Features(BaseFeatureExtractor):
             assert self.img_format is not None
             img_format = self.img_format
 
-        return sf.model.extractors.features_from_slide(
+        return hx.model.extractors.features_from_slide(
             self,
             slide,
             img_format=img_format,
@@ -2622,7 +2622,7 @@ def load(
     if method == 'full':
         return tf.keras.models.load_model(path, custom_objects=custom_objects)
     else:
-        config = sf.util.get_model_config(path)
+        config = hx.util.get_model_config(path)
         hp = ModelParams.from_dict(config['hp'])
         if len(config['outcomes']) == 1 or config['model_type'] == 'regression':
             num_classes = len(list(config['outcome_labels'].keys()))

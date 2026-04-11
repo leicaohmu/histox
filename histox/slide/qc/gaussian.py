@@ -1,7 +1,7 @@
 """Gaussian filter QC algorithm."""
 
 import numpy as np
-import histox as sf
+import histox as hx
 import skimage
 from histox import errors
 from typing import Union, Optional
@@ -30,10 +30,10 @@ class Gaussian:
 
                 .. code-block:: python
 
-                    import histox as sf
+                    import histox as hx
                     from histox.slide import qc
 
-                    wsi = sf.WSI(...)
+                    wsi = hx.WSI(...)
                     gaussian = qc.Gaussian()
                     wsi.qc(gaussian)
 
@@ -57,19 +57,19 @@ class Gaussian:
 
     def _thumb_from_slide(
         self,
-        wsi: "sf.WSI"
+        wsi: "hx.WSI"
     ) -> np.ndarray:
         """Get a thumbnail from the given slide.
 
         Args:
-            wsi (sf.WSI): Whole-slide image.
+            wsi (hx.WSI): Whole-slide image.
 
         Returns:
             np.ndarray: RGB thumbnail of the whole-slide image.
         """
         if self.mpp is None:
             _mpp = (wsi.tile_um/wsi.tile_px)*4
-            sf.log.info(f"Performing Gaussian blur filter at mpp={_mpp:.3f}")
+            hx.log.info(f"Performing Gaussian blur filter at mpp={_mpp:.3f}")
         else:
             _mpp = self.mpp
         thumb = wsi.thumb(mpp=_mpp)
@@ -84,13 +84,13 @@ class Gaussian:
 
     def __call__(
         self,
-        wsi: Union["sf.WSI", np.ndarray],
+        wsi: Union["hx.WSI", np.ndarray],
         mask: Optional[np.ndarray] = None,
     ) -> np.ndarray:
         """Perform Gaussian filtering on the given slide or image.
 
         Args:
-            slide (sf.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
+            slide (hx.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
                 with shape (h, w, c) and type np.uint8.
             mask (np.ndarray): Restrict Otsu's threshold to the area of the
                 image indicated by this boolean mask. Defaults to None.
@@ -98,7 +98,7 @@ class Gaussian:
         Returns:
             np.ndarray: QC boolean mask, where True = filtered out.
         """
-        if isinstance(wsi, sf.WSI):
+        if isinstance(wsi, hx.WSI):
             thumb = self._thumb_from_slide(wsi)
         else:
             thumb = wsi
@@ -110,11 +110,11 @@ class Gaussian:
 
         # Assign blur burden value
         existing_qc_mask = mask
-        if mask is None and isinstance(wsi, sf.WSI):
+        if mask is None and isinstance(wsi, hx.WSI):
             existing_qc_mask = wsi.qc_mask
-        if existing_qc_mask is not None and isinstance(wsi, sf.WSI):
+        if existing_qc_mask is not None and isinstance(wsi, hx.WSI):
             wsi.blur_burden = blur_burden(blur_mask, existing_qc_mask)
-            sf.log.debug(f"Blur burden: {wsi.blur_burden}")
+            hx.log.debug(f"Blur burden: {wsi.blur_burden}")
 
         return blur_mask
 

@@ -4,7 +4,7 @@ import cv2
 import time
 import numpy as np
 import imgui
-import histox as sf
+import histox as hx
 from typing import Tuple, Optional, Union, Callable
 from .. import gl_utils
 from ...utils import EasyDict
@@ -24,7 +24,7 @@ class Viewer:
         y_offset: int = 0,
         bilinear: bool = False,
         mipmap: bool = False,
-        normalizer: sf.norm.StainNormalizer = None,
+        normalizer: hx.norm.StainNormalizer = None,
         viz = None
     ):
         self._tex_img           = None
@@ -373,11 +373,11 @@ class Viewer:
                 return text
         return None
 
-    def set_normalizer(self, normalizer: sf.norm.StainNormalizer) -> None:
+    def set_normalizer(self, normalizer: hx.norm.StainNormalizer) -> None:
         """Set the internal WSI normalizer.
 
         Args:
-            normalizer (sf.norm.StainNormalizer): Stain normalizer.
+            normalizer (hx.norm.StainNormalizer): Stain normalizer.
         """
         self._normalizer = normalizer
 
@@ -439,7 +439,7 @@ class Viewer:
         if offset:
             all_x_offset += self.x_offset
             all_y_offset += self.y_offset
-        if sf.slide_backend() == 'cucim':
+        if hx.slide_backend() == 'cucim':
             x, y = int(x), int(y)
             origin_x, origin_y = int(self.origin[0]), int(self.origin[1])
         else:

@@ -1,6 +1,6 @@
 """Tensorflow-based feature extraction from whole-slide images."""
 
-import histox as sf
+import histox as hx
 import numpy as np
 import tensorflow as tf
 from typing import Optional, Callable, Union, TYPE_CHECKING
@@ -31,7 +31,7 @@ def _wrap_preprocess(preprocess):
 
 def _build_slide_iterator(
     generator: Callable,
-    slide: "sf.WSI",
+    slide: "hx.WSI",
     img_format: str,
     normalizer: Optional["StainNormalizer"],
     batch_size: int,
@@ -127,7 +127,7 @@ def _build_slide_iterator(
 
 def features_from_slide_tf(
     extractor: "BaseFeatureExtractor",
-    slide: "sf.WSI",
+    slide: "hx.WSI",
     *,
     img_format: str = 'numpy',
     batch_size: int = 32,
@@ -152,7 +152,7 @@ def features_from_slide_tf(
 
     # Establish stain normalization
     if isinstance(normalizer, str):
-        normalizer = sf.norm.autoselect(
+        normalizer = hx.norm.autoselect(
             normalizer,
             source=normalizer_source,
             backend='tensorflow'

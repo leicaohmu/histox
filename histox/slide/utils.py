@@ -1,6 +1,6 @@
 """Utility functions and constants for slide reading."""
 
-import histox as sf
+import histox as hx
 import cv2
 import csv
 import io
@@ -226,12 +226,12 @@ class ROI:
 
         # First, ensure the polygon is valid
         if not self.polygon_is_valid():
-            sf.log.error(
+            hx.log.error(
                 "Unable to create triangles; ROI polygon is invalid."
             )
             return None
         if self.poly.geom_type != 'Polygon' or any([h.poly.geom_type != 'Polygon' for h in self.holes.values()]):
-            sf.log.error(
+            hx.log.error(
                 "Unable to create triangles; ROI is not a simple polygon."
             )
             return None
@@ -264,7 +264,7 @@ class ROI:
             hole_points = None
 
         # Build triangles.
-        triangle_vertices = sf.util.create_triangles(
+        triangle_vertices = hx.util.create_triangles(
             as_open_array(self.poly_coords()),
             hole_vertices=hole_vertices,
             hole_points=hole_points
@@ -904,7 +904,7 @@ def calc_alignment(c, us, them, n=None):
         our_tile = n.transform(our_tile[:, :, 0:3])
         their_tile = n.transform(their_tile[:, :, 0:3])
     try:
-        rough_alignment = sf.slide.utils._find_translation_matrix(their_tile, our_tile, h=50, search_window=53)
+        rough_alignment = hx.slide.utils._find_translation_matrix(their_tile, our_tile, h=50, search_window=53)
     except cv2.error:
         rough_alignment = None
         log.debug("Initial rough alignment failed at x={}, y={} (grid {}, {})".format(

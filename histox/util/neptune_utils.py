@@ -1,7 +1,7 @@
 import random
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-import histox as sf
+import histox as hx
 from histox.util import log
 
 if TYPE_CHECKING:
@@ -73,7 +73,7 @@ class NeptuneLog:
             for key in hp_data.keys()
             if 'validation' in key
         }
-        self.run['backend'] = sf.backend()
+        self.run['backend'] = hx.backend()
         self.run['project_info'] = {key: stringify_unsupported(hp_data[key]) for key in proj_keys}
         self.run['outcomes'] = str(outcomes)
         self.run['model_params/validation'] = stringify_unsupported(validation_params)
