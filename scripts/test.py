@@ -5,9 +5,9 @@ import click
 import multiprocessing
 import logging
 import tabulate  # type: ignore
-import slideflow as sf
-from slideflow.test import TestSuite
-from slideflow.util import colors as col
+import histox as sf
+from histox.test import TestSuite
+from histox.util import colors as col
 
 
 @click.command()
@@ -44,13 +44,13 @@ from slideflow.util import colors as col
 def main(slides, out, all_tests, slide_threads, **kwargs):
     '''Test script for running both unit tests and functional tests.
 
-    Unit tests are included in `slideflow.test` and use the builtin `unittest`
+    Unit tests are included in `histox.test` and use the builtin `unittest`
     framework. These tests can be run by executing this script with no arguments:
 
         python3 test.py
 
     Most functions are difficult to test without sample slides. To this end, an
-    additional set of functional tests are provided in `slideflow.test.TestSuite`,
+    additional set of functional tests are provided in `histox.test.TestSuite`,
     which require a set of sample slides. These tests can be enabled by providing
     a path to a directory with sample slides to the argument `--slides`:
 
@@ -70,7 +70,7 @@ def main(slides, out, all_tests, slide_threads, **kwargs):
         python3 test.py --slides=/path/to/slides --all=True --mil=False
     '''
     if not out:
-        out = 'slideflow_test'
+        out = 'histox_test'
     if 'SF_LOGGING_LEVEL' in os.environ:
         verbosity = sf.getLoggingLevel()
     else:

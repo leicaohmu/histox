@@ -11,7 +11,7 @@ set up an experiment which extracts tiles from slides then trains a model
 to the outcome variable 'is_tumor', modify the file as follows:
 
     def main(P):
-        import slideflow as sf
+        import histox as sf
 
         P.extract_tiles(tile_px=299, tile_um=302)
         hp = sf.ModelParams(
@@ -36,7 +36,7 @@ a regular package in scripts, Jupyter notebooks, or an interactive shell.
 
 import os
 import sys
-import slideflow as sf
+import histox as sf
 import argparse
 import logging
 import multiprocessing

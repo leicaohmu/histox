@@ -1,9 +1,9 @@
 import os
 import click
-import slideflow as sf
+import histox as sf
 from PIL import Image
 
-from slideflow.slide import TIF_EXIF_KEY_MPP
+from histox.slide import TIF_EXIF_KEY_MPP
 
 # ----------------------------------------------------------------------------
 

@@ -12,13 +12,13 @@ def get_version(package_name):
 
 # -----------------------------------------------------------------------------
 
-slideflow_version = get_version("slideflow")
+histox_version = get_version("histox")
 pytorch_version = get_version("torch")
 tensorflow_version = get_version("tensorflow")
 has_cucim = importlib.util.find_spec('cucim')
 has_vips = importlib.util.find_spec('pyvips')
-has_nc = importlib.util.find_spec('slideflow_noncommercial')
-has_gpl = importlib.util.find_spec('slideflow_gpl')
+has_nc = importlib.util.find_spec('histox_noncommercial')
+has_gpl = importlib.util.find_spec('histox_gpl')
 
 # -----------------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ def print_welcome():
     BLUE = '\033[94m'
 
     # Print the welcome message with formatting
-    print(f"{BOLD}Slideflow {slideflow_version}{END}")
+    print(f"{BOLD}Slideflow {histox_version}{END}")
     print(f"{GREEN}Tensor backend:{END} {tensor_backend}")
     print(f"{GREEN}Slide backends:{END} {slide_backends}")
     print(f"{BLUE}Additional modules:{END} {additional_modules}")

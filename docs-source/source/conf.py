@@ -1,7 +1,7 @@
 #!/home/shawarma/venv/bin/python3
 # -*- coding: utf-8 -*-
 #
-# slideflow documentation build configuration file, created by
+# histox documentation build configuration file, created by
 # sphinx-quickstart on Mon Jan 14 19:42:39 2019.
 #
 # This file is execfile()d with the current directory set to its
@@ -20,7 +20,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../'))
-import slideflow as sf
+import histox as sf
 
 
 # -- General configuration ------------------------------------------------
@@ -61,7 +61,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'slideflow'
+project = 'histox'
 copyright = '2023, James M Dolezal'
 author = 'James M Dolezal'
 
@@ -129,7 +129,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'slideflowdoc'
+htmlhelp_basename = 'histoxdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -156,7 +156,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'slideflow.tex', 'Slideflow Documentation',
+    (master_doc, 'histox.tex', 'Slideflow Documentation',
      'James M Dolezal', 'manual'),
 ]
 
@@ -166,7 +166,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'slideflow', 'Slideflow Documentation',
+    (master_doc, 'histox', 'Slideflow Documentation',
      [author], 1)
 ]
 
@@ -177,8 +177,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'slideflow', 'Slideflow Documentation',
-     author, 'slideflow', 'Machine learning histology pipeline and toolset.',
+    (master_doc, 'histox', 'Slideflow Documentation',
+     author, 'histox', 'Machine learning histology pipeline and toolset.',
      'Miscellaneous'),
 ]
 

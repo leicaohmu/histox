@@ -1,0 +1,13 @@
+2026-04-11 02:58:52 [INFO] - Downloading https://raw.githubusercontent.com/histox/histox/master/datasets/lung_adeno_squam/lung_adeno_squam.json
+2026-04-11 03:29:18 [INFO] - Downloading https://raw.githubusercontent.com/leicaohmu/histox/master/datasets/lung_adeno_squam/lung_adeno_squam.json
+2026-04-11 03:29:19 [INFO] - Setting up project at ./data
+2026-04-11 03:29:19 [INFO] - Creating project at ./data...
+2026-04-11 03:29:19 [INFO] - Downloading https://raw.githubusercontent.com/leicaohmu/histox/master/datasets/lung_adeno_squam/lung_labels.csv
+2026-04-11 03:29:20 [INFO] - Saved dataset source TCGA_LUNG to ./data/datasets.json
+2026-04-11 03:29:20 [INFO] - Wrote annotations file to [green]./data/lung_labels.csv
+2026-04-11 03:36:16 [INFO] - Downloading https://raw.githubusercontent.com/leicaohmu/histox/master/datasets/lung_adeno_squam/lung_adeno_squam.json
+2026-04-11 03:36:17 [INFO] - Setting up project at ./data
+2026-04-11 03:36:17 [INFO] - Creating project at ./data...
+2026-04-11 03:36:17 [INFO] - Downloading https://raw.githubusercontent.com/leicaohmu/histox/master/datasets/lung_adeno_squam/lung_labels.csv
+2026-04-11 03:36:18 [INFO] - Saved dataset source TCGA_LUNG to ./data/datasets.json
+2026-04-11 03:36:18 [INFO] - Wrote annotations file to [green]./data/lung_labels.csv

@@ -1,4 +1,4 @@
-name: slideflow
+name: histox
 channels:
   - pytorch
   - conda-forge
@@ -183,7 +183,7 @@ dependencies:
     - scipy==1.9.3
     - seaborn==0.11.2
     - shapely==1.8.5.post1
-    - slideflow==2.1.1
+    - histox==2.1.1
     - smac==1.4.0
     - snowballstemmer==2.2.0
     - snuggs==1.4.7
