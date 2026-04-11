@@ -8,13 +8,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-from ._version import get_versions
+from importlib.metadata import version, PackageNotFoundError
 
-__author__ = 'James Dolezal'
+__author__ = 'Lei Cao'
 __license__ = 'GNU General Public License v3.0'
-__version__ = get_versions()['version']
-__gitcommit__ = get_versions()['full-revisionid']
-__github__ = 'https://github.com/histox/histox'
+try:
+    __version__ = version("histox")
+except PackageNotFoundError:
+    __version__ = "unknown"
+__gitcommit__ = ""
+__github__ = 'https://github.com/leicaohmu/histox'
 
 # Configure deep learning and slide backends
 from ._backend import backend, slide_backend

@@ -5,7 +5,8 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="histox",
-    version="0.1.0",
+    use_scm_version=True,                        # ← 改这里
+    setup_requires=["setuptools-scm"],            # ← 加这行
     cmdclass={},
     author="Lei Cao",
     author_email="caolei@hrbmu.edu.cn",
@@ -62,11 +63,15 @@ setuptools.setup(
         'pyarrow',
     ],
     extras_require={
-        'cucim': ['cucim'],
         'torch': [
-            'torch', 'torchvision', 'pretrainedmodels',
-            'cellpose<2.2', 'spacy<3.8', 'fastai',
-            'pytorch-lightning', 'timm',
+            'torch',
+            'torchvision',
+            'pretrainedmodels',
+            'cellpose<2.2',
+            'spacy<3.8',
+            'fastai',
+            'pytorch-lightning',
+            'timm',
             'segmentation-models-pytorch',
         ],
         'tf': [
