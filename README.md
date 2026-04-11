@@ -1,5 +1,3 @@
----
-
 # histox
 
 ![Python Version](https://img.shields.io/badge/python->=3.7-blue)
@@ -377,5 +375,3 @@ This project is licensed under the **Apache License 2.0**. See `LICENSE` file fo
 
 **Status**: Active development  
 **Last Updated**: 2026-04-11
-
----
