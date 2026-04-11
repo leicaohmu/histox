@@ -1,0 +1,6 @@
+/* 控制侧边栏 logo 大小 */
+.wy-side-nav-search .wy-nav-top img,
+.wy-side-nav-search > a img {
+    max-width: 120px !important;  /* 改这个数值，越小logo越小 */
+    height: auto !important;
+}

@@ -3,10 +3,11 @@
 ![Python Version](https://img.shields.io/badge/python->=3.7-blue)
 ![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen)
 ![Language](https://img.shields.io/badge/language-Python-blue)
+[![Docs](https://readthedocs.org/projects/histox/badge/?version=latest)](https://histox.readthedocs.io/en/latest/)
 
 **histox** is a powerful, open-source deep learning library for digital pathology. Built on top of [Slideflow](https://github.com/slideflow/slideflow), it provides researchers and AI practitioners with a comprehensive toolkit for analyzing whole slide images (WSI) and building state-of-the-art computational pathology models.
 
-🌐 **Website**: [slideflow.dev](https://slideflow.dev)
+🌐 **Documentation**: [histox.readthedocs.io](https://histox.readthedocs.io)
 
 ## ✨ Key Features
 
@@ -222,9 +223,8 @@ import os
 data_root = './datasets/lung_adeno_squam'
 project_dir = './lung_project'
 
-# The lung_labels.csv is already in the repository with TCGA samples
 annotations_file = os.path.join(data_root, 'lung_labels.csv')
-slides_dir = os.path.join(data_root, 'slides')  # Add actual .svs files here
+slides_dir = os.path.join(data_root, 'slides')
 tfrecords_dir = os.path.join(project_dir, 'tfrecords')
 
 # Check available data
@@ -268,12 +268,11 @@ params = hx.ModelParams(
     validation_fraction=0.2
 )
 
-# Train on adenocarcinoma vs squamous classification
 project.train(
     'subtype',
     params=params,
     save_predictions=True,
-    multi_gpu=False  # Set to True if using multi-GPU
+    multi_gpu=False
 )
 
 print("✓ Model training complete!")
@@ -289,7 +288,7 @@ Use when you only have slide-level labels, not individual tile annotations:
 params = hx.ModelParams(
     tile_px=299,
     model='xception',
-    mil=True,                 # Enable MIL
+    mil=True,
     mil_method='attention',   # 'attention' or 'max-pooling'
     learning_rate=0.0001
 )
@@ -302,9 +301,8 @@ project.train('diagnosis', params=params)
 Pre-train feature extractors without labeled data:
 
 ```python
-# Perform self-supervised learning on unlabeled slides
 project.train_ssl(
-    method='simclr',          # Self-supervised learning method
+    method='simclr',
     epochs=100,
     batch_size=64,
     model='xception'
@@ -319,11 +317,10 @@ project.train('diagnosis', params=params)
 Automatic handling of staining variations across labs:
 
 ```python
-# Extract tiles with stain normalization
 project.extract_tiles(
     tile_px=299,
     tile_um=302,
-    stain_norm=True,          # Enable normalization
+    stain_norm=True,
     norm_method='macenko'     # 'macenko' or 'reinhard'
 )
 ```
@@ -340,7 +337,6 @@ heatmap = hx.Heatmap.from_project(
     cmap='RdYlBu_r'
 )
 
-# Save with metadata
 heatmap.save(
     '/output/heatmap.png',
     high_res=True,
@@ -369,8 +365,9 @@ heatmap.save(
 ## 📖 Documentation
 
 For detailed documentation and API reference:
-- [Slideflow Documentation](https://slideflow.dev)
-- [GitHub Issues](https://github.com/leicaohmu/histox/issues)
+- 📘 [histox Documentation](https://histox.readthedocs.io)
+- 🐛 [GitHub Issues](https://github.com/leicaohmu/histox/issues)
+- 📦 [PyPI Package](https://pypi.org/project/histox/)
 
 ## 🤝 Contributing
 
@@ -386,22 +383,23 @@ Contributions are welcome! Please:
 
 This project is licensed under the **Apache License 2.0**. See `LICENSE` file for details.
 
-**Note**: This project is built on [Slideflow](https://github.com/slideflow/slideflow). Please refer to the original project's license for additional terms.
+> **Note**: This project is built on [Slideflow](https://github.com/slideflow/slideflow). Please refer to the original project's license for additional terms.
 
 ## 🙏 Acknowledgments
 
-- **Slideflow** - The powerful foundation this project is built upon
-- **TCGA** - The Cancer Genome Atlas for dataset resources
+- **[Slideflow](https://github.com/slideflow/slideflow)** - The powerful foundation this project is built upon
+- **[TCGA](https://portal.gdc.cancer.gov/)** - The Cancer Genome Atlas for dataset resources
 - **PyTorch & TensorFlow** - Deep learning frameworks
 
 ## 📞 Support & Contact
 
-- **Email**: james@histox.ai
-- **Website**: [slideflow.dev](https://slideflow.dev)
+- **Email**: caolei@hrbmu.edu.cn
+- **Documentation**: [histox.readthedocs.io](https://histox.readthedocs.io)
 - **Repository**: [github.com/leicaohmu/histox](https://github.com/leicaohmu/histox)
 
 ## 🔗 Related Resources
 
+- [histox Documentation](https://histox.readthedocs.io)
 - [Slideflow Documentation](https://slideflow.dev)
 - [TCGA Data Portal](https://portal.gdc.cancer.gov/)
 - [Digital Pathology Resources](https://www.digipathonet.org/)
