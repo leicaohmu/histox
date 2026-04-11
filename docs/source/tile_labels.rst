@@ -32,7 +32,7 @@ When ROIs are saved in Slideflow Studio, they are exported in this file format a
 Building tile labels
 ********************
 
-Once ROIs have been generated, labeled, and saved in CSV format, the next step is to build a dataframe of tile labels. If not already done, start by :ref:`configuring a project <project_setup>` and ensuring that ROIs are in the correct directory. You can verify that the ROIs are in the right place by confirming that :meth:`slideflow.Dataset.rois` returns the number of slides with ROIs:
+Once ROIs have been generated, labeled, and saved in CSV format, the next step is to build a dataframe of tile labels. If not already done, start by :ref:`configuring a project <project_setup>` and ensuring that ROIs are in the correct directory. You can verify that the ROIs are in the right place by confirming that :meth:`histox.Dataset.rois` returns the number of slides with ROIs:
 
 .. code-block:: python
 
@@ -42,7 +42,7 @@ Once ROIs have been generated, labeled, and saved in CSV format, the next step i
     >>> len(dataset.rois())
     941
 
-Next, build a dataframe of tile labels with :meth:`slideflow.Dataset.get_tile_dataframe`. This will return a dataframe with tile coordinates (X/Y of tile center, in base dimension), slide grid index, and associated ROI name/label if the tile is in an ROI. For example:
+Next, build a dataframe of tile labels with :meth:`histox.Dataset.get_tile_dataframe`. This will return a dataframe with tile coordinates (X/Y of tile center, in base dimension), slide grid index, and associated ROI name/label if the tile is in an ROI. For example:
 
 .. code-block:: python
 
@@ -79,7 +79,7 @@ This dataframe can now be used to train a model with strong supervision.
 Training a model
 ****************
 
-Training a model with strong supervision requires using a :class:`slideflow.model.Trainer`, as described in :ref:`tutorial2`. The only difference when training with strong supervision is that the trainer should be initialized with the tile dataframe for the labels:
+Training a model with strong supervision requires using a :class:`histox.model.Trainer`, as described in :ref:`tutorial2`. The only difference when training with strong supervision is that the trainer should be initialized with the tile dataframe for the labels:
 
 .. code-block:: python
 

@@ -74,7 +74,7 @@ The next step is to calculate layer activations for images in the model's valida
 
 .. code-block:: python
 
-    from slideflow.util import get_slides_from_model_manifest
+    from histox.util import get_slides_from_model_manifest
 
     # Path to the saved model
     model_path = ...
@@ -115,13 +115,13 @@ Layer activations calculated on very large datasets may result in high memory us
       max_tiles=100
     )
 
-This function will return an instance of :class:`slideflow.DatasetFeatures`, which contains tile-level predictions (in ``DatasetFeatures.predictions``), tile X,Y locations from their respective slides (in ``DatasetFeatures.locations``), layer activations (in ``DatasetFeatures.activations``), and uncertainty (if applicable, in ``DatasetFeatures.uncertainty``).
+This function will return an instance of :class:`histox.DatasetFeatures`, which contains tile-level predictions (in ``DatasetFeatures.predictions``), tile X,Y locations from their respective slides (in ``DatasetFeatures.locations``), layer activations (in ``DatasetFeatures.activations``), and uncertainty (if applicable, in ``DatasetFeatures.uncertainty``).
 
 
 Create the mosaic map
 *********************
 
-From this collection of layer activations, we can generate a mosaic map from this ``DatasetFeatures`` object. Use :meth:`slideflow.Project.generate_mosaic` to create the mosaic. We will use the ``umap_cache`` argument to cache the UMAP created during mosaic map generation, so it can be reused if necessary.
+From this collection of layer activations, we can generate a mosaic map from this ``DatasetFeatures`` object. Use :meth:`histox.Project.generate_mosaic` to create the mosaic. We will use the ``umap_cache`` argument to cache the UMAP created during mosaic map generation, so it can be reused if necessary.
 
 .. code-block:: python
 
@@ -145,9 +145,9 @@ We can then render and save the mosaic map to disc using the ``.save()`` functio
 Save corresponding UMAPs
 ************************
 
-Now that we have the mosaic generated, we need to create corresponding labeled UMAP plots to aid in interpretability. UMAP plots are stored in :class:`slideflow.SlideMap` objects. A mosaic's underlying ``SlideMap`` can be accessed via ``mosaic.slide_map``.
+Now that we have the mosaic generated, we need to create corresponding labeled UMAP plots to aid in interpretability. UMAP plots are stored in :class:`histox.SlideMap` objects. A mosaic's underlying ``SlideMap`` can be accessed via ``mosaic.slide_map``.
 
-The :class:`slideflow.SlideMap` class provides several functions useful for labeling. To start, we will label the umap according to the raw predictions for each tile image. As this is a binary categorical outcome, there will be two post-softmax predictions. We will label the UMAP according to the second logit (id=1), and then save the image to disc.
+The :class:`histox.SlideMap` class provides several functions useful for labeling. To start, we will label the umap according to the raw predictions for each tile image. As this is a binary categorical outcome, there will be two post-softmax predictions. We will label the UMAP according to the second logit (id=1), and then save the image to disc.
 
 .. code-block:: python
 
@@ -158,7 +158,7 @@ The :class:`slideflow.SlideMap` class provides several functions useful for labe
 
 .. image:: https://i.imgur.com/FT7nH90.png
 
-Next, we will discretize the predictions, showing the final prediction as a categorical label. The ``SlideMap`` object contains a dictionary of metadata for each image tile, and the final categorical prediction is assigned to the ``prediction`` key. We will use the :meth:`slideflow.SlideMap.label_by_meta` function to label the umap with these categorical predictions.
+Next, we will discretize the predictions, showing the final prediction as a categorical label. The ``SlideMap`` object contains a dictionary of metadata for each image tile, and the final categorical prediction is assigned to the ``prediction`` key. We will use the :meth:`histox.SlideMap.label_by_meta` function to label the umap with these categorical predictions.
 
 .. code-block:: python
 
@@ -168,7 +168,7 @@ Next, we will discretize the predictions, showing the final prediction as a cate
 
 .. image:: https://i.imgur.com/oQwRPY2.png
 
-For reference, let's see the ground truth categorical labels. For this, we will need a dictionary mapping slide names to labels, which we will then pass to :meth:`slideflow.SlideMap.label_by_slide`. We can retrieve our slide labels from the project annotations file, using :meth:`slideflow.Dataset.labels`:
+For reference, let's see the ground truth categorical labels. For this, we will need a dictionary mapping slide names to labels, which we will then pass to :meth:`histox.SlideMap.label_by_slide`. We can retrieve our slide labels from the project annotations file, using :meth:`histox.Dataset.labels`:
 
 .. code-block:: python
 
@@ -191,7 +191,7 @@ Finally, if we are a using a model that was trained with uncertainty quantificat
 
 .. image:: https://i.imgur.com/fnv8eQj.png
 
-In all cases, the UMAP plots can be customized by passing keyword arguments accepted by Seaborn's `scatterplot <https://seaborn.pydata.org/generated/seaborn.scatterplot.html>`_ function, as well as a number of other arguments described in :meth:`slideflow.SlideMap.save`:
+In all cases, the UMAP plots can be customized by passing keyword arguments accepted by Seaborn's `scatterplot <https://seaborn.pydata.org/generated/seaborn.scatterplot.html>`_ function, as well as a number of other arguments described in :meth:`histox.SlideMap.save`:
 
 .. code-block:: python
 

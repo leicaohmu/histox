@@ -3,7 +3,7 @@ Troubleshooting
 
 If you're running into problems, look for more information by including debug logging. To enable debug logging, set the environmental variable ``SF_LOGGING_LEVEL=10``.
 
-To check for errors in your environment or installation, you can also use the test script ``test.py``, which uses the testing suite ``slideflow.test.TestSuite`` to execute all pipeline functions on a set of provided slides.
+To check for errors in your environment or installation, you can also use the test script ``test.py``, which uses the testing suite ``histox.test.TestSuite`` to execute all pipeline functions on a set of provided slides.
 
 Testing
 *******
@@ -39,13 +39,13 @@ If the issue is still unclear, please submit an Issue on the `project Github pag
 
 .. code-block:: bash
 
-    $ python3 -c "import slideflow; slideflow.about()"
+    $ python3 -c "import slideflow; histox.about()"
     ╭=======================╮
     │       Slideflow       │
     │    Version: 2.1.0     │
     │  Backend: tensorflow  │
     │ Slide Backend: cucim  │
-    │ https://slideflow.dev │
+    │ https://histox.dev │
     ╰=======================╯
 
 * The active deep learning backend (``sf.backend()``) and slide backend (``sf.slide_backend()``)

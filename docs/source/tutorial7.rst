@@ -69,7 +69,7 @@ Now, we'll define our custom augmentation. Augmentations are functions that take
     ...     transforms.GaussianBlur(3)
     ... ])
 
-Transformations can be applied to training or validation data by passing a dictionary - with the keys 'train' and/or 'val' - to the ``transform`` argument of :class:`slideflow.Trainer`. If a transformation should be applied to both training and validation, it can be passed directly to the ``transform`` argument. In this case, we'll apply our custom augmentation to the training dataset only.
+Transformations can be applied to training or validation data by passing a dictionary - with the keys 'train' and/or 'val' - to the ``transform`` argument of :class:`histox.Trainer`. If a transformation should be applied to both training and validation, it can be passed directly to the ``transform`` argument. In this case, we'll apply our custom augmentation to the training dataset only.
 
 .. code-block:: python
 
@@ -80,7 +80,7 @@ Transformations can be applied to training or validation data by passing a dicti
     ...   transform={'train': augment},
     ... )
 
-Now we can start training. Pass the training and validation datasets to the :meth:`slideflow.model.Trainer.train` method of our trainer, assigning the output to a new variable ``results``.
+Now we can start training. Pass the training and validation datasets to the :meth:`histox.model.Trainer.train` method of our trainer, assigning the output to a new variable ``results``.
 
 .. code-block:: python
 

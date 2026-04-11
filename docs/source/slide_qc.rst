@@ -1,16 +1,16 @@
-.. currentmodule:: slideflow.slide.qc
+.. currentmodule:: histox.slide.qc
 
 .. _qc:
 
-slideflow.slide.qc
+histox.slide.qc
 ==================
 
-This module contains functions for slide-level quality control, including Otsu's thresholding and Gaussian blur filtering. Quality control methods are used by passing a list of callables to the ``qc`` argument of ``.extract_tiles()``. They can also be directly applied to a slide with :meth:`slideflow.WSI.qc`.
+This module contains functions for slide-level quality control, including Otsu's thresholding and Gaussian blur filtering. Quality control methods are used by passing a list of callables to the ``qc`` argument of ``.extract_tiles()``. They can also be directly applied to a slide with :meth:`histox.WSI.qc`.
 
 .. code-block:: python
 
   import slideflow as sf
-  from slideflow.slide import qc
+  from histox.slide import qc
 
   # Define custom QC options
   qc = [

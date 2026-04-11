@@ -2,7 +2,7 @@
 
 .. _project:
 
-slideflow.Project
+histox.Project
 =================
 
 .. autoclass:: Project
@@ -24,56 +24,56 @@ Attributes
 Methods
 -------
 
-.. autofunction:: slideflow.Project.add_source
+.. autofunction:: histox.Project.add_source
 
-.. autofunction:: slideflow.Project.associate_slide_names
+.. autofunction:: histox.Project.associate_slide_names
 
-.. autofunction:: slideflow.Project.cell_segmentation
+.. autofunction:: histox.Project.cell_segmentation
 
-.. autofunction:: slideflow.Project.create_blank_annotations
+.. autofunction:: histox.Project.create_blank_annotations
 
-.. autofunction:: slideflow.Project.create_hp_sweep
+.. autofunction:: histox.Project.create_hp_sweep
 
-.. autofunction:: slideflow.Project.evaluate
+.. autofunction:: histox.Project.evaluate
 
-.. autofunction:: slideflow.Project.evaluate_mil
+.. autofunction:: histox.Project.evaluate_mil
 
-.. autofunction:: slideflow.Project.extract_cells
+.. autofunction:: histox.Project.extract_cells
 
-.. autofunction:: slideflow.Project.extract_tiles
+.. autofunction:: histox.Project.extract_tiles
 
-.. autofunction:: slideflow.Project.gan_train
+.. autofunction:: histox.Project.gan_train
 
-.. autofunction:: slideflow.Project.gan_generate
+.. autofunction:: histox.Project.gan_generate
 
-.. autofunction:: slideflow.Project.generate_features
+.. autofunction:: histox.Project.generate_features
 
-.. autofunction:: slideflow.Project.generate_feature_bags
+.. autofunction:: histox.Project.generate_feature_bags
 
-.. autofunction:: slideflow.Project.generate_heatmaps
+.. autofunction:: histox.Project.generate_heatmaps
 
-.. autofunction:: slideflow.Project.generate_mosaic
+.. autofunction:: histox.Project.generate_mosaic
 
-.. autofunction:: slideflow.Project.generate_mosaic_from_annotations
+.. autofunction:: histox.Project.generate_mosaic_from_annotations
 
-.. autofunction:: slideflow.Project.generate_tfrecord_heatmap
+.. autofunction:: histox.Project.generate_tfrecord_heatmap
 
-.. autofunction:: slideflow.Project.dataset
+.. autofunction:: histox.Project.dataset
 
-.. autofunction:: slideflow.Project.predict
+.. autofunction:: histox.Project.predict
 
-.. autofunction:: slideflow.Project.predict_ensemble
+.. autofunction:: histox.Project.predict_ensemble
 
-.. autofunction:: slideflow.Project.predict_wsi
+.. autofunction:: histox.Project.predict_wsi
 
-.. autofunction:: slideflow.Project.save
+.. autofunction:: histox.Project.save
 
-.. autofunction:: slideflow.Project.smac_search
+.. autofunction:: histox.Project.smac_search
 
-.. autofunction:: slideflow.Project.train
+.. autofunction:: histox.Project.train
 
-.. autofunction:: slideflow.Project.train_ensemble
+.. autofunction:: histox.Project.train_ensemble
 
-.. autofunction:: slideflow.Project.train_mil
+.. autofunction:: histox.Project.train_mil
 
-.. autofunction:: slideflow.Project.train_simclr
+.. autofunction:: histox.Project.train_simclr

@@ -1,4 +1,4 @@
-.. currentmodule:: slideflow.dataset
+.. currentmodule:: histox.dataset
 
 .. _datasets_and_validation:
 

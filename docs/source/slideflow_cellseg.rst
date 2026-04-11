@@ -1,6 +1,6 @@
-.. currentmodule:: slideflow.cellseg
+.. currentmodule:: histox.cellseg
 
-slideflow.cellseg
+histox.cellseg
 =================
 
 This module contains utility functions for performing whole-slide image cell segmentation with Cellpose.
@@ -12,12 +12,12 @@ See :ref:`cellseg` for more information.
 Segmentation
 ************
 .. autoclass:: Segmentation
-.. autofunction:: slideflow.cellseg.Segmentation.apply_rois
-.. autofunction:: slideflow.cellseg.Segmentation.calculate_centroids
-.. autofunction:: slideflow.cellseg.Segmentation.calculate_outlines
-.. autofunction:: slideflow.cellseg.Segmentation.centroids
-.. autofunction:: slideflow.cellseg.Segmentation.centroid_to_image
-.. autofunction:: slideflow.cellseg.Segmentation.extract_centroids
-.. autofunction:: slideflow.cellseg.Segmentation.mask_to_image
-.. autofunction:: slideflow.cellseg.Segmentation.outline_to_image
-.. autofunction:: slideflow.cellseg.Segmentation.save
+.. autofunction:: histox.cellseg.Segmentation.apply_rois
+.. autofunction:: histox.cellseg.Segmentation.calculate_centroids
+.. autofunction:: histox.cellseg.Segmentation.calculate_outlines
+.. autofunction:: histox.cellseg.Segmentation.centroids
+.. autofunction:: histox.cellseg.Segmentation.centroid_to_image
+.. autofunction:: histox.cellseg.Segmentation.extract_centroids
+.. autofunction:: histox.cellseg.Segmentation.mask_to_image
+.. autofunction:: histox.cellseg.Segmentation.outline_to_image
+.. autofunction:: histox.cellseg.Segmentation.save

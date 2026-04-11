@@ -15,7 +15,7 @@ For example, suppose you have a custom MIL model called ``MyMILModel`` that you 
 
 .. code-block:: python
 
-    from slideflow.model.mil import register_model
+    from histox.model.mil import register_model
 
     @register_model
     def my_mil_model(**kwargs):
@@ -38,7 +38,7 @@ Similarly, Slideflow supports the integration of custom feature extractors via t
 
 .. code-block:: python
 
-    from slideflow.model.extractors import register_torch
+    from histox.model.extractors import register_torch
 
     @register_torch
     def my_foundation_model(**kwargs):
@@ -59,7 +59,7 @@ In your package's ``setup.py`` file, use the "entry_points" key to connect with 
 
     ...,
     entry_points={
-        'slideflow.plugins': [
+        'histox.plugins': [
             'extras = my_package:register_extras',
         ],
     },

@@ -92,7 +92,7 @@ Training
 ********
 
 After tiles are extracted, the dataset will be ready for training. We will train with a single set of manually defined
-hyperparameters, which we can configure with :class:`slideflow.ModelParams`. We will use the
+hyperparameters, which we can configure with :class:`histox.ModelParams`. We will use the
 `Xception <https://arxiv.org/abs/1610.02357>`_ model with a batch size of 32, otherwise keeping defaults.
 
 .. code-block:: python
@@ -106,7 +106,7 @@ hyperparameters, which we can configure with :class:`slideflow.ModelParams`. We 
     )
 
 For training, we will use 5-fold cross-validation on the training dataset. To set up training, invoke the
-:meth:`slideflow.Project.train` function with the outcome of interest, our hyperparameters, and our validation plan.
+:meth:`histox.Project.train` function with the outcome of interest, our hyperparameters, and our validation plan.
 We will use the ``filters`` argument to limit our training to the "train" dataset, as well as limit the training
 to only include patients with documented ER status (otherwise a blank "" would be marked as a third outcome).
 

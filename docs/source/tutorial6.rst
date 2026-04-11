@@ -1,4 +1,4 @@
-.. currentmodule:: slideflow.slide
+.. currentmodule:: histox.slide
 
 .. _tutorial6:
 

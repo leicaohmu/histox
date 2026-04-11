@@ -1,9 +1,9 @@
-.. currentmodule:: slideflow.norm
+.. currentmodule:: histox.norm
 
-slideflow.norm
+histox.norm
 ===============
 
-The ``slideflow.norm`` submodule includes tools for H&E stain normalization and augmentation.
+The ``histox.norm`` submodule includes tools for H&E stain normalization and augmentation.
 
 Available stain normalization algorithms include:
 
@@ -20,7 +20,7 @@ Available stain normalization algorithms include:
 Overview
 ********
 
-The main normalizer interface, :class:`slideflow.norm.StainNormalizer`, offers
+The main normalizer interface, :class:`histox.norm.StainNormalizer`, offers
 efficient numpy implementations for the Macenko, Reinhard, and Vahadane H&E stain normalization algorithms, as well
 as an HSV colorspace stain augmentation method. This normalizer can convert
 images to and from Tensors, numpy arrays, and raw JPEG/PNG images.
@@ -28,13 +28,13 @@ images to and from Tensors, numpy arrays, and raw JPEG/PNG images.
 In addition to these numpy implementations, PyTorch-native and Tensorflow-native
 implementations are also provided, which offer performance improvements, GPU acceleration,
 and/or vectorized application. The native normalizers are found in
-``slideflow.norm.tensorflow`` and ``slideflow.norm.torch``, respectively.
+``histox.norm.tensorflow`` and ``histox.norm.torch``, respectively.
 
 The Vahadane normalizer has two numpy implementations available: SPAMS
 (``vahadane_spams``) and sklearn (``vahadane_sklearn``). By default,
 the SPAMS implementation will be used if unspecified (``method='vahadane'``).
 
-Use :func:`slideflow.norm.autoselect` to get the fastest available normalizer
+Use :func:`histox.norm.autoselect` to get the fastest available normalizer
 for a given method and active backend (Tensorflow/PyTorch).
 
 How to use
@@ -56,7 +56,7 @@ Load a backend-native stain normalizer with ``autoselect``, then transform an im
     macenko = sf.norm.autoselect('macenko')
     image = macenko.transform(image)
 
-You can use :meth:`slideflow.norm.StainNormalizer.fit` to fit the normalizer to a custom reference image, or use one of our preset fits.
+You can use :meth:`histox.norm.StainNormalizer.fit` to fit the normalizer to a custom reference image, or use one of our preset fits.
 
 Dataloader pre-processing
 -------------------------
@@ -125,7 +125,7 @@ Real-time normalization can be performed for most pipeline functions - such as m
 
 .. code-block:: python
 
-    from slideflow.model import ModelParams
+    from histox.model import ModelParams
     hp = ModelParams(..., normalizer='reinhard')
 
 If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, ``params.json``, in the saved model folder. Any Slideflow function that uses this model will automatically process images using the same normalization strategy.
@@ -176,7 +176,7 @@ Contextual Normalization
 
 Contextual stain normalization allows you to stain normalize an image using the staining context of a separate image. When the context image is a thumbnail of the whole slide, this may provide slight improvements in normalization quality for areas of a slide that are predominantly eosin (e.g. necrosis or low cellularity). For the Macenko normalizer, this works by determining the maximum H&E concentrations from the context image rather than the image being transformed. For the Reinhard normalizer, channel means and standard deviations are calculated from the context image instead of the image being transformed. This normalization approach can result in poor quality images if the context image has pen marks or other artifacts, so we do not recommend using this approach without ROIs or effective slide-level filtering.
 
-Contextual normalization can be enabled during tile extraction by passing the argument ``context_normalize=True`` to :meth:`slideflow.Dataset.extract_tiles()`.
+Contextual normalization can be enabled during tile extraction by passing the argument ``context_normalize=True`` to :meth:`histox.Dataset.extract_tiles()`.
 
 You can use contextual normalization when manually using a ``StainNormalizer`` object by using the ``.context()`` function. The context can either be a slide (path or ``sf.WSI``) or an image (Tensor or np.ndarray).
 
@@ -260,19 +260,19 @@ StainNormalizer
 ***************
 
 .. autoclass:: StainNormalizer
-.. autofunction:: slideflow.norm.StainNormalizer.fit
-.. autofunction:: slideflow.norm.StainNormalizer.get_fit
-.. autofunction:: slideflow.norm.StainNormalizer.set_fit
-.. autofunction:: slideflow.norm.StainNormalizer.augment
-.. autofunction:: slideflow.norm.StainNormalizer.transform
-.. autofunction:: slideflow.norm.StainNormalizer.jpeg_to_jpeg
-.. autofunction:: slideflow.norm.StainNormalizer.jpeg_to_rgb
-.. autofunction:: slideflow.norm.StainNormalizer.png_to_png
-.. autofunction:: slideflow.norm.StainNormalizer.png_to_rgb
-.. autofunction:: slideflow.norm.StainNormalizer.rgb_to_rgb
-.. autofunction:: slideflow.norm.StainNormalizer.tf_to_rgb
-.. autofunction:: slideflow.norm.StainNormalizer.tf_to_tf
-.. autofunction:: slideflow.norm.StainNormalizer.torch_to_torch
+.. autofunction:: histox.norm.StainNormalizer.fit
+.. autofunction:: histox.norm.StainNormalizer.get_fit
+.. autofunction:: histox.norm.StainNormalizer.set_fit
+.. autofunction:: histox.norm.StainNormalizer.augment
+.. autofunction:: histox.norm.StainNormalizer.transform
+.. autofunction:: histox.norm.StainNormalizer.jpeg_to_jpeg
+.. autofunction:: histox.norm.StainNormalizer.jpeg_to_rgb
+.. autofunction:: histox.norm.StainNormalizer.png_to_png
+.. autofunction:: histox.norm.StainNormalizer.png_to_rgb
+.. autofunction:: histox.norm.StainNormalizer.rgb_to_rgb
+.. autofunction:: histox.norm.StainNormalizer.tf_to_rgb
+.. autofunction:: histox.norm.StainNormalizer.tf_to_tf
+.. autofunction:: histox.norm.StainNormalizer.torch_to_torch
 
 Example images
 **************

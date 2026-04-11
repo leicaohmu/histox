@@ -1,4 +1,4 @@
-.. currentmodule:: slideflow.segmentation
+.. currentmodule:: histox.segmentation
 
 .. _segmentation:
 
@@ -34,7 +34,7 @@ Segmentation models in Slideflow are trained on regions of interest, which can b
     from slideflow import segment
 
     # Load a project and dataset
-    project = slideflow.load_project('path/to/project')
+    project = histox.load_project('path/to/project')
     dataset = project.dataset()
 
     # Export thumbnails and masks
@@ -84,7 +84,7 @@ Segmentation models are configured using a :class:`segment.SegmentConfig` object
 
 Slideflow uses the `segmentation_models_pytorch <https://github.com/qubvel/segmentation_models.pytorch>`_ library to implement segmentation models. The ``arch`` argument specifies the model architecture, and the ``encoder_name`` argument specifies the encoder backbone. See available models and encoders in the `segmentation_models_pytorch documentation <https://smp.readthedocs.io/en/latest/models.html>`_.
 
-The segmentation model can then be trained using the :func:`segment.train` function. This function takes a :class:`segment.SegmentConfig` object and a :class:`slideflow.Dataset` object as arguments. During training, segmentation thumbnails and masks are randomly cropped to the specified ``size``, and images/masks then undergo augmentation with random flipping/rotating.
+The segmentation model can then be trained using the :func:`segment.train` function. This function takes a :class:`segment.SegmentConfig` object and a :class:`histox.Dataset` object as arguments. During training, segmentation thumbnails and masks are randomly cropped to the specified ``size``, and images/masks then undergo augmentation with random flipping/rotating.
 
 For example, to train a model for binary segmentation with a resolution of 20 MPP, use:
 
@@ -127,7 +127,7 @@ After training, models can be loaded using :func:`segment.load_model_and_config`
     # Load the model and config
     model, config = segment.load_model_and_config('path/to/model.pth')
 
-To run inference on a slide, use the :meth:`segment.SegmentModel.run_slide_inference` method. This method takes a :class:`slideflow.WSI` object or str (path to slide) as an argument, and returns an array of pixel-level predictions. For binary models, the output shape will be ``(H, W)``. For multiclass models, the output shape will be ``(N+1, H, W)`` (the first channel is predicted background), and for multilabel models, the output shape will be ``(N, H, W)``, where ``N`` is the number of labels.
+To run inference on a slide, use the :meth:`segment.SegmentModel.run_slide_inference` method. This method takes a :class:`histox.WSI` object or str (path to slide) as an argument, and returns an array of pixel-level predictions. For binary models, the output shape will be ``(H, W)``. For multiclass models, the output shape will be ``(N+1, H, W)`` (the first channel is predicted background), and for multilabel models, the output shape will be ``(N, H, W)``, where ``N`` is the number of labels.
 
 .. code-block:: python
 
@@ -144,12 +144,12 @@ You can also run inference directly on an arbitrary image using the :meth:`segme
 Generating QC Masks
 -------------------
 
-The :class:`slideflow.slide.qc.Segment` class provides an easy interface for generating QC masks from a segmentation model. This class takes a path to a trained segmentation model as an argument, and can be used for QC :ref:`as previously described <filtering>`. For example:
+The :class:`histox.slide.qc.Segment` class provides an easy interface for generating QC masks from a segmentation model. This class takes a path to a trained segmentation model as an argument, and can be used for QC :ref:`as previously described <filtering>`. For example:
 
 .. code-block:: python
 
     import slideflow as sf
-    from slideflow.slide import qc
+    from histox.slide import qc
 
     # Load a project and dataset
     project = sf.load_project('path/to/project')
@@ -166,7 +166,7 @@ You can also use this interface for applying QC to a single slide:
 .. code-block:: python
 
     import slideflow as sf
-    from slideflow.slide import qc
+    from histox.slide import qc
 
     # Load the slide
     wsi = sf.WSI('/path/to/slide', ...)
@@ -200,12 +200,12 @@ In all cases, the thresholding direction can be reversed with by setting ``thres
 Generating ROIs
 ---------------
 
-The :class:`slideflow.slide.qc.Segment` also provides an easy interface for generating regions of interest (ROIs). Use :meth:`slideflow.slide.qc.Segment.generate_rois` method to generate and apply ROIs to a slide. If the segmentation model is multiclass or multilabel, generated ROIs will be labeled. For example:
+The :class:`histox.slide.qc.Segment` also provides an easy interface for generating regions of interest (ROIs). Use :meth:`histox.slide.qc.Segment.generate_rois` method to generate and apply ROIs to a slide. If the segmentation model is multiclass or multilabel, generated ROIs will be labeled. For example:
 
 .. code-block:: python
 
     import slideflow as sf
-    from slideflow.slide import qc
+    from histox.slide import qc
 
     # Load a project and dataset
     wsi = sf.WSI('/path/to/slide', ...)
@@ -216,9 +216,9 @@ The :class:`slideflow.slide.qc.Segment` also provides an easy interface for gene
     # Generate and apply ROIs to a slide
     roi_outlines = segmenter.generate_rois(wsi)
 
-By default, this will apply generated ROIs directly to the :class:`slideflow.WSI` object. If you wish to calculate ROI outlines without applying them to the slide, use the argument ``apply=False``.
+By default, this will apply generated ROIs directly to the :class:`histox.WSI` object. If you wish to calculate ROI outlines without applying them to the slide, use the argument ``apply=False``.
 
-In addition to generating ROIs for a single slide, you can also generate ROIs for an entire dataset using :meth:`slideflow.Dataset.generate_rois`. For example:
+In addition to generating ROIs for a single slide, you can also generate ROIs for an entire dataset using :meth:`histox.Dataset.generate_rois`. For example:
 
 .. code-block:: python
 

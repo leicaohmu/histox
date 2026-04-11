@@ -5,7 +5,7 @@ Saliency Maps
 
 Slideflow provides an API for calculating gradient-based pixel attribution (saliency maps), as implemented by `PAIR <https://github.com/PAIR-code/saliency>`_. Saliency maps can be calculated manually (as described below), or interactively in :ref:`Slideflow Studio <studio>`.
 
-:class:`slideflow.grad.SaliencyMap` provides an interface for preparing a saliency map generator from a loaded model (Tensorflow or PyTorch) and calculating maps from preprocessed images. Supported methods include:
+:class:`histox.grad.SaliencyMap` provides an interface for preparing a saliency map generator from a loaded model (Tensorflow or PyTorch) and calculating maps from preprocessed images. Supported methods include:
 
 - Vanilla gradients
 - Integrated gradients
@@ -17,7 +17,7 @@ Slideflow provides an API for calculating gradient-based pixel attribution (sali
 Generating a Saliency Map
 -------------------------
 
-Creating a saliency map with :class:`slideflow.grad.SaliencyMap` requires two components: a loaded model and a preprocessed image. Trained models can be loaded from disk with :func:`slideflow.model.load`, and the model's preprocessing function can be prepared with :func:`slideflow.util.get_preprocess_fn`.
+Creating a saliency map with :class:`histox.grad.SaliencyMap` requires two components: a loaded model and a preprocessed image. Trained models can be loaded from disk with :func:`histox.model.load`, and the model's preprocessing function can be prepared with :func:`histox.util.get_preprocess_fn`.
 
 .. code-block:: python
 
@@ -31,7 +31,7 @@ Creating a saliency map with :class:`slideflow.grad.SaliencyMap` requires two co
     sal_map = SaliencyMap(model, class_idx=0)
 
 
-There are several ways you might acquire an image to use for a saliency map. To load an image tile from a whole-slide image, you can index a :class:`slideflow.WSI` object:
+There are several ways you might acquire an image to use for a saliency map. To load an image tile from a whole-slide image, you can index a :class:`histox.WSI` object:
 
 .. code-block:: python
 
@@ -48,7 +48,7 @@ There are several ways you might acquire an image to use for a saliency map. To 
 
 |
 
-Alternatively, if you know the coordinates for an image tile and want to extract it from TFRecords, you can use :meth:`slideflow.Dataset.read_tfrecord_by_location`:
+Alternatively, if you know the coordinates for an image tile and want to extract it from TFRecords, you can use :meth:`histox.Dataset.read_tfrecord_by_location`:
 
 .. code-block:: python
 
@@ -74,12 +74,12 @@ Once you have an image and a loaded ``SaliencyMap`` object, you can calculate a 
 Plotting a Saliency Map
 -----------------------
 
-Once a saliency map has been created, you can plot the image as a heatmap or as an overlay. The ``slideflow.grad`` submodule includes several utility functions to assist with plotting. For example, to plot a basic heatmap using the ``inferno`` matplotlib colormap, use :func:`slideflow.grad.plot_utils.inferno`:
+Once a saliency map has been created, you can plot the image as a heatmap or as an overlay. The ``histox.grad`` submodule includes several utility functions to assist with plotting. For example, to plot a basic heatmap using the ``inferno`` matplotlib colormap, use :func:`histox.grad.plot_utils.inferno`:
 
 .. code-block:: python
 
     from PIL import Image
-    from slideflow.grad.plot_utils import inferno
+    from histox.grad.plot_utils import inferno
 
     pil_image = Image.fromarray(inferno(mask))
     pil_image.show()
@@ -89,12 +89,12 @@ Once a saliency map has been created, you can plot the image as a heatmap or as 
 
 |
 
-To plot this saliency map as an overlay, use :func:`slideflow.grad.plot_utils.overlay`, passing in both the unprocessed image and the saliency map:
+To plot this saliency map as an overlay, use :func:`histox.grad.plot_utils.overlay`, passing in both the unprocessed image and the saliency map:
 
 .. code-block:: python
 
     from PIL import Image
-    from slideflow.grad.plot_utils import overlay
+    from histox.grad.plot_utils import overlay
 
     overlay_img = overlay(image.numpy(), mask)
     pil_image = Image.fromarray(overlay_img)
@@ -114,8 +114,8 @@ The following is a complete example for how to calculate and plot a saliency map
 .. code-block:: python
 
     import slideflow as sf
-    from slideflow.grad import SaliencyMap
-    from slideflow.grad.plot_utils import overlay
+    from histox.grad import SaliencyMap
+    from histox.grad.plot_utils import overlay
     from PIL import Image
 
     # Load a slide and find the desired image tile.

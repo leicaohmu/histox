@@ -2,7 +2,7 @@
 
 .. _dataset:
 
-slideflow.Dataset
+histox.Dataset
 =================
 
 .. autoclass:: Dataset
@@ -24,57 +24,57 @@ Attributes
 Methods
 -------
 
-.. autofunction:: slideflow.Dataset.balance
-.. autofunction:: slideflow.Dataset.build_index
-.. autofunction:: slideflow.Dataset.cell_segmentation
-.. autofunction:: slideflow.Dataset.check_duplicates
-.. autofunction:: slideflow.Dataset.clear_filters
-.. autofunction:: slideflow.Dataset.clip
-.. autofunction:: slideflow.Dataset.convert_xml_rois
-.. autofunction:: slideflow.Dataset.extract_cells
-.. autofunction:: slideflow.Dataset.extract_tiles
-.. autofunction:: slideflow.Dataset.extract_tiles_from_tfrecords
-.. autofunction:: slideflow.Dataset.filter
-.. autofunction:: slideflow.Dataset.find_slide
-.. autofunction:: slideflow.Dataset.find_tfrecord
-.. autofunction:: slideflow.Dataset.generate_feature_bags
-.. autofunction:: slideflow.Dataset.get_tfrecord_locations
-.. autofunction:: slideflow.Dataset.get_tile_dataframe
-.. autofunction:: slideflow.Dataset.harmonize_labels
-.. autofunction:: slideflow.Dataset.is_float
-.. autofunction:: slideflow.Dataset.kfold_split
-.. autofunction:: slideflow.Dataset.labels
-.. autofunction:: slideflow.Dataset.load_annotations
-.. autofunction:: slideflow.Dataset.load_indices
-.. autofunction:: slideflow.Dataset.manifest
-.. autofunction:: slideflow.Dataset.manifest_histogram
-.. autofunction:: slideflow.Dataset.patients
-.. autofunction:: slideflow.Dataset.get_bags
-.. autofunction:: slideflow.Dataset.read_tfrecord_by_location
-.. autofunction:: slideflow.Dataset.remove_filter
-.. autofunction:: slideflow.Dataset.rebuild_index
-.. autofunction:: slideflow.Dataset.resize_tfrecords
-.. autofunction:: slideflow.Dataset.rois
-.. autofunction:: slideflow.Dataset.slide_manifest
-.. autofunction:: slideflow.Dataset.slide_paths
-.. autofunction:: slideflow.Dataset.slides
-.. autofunction:: slideflow.Dataset.split
-.. autofunction:: slideflow.Dataset.split_tfrecords_by_roi
-.. autofunction:: slideflow.Dataset.summary
-.. autofunction:: slideflow.Dataset.tensorflow
-.. autofunction:: slideflow.Dataset.tfrecord_report
-.. autofunction:: slideflow.Dataset.tfrecord_heatmap
-.. autofunction:: slideflow.Dataset.tfrecords
-.. autofunction:: slideflow.Dataset.tfrecords_by_subfolder
-.. autofunction:: slideflow.Dataset.tfrecords_folders
-.. autofunction:: slideflow.Dataset.tfrecords_from_tiles
-.. autofunction:: slideflow.Dataset.tfrecords_have_locations
-.. autofunction:: slideflow.Dataset.transform_tfrecords
-.. autofunction:: slideflow.Dataset.thumbnails
-.. autofunction:: slideflow.Dataset.torch
-.. autofunction:: slideflow.Dataset.unclip
-.. autofunction:: slideflow.Dataset.update_manifest
-.. autofunction:: slideflow.Dataset.update_annotations_with_slidenames
-.. autofunction:: slideflow.Dataset.verify_annotations_slides
-.. autofunction:: slideflow.Dataset.verify_img_format
-.. autofunction:: slideflow.Dataset.verify_slide_names
+.. autofunction:: histox.Dataset.balance
+.. autofunction:: histox.Dataset.build_index
+.. autofunction:: histox.Dataset.cell_segmentation
+.. autofunction:: histox.Dataset.check_duplicates
+.. autofunction:: histox.Dataset.clear_filters
+.. autofunction:: histox.Dataset.clip
+.. autofunction:: histox.Dataset.convert_xml_rois
+.. autofunction:: histox.Dataset.extract_cells
+.. autofunction:: histox.Dataset.extract_tiles
+.. autofunction:: histox.Dataset.extract_tiles_from_tfrecords
+.. autofunction:: histox.Dataset.filter
+.. autofunction:: histox.Dataset.find_slide
+.. autofunction:: histox.Dataset.find_tfrecord
+.. autofunction:: histox.Dataset.generate_feature_bags
+.. autofunction:: histox.Dataset.get_tfrecord_locations
+.. autofunction:: histox.Dataset.get_tile_dataframe
+.. autofunction:: histox.Dataset.harmonize_labels
+.. autofunction:: histox.Dataset.is_float
+.. autofunction:: histox.Dataset.kfold_split
+.. autofunction:: histox.Dataset.labels
+.. autofunction:: histox.Dataset.load_annotations
+.. autofunction:: histox.Dataset.load_indices
+.. autofunction:: histox.Dataset.manifest
+.. autofunction:: histox.Dataset.manifest_histogram
+.. autofunction:: histox.Dataset.patients
+.. autofunction:: histox.Dataset.get_bags
+.. autofunction:: histox.Dataset.read_tfrecord_by_location
+.. autofunction:: histox.Dataset.remove_filter
+.. autofunction:: histox.Dataset.rebuild_index
+.. autofunction:: histox.Dataset.resize_tfrecords
+.. autofunction:: histox.Dataset.rois
+.. autofunction:: histox.Dataset.slide_manifest
+.. autofunction:: histox.Dataset.slide_paths
+.. autofunction:: histox.Dataset.slides
+.. autofunction:: histox.Dataset.split
+.. autofunction:: histox.Dataset.split_tfrecords_by_roi
+.. autofunction:: histox.Dataset.summary
+.. autofunction:: histox.Dataset.tensorflow
+.. autofunction:: histox.Dataset.tfrecord_report
+.. autofunction:: histox.Dataset.tfrecord_heatmap
+.. autofunction:: histox.Dataset.tfrecords
+.. autofunction:: histox.Dataset.tfrecords_by_subfolder
+.. autofunction:: histox.Dataset.tfrecords_folders
+.. autofunction:: histox.Dataset.tfrecords_from_tiles
+.. autofunction:: histox.Dataset.tfrecords_have_locations
+.. autofunction:: histox.Dataset.transform_tfrecords
+.. autofunction:: histox.Dataset.thumbnails
+.. autofunction:: histox.Dataset.torch
+.. autofunction:: histox.Dataset.unclip
+.. autofunction:: histox.Dataset.update_manifest
+.. autofunction:: histox.Dataset.update_annotations_with_slidenames
+.. autofunction:: histox.Dataset.verify_annotations_slides
+.. autofunction:: histox.Dataset.verify_img_format
+.. autofunction:: histox.Dataset.verify_slide_names

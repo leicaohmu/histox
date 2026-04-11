@@ -1,6 +1,6 @@
-.. currentmodule:: slideflow.model
+.. currentmodule:: histox.model
 
-slideflow.model
+histox.model
 ===============
 
 This module provides the :class:`ModelParams` class to organize model and training
@@ -11,8 +11,8 @@ are extensions of this class, supporting regression and Cox Proportional Hazards
 hyperparameters.
 
 .. note::
-    In order to support both Tensorflow and PyTorch backends, the :mod:`slideflow.model` module will import either
-    :mod:`slideflow.model.tensorflow` or :mod:`slideflow.model.torch` according to the currently active backend,
+    In order to support both Tensorflow and PyTorch backends, the :mod:`histox.model` module will import either
+    :mod:`histox.model.tensorflow` or :mod:`histox.model.torch` according to the currently active backend,
     indicated by the environmental variable ``SF_BACKEND``.
 
 See :ref:`training` for a detailed look at how to train models.
@@ -20,10 +20,10 @@ See :ref:`training` for a detailed look at how to train models.
 Trainer
 *******
 .. autoclass:: Trainer
-.. autofunction:: slideflow.model.Trainer.load
-.. autofunction:: slideflow.model.Trainer.evaluate
-.. autofunction:: slideflow.model.Trainer.predict
-.. autofunction:: slideflow.model.Trainer.train
+.. autofunction:: histox.model.Trainer.load
+.. autofunction:: histox.model.Trainer.evaluate
+.. autofunction:: histox.model.Trainer.predict
+.. autofunction:: histox.model.Trainer.train
 
 RegressionTrainer
 *****************
@@ -36,8 +36,8 @@ SurvivalTrainer
 Features
 ********
 .. autoclass:: Features
-.. autofunction:: slideflow.model.Features.from_model
-.. autofunction:: slideflow.model.Features.__call__
+.. autofunction:: histox.model.Features.from_model
+.. autofunction:: histox.model.Features.__call__
 
 Other functions
 ***************

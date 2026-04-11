@@ -5,7 +5,7 @@ Setting up a Project
 
 Slideflow :ref:`Projects <project>` organize datasets, annotations, and results into a unified directory and provide a high-level API for common tasks.
 
-Use :func:`slideflow.create_project` to create a new project, supplying an annotations file (with patient labels) and path to slides. A new dataset source (collection of slides and tfrecords) will be configured. Additional keyword arguments can be used to specify the location of trecords and saved models.
+Use :func:`histox.create_project` to create a new project, supplying an annotations file (with patient labels) and path to slides. A new dataset source (collection of slides and tfrecords) will be configured. Additional keyword arguments can be used to specify the location of trecords and saved models.
 
 .. code-block:: python
 
@@ -66,7 +66,7 @@ A :ref:`dataset source <datasets_and_validation>` is a collection of slides, Reg
       }
     }
 
-When a project is created with :func:`slideflow.create_project`, a dataset source is automatically created. You can change where slides and extracted tiles are stored by editing the project's dataset configuration file.
+When a project is created with :func:`histox.create_project`, a dataset source is automatically created. You can change where slides and extracted tiles are stored by editing the project's dataset configuration file.
 
 It is possible for a project to have multiple dataset sources - for example, you may choose to organize data from multiple institutions into separate sources. You can add a new dataset source to a project with :meth:`Project.add_source`, which will update the project dataset configuration file accordingly.
 

@@ -1,6 +1,6 @@
-.. currentmodule:: slideflow.io
+.. currentmodule:: histox.io
 
-slideflow.io
+histox.io
 ============
 
 This module contains utility functions for working with TFRecords, cross-compatible
@@ -10,8 +10,8 @@ Functions included in this module assist with processing TFRecords, detecting im
 extracting tiles, splitting and merging TFrecords, and a variety of other manipulations.
 
 Additional Tensorflow-specific TFRecord reading/writing utility functions are
-available in :py:mod:`slideflow.io.tensorflow`, and additional PyTorch-specific
-functions are in :py:mod:`slideflow.io.torch`.
+available in :py:mod:`histox.io.tensorflow`, and additional PyTorch-specific
+functions are in :py:mod:`histox.io.torch`.
 
 .. autofunction:: convert_dtype
 .. autofunction:: detect_tfrecord_format
@@ -29,6 +29,6 @@ functions are in :py:mod:`slideflow.io.torch`.
 .. autofunction:: write_tfrecords_single
 .. autofunction:: write_tfrecords_merge
 
-slideflow.io.preservedsite
+histox.io.preservedsite
 **************************
-.. autofunction:: slideflow.io.preservedsite.generate_crossfolds
+.. autofunction:: histox.io.preservedsite.generate_crossfolds

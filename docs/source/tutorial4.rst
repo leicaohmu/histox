@@ -33,7 +33,7 @@ The results we report are a continuation of the project described in :ref:`tutor
 Evaluation
 **********
 
-To evaluate a saved model, use the :meth:`slideflow.Project.evaluate` function:
+To evaluate a saved model, use the :meth:`histox.Project.evaluate` function:
 
 .. code-block:: python
 
@@ -67,7 +67,7 @@ Predictive heatmaps can be generated for either individuals slides or for all sl
 From a dataset
 --------------
 
-The :meth:`slideflow.Project.generate_heatmaps` can be used to easily and quickly create predictive heatmaps for a dataset. The filters argument is used to specify which slides should be included.
+The :meth:`histox.Project.generate_heatmaps` can be used to easily and quickly create predictive heatmaps for a dataset. The filters argument is used to specify which slides should be included.
 
 .. code-block:: python
 
@@ -107,7 +107,7 @@ Heatmaps are saved by default in the ``project_folder/heatmaps`` folder. A separ
 From a single slide
 -------------------
 
-Heatmaps can also be manually created with the :class:`slideflow.Heatmap` class. To create a heatmap from a slide located at '/home/user/example.svs', use the following syntax:
+Heatmaps can also be manually created with the :class:`histox.Heatmap` class. To create a heatmap from a slide located at '/home/user/example.svs', use the following syntax:
 
 .. code-block:: python
 
@@ -120,7 +120,7 @@ Heatmaps can also be manually created with the :class:`slideflow.Heatmap` class.
     ...     buffer='/mnt/ramdisk',  # optional
     ... )
 
-To calculate heatmaps only within areas of an annotated ROI, you can pass the directory in which ROIs are contained to ``roi_dir``, or pass the path (or list of ROI paths) to ``rois``. The easiest way to do this is to let the :class:`slideflow.Dataset` object handle this for you:
+To calculate heatmaps only within areas of an annotated ROI, you can pass the directory in which ROIs are contained to ``roi_dir``, or pass the path (or list of ROI paths) to ``rois``. The easiest way to do this is to let the :class:`histox.Dataset` object handle this for you:
 
 .. code-block:: python
 
@@ -134,13 +134,13 @@ To calculate heatmaps only within areas of an annotated ROI, you can pass the di
     ...     ...
     ... )
 
-The heatmap can then be saved with :meth:`slideflow.Heatmap.save`, which accepts a directory location as its first positional argument:
+The heatmap can then be saved with :meth:`histox.Heatmap.save`, which accepts a directory location as its first positional argument:
 
 .. code-block:: python
 
     >>> heatmap.save('/save_dir')
 
-Heatmap interpolation and colorscale settings are passed as additional arguments to the :meth:`slideflow.Heatmap.save` function, and ``show_roi`` can be used to indicate whether ROIs should be shown on the thumbnail images:
+Heatmap interpolation and colorscale settings are passed as additional arguments to the :meth:`histox.Heatmap.save` function, and ``show_roi`` can be used to indicate whether ROIs should be shown on the thumbnail images:
 
 .. code-block:: python
 

@@ -1,4 +1,4 @@
-.. currentmodule:: slideflow.gan
+.. currentmodule:: histox.gan
 
 .. _stylegan:
 
@@ -25,8 +25,8 @@ Slideflow includes tools to easily interface with the PyTorch implementations of
 Training StyleGAN
 *****************
 
-The easiest way to train StyleGAN2/StyleGAN3 is with :meth:`slideflow.Project.gan_train`. Both standard and class-conditional GANs are
-supported. To train a GAN, pass a :class:`slideflow.Dataset`, experiment label,
+The easiest way to train StyleGAN2/StyleGAN3 is with :meth:`histox.Project.gan_train`. Both standard and class-conditional GANs are
+supported. To train a GAN, pass a :class:`histox.Dataset`, experiment label,
 and StyleGAN keyword arguments to this function:
 
 .. code-block:: python
@@ -60,14 +60,14 @@ StyleGAN2/3 can only be trained on images with sizes that are powers of 2. You c
       resize=256,
     )
 
-See the :meth:`slideflow.Project.gan_train` documentation for additional
+See the :meth:`histox.Project.gan_train` documentation for additional
 keyword arguments to customize training.
 
 Class conditioning
 ------------------
 
 GANs can also be trained with class conditioning. To train a class-conditional GAN, simply provide a list of categorical
-outcome labels to the ``outcomes`` argument of :meth:`slideflow.Project.gan_train`. For example, to train a GAN with class conditioning on ER status:
+outcome labels to the ``outcomes`` argument of :meth:`histox.Project.gan_train`. For example, to train a GAN with class conditioning on ER status:
 
 .. code-block:: python
 
@@ -104,7 +104,7 @@ Prepare a pandas dataframe, indexed with the format ``{slide}-{x}-{y}``, where `
       }
     )
 
-This dataframe can be generated, as described in :ref:`tile_labels`, through the :meth:`slideflow.Dataset.get_tile_dataframe` function. For GAN conditioning, the ``label`` column should be onehot-encoded.
+This dataframe can be generated, as described in :ref:`tile_labels`, through the :meth:`histox.Dataset.get_tile_dataframe` function. For GAN conditioning, the ``label`` column should be onehot-encoded.
 
 Once the dataframe is complete, save it in parquet format:
 
@@ -112,7 +112,7 @@ Once the dataframe is complete, save it in parquet format:
 
     df.to_parquet('tile_labels.parquet')
 
-And supply this file to the ``tile_labels`` argument of :meth:`slideflow.Project.gan_train`:
+And supply this file to the ``tile_labels`` argument of :meth:`histox.Project.gan_train`:
 
 .. code-block:: python
 
@@ -126,7 +126,7 @@ Generating images
 
 Images can be generated from a trained GAN and exported either as loose images
 in PNG or JPG format, or alternatively stored in TFRecords. Images are generated from a list
-of seeds (list of int). Use the :meth:`slideflow.Project.gan_generate` function
+of seeds (list of int). Use the :meth:`histox.Project.gan_generate` function
 to generate images, with ``out`` set to a directory path if exporting loose images,
 or ``out`` set to a filename ending in ``.tfrecords`` if saving images in
 TFRecord format:

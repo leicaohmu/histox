@@ -8,7 +8,7 @@ Slideflow includes several :ref:`pretrained feature extractors <mil>` for conver
 PyTorch
 *******
 
-Feature extractors are implemented as a subclass of :class:`slideflow.model.extractors._factory_torch.TorchFeatureExtractor`. The base class provides core functionality and helper methods for generating features from image tiles (dtype uint8) or whole-slide images (type :class:`slideflow.WSI`).
+Feature extractors are implemented as a subclass of :class:`histox.model.extractors._factory_torch.TorchFeatureExtractor`. The base class provides core functionality and helper methods for generating features from image tiles (dtype uint8) or whole-slide images (type :class:`histox.WSI`).
 
 The initializer should create the feature extraction model and move it to the appropriate device (*i.e.* GPU). The model should be a :class:`torch.nn.Module` that accepts an image tensor as input and returns a feature tensor as output.
 
@@ -18,7 +18,7 @@ The initializer should create the feature extraction model and move it to the ap
     # which generates features from an image.
     from my_module import MyModel
 
-    from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
+    from histox.model.extractors._factory_torch import TorchFeatureExtractor
 
     class MyFeatureExtractor(TorchFeatureExtractor):
 
@@ -76,7 +76,7 @@ The final class should look like this:
 .. code-block:: python
 
     from my_module import MyModel
-    from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
+    from histox.model.extractors._factory_torch import TorchFeatureExtractor
     from torchvision import transforms
 
     class MyFeatureExtractor(TorchFeatureExtractor):
@@ -111,7 +111,7 @@ You can then use the feature extractor for generating bags for MIL training, as 
     myfeatures = MyFeatureExtractor()
 
     # Load a dataset.
-    project = slideflow.load_project(...)
+    project = histox.load_project(...)
     dataset = project.dataset(...)
 
     # Generate bags.
@@ -129,11 +129,11 @@ You can also generate features across whole-slide images, returning a grid of fe
 
 Finally, the feature extractor can also be used to perform latent space analysis and generate mosaic maps, as described in :ref:`activations`.
 
-Slideflow includes a registration system for keeping track of all available feature extractors. To register your feature extractor, use the :func:`slideflow.model.extractors.register_torch` decorator.
+Slideflow includes a registration system for keeping track of all available feature extractors. To register your feature extractor, use the :func:`histox.model.extractors.register_torch` decorator.
 
 .. code-block:: python
 
-    from slideflow.model.extractors import register_torch
+    from histox.model.extractors import register_torch
 
     @register_torch
     def my_feature_extractor(**kwargs):
@@ -150,14 +150,14 @@ Once registered, a feature extractor can be built by name:
 Tensorflow
 **********
 
-Tensorflow feature extractors are implemented very similarly to PyTorch feature extractors, extended from :class:`slideflow.model.extractors._tensorflow_base.TensorflowFeatureExtractor`.
+Tensorflow feature extractors are implemented very similarly to PyTorch feature extractors, extended from :class:`histox.model.extractors._tensorflow_base.TensorflowFeatureExtractor`.
 
 The initializer should create the model and set the expected number of features.
 
 .. code-block:: python
 
     from my_module import MyModel
-    from slideflow.model.extractors._tensorflow_base import TensorflowFeatureExtractor
+    from histox.model.extractors._tensorflow_base import TensorflowFeatureExtractor
 
     class MyFeatureExtractor(TensorflowFeatureExtractor):
 
@@ -229,7 +229,7 @@ The final class should look like this:
 .. code-block:: python
 
     from my_module import MyModel
-    from slideflow.model.extractors._tensorflow_base import TensorflowFeatureExtractor
+    from histox.model.extractors._tensorflow_base import TensorflowFeatureExtractor
 
     class MyFeatureExtractor(TensorflowFeatureExtractor):
 
@@ -256,11 +256,11 @@ The final class should look like this:
 
 As described above, this feature extractor can then be used to create bags for MIL training, generate features across whole-slide images, or perform feature space analysis across a dataset.
 
-To register your feature extractor, use the :func:`slideflow.model.extractors.register_tensorflow` decorator.
+To register your feature extractor, use the :func:`histox.model.extractors.register_tensorflow` decorator.
 
 .. code-block:: python
 
-    from slideflow.model.extractors import register_tf
+    from histox.model.extractors import register_tf
 
     @register_tf
     def my_feature_extractor(**kwargs):

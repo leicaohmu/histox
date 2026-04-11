@@ -8,7 +8,7 @@ Out of the box, Slideflow includes support for 21 model architectures in the Ten
 Custom Tensorflow model
 ***********************
 
-Any Tensorflow/Keras model (:class:`tf.keras.Model`) can be trained in Slideflow by setting the ``model`` parameter of a :class:`slideflow.ModelParams` object to a function which initalizes the model.
+Any Tensorflow/Keras model (:class:`tf.keras.Model`) can be trained in Slideflow by setting the ``model`` parameter of a :class:`histox.ModelParams` object to a function which initalizes the model.
 
 First, define the model in a file that can be imported. In this example, we will define a vision transformer (ViT) model in a file ``vit_tensorflow.py``:
 
@@ -202,7 +202,7 @@ Next, define a function that accepts any combination of the keyword arguments ``
             mlp_dim=2048
         )
 
-Then, create a :class:`slideflow.ModelParams` object with your training parameters, setting the ``model`` argument equal to the function you just defined:
+Then, create a :class:`histox.ModelParams` object with your training parameters, setting the ``model`` argument equal to the function you just defined:
 
 .. code-block:: python
 
@@ -253,7 +253,7 @@ Next, define a function which accepts any combination of the keyword arguments `
         model.out_features = 1000
         return model
 
-Finally, set the ``model`` argument of a :class:`slideflow.ModelParams` object equal to this function:
+Finally, set the ``model`` argument of a :class:`histox.ModelParams` object equal to this function:
 
 .. code-block:: python
 

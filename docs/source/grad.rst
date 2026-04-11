@@ -1,6 +1,6 @@
-.. currentmodule:: slideflow.grad
+.. currentmodule:: histox.grad
 
-slideflow.grad
+histox.grad
 ==============
 
 This submodule contains tools for calculating and display pixel attribution, or
@@ -9,7 +9,7 @@ saliency, maps. See :ref:`saliency` for more information.
 .. autoclass:: SaliencyMap
     :inherited-members:
 
-.. automodule:: slideflow.grad
+.. automodule:: histox.grad
    :members:
 
 .. autofunction:: comparison_plot

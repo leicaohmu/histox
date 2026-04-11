@@ -3,12 +3,12 @@
 Generating Features
 ===================
 
-Converting images into feature vectors is a common step for many machine learning tasks, including `feature space analysis <activations>`_ and `multiple-instance learning (MIL) <mil>`_. Slideflow provides a simple API for generating features from image tiles and includes several pretrained feature extractors. You can see a list of all available feature extractors with :func:`slideflow.list_extractors`.
+Converting images into feature vectors is a common step for many machine learning tasks, including `feature space analysis <activations>`_ and `multiple-instance learning (MIL) <mil>`_. Slideflow provides a simple API for generating features from image tiles and includes several pretrained feature extractors. You can see a list of all available feature extractors with :func:`histox.list_extractors`.
 
 Generating Features
 *******************
 
-The first step in generating features from a dataset of images is creating a feature extractor. Many types of feature extractors can be used, including imagenet-pretrained models, models finetuned in Slideflow, histology-specific pretrained feature extractors (ie. "foundation models"), or fine-tuned SSL models.  In all cases, feature extractors are built with :func:`slideflow.build_feature_extractor`, and features are generated for a `Dataset <datasets_and_val>`_ using :meth:`slideflow.Dataset.generate_feature_bags`, as described :ref:`below <bags>`.
+The first step in generating features from a dataset of images is creating a feature extractor. Many types of feature extractors can be used, including imagenet-pretrained models, models finetuned in Slideflow, histology-specific pretrained feature extractors (ie. "foundation models"), or fine-tuned SSL models.  In all cases, feature extractors are built with :func:`histox.build_feature_extractor`, and features are generated for a `Dataset <datasets_and_val>`_ using :meth:`histox.Dataset.generate_feature_bags`, as described :ref:`below <bags>`.
 
 .. code-block:: python
 
@@ -235,7 +235,7 @@ In addition to running the tile and slide encoder steps separately, you can also
 ImageNet Features
 *****************
 
-To calculate features from an ImageNet-pretrained network, first build an imagenet feature extractor with :func:`slideflow.build_feature_extractor`. The first argument should be the name of an architecture followed by ``_imagenet``, and the expected tile size should be passed to the keyword argument ``tile_px``. You can optionally specify the layer from which to generate features with the ``layers`` argument; if not provided, it will default to calculating features from post-convolutional layer activations. For example, to build a ResNet50 feature extractor for images at 299 x 299 pixels:
+To calculate features from an ImageNet-pretrained network, first build an imagenet feature extractor with :func:`histox.build_feature_extractor`. The first argument should be the name of an architecture followed by ``_imagenet``, and the expected tile size should be passed to the keyword argument ``tile_px``. You can optionally specify the layer from which to generate features with the ``layers`` argument; if not provided, it will default to calculating features from post-convolutional layer activations. For example, to build a ResNet50 feature extractor for images at 299 x 299 pixels:
 
 .. code-block:: python
 
@@ -268,7 +268,7 @@ If a model architecture is available in both the Tensorflow and PyTorch backends
         backend='torch'
     )
 
-You can view all available feature extractors with :func:`slideflow.model.list_extractors`.
+You can view all available feature extractors with :func:`histox.model.list_extractors`.
 
 Layer Activations
 *****************
@@ -322,7 +322,7 @@ Exporting Features
 Feature bags
 ------------
 
-Once you have prepared a feature extractor, features can be generated for a dataset and exported to disk for later use. Pass a feature extractor to the first argument of :meth:`slideflow.Project.generate_feature_bags`, with a :class:`slideflow.Dataset` as the second argument.
+Once you have prepared a feature extractor, features can be generated for a dataset and exported to disk for later use. Pass a feature extractor to the first argument of :meth:`histox.Project.generate_feature_bags`, with a :class:`histox.Dataset` as the second argument.
 
 .. code-block:: python
 
@@ -339,11 +339,11 @@ Once you have prepared a feature extractor, features can be generated for a data
 .. note::
 
     If you are generating features from a SimCLR model trained with stain normalization,
-    you should specify the stain normalizer using the ``normalizer`` argument to :meth:`slideflow.Project.generate_feature_bags` or :class:`slideflow.DatasetFeatures`.
+    you should specify the stain normalizer using the ``normalizer`` argument to :meth:`histox.Project.generate_feature_bags` or :class:`histox.DatasetFeatures`.
 
 Features are calculated for slides in batches, keeping memory usage low. By default, features are saved to disk in a directory named ``pt_files`` within the project directory, but you can override the destination directory using the ``outdir`` argument.
 
-Alternatively, you can calculate features for a dataset using :class:`slideflow.DatasetFeatures` and the ``.to_torch()`` method.  This will calculate features for your entire dataset at once, which may require a large amount of memory. The first argument should be the feature extractor, and the second argument should be a :class:`slideflow.Dataset`.
+Alternatively, you can calculate features for a dataset using :class:`histox.DatasetFeatures` and the ``.to_torch()`` method.  This will calculate features for your entire dataset at once, which may require a large amount of memory. The first argument should be the feature extractor, and the second argument should be a :class:`histox.Dataset`.
 
 .. code-block:: python
 
@@ -356,7 +356,7 @@ Alternatively, you can calculate features for a dataset using :class:`slideflow.
 
 .. warning::
 
-    Using :class:`slideflow.DatasetFeatures` directly may result in a large amount of memory usage, particularly for sizable datasets. When generating feature bags for training MIL models, it is recommended to use :meth:`slideflow.Project.generate_feature_bags` instead.
+    Using :class:`histox.DatasetFeatures` directly may result in a large amount of memory usage, particularly for sizable datasets. When generating feature bags for training MIL models, it is recommended to use :meth:`histox.Project.generate_feature_bags` instead.
 
 Feature "bags" are PyTorch tensors of features for all images in a slide, saved to disk as ``.pt`` files. These bags are used to train MIL models. Bags can be manually loaded and inspected using :func:`torch.load`.
 
@@ -375,7 +375,7 @@ When image features are exported for a dataset, the feature extractor configurat
 
     {
      "extractor": {
-      "class": "slideflow.model.extractors.ctranspath.CTransPathFeatures",
+      "class": "histox.model.extractors.ctranspath.CTransPathFeatures",
       "kwargs": {
        "center_crop": true
       }
@@ -408,11 +408,11 @@ When image features are exported for a dataset, the feature extractor configurat
      "tile_um": 302
     }
 
-The feature extractor can be manually rebuilt using :func:`slideflow.model.rebuild_extractor()`:
+The feature extractor can be manually rebuilt using :func:`histox.model.rebuild_extractor()`:
 
 .. code-block:: python
 
-    from slideflow.model import rebuild_extractor
+    from histox.model import rebuild_extractor
 
     # Recreate the feature extractor
     # and stain normalizer, if applicable

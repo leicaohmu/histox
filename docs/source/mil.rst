@@ -20,14 +20,14 @@ Training
 Model Configuration
 -------------------
 
-To train an MIL model using exported features, first prepare an MIL configuration using :func:`slideflow.mil.mil_config`.
+To train an MIL model using exported features, first prepare an MIL configuration using :func:`histox.mil.mil_config`.
 
 The first argument to this function is the model architecture (which can be a name or a custom ``torch.nn.Module`` model), and the remaining arguments are used to configure the training process, such as learning rate and number of epochs. Training is executed using `FastAI <https://docs.fast.ai/>`_ with `1cycle learning rate scheduling <https://arxiv.org/pdf/1803.09820.pdf%E5%92%8CSylvain>`_.
 
 .. code-block:: python
 
     import slideflow as sf
-    from slideflow.mil import mil_config
+    from histox.mil import mil_config
 
     config = mil_config('attention_mil', lr=1e-3)
 
@@ -65,7 +65,7 @@ MIL models can be trained for both classification and regression tasks. The type
 Training an MIL Model
 ---------------------
 
-Next, prepare a :ref:`training and validation dataset <datasets_and_validation>` and use :func:`slideflow.Project.train_mil` to start training. For example, to train a model using three-fold cross-validation to the outcome "HPV_status":
+Next, prepare a :ref:`training and validation dataset <datasets_and_validation>` and use :func:`histox.Project.train_mil` to start training. For example, to train a model using three-fold cross-validation to the outcome "HPV_status":
 
 .. code-block:: python
 
@@ -125,7 +125,7 @@ Hyperparameters, model configuration, and feature extractor information is logge
      "output_shape": 2,
      "bags_encoder": {
       "extractor": {
-       "class": "slideflow.model.extractors.simclr.SimCLR_Features",
+       "class": "histox.model.extractors.simclr.SimCLR_Features",
        "kwargs": {
         "center_crop": false,
         "ckpt": "/mnt/data/projects/example_project/simclr/00001-EXAMPLE/ckpt-263510.ckpt"
@@ -145,7 +145,7 @@ Multi-Magnification MIL
 
 Slideflow 2.2 introduced a multi-magnification, multi-modal MIL model, ``MultiModal_Attention_MIL`` (``"mm_attention_mil"``). This late-fusion multimodal model is based on standard attention-based MIL, but accepts multiple input modalities (e.g., multiple magnifications) simultaneously. Each input modality is processed by a separate encoder network and a separate attention module. The attention-weighted features from each modality are then concatenated and passed to a fully-connected layer.
 
-Multimodal models are trained using the same API as standard MIL models. Modalities are specified using the ``bags`` argument to :func:`slideflow.Project.train_mil`, where the number of modes is determined by the number of bag directories provided. Within each bag directory, bags should be generated using the same feature extractor and at the same magnification, but feature extractors and magnifications can vary between bag directories.
+Multimodal models are trained using the same API as standard MIL models. Modalities are specified using the ``bags`` argument to :func:`histox.Project.train_mil`, where the number of modes is determined by the number of bag directories provided. Within each bag directory, bags should be generated using the same feature extractor and at the same magnification, but feature extractors and magnifications can vary between bag directories.
 
 For example, to train a multimodal model using two magnifications, you would pass two bag paths to the model. In this case, the ``/path/to/bags_10x`` directory contains bags generated from a 10x feature extractor, and the ``/path/to/bags_40x`` directory contains bags generated from a 40x feature extractor.
 
@@ -184,12 +184,12 @@ Training custom MIL models is straightforward with Slideflow, particularly if yo
     - ``forward()`` function includes an optional ``return_attention`` argument, which if True returns attention scores after model output
     - Has a ``calculate_attention()`` function that returns attention scores
 
-If the above applies to your model, you can train it simply by passing it as the first argument to :func:`slideflow.mil.mil_config`.
+If the above applies to your model, you can train it simply by passing it as the first argument to :func:`histox.mil.mil_config`.
 
 .. code-block:: python
 
     import slideflow as sf
-    from slideflow.mil import mil_config
+    from histox.mil import mil_config
     from my_module import CustomMIL
 
     config = mil_config(CustomMIL, lr=1e-3)
@@ -199,7 +199,7 @@ For larger projects, or if you are designing a plugin/extension for Slideflow, c
 
 .. code-block:: python
 
-    from slideflow.mil import register_model
+    from histox.mil import register_model
 
     @register_model
     def my_model():
@@ -213,11 +213,11 @@ You can then use your model when creating an MIL configuration:
     config = sf.mil.mil_config('my_model', ...)
 
 
-If the above guidelines do *not* apply to your model, or if you want to customize model logic or functionality, you can supply a custom MIL configuration class that will supervise model building and dataset preparation. Your custom configuration class should inherit ``slideflow.mil.MILModelConfig``, and methods in this class can be overloaded to provide additional functionality. For example, to create an MIL configuration that uses a custom loss and custom metrics:
+If the above guidelines do *not* apply to your model, or if you want to customize model logic or functionality, you can supply a custom MIL configuration class that will supervise model building and dataset preparation. Your custom configuration class should inherit ``histox.mil.MILModelConfig``, and methods in this class can be overloaded to provide additional functionality. For example, to create an MIL configuration that uses a custom loss and custom metrics:
 
 .. code-block:: python
 
-    from slideflow.mil import MILModelConfig
+    from histox.mil import MILModelConfig
 
     class MyModelConfig(MILModelConfig):
 
@@ -244,7 +244,7 @@ For an example of how to utilize model registration and configuration customizat
 Evaluation
 **********
 
-To evaluate a saved MIL model on an external dataset, first extract features from a dataset, then use :func:`slideflow.Project.evaluate_mil`, which displays evaluation metrics and returns predictions as a DataFrame.
+To evaluate a saved MIL model on an external dataset, first extract features from a dataset, then use :func:`histox.Project.evaluate_mil`, which displays evaluation metrics and returns predictions as a DataFrame.
 
 .. code-block:: python
 
@@ -274,11 +274,11 @@ As with training, attention heatmaps can be generated for attention-based MIL mo
 Generating Predictions
 **********************
 
-In addition to generating slide-level predictions during training and evaluation, you can also generate tile-level predictions and attention scores for a dataset using :func:`slideflow.mil.get_mil_tile_predictions`. This function returns a DataFrame containing tile-level predictions and attention.
+In addition to generating slide-level predictions during training and evaluation, you can also generate tile-level predictions and attention scores for a dataset using :func:`histox.mil.get_mil_tile_predictions`. This function returns a DataFrame containing tile-level predictions and attention.
 
 .. code-block:: python
 
-    >>> from slideflow.mil import get_mil_tile_predictions
+    >>> from histox.mil import get_mil_tile_predictions
     >>> df = get_mil_tile_predictions(model, dataset, bags)
     >>> df
                             slide  loc_x  loc_y  ...   y_pred3   y_pred4   y_pred5
@@ -300,12 +300,12 @@ In addition to generating slide-level predictions during training and evaluation
 Single-Slide Inference
 **********************
 
-Predictions can also be generated for individual slides, without requiring the user to manually generate feature bags. Use :func:`slideflow.model.predict_slide` to generate predictions for a single slide. The first argument is th path to the saved MIL model (a directory containing ``mil_params.json``), and the second argument can either be a path to a slide or a loaded :class:`sf.WSI` object.
+Predictions can also be generated for individual slides, without requiring the user to manually generate feature bags. Use :func:`histox.model.predict_slide` to generate predictions for a single slide. The first argument is th path to the saved MIL model (a directory containing ``mil_params.json``), and the second argument can either be a path to a slide or a loaded :class:`sf.WSI` object.
 
 .. code-block:: python
 
-    from slideflow.mil import predict_slide
-    from slideflow.slide import qc
+    from histox.mil import predict_slide
+    from histox.slide import qc
 
     # Load a slide and apply Otsu thresholding
     slide = '/path/to/slide.svs'

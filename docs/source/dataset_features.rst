@@ -1,6 +1,6 @@
 .. currentmodule:: slideflow
 
-slideflow.DatasetFeatures
+histox.DatasetFeatures
 =========================
 
 .. autoclass:: DatasetFeatures
@@ -8,21 +8,21 @@ slideflow.DatasetFeatures
 Methods
 -------
 
-.. autofunction:: slideflow.DatasetFeatures.activations_by_category
-.. autofunction:: slideflow.DatasetFeatures.box_plots
-.. autofunction:: slideflow.DatasetFeatures.concat
-.. autofunction:: slideflow.DatasetFeatures.from_df
-.. autofunction:: slideflow.DatasetFeatures.load_cache
-.. autofunction:: slideflow.DatasetFeatures.map_activations
-.. autofunction:: slideflow.DatasetFeatures.map_predictions
-.. autofunction:: slideflow.DatasetFeatures.merge
-.. autofunction:: slideflow.DatasetFeatures.remove_slide
-.. autofunction:: slideflow.DatasetFeatures.save_cache
-.. autofunction:: slideflow.DatasetFeatures.save_example_tiles
-.. autofunction:: slideflow.DatasetFeatures.softmax_mean
-.. autofunction:: slideflow.DatasetFeatures.softmax_percent
-.. autofunction:: slideflow.DatasetFeatures.softmax_predict
-.. autofunction:: slideflow.DatasetFeatures.stats
-.. autofunction:: slideflow.DatasetFeatures.to_csv
-.. autofunction:: slideflow.DatasetFeatures.to_df
-.. autofunction:: slideflow.DatasetFeatures.to_torch
+.. autofunction:: histox.DatasetFeatures.activations_by_category
+.. autofunction:: histox.DatasetFeatures.box_plots
+.. autofunction:: histox.DatasetFeatures.concat
+.. autofunction:: histox.DatasetFeatures.from_df
+.. autofunction:: histox.DatasetFeatures.load_cache
+.. autofunction:: histox.DatasetFeatures.map_activations
+.. autofunction:: histox.DatasetFeatures.map_predictions
+.. autofunction:: histox.DatasetFeatures.merge
+.. autofunction:: histox.DatasetFeatures.remove_slide
+.. autofunction:: histox.DatasetFeatures.save_cache
+.. autofunction:: histox.DatasetFeatures.save_example_tiles
+.. autofunction:: histox.DatasetFeatures.softmax_mean
+.. autofunction:: histox.DatasetFeatures.softmax_percent
+.. autofunction:: histox.DatasetFeatures.softmax_predict
+.. autofunction:: histox.DatasetFeatures.stats
+.. autofunction:: histox.DatasetFeatures.to_csv
+.. autofunction:: histox.DatasetFeatures.to_df
+.. autofunction:: histox.DatasetFeatures.to_torch

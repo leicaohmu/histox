@@ -1,4 +1,4 @@
-.. currentmodule:: slideflow.simclr
+.. currentmodule:: histox.simclr
 
 .. _simclr_ssl:
 
@@ -7,12 +7,12 @@ Self-Supervised Learning (SSL)
 
 Slideflow provides easy access to training the self-supervised, contrastive learning framework `SimCLR <https://arxiv.org/abs/2002.05709>`_. Self-supervised learning provides an avenue for learning useful visual representations in your dataset without requiring ground-truth labels. These visual representations can be exported as feature vectors and used for downstream analyses such as :ref:`dimensionality reduction <slidemap>` or :ref:`multi-instance learning <mil>`.
 
-The ``slideflow.simclr`` module contains a `forked Tensorflow implementation <https://github.com/jamesdolezal/simclr/>`_ minimally modified to interface with Slideflow. SimCLR models can be trained with :meth:`slideflow.Project.train_simclr`, and SimCLR features can be calculated as with other models using :meth:`slideflow.Project.generate_features`.
+The ``histox.simclr`` module contains a `forked Tensorflow implementation <https://github.com/jamesdolezal/simclr/>`_ minimally modified to interface with Slideflow. SimCLR models can be trained with :meth:`histox.Project.train_simclr`, and SimCLR features can be calculated as with other models using :meth:`histox.Project.generate_features`.
 
 Training SimCLR
 ***************
 
-First, determine the SimCLR training parameters with :func:`slideflow.simclr.get_args`. This function accepts parameters via keyword arguments, such as ``learning_rate`` and ``temperature``, and returns a configured :class:`slideflow.simclr.SimCLR_Args`.
+First, determine the SimCLR training parameters with :func:`histox.simclr.get_args`. This function accepts parameters via keyword arguments, such as ``learning_rate`` and ``temperature``, and returns a configured :class:`histox.simclr.SimCLR_Args`.
 
 .. code-block:: python
 
@@ -41,7 +41,7 @@ Next, assemble a training and (optionally) a validation dataset. The validation 
         model_type='classification',
         labels='subtype')
 
-Finally, SimCLR can be trained with :meth:`slideflow.Project.train_simclr`. You can train with a single dataset:
+Finally, SimCLR can be trained with :meth:`histox.Project.train_simclr`. You can train with a single dataset:
 
 .. code-block:: python
 
@@ -126,7 +126,7 @@ The teacher weights will be saved in ``outdir/eval/.../teacher_checkpoint.pth``,
 Generating features
 *******************
 
-Generating features from a trained SSL is straightforward - use the same :meth:`slideflow.Project.generate_features` and :class:`slideflow.DatasetFeatures` interfaces as :ref:`previously described <dataset_features>`, providing a path to a saved SimCLR model or checkpoint.
+Generating features from a trained SSL is straightforward - use the same :meth:`histox.Project.generate_features` and :class:`histox.DatasetFeatures` interfaces as :ref:`previously described <dataset_features>`, providing a path to a saved SimCLR model or checkpoint.
 
 .. code-block:: python
 

@@ -6,7 +6,7 @@ This section provides an example of using Slideflow to build a deep learning cla
 Preparing a project
 *******************
 
-Slideflow experiments are organized using :class:`slideflow.Project`, which supervises storage of data, saved models, and results. The ``slideflow.project`` module has three preconfigured projects with associated slides and clinical annotations: ``LungAdenoSquam``, ``ThyroidBRS``, and ``BreastER``.
+Slideflow experiments are organized using :class:`histox.Project`, which supervises storage of data, saved models, and results. The ``histox.project`` module has three preconfigured projects with associated slides and clinical annotations: ``LungAdenoSquam``, ``ThyroidBRS``, and ``BreastER``.
 
 For this example, we will the ``LungAdenoSquam`` project to train a classifier to predict lung adenocarcinoma (Adeno) vs. squamous cell carcinoma (Squam).
 
@@ -26,7 +26,7 @@ Read more about :ref:`setting up a project on your own data <project_setup>`.
 Data preparation
 ****************
 
-The core imaging data used in Slideflow are image tiles :ref:`extracted from slides <filtering>` at a specific magnification and pixel resolution. Tile extraction and downstream image processing is handled through the primitive :ref:`slideflow.Dataset <datasets_and_validation>`. We can request a ``Dataset`` at a given tile size from our project using :meth:`slideflow.Project.dataset`. Tile magnification can be specified in microns (as an ``int``) or as optical magnification (e.g. ``'40x'``).
+The core imaging data used in Slideflow are image tiles :ref:`extracted from slides <filtering>` at a specific magnification and pixel resolution. Tile extraction and downstream image processing is handled through the primitive :ref:`histox.Dataset <datasets_and_validation>`. We can request a ``Dataset`` at a given tile size from our project using :meth:`histox.Project.dataset`. Tile magnification can be specified in microns (as an ``int``) or as optical magnification (e.g. ``'40x'``).
 
 .. code-block:: python
 
@@ -92,7 +92,7 @@ Read more about tile extraction and :ref:`slide processing in Slideflow <filteri
 Held-out test sets
 ------------------
 
-Now that we have our dataset and we've completed the initial tile image processing, we'll split the dataset into a training cohort and a held-out test cohort with :meth:`slideflow.Dataset.split`. We'll split while balancing the outcome ``'subtype'`` equally in the training and test dataset, with 30% of the data retained in the held-out set.
+Now that we have our dataset and we've completed the initial tile image processing, we'll split the dataset into a training cohort and a held-out test cohort with :meth:`histox.Dataset.split`. We'll split while balancing the outcome ``'subtype'`` equally in the training and test dataset, with 30% of the data retained in the held-out set.
 
 .. code-block:: python
 
@@ -108,7 +108,7 @@ Read more about :ref:`Dataset management <datasets_and_validation>`.
 Configuring models
 ******************
 
-Neural network models are prepared for training with :class:`slideflow.ModelParams`, through which we define the model architecture, loss, and hyperparameters. Dozens of architectures are available in both the Tensorflow and PyTorch backends, and both neural network :ref:`architectures <tutorial3>` and :ref:`loss <custom_loss>` functions can be customized. In this example, we will use the included Xception network.
+Neural network models are prepared for training with :class:`histox.ModelParams`, through which we define the model architecture, loss, and hyperparameters. Dozens of architectures are available in both the Tensorflow and PyTorch backends, and both neural network :ref:`architectures <tutorial3>` and :ref:`loss <custom_loss>` functions can be customized. In this example, we will use the included Xception network.
 
 .. code-block:: python
 
@@ -149,7 +149,7 @@ Read more about :ref:`training a model <training>`.
 Evaluating a trained model
 **************************
 
-After training, you can test model performance on a held-out test dataset with :meth:`Project.evaluate`, or generate predictions without evaluation (when ground-truth labels are not available) with :meth:`Project.predict`. As with :meth:`Project.train`, we can specify a :class:`slideflow.Dataset` to evaluate.
+After training, you can test model performance on a held-out test dataset with :meth:`Project.evaluate`, or generate predictions without evaluation (when ground-truth labels are not available) with :meth:`Project.predict`. As with :meth:`Project.train`, we can specify a :class:`histox.Dataset` to evaluate.
 
 .. code-block:: python
 

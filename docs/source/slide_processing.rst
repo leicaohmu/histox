@@ -14,13 +14,13 @@ Most tools in Slideflow work with image tiles - extracted sub-regions of a whole
 Tile extraction
 ***************
 
-Image tiles are extracted from whole-slide images using either :meth:`slideflow.Project.extract_tiles` or :meth:`slideflow.Dataset.extract_tiles`. When using the Project interface, the only arguments required are ``tile_px`` and ``tile_um``, which determine the size of the extracted image tiles in pixels and microns:
+Image tiles are extracted from whole-slide images using either :meth:`histox.Project.extract_tiles` or :meth:`histox.Dataset.extract_tiles`. When using the Project interface, the only arguments required are ``tile_px`` and ``tile_um``, which determine the size of the extracted image tiles in pixels and microns:
 
 .. code-block:: python
 
     P.extract_tiles(tile_px=299, tile_um=302)
 
-and when using a :class:`slideflow.Dataset`, no arguments are required.
+and when using a :class:`histox.Dataset`, no arguments are required.
 
 .. code-block:: python
 
@@ -28,7 +28,7 @@ and when using a :class:`slideflow.Dataset`, no arguments are required.
 
 Tiles will be extracted at the specified pixel and micron size and stored in TFRecord format. Loose image tiles (\*.jpg or \*.png format) can also be saved with the argument ``save_tiles=True``.
 
-See the :meth:`slideflow.Dataset.extract_tiles` API documentation for customization options.
+See the :meth:`histox.Dataset.extract_tiles` API documentation for customization options.
 
 .. note::
 
@@ -77,7 +77,7 @@ By default, ROIs filter tiles based on the center point of the tile. Alternative
 
 ROIs can optionally be assigned a label. Labels can be added or changed using :ref:`Slideflow Studio <studio_roi>`, or by adding a "label" column in the ROI CSV file. Labels can be used to train strongly supervised models, where each tile is assigned a label based on the ROI it is extracted from, rather than inheriting the label of the whole-slide image. See the developer note :ref:`tile_labels` for more information.
 
-To retrieve the ROI name (and label, if present) for all tiles in a slide, use :meth:`slideflow.WSI.get_tile_dataframe`. This will return a Pandas DataFrame with the following columns:
+To retrieve the ROI name (and label, if present) for all tiles in a slide, use :meth:`histox.WSI.get_tile_dataframe`. This will return a Pandas DataFrame with the following columns:
 
     - **loc_x**: X-coordinate of tile center
     - **loc_y**: Y-coordinate of tile center
@@ -89,7 +89,7 @@ To retrieve the ROI name (and label, if present) for all tiles in a slide, use :
 
 The **loc_x** and **loc_y** columns contain the same tile location information :ref:`stored in TFRecords <tfrecords>`.
 
-You can also retrieve this information for all slides in a dataset by using :meth:`slideflow.Dataset.get_tile_dataframe`, which will return a DataFrame with the same columns as above, plus ``slide`` column.
+You can also retrieve this information for all slides in a dataset by using :meth:`histox.Dataset.get_tile_dataframe`, which will return a DataFrame with the same columns as above, plus ``slide`` column.
 
 
 Masking & Filtering
@@ -110,13 +110,13 @@ To apply Otsu's thresholding to slides before tile extraction, use the ``qc`` ar
 
 .. code-block:: python
 
-  from slideflow.slide import qc
+  from histox.slide import qc
 
   # Use this QC during tile extraction
   P.extract_tiles(qc=qc.Otsu())
 
 
-You can also apply Otsu's thresholding to a single slide with the :meth:`slideflow.WSI.qc` method. See :class:`the WSI API documentation <slideflow.WSI>` for more information on working with individual slides.
+You can also apply Otsu's thresholding to a single slide with the :meth:`histox.WSI.qc` method. See :class:`the WSI API documentation <histox.WSI>` for more information on working with individual slides.
 
 .. code-block:: python
 
@@ -138,7 +138,7 @@ Two versions of Gaussian blur masking are available: ``qc.Gaussian`` and ``qc.Ga
 
 .. code-block:: python
 
-  from slideflow.slide import qc
+  from histox.slide import qc
 
   # Use this QC during tile extraction
   P.extract_tiles(qc=qc.GaussianV2())
@@ -149,7 +149,7 @@ Gaussian blur masking is performed on gray images. The ``sigma`` argument contro
 
 .. code-block:: python
 
-  from slideflow.slide import qc
+  from histox.slide import qc
 
   # Customize the Gaussian filter,
   # using a sigma of 2 and a mpp of 1 (10X magnification)
@@ -159,7 +159,7 @@ You can also use multiple slide-level masking methods by providing a list to ``q
 
 .. code-block:: python
 
-  from slideflow.slide import qc
+  from histox.slide import qc
 
   qc = [
     qc.Otsu(),
@@ -176,12 +176,12 @@ Slideflow also provides an interface for using `DeepFocus <https://journals.plos
 
 .. code-block:: python
 
-    from slideflow.slide import qc
+    from histox.slide import qc
 
     deepfocus = qc.DeepFocus(tile_um='20x')
     slide.qc(deepfocus)
 
-Alternatively, you can also retrieve raw predictions from the DeepFocus model for a slide by calling the deepfocus object on a :class:`slideflow.WSI` object, passing the argument threshold=False:
+Alternatively, you can also retrieve raw predictions from the DeepFocus model for a slide by calling the deepfocus object on a :class:`histox.WSI` object, passing the argument threshold=False:
 
 .. code-block:: python
 
@@ -190,11 +190,11 @@ Alternatively, you can also retrieve raw predictions from the DeepFocus model fo
 Custom deep learning QC
 -----------------------
 
-You can also create your own deep learning slide filters. To create a custom deep learning QC method like DeepFocus, create a custom slide filter that inherits :class:`slideflow.slide.qc.StridedDL`. For example, to manually recreate the above DeepFocus model, first clone the `TF2 fork on GitHub <https://github.com/jamesdolezal/deepfocus>`_, which contains the DeepFocus architecture and model weights, and create a custom class as below:
+You can also create your own deep learning slide filters. To create a custom deep learning QC method like DeepFocus, create a custom slide filter that inherits :class:`histox.slide.qc.StridedDL`. For example, to manually recreate the above DeepFocus model, first clone the `TF2 fork on GitHub <https://github.com/jamesdolezal/deepfocus>`_, which contains the DeepFocus architecture and model weights, and create a custom class as below:
 
 .. code-block:: python
 
-    from slideflow.slide.qc import strided_dl
+    from histox.slide.qc import strided_dl
     from deepfocus.keras_model import load_checkpoint, deepfocus_v3
 
     class CustomDeepFocus(strided_dl.StridedDL):
@@ -293,14 +293,14 @@ Real-time normalization can be performed by setting the ``normalizer`` and/or ``
 
 .. code-block:: python
 
-    from slideflow.model import ModelParams
+    from histox.model import ModelParams
     hp = ModelParams(..., normalizer='reinhard')
 
 If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, ``params.json``, in the saved model folder. Any Slideflow function that uses this model will automatically process images using the same normalization strategy.
 
 When stain normalizing on-the-fly, stain augmentation becomes available as a training augmentation technique. Read more about :ref:`stain augmentation <stain_augmentation>`.
 
-The normalizer interfaces can also be access directly through :class:`slideflow.norm.StainNormalizer`. See :py:mod:`slideflow.norm` for examples and more information.
+The normalizer interfaces can also be access directly through :class:`histox.norm.StainNormalizer`. See :py:mod:`histox.norm` for examples and more information.
 
 Performance optimization
 ************************
@@ -314,11 +314,11 @@ Once tiles have been extracted, a PDF report will be generated with a summary an
 
 .. image:: example_report_small.jpg
 
-In addition to viewing reports after tile extraction, you may generate new reports on existing tfrecords with :func:`slideflow.Dataset.tfrecord_report`, by calling this function on a given dataset. For example:
+In addition to viewing reports after tile extraction, you may generate new reports on existing tfrecords with :func:`histox.Dataset.tfrecord_report`, by calling this function on a given dataset. For example:
 
 .. code-block:: python
 
     dataset = P.dataset(tile_px=299, tile_um=302)
     dataset.tfrecord_report("/path/to/dest")
 
-You can also generate reports for slides that have not yet been extracted by passing ``dry_run=True`` to :meth:`slideflow.Dataset.extract_tiles`.
+You can also generate reports for slides that have not yet been extracted by passing ``dry_run=True`` to :meth:`histox.Dataset.extract_tiles`.

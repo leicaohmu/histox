@@ -42,7 +42,7 @@ Once a dataset has been prepared, the next step in training an MIL model is :ref
     >>> virchow.num_features
     2560
 
-The Virchow feature extractor produces a 2560-dimensional vector for each tile. We can generate and export :ref:`bags <bags>` of these features for all slides in our dataset using :func:`slideflow.Project.generate_feature_bags`.
+The Virchow feature extractor produces a 2560-dimensional vector for each tile. We can generate and export :ref:`bags <bags>` of these features for all slides in our dataset using :func:`histox.Project.generate_feature_bags`.
 
 .. code-block:: python
 
@@ -66,11 +66,11 @@ The output directory, ``/bags/path``, should look like:
 
 The ``*.pt`` files contain the feature vectors for tiles in each slide, and the ``*.index.npz`` files contain the corresponding X, Y coordinates for each tile.  The ``bags_config.json`` file contains the feature extractor configuration.
 
-The next step is to create an MIL model configuration using :func:`slideflow.mil.mil_config`, specifying the architecture and relevant hyperparameters. For the architecture, we'll use :class:`slideflow.mil.models.Attention_MIL`. For the hyperparameters, we'll use a learning rate of 1e-4, a batch size of 32, 1cycle learning rate scheduling, and train for 10 epochs.
+The next step is to create an MIL model configuration using :func:`histox.mil.mil_config`, specifying the architecture and relevant hyperparameters. For the architecture, we'll use :class:`histox.mil.models.Attention_MIL`. For the hyperparameters, we'll use a learning rate of 1e-4, a batch size of 32, 1cycle learning rate scheduling, and train for 10 epochs.
 
 .. code-block:: python
 
-    >>> from slideflow.mil import mil_config
+    >>> from histox.mil import mil_config
     >>> config = mil_config(
     ...     model='attention_mil',
     ...     lr=1e-4,
@@ -79,11 +79,11 @@ The next step is to create an MIL model configuration using :func:`slideflow.mil
     ...     fit_one_cycle=True
     ... )
 
-Finally, we can train the model using :func:`slideflow.mil.train_mil`. We'll split our dataset into 70% training and 30% validation, training to the outcome "er_status_by_ihc" and saving the model to ``/model/path``.
+Finally, we can train the model using :func:`histox.mil.train_mil`. We'll split our dataset into 70% training and 30% validation, training to the outcome "er_status_by_ihc" and saving the model to ``/model/path``.
 
 .. code-block:: python
 
-    >>> from slideflow.mil import train_mil
+    >>> from histox.mil import train_mil
     >>> train, val = dataset.split(labels='er_status_by_ihc', val_fraction=0.3)
     >>> train_mil(
     ...     config,
@@ -162,4 +162,4 @@ After training has completed, the output directory, ``/model/path``, should look
 
 The final model weights are saved in ``models/best_valid.pth``. Validation dataset predictions are saved in the "predictions.parquet" file. A manifest of training/validation data is saved in the "slide_manifest.csv" file, and training history is saved in the "history.csv" file. Attention values for all tiles in each slide are saved in the ``attention/`` directory.
 
-The final saved model can be used for evaluation (:class:`slideflow.mil.eval_mil`) or inference (:class:`slideflow.mil.predict_slide` or :ref:`Slideflow Studio <studio_mil>`). The saved model path should be referenced by the parent directory (in this case, "/model/path") rather than the model file itself. For more information on MIL models, see :ref:`mil`.
+The final saved model can be used for evaluation (:class:`histox.mil.eval_mil`) or inference (:class:`histox.mil.predict_slide` or :ref:`Slideflow Studio <studio_mil>`). The saved model path should be referenced by the parent directory (in this case, "/model/path") rather than the model file itself. For more information on MIL models, see :ref:`mil`.

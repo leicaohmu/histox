@@ -1,8 +1,8 @@
 .. _mil_api:
 
-.. currentmodule:: slideflow.mil
+.. currentmodule:: histox.mil
 
-slideflow.mil
+histox.mil
 ==============
 
 This submodule contains tools for multiple-instance learning (MIL) model training and evaluation. See :ref:`mil` for more information. A summary of the API is given below.
@@ -44,7 +44,7 @@ Main functions
 TrainerConfig
 *************
 
-.. autoclass:: slideflow.mil.TrainerConfig
+.. autoclass:: histox.mil.TrainerConfig
 .. autosummary::
 
     TrainerConfig.model_fn
@@ -52,20 +52,20 @@ TrainerConfig
     TrainerConfig.is_multimodal
     TrainerConfig.model_type
 
-.. autofunction:: slideflow.mil.TrainerConfig.to_dict
-.. autofunction:: slideflow.mil.TrainerConfig.json_dump
-.. autofunction:: slideflow.mil.TrainerConfig.is_classification
-.. autofunction:: slideflow.mil.TrainerConfig.get_metrics
-.. autofunction:: slideflow.mil.TrainerConfig.prepare_training
-.. autofunction:: slideflow.mil.TrainerConfig.build_model
-.. autofunction:: slideflow.mil.TrainerConfig.predict
-.. autofunction:: slideflow.mil.TrainerConfig.batched_predict
-.. autofunction:: slideflow.mil.TrainerConfig.train
-.. autofunction:: slideflow.mil.TrainerConfig.eval
-.. autofunction:: slideflow.mil.TrainerConfig.build_train_dataloader
-.. autofunction:: slideflow.mil.TrainerConfig.build_val_dataloader
-.. autofunction:: slideflow.mil.TrainerConfig.inspect_batch
-.. autofunction:: slideflow.mil.TrainerConfig.run_metrics
+.. autofunction:: histox.mil.TrainerConfig.to_dict
+.. autofunction:: histox.mil.TrainerConfig.json_dump
+.. autofunction:: histox.mil.TrainerConfig.is_classification
+.. autofunction:: histox.mil.TrainerConfig.get_metrics
+.. autofunction:: histox.mil.TrainerConfig.prepare_training
+.. autofunction:: histox.mil.TrainerConfig.build_model
+.. autofunction:: histox.mil.TrainerConfig.predict
+.. autofunction:: histox.mil.TrainerConfig.batched_predict
+.. autofunction:: histox.mil.TrainerConfig.train
+.. autofunction:: histox.mil.TrainerConfig.eval
+.. autofunction:: histox.mil.TrainerConfig.build_train_dataloader
+.. autofunction:: histox.mil.TrainerConfig.build_val_dataloader
+.. autofunction:: histox.mil.TrainerConfig.inspect_batch
+.. autofunction:: histox.mil.TrainerConfig.run_metrics
 
 MILModelConfig
 **************
@@ -79,13 +79,13 @@ MILModelConfig
     MILModelConfig.model_type
     MILModelConfig.is_multimodal
 
-.. autofunction:: slideflow.mil.MILModelConfig.is_classification
-.. autofunction:: slideflow.mil.MILModelConfig.to_dict
-.. autofunction:: slideflow.mil.MILModelConfig.inspect_batch
-.. autofunction:: slideflow.mil.MILModelConfig.build_model
-.. autofunction:: slideflow.mil.MILModelConfig.predict
-.. autofunction:: slideflow.mil.MILModelConfig.batched_predict
-.. autofunction:: slideflow.mil.MILModelConfig.run_metrics
+.. autofunction:: histox.mil.MILModelConfig.is_classification
+.. autofunction:: histox.mil.MILModelConfig.to_dict
+.. autofunction:: histox.mil.MILModelConfig.inspect_batch
+.. autofunction:: histox.mil.MILModelConfig.build_model
+.. autofunction:: histox.mil.MILModelConfig.predict
+.. autofunction:: histox.mil.MILModelConfig.batched_predict
+.. autofunction:: histox.mil.MILModelConfig.run_metrics
 
 CLAMModelConfig
 ***************
@@ -96,7 +96,7 @@ The CLAM model configuration class requires ``slideflow-gpl``, which can be inst
 
     pip install slideflow-gpl
 
-Once installed, the class is available at ``slideflow.clam.CLAMModelConfig``.
+Once installed, the class is available at ``histox.clam.CLAMModelConfig``.
 
-.. autoclass:: slideflow.clam.CLAMModelConfig
+.. autoclass:: histox.clam.CLAMModelConfig
 

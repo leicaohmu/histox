@@ -26,7 +26,7 @@ If you encounter any issues with the initialization scripts, you can also start 
 
 .. code-block:: bash
 
-    python -m slideflow.studio
+    python -m histox.studio
 
 If you are using a Docker image, additional arguments are required to launch Studio. Start your docker container using the arguments ``-e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix``. For example:
 
@@ -39,7 +39,7 @@ If you are using a Docker image, additional arguments are required to launch Stu
 
 A path to a whole-slide image can optionally be provided as the first argument. Use the ``--help`` flag to see a list of available arguments.
 
-You can also launch Studio by using the ``.view()`` function of :class:`slideflow.WSI`, :class:`slideflow.Heatmap`, and :class:`slideflow.Mosaic` functions.
+You can also launch Studio by using the ``.view()`` function of :class:`histox.WSI`, :class:`histox.Heatmap`, and :class:`histox.Mosaic` functions.
 
 .. code-block:: python
 
@@ -164,7 +164,7 @@ The Segmentation widget also contains a section for training models. In order to
 Preview slide normalization
 ---------------------------
 
-Stain normalization strategies can be quickly previewed by checking "Normalize", which will apply the associated normalization strategy to the main view. If a model is loaded, the model's normalizer will be used by default. The normalizer can be changed with the corresponding dropdown menu, allowing you to preview any normalization method. All normalizer methods shown except for the model normalizer will use the "v3" fit (see :py:mod:`slideflow.norm` for more information). Regardless of what is being previewed, the appropriate model normalizer will be used when generating predictions from the slide.
+Stain normalization strategies can be quickly previewed by checking "Normalize", which will apply the associated normalization strategy to the main view. If a model is loaded, the model's normalizer will be used by default. The normalizer can be changed with the corresponding dropdown menu, allowing you to preview any normalization method. All normalizer methods shown except for the model normalizer will use the "v3" fit (see :py:mod:`histox.norm` for more information). Regardless of what is being previewed, the appropriate model normalizer will be used when generating predictions from the slide.
 
 Preview tile extraction
 -----------------------
@@ -330,7 +330,7 @@ StyleGAN requires the ``slideflow-noncommercial`` package:
 Mosaic maps
 -----------
 
-The Mosaic Maps extension, which is enabled by default, adds support for interactively viewing mosaic maps. You can use the :meth:`slideflow.Mosaic.view` function to launch Studio and load the mosaic.
+The Mosaic Maps extension, which is enabled by default, adds support for interactively viewing mosaic maps. You can use the :meth:`histox.Mosaic.view` function to launch Studio and load the mosaic.
 
 .. code-block:: python
 
@@ -339,7 +339,7 @@ The Mosaic Maps extension, which is enabled by default, adds support for interac
     mosaic = sf.Mosaic(...)
     mosaic.view()
 
-Alternatively, a mosaic map can be saved to disk with :meth:`slideflow.Mosaic.export`, and then loaded into Studio with File -> Load Mosaic.
+Alternatively, a mosaic map can be saved to disk with :meth:`histox.Mosaic.export`, and then loaded into Studio with File -> Load Mosaic.
 
 .. image:: studio_mosaic.jpg
 

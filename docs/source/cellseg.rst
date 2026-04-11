@@ -1,4 +1,4 @@
-.. currentmodule:: slideflow.cellseg
+.. currentmodule:: histox.cellseg
 
 .. _cellseg:
 
@@ -27,7 +27,7 @@ Use Cellpose-based cell segmentation in Slideflow Studio by :ref:`enabling the e
 
 .. code-block:: bash
 
-    python -m slideflow.studio --cellpose
+    python -m histox.studio --cellpose
 
 Control panel
 -------------
@@ -110,12 +110,12 @@ Segmenting cells
 Single slide segmentation
 -------------------------
 
-Once the segmentation parameters have been determined, you can run segmentation for a single slide using :func:`slideflow.cellseg.segment_slide`.
+Once the segmentation parameters have been determined, you can run segmentation for a single slide using :func:`histox.cellseg.segment_slide`.
 
 .. code-block::
 
     import slideflow as sf
-    from slideflow.cellseg import segment_slide
+    from histox.cellseg import segment_slide
 
     segmentation = segment_slide(
         '.../slide.svs',
@@ -129,7 +129,7 @@ Project-wide segmentation
 -------------------------
 
 Cell segmentation can also be performed automatically for all slides in a Slideflow project.
-Cell segmentation masks (and associated cell centroids) are calculated for all slides in the project using :meth:`slideflow.Project.cell_segmentation`.
+Cell segmentation masks (and associated cell centroids) are calculated for all slides in the project using :meth:`histox.Project.cell_segmentation`.
 
 .. code-block::
 
@@ -167,11 +167,11 @@ section.
 Accessing segmentation masks
 ----------------------------
 
-Saved cell segmentation masks (in \*.zip format) can be loaded with :class:`slideflow.cellseg.Segmentation`.
+Saved cell segmentation masks (in \*.zip format) can be loaded with :class:`histox.cellseg.Segmentation`.
 
 .. code-block:: python
 
-    from slideflow.cellseg import Segmentation
+    from histox.cellseg import Segmentation
     seg = Segmentation.load('.../slide-masks.zip')
 
 The mask array, ``Segmentation.masks`` , is a ``np.ndarray`` with dtype of np.uint32. Zero values are background, and masks for each cell are represented by a unique integer. Flows/gradients,
@@ -196,12 +196,12 @@ Once segmentation masks have been calculated, images of individual cells can be 
 From a single slide
 -------------------
 
-Start by loading the saved segmentation, as described above. Then, use :meth:`slideflow.WSI.apply_segmentation`, followed by :meth:`slideflow.WSI.extract_cells`.
+Start by loading the saved segmentation, as described above. Then, use :meth:`histox.WSI.apply_segmentation`, followed by :meth:`histox.WSI.extract_cells`.
 
 .. code-block:: python
 
     import slideflow as sf
-    from slideflow.cellseg import Segmentation
+    from histox.cellseg import Segmentation
 
     # Load WSI.
     wsi = sf.WSI('../slide.svs', tile_px=96, tile_um='40x')
@@ -228,13 +228,13 @@ Start by loading the saved segmentation, as described above. Then, use :meth:`sl
 
       - .. image:: cell_unmasked.png
 
-Tile extraction is then performed as usual. Cell images (tiles) can either be saved as loose images or in TFRecord format. See :meth:`slideflow.WSI.extract_cells` for more information.
+Tile extraction is then performed as usual. Cell images (tiles) can either be saved as loose images or in TFRecord format. See :meth:`histox.WSI.extract_cells` for more information.
 
 From all slides
 ---------------
 
 Additionally, cell images can be extracted from all slides in a project. This should only be
-done after :meth:`slideflow.Project.cell_segmentation`.
+done after :meth:`histox.Project.cell_segmentation`.
 
 .. code-block:: python
 
@@ -245,7 +245,7 @@ done after :meth:`slideflow.Project.cell_segmentation`.
     )
 
 Extracted cell images are saved by default in TFRecord format, and are otherwise handled
-identically to tile images generated through :meth:`slideflow.Project.extract_tiles`.
+identically to tile images generated through :meth:`histox.Project.extract_tiles`.
 
 Complete example
 ****************
@@ -260,7 +260,7 @@ Determine optimal cell segmenation parameters using Studio, as described above:
 
 .. code-block:: bash
 
-    python -m slideflow.studio --cellpose
+    python -m histox.studio --cellpose
 
 2. Cell segmentation
 --------------------

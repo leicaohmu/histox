@@ -32,7 +32,7 @@ Slideflow uses TFRecord index files to keep track of the internal structure of e
 - **"arr_0"**: An array of shape ``(n_tiles, 2)`` containing the starting bytes and length of each record.
 - **"locations"**: An array of shape ``(n_tiles, 2)`` containing the x- and y-coordinates of each tile.
 
-Index files for an entire dataset can be rebuilt using :meth:`slideflow.Dataset.rebuild_index()`. You can manually create an index file for a single TFRecord using :func:`sf.util.tfrecord2idx.create_index()`.
+Index files for an entire dataset can be rebuilt using :meth:`histox.Dataset.rebuild_index()`. You can manually create an index file for a single TFRecord using :func:`sf.util.tfrecord2idx.create_index()`.
 
 Creating TFRecords
 ******************
@@ -40,17 +40,17 @@ Creating TFRecords
 From a Dataset
 --------------
 
-The typical way to create TFRecords is to use the :meth:`slideflow.Dataset.extract_tiles` function, as described in :ref:`filtering`. TFRecords will be exported to the destination configured in the :class:`slideflow.Dataset` object (see: :ref:`datasets_and_validation`).
+The typical way to create TFRecords is to use the :meth:`histox.Dataset.extract_tiles` function, as described in :ref:`filtering`. TFRecords will be exported to the destination configured in the :class:`histox.Dataset` object (see: :ref:`datasets_and_validation`).
 
 From a slide
 ------------
 
-A TFRecord file for a single slide can be manually created using :meth:`slideflow.WSI.extract_tiles()` function. The first argument of this function is the TFRecord destination folder.
+A TFRecord file for a single slide can be manually created using :meth:`histox.WSI.extract_tiles()` function. The first argument of this function is the TFRecord destination folder.
 
 From a directory of images
 --------------------------
 
-A directory of loose image files can be assembled into a TFRecord using :func:`slideflow.io.write_tfrecords_single()`:
+A directory of loose image files can be assembled into a TFRecord using :func:`histox.io.write_tfrecords_single()`:
 
 .. code-block:: python
 
@@ -61,7 +61,7 @@ A directory of loose image files can be assembled into a TFRecord using :func:`s
         slide='slide',
     )
 
-A nested directory of loose image tiles, organized into subdirectory by slide name, can be simultaneously assembled into multiple TFRecords (one for each slide) using :func:`slideflow.io.write_tfrecords_multi()`. Slide names are determined from the subdirectory names:
+A nested directory of loose image tiles, organized into subdirectory by slide name, can be simultaneously assembled into multiple TFRecords (one for each slide) using :func:`histox.io.write_tfrecords_multi()`. Slide names are determined from the subdirectory names:
 
 .. code-block:: python
 
@@ -76,7 +76,7 @@ Inspecting TFRecords
 Individual TFRecords
 --------------------
 
-The quickest way to inspect a TFRecord is to use :class:`slideflow.TFRecord`:
+The quickest way to inspect a TFRecord is to use :class:`histox.TFRecord`:
 
 .. code-block:: python
 
@@ -107,9 +107,9 @@ The ``locations`` attribute is a list of the x- and y- center coordinates of eac
 Inspecting Datasets
 -------------------
 
-The :class:`slideflow.Dataset` object provides several methods for inspecting the TFRecords in a dataset generated through :meth:`slideflow.Dataset.extract_tiles`.
+The :class:`histox.Dataset` object provides several methods for inspecting the TFRecords in a dataset generated through :meth:`histox.Dataset.extract_tiles`.
 
-The :meth:`slideflow.Dataset.summary()` method provides a summary of the dataset, including the location TFRecords are stored and the number of total number of tiles across all TFRecords in the dataset.
+The :meth:`histox.Dataset.summary()` method provides a summary of the dataset, including the location TFRecords are stored and the number of total number of tiles across all TFRecords in the dataset.
 
 .. code-block:: python
 
@@ -161,7 +161,7 @@ The :meth:`slideflow.Dataset.summary()` method provides a summary of the dataset
     Index(['patient', 'subtype', 'site', 'slide'],
         dtype='object')
 
-The :meth:`slideflow.Dataset.tfrecords()` method returns a list of paths to tfrecords.
+The :meth:`histox.Dataset.tfrecords()` method returns a list of paths to tfrecords.
 
 .. code-block:: python
 
@@ -171,14 +171,14 @@ The :meth:`slideflow.Dataset.tfrecords()` method returns a list of paths to tfre
     >>> tfrecords[0]
     '/path/to/tfrecords1'
 
-The ``slideflow.Dataset.num_tiles`` attribute returns the total number of tiles across all TFRecords in the dataset.
+The ``histox.Dataset.num_tiles`` attribute returns the total number of tiles across all TFRecords in the dataset.
 
 .. code-block:: python
 
     >>> dataset.num_tiles
     284114
 
-Finally, the :meth:`slideflow.Dataset.manifest()` method returns a dictionary mapping TFRecord paths to the number tiles in each TFRecord. Each value returned by the dictionary is a nested dictionary with two keys: ``"total"``, which is the total number of tiles in the TFRecords, and ``"clipped"``, which is the number of tiles that will be taken from the TFRecord as a result of :ref:`clipping/undersampling <sampling>`.
+Finally, the :meth:`histox.Dataset.manifest()` method returns a dictionary mapping TFRecord paths to the number tiles in each TFRecord. Each value returned by the dictionary is a nested dictionary with two keys: ``"total"``, which is the total number of tiles in the TFRecords, and ``"clipped"``, which is the number of tiles that will be taken from the TFRecord as a result of :ref:`clipping/undersampling <sampling>`.
 
 .. code-block:: python
 
@@ -195,7 +195,7 @@ Slideflow provides several tools for reading and parsing TFRecords. These tools 
 Reading a single image tile
 ---------------------------
 
-To get a single parsed record according to its index, use :meth:`slideflow.TFRecord.__getitem__()`, which returns a dictionary of the parsed record:
+To get a single parsed record according to its index, use :meth:`histox.TFRecord.__getitem__()`, which returns a dictionary of the parsed record:
 
 .. code-block:: python
 
@@ -206,14 +206,14 @@ To get a single parsed record according to its index, use :meth:`slideflow.TFRec
 
 The ``'image_raw'`` field contains raw image bytes, in either JPG or PNG format.
 
-To get a single parsed record according to its location, use :meth:`slideflow.TFRecord.get_record_by_xy()`, which returns the slide name and image bytes:
+To get a single parsed record according to its location, use :meth:`histox.TFRecord.get_record_by_xy()`, which returns the slide name and image bytes:
 
 .. code-block:: python
 
     >>> tfr.get_record_by_xy(768, 256)
     ('SLIDE_NAME', b'...')
 
-Image bytes can be decoded into Tensors (according to the active backend) using :func:`slideflow.io.decode_image()`:
+Image bytes can be decoded into Tensors (according to the active backend) using :func:`histox.io.decode_image()`:
 
 .. code-block:: python
 
@@ -228,7 +228,7 @@ Image bytes can be decoded into Tensors (according to the active backend) using 
 Reading from a single TFRecord
 ------------------------------
 
-The function :func:`slideflow.tfrecord_loader()` provides an interface for reading images from a single TFRecord in sequence. Start by loading the TFRecord index, creating one if it does not already exist:
+The function :func:`histox.tfrecord_loader()` provides an interface for reading images from a single TFRecord in sequence. Start by loading the TFRecord index, creating one if it does not already exist:
 
 .. code-block:: python
 
@@ -237,7 +237,7 @@ The function :func:`slideflow.tfrecord_loader()` provides an interface for readi
     >>> sf.io.tfrecord2idx.create_index(tfr)
     >>> index = sf.io.tfrecord2idx.load_index(tfr)
 
-Then, use :func:`slideflow.tfrecord_loader()` to create a generator that yields parsed records from the TFRecord:
+Then, use :func:`histox.tfrecord_loader()` to create a generator that yields parsed records from the TFRecord:
 
 .. code-block:: python
 
@@ -245,7 +245,7 @@ Then, use :func:`slideflow.tfrecord_loader()` to create a generator that yields 
     >>> record = next(iter(loader))
     {'image_raw': <np.ndarray>, 'slide': <np.ndarray>, 'loc_x': [0], 'loc_y': [0]}
 
-Both ``"image_raw"`` and ``"slide"`` fields are returned as bytes in numpy arrays. The ``"loc_x"`` and ``"loc_y"`` fields are returned as integers. The image and slide name can be decoded using :func:`slideflow.io.decode_image()` and ``.decode('utf-8')``, respectively:
+Both ``"image_raw"`` and ``"slide"`` fields are returned as bytes in numpy arrays. The ``"loc_x"`` and ``"loc_y"`` fields are returned as integers. The image and slide name can be decoded using :func:`histox.io.decode_image()` and ``.decode('utf-8')``, respectively:
 
 .. code-block:: python
 
@@ -273,7 +273,7 @@ An index file is recommended for improving efficiency of data reading, and requi
 Interleaving multiple TFRecords
 -------------------------------
 
-You can also interleave multiple TFRecords using :func:`slideflow.multi_tfrecord_loader()`. This function takes a list of TFRecord paths and a list of corresponding TFRecord indices, and returns a generator that randomly samples from TFRecords and parses the records:
+You can also interleave multiple TFRecords using :func:`histox.multi_tfrecord_loader()`. This function takes a list of TFRecord paths and a list of corresponding TFRecord indices, and returns a generator that randomly samples from TFRecords and parses the records:
 
 .. code-block:: python
 

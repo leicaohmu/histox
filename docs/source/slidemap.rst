@@ -1,20 +1,20 @@
 .. currentmodule:: slideflow
 
-slideflow.SlideMap
+histox.SlideMap
 ==================
 
-:class:`slideflow.SlideMap` assists with visualizing tiles and slides in two-dimensional space.
+:class:`histox.SlideMap` assists with visualizing tiles and slides in two-dimensional space.
 
 Once a model has been trained, tile-level predictions and intermediate layer activations can be calculated
-across an entire dataset with :class:`slideflow.DatasetFeatures`.
-The :class:`slideflow.SlideMap` class can then perform dimensionality reduction on these dataset-wide
+across an entire dataset with :class:`histox.DatasetFeatures`.
+The :class:`histox.SlideMap` class can then perform dimensionality reduction on these dataset-wide
 activations, plotting tiles and slides in two-dimensional space. Visualizing the distribution and clustering
 of tile-level and slide-level layer activations can help reveal underlying structures in the dataset and shared
 visual features among classes.
 
-The primary method of use is first generating an :class:`slideflow.DatasetFeatures` from a trained
-model, then using :meth:`slideflow.DatasetFeatures.map_activations`, which returns an instance of
-:class:`slideflow.SlideMap`.
+The primary method of use is first generating an :class:`histox.DatasetFeatures` from a trained
+model, then using :meth:`histox.DatasetFeatures.map_activations`, which returns an instance of
+:class:`histox.SlideMap`.
 
 .. code-block:: python
 
@@ -38,24 +38,24 @@ slide and the tile index in the slide TFRecord.
 Methods
 -------
 
-.. autofunction:: slideflow.SlideMap.activations
-.. autofunction:: slideflow.SlideMap.build_mosaic
-.. autofunction:: slideflow.SlideMap.cluster
-.. autofunction:: slideflow.SlideMap.neighbors
-.. autofunction:: slideflow.SlideMap.filter
-.. autofunction:: slideflow.SlideMap.umap_transform
-.. autofunction:: slideflow.SlideMap.label
-.. autofunction:: slideflow.SlideMap.label_by_preds
-.. autofunction:: slideflow.SlideMap.label_by_slide
-.. autofunction:: slideflow.SlideMap.label_by_uncertainty
-.. autofunction:: slideflow.SlideMap.load
-.. autofunction:: slideflow.SlideMap.load_coordinates
-.. autofunction:: slideflow.SlideMap.load_umap
-.. autofunction:: slideflow.SlideMap.plot
-.. autofunction:: slideflow.SlideMap.plot_3d
-.. autofunction:: slideflow.SlideMap.save
-.. autofunction:: slideflow.SlideMap.save_3d
-.. autofunction:: slideflow.SlideMap.save_plot
-.. autofunction:: slideflow.SlideMap.save_coordinates
-.. autofunction:: slideflow.SlideMap.save_umap
-.. autofunction:: slideflow.SlideMap.save_encoder
+.. autofunction:: histox.SlideMap.activations
+.. autofunction:: histox.SlideMap.build_mosaic
+.. autofunction:: histox.SlideMap.cluster
+.. autofunction:: histox.SlideMap.neighbors
+.. autofunction:: histox.SlideMap.filter
+.. autofunction:: histox.SlideMap.umap_transform
+.. autofunction:: histox.SlideMap.label
+.. autofunction:: histox.SlideMap.label_by_preds
+.. autofunction:: histox.SlideMap.label_by_slide
+.. autofunction:: histox.SlideMap.label_by_uncertainty
+.. autofunction:: histox.SlideMap.load
+.. autofunction:: histox.SlideMap.load_coordinates
+.. autofunction:: histox.SlideMap.load_umap
+.. autofunction:: histox.SlideMap.plot
+.. autofunction:: histox.SlideMap.plot_3d
+.. autofunction:: histox.SlideMap.save
+.. autofunction:: histox.SlideMap.save_3d
+.. autofunction:: histox.SlideMap.save_plot
+.. autofunction:: histox.SlideMap.save_coordinates
+.. autofunction:: histox.SlideMap.save_umap
+.. autofunction:: histox.SlideMap.save_encoder
