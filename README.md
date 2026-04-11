@@ -45,25 +45,60 @@ cd histox
 pip install -e .
 ```
 
-### Optional GPU Support
-
-Install with PyTorch GPU support:
+### With PyTorch Backend
 
 ```bash
+pip install histox[torch]
+# or from source
 pip install -e ".[torch]"
 ```
 
-Or TensorFlow GPU support:
+### With TensorFlow Backend
 
 ```bash
+pip install histox[tf]
+# or from source
 pip install -e ".[tf]"
 ```
 
-NVIDIA RAPIDS acceleration (optional):
+### With cuCIM GPU Acceleration (WSI Reading)
+
+cuCIM provides GPU-accelerated whole slide image reading. First check your CUDA version:
 
 ```bash
-pip install -e ".[cucim]"
+nvidia-smi
 ```
+
+Then install the matching extra:
+
+```bash
+# CUDA 12.x
+pip install histox[torch,cucim-cuda12]
+
+# CUDA 11.x
+pip install histox[torch,cucim-cuda11]
+
+# cuCIM only (manage cupy manually)
+pip install histox[torch,cucim]
+```
+
+> ⚠️ **Important**: `cupy` is tightly coupled to your CUDA version. Do **not** install multiple `cupy-*` packages simultaneously, as this will cause conflicts.
+> If you encounter a conflict, clean up first:
+> ```bash
+> pip uninstall cupy cupy-cuda12x cupy-cuda11x -y
+> ```
+> Then reinstall the correct version.
+
+### Installation Summary
+
+| Command | Includes |
+|---------|----------|
+| `pip install histox` | Core only |
+| `pip install histox[torch]` | Core + PyTorch |
+| `pip install histox[tf]` | Core + TensorFlow |
+| `pip install histox[torch,cucim]` | Core + PyTorch + cuCIM |
+| `pip install histox[torch,cucim-cuda12]` | Core + PyTorch + cuCIM + CuPy (CUDA 12) |
+| `pip install histox[torch,cucim-cuda11]` | Core + PyTorch + cuCIM + CuPy (CUDA 11) |
 
 ## 🚀 Quick Start Example
 

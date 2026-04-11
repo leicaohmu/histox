@@ -5,8 +5,8 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="histox",
-    use_scm_version=True,                        # ← 改这里
-    setup_requires=["setuptools-scm"],            # ← 加这行
+    use_scm_version=True,
+    setup_requires=["setuptools-scm"],
     cmdclass={},
     author="Lei Cao",
     author_email="caolei@hrbmu.edu.cn",
@@ -78,6 +78,17 @@ setuptools.setup(
             'tensorflow>=2.7,<2.12',
             'tensorflow_probability<0.20',
             'tensorflow_datasets<4.9.0',
+        ],
+        'cucim': [
+            'cucim',
+        ],
+        'cucim-cuda12': [
+            'cucim',
+            'cupy-cuda12x',
+        ],
+        'cucim-cuda11': [
+            'cucim',
+            'cupy-cuda11x',
         ],
     },
 )
