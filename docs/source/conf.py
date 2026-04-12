@@ -92,28 +92,22 @@ for mod_name in MOCK_MODULES:
     sys.modules[mod_name].__spec__ = importlib.machinery.ModuleSpec(mod_name, None)
 
 # ── 注册真实 histox 子模块为顶层别名（覆盖上面的 mock）──────────────
-REAL_SUBMODULES = {
+# NOTE: 不在 conf.py 里手动 import histox 子模块，
+# 因为 histox.io.torch 链式依赖 torchvision，会触发 NumPy 版本冲突。
+# autodoc_mock_imports 已经覆盖了 torch/torchvision，
+# Sphinx autodoc 自己 import 时会走 mock，不会崩溃。
+# 这里只注册纯 Python、无 torch 依赖的别名。
+_SAFE_SUBMODULES = {
     'gan':              'histox.gan',
     'grad':             'histox.grad',
     'heatmap':          'histox.heatmap',
     'mosaic':           'histox.mosaic',
     'project':          'histox.project',
-    'cellseg':          'histox.cellseg',
     'dataset':          'histox.dataset',
-    'mil':              'histox.mil',
-    'model':            'histox.model',
-    'norm':             'histox.norm',
     'simclr':           'histox.simclr',
-    'slide':            'histox.slide',
-    'studio':           'histox.studio',
     'util':             'histox.util',
-    # io 子模块（注意：不能注册 'io' 本身，会覆盖内置 io 模块）
-    'io.torch':         'histox.io.torch',
-    'io.tensorflow':    'histox.io.tensorflow',
-    'io.preservedsite': 'histox.io.preservedsite',
-    'io.io_utils':      'histox.io.io_utils',
 }
-for alias, full in REAL_SUBMODULES.items():
+for alias, full in _SAFE_SUBMODULES.items():
     try:
         mod = importlib.import_module(full)
         sys.modules[alias] = mod
