@@ -1,7 +1,7 @@
 Installation
 ============
 
-.. figure:: ./_static/histox.jpg
+.. figure:: ./_static/histox.png
    :alt: histox installation
    :width: 100%
    :align: center
