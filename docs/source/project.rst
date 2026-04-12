@@ -24,56 +24,56 @@ Attributes
 Methods
 -------
 
-.. autofunction:: histox.Project.add_source
+.. autofunction:: Project.add_source
 
-.. autofunction:: histox.Project.associate_slide_names
+.. autofunction:: Project.associate_slide_names
 
-.. autofunction:: histox.Project.cell_segmentation
+.. autofunction:: Project.cell_segmentation
 
-.. autofunction:: histox.Project.create_blank_annotations
+.. autofunction:: Project.create_blank_annotations
 
-.. autofunction:: histox.Project.create_hp_sweep
+.. autofunction:: Project.create_hp_sweep
 
-.. autofunction:: histox.Project.evaluate
+.. autofunction:: Project.evaluate
 
-.. autofunction:: histox.Project.evaluate_mil
+.. autofunction:: Project.evaluate_mil
 
-.. autofunction:: histox.Project.extract_cells
+.. autofunction:: Project.extract_cells
 
-.. autofunction:: histox.Project.extract_tiles
+.. autofunction:: Project.extract_tiles
 
-.. autofunction:: histox.Project.gan_train
+.. autofunction:: Project.gan_train
 
-.. autofunction:: histox.Project.gan_generate
+.. autofunction:: Project.gan_generate
 
-.. autofunction:: histox.Project.generate_features
+.. autofunction:: Project.generate_features
 
-.. autofunction:: histox.Project.generate_feature_bags
+.. autofunction:: Project.generate_feature_bags
 
-.. autofunction:: histox.Project.generate_heatmaps
+.. autofunction:: Project.generate_heatmaps
 
-.. autofunction:: histox.Project.generate_mosaic
+.. autofunction:: Project.generate_mosaic
 
-.. autofunction:: histox.Project.generate_mosaic_from_annotations
+.. autofunction:: Project.generate_mosaic_from_annotations
 
-.. autofunction:: histox.Project.generate_tfrecord_heatmap
+.. autofunction:: Project.generate_tfrecord_heatmap
 
-.. autofunction:: histox.Project.dataset
+.. autofunction:: Project.dataset
 
-.. autofunction:: histox.Project.predict
+.. autofunction:: Project.predict
 
-.. autofunction:: histox.Project.predict_ensemble
+.. autofunction:: Project.predict_ensemble
 
-.. autofunction:: histox.Project.predict_wsi
+.. autofunction:: Project.predict_wsi
 
-.. autofunction:: histox.Project.save
+.. autofunction:: Project.save
 
-.. autofunction:: histox.Project.smac_search
+.. autofunction:: Project.smac_search
 
-.. autofunction:: histox.Project.train
+.. autofunction:: Project.train
 
-.. autofunction:: histox.Project.train_ensemble
+.. autofunction:: Project.train_ensemble
 
-.. autofunction:: histox.Project.train_mil
+.. autofunction:: Project.train_mil
 
-.. autofunction:: histox.Project.train_simclr
+.. autofunction:: Project.train_simclr

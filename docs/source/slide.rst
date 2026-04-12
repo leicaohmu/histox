@@ -31,38 +31,38 @@ Attributes
 Methods
 -------
 
-.. autofunction:: histox.WSI.align_to
-.. autofunction:: histox.WSI.align_tiles_to
-.. autofunction:: histox.WSI.apply_qc_mask
-.. autofunction:: histox.WSI.apply_segmentation
-.. autofunction:: histox.WSI.area
-.. autofunction:: histox.WSI.build_generator
-.. autofunction:: histox.WSI.dim_to_mpp
-.. autofunction:: histox.WSI.get_tile_mask
-.. autofunction:: histox.WSI.get_tile_dataframe
-.. autofunction:: histox.WSI.extract_cells
-.. autofunction:: histox.WSI.extract_tiles
-.. autofunction:: histox.WSI.export_rois
-.. autofunction:: histox.WSI.has_rois
-.. autofunction:: histox.WSI.load_csv_roi
-.. autofunction:: histox.WSI.load_json_roi
-.. autofunction:: histox.WSI.load_roi_array
-.. autofunction:: histox.WSI.mpp_to_dim
-.. autofunction:: histox.WSI.predict
-.. autofunction:: histox.WSI.preview
-.. autofunction:: histox.WSI.process_rois
-.. autofunction:: histox.WSI.show_alignment
-.. autofunction:: histox.WSI.square_thumb
-.. autofunction:: histox.WSI.qc
-.. autofunction:: histox.WSI.remove_qc
-.. autofunction:: histox.WSI.remove_roi
-.. autofunction:: histox.WSI.tensorflow
-.. autofunction:: histox.WSI.torch
-.. autofunction:: histox.WSI.thumb
-.. autofunction:: histox.WSI.verify_alignment
-.. autofunction:: histox.WSI.view
+.. autofunction:: WSI.align_to
+.. autofunction:: WSI.align_tiles_to
+.. autofunction:: WSI.apply_qc_mask
+.. autofunction:: WSI.apply_segmentation
+.. autofunction:: WSI.area
+.. autofunction:: WSI.build_generator
+.. autofunction:: WSI.dim_to_mpp
+.. autofunction:: WSI.get_tile_mask
+.. autofunction:: WSI.get_tile_dataframe
+.. autofunction:: WSI.extract_cells
+.. autofunction:: WSI.extract_tiles
+.. autofunction:: WSI.export_rois
+.. autofunction:: WSI.has_rois
+.. autofunction:: WSI.load_csv_roi
+.. autofunction:: WSI.load_json_roi
+.. autofunction:: WSI.load_roi_array
+.. autofunction:: WSI.mpp_to_dim
+.. autofunction:: WSI.predict
+.. autofunction:: WSI.preview
+.. autofunction:: WSI.process_rois
+.. autofunction:: WSI.show_alignment
+.. autofunction:: WSI.square_thumb
+.. autofunction:: WSI.qc
+.. autofunction:: WSI.remove_qc
+.. autofunction:: WSI.remove_roi
+.. autofunction:: WSI.tensorflow
+.. autofunction:: WSI.torch
+.. autofunction:: WSI.thumb
+.. autofunction:: WSI.verify_alignment
+.. autofunction:: WSI.view
 
 Other functions
 ***************
 
-.. autofunction:: histox.slide.predict
+.. autofunction:: slide.predict

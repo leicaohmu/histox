@@ -31,4 +31,4 @@ functions are in :py:mod:`histox.io.torch`.
 
 histox.io.preservedsite
 **************************
-.. autofunction:: histox.io.preservedsite.generate_crossfolds
+.. autofunction:: io.preservedsite.generate_crossfolds

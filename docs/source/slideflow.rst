@@ -1,11 +1,11 @@
 .. currentmodule:: histox
 
-slideflow
+histox
 =========
 
-.. autofunction:: histox.about
-.. autofunction:: histox.build_feature_extractor
-.. autofunction:: histox.create_project
-.. autofunction:: histox.load_project
-.. autofunction:: histox.getLoggingLevel
-.. autofunction:: histox.setLoggingLevel
+.. autofunction:: about
+.. autofunction:: build_feature_extractor
+.. autofunction:: create_project
+.. autofunction:: load_project
+.. autofunction:: getLoggingLevel
+.. autofunction:: setLoggingLevel

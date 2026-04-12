@@ -5,7 +5,7 @@ histox.model.tensorflow
 
 This submodule contains Tensorflow-specific utility functions when working in the Tensorflow backend.
 
-.. autofunction:: histox.model.tensorflow.flatten
-.. autofunction:: histox.model.tensorflow.load
-.. autofunction:: histox.model.tensorflow.log_manifest
-.. autofunction:: histox.model.tensorflow.unwrap
+.. autofunction:: model.tensorflow.flatten
+.. autofunction:: model.tensorflow.load
+.. autofunction:: model.tensorflow.log_manifest
+.. autofunction:: model.tensorflow.unwrap

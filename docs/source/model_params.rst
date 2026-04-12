@@ -12,10 +12,10 @@ See :ref:`training` for a detailed look at how to train models.
 ModelParams
 ***********
 .. autoclass:: ModelParams
-.. autofunction:: histox.ModelParams.to_dict
-.. autofunction:: histox.ModelParams.get_normalizer
-.. autofunction:: histox.ModelParams.validate
-.. autofunction:: histox.ModelParams.model_type
+.. autofunction:: ModelParams.to_dict
+.. autofunction:: ModelParams.get_normalizer
+.. autofunction:: ModelParams.validate
+.. autofunction:: ModelParams.model_type
 
 Mini-batch balancing
 ********************

@@ -9,10 +9,10 @@ https://github.com/vahidk/tfrecord, included as the module :mod:`histox.tfrecord
 interleaving is supervised by :func:`histox.io.torch.interleave`, while the
 :func:`histox.io.torch.interleave_dataloader` function provides a PyTorch DataLoader object which can be directly used.
 
-.. automodule:: histox.io.torch
+.. automodule:: io.torch
     :members:
     :exclude-members: StyleGAN2Interleaver, TileLabelInterleaver, InterleaveIterator, IndexedInterleaver
 
-.. autoclass:: histox.io.torch.InterleaveIterator
+.. autoclass:: io.torch.InterleaveIterator
 
-.. autoclass:: histox.io.torch.IndexedInterleaver
+.. autoclass:: io.torch.IndexedInterleaver

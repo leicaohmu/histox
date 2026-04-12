@@ -260,19 +260,19 @@ StainNormalizer
 ***************
 
 .. autoclass:: StainNormalizer
-.. autofunction:: histox.norm.StainNormalizer.fit
-.. autofunction:: histox.norm.StainNormalizer.get_fit
-.. autofunction:: histox.norm.StainNormalizer.set_fit
-.. autofunction:: histox.norm.StainNormalizer.augment
-.. autofunction:: histox.norm.StainNormalizer.transform
-.. autofunction:: histox.norm.StainNormalizer.jpeg_to_jpeg
-.. autofunction:: histox.norm.StainNormalizer.jpeg_to_rgb
-.. autofunction:: histox.norm.StainNormalizer.png_to_png
-.. autofunction:: histox.norm.StainNormalizer.png_to_rgb
-.. autofunction:: histox.norm.StainNormalizer.rgb_to_rgb
-.. autofunction:: histox.norm.StainNormalizer.tf_to_rgb
-.. autofunction:: histox.norm.StainNormalizer.tf_to_tf
-.. autofunction:: histox.norm.StainNormalizer.torch_to_torch
+.. autofunction:: norm.StainNormalizer.fit
+.. autofunction:: norm.StainNormalizer.get_fit
+.. autofunction:: norm.StainNormalizer.set_fit
+.. autofunction:: norm.StainNormalizer.augment
+.. autofunction:: norm.StainNormalizer.transform
+.. autofunction:: norm.StainNormalizer.jpeg_to_jpeg
+.. autofunction:: norm.StainNormalizer.jpeg_to_rgb
+.. autofunction:: norm.StainNormalizer.png_to_png
+.. autofunction:: norm.StainNormalizer.png_to_rgb
+.. autofunction:: norm.StainNormalizer.rgb_to_rgb
+.. autofunction:: norm.StainNormalizer.tf_to_rgb
+.. autofunction:: norm.StainNormalizer.tf_to_tf
+.. autofunction:: norm.StainNormalizer.torch_to_torch
 
 Example images
 **************

@@ -44,7 +44,7 @@ Main functions
 TrainerConfig
 *************
 
-.. autoclass:: histox.mil.TrainerConfig
+.. autoclass:: mil.TrainerConfig
 .. autosummary::
 
     TrainerConfig.model_fn
@@ -52,20 +52,20 @@ TrainerConfig
     TrainerConfig.is_multimodal
     TrainerConfig.model_type
 
-.. autofunction:: histox.mil.TrainerConfig.to_dict
-.. autofunction:: histox.mil.TrainerConfig.json_dump
-.. autofunction:: histox.mil.TrainerConfig.is_classification
-.. autofunction:: histox.mil.TrainerConfig.get_metrics
-.. autofunction:: histox.mil.TrainerConfig.prepare_training
-.. autofunction:: histox.mil.TrainerConfig.build_model
-.. autofunction:: histox.mil.TrainerConfig.predict
-.. autofunction:: histox.mil.TrainerConfig.batched_predict
-.. autofunction:: histox.mil.TrainerConfig.train
-.. autofunction:: histox.mil.TrainerConfig.eval
-.. autofunction:: histox.mil.TrainerConfig.build_train_dataloader
-.. autofunction:: histox.mil.TrainerConfig.build_val_dataloader
-.. autofunction:: histox.mil.TrainerConfig.inspect_batch
-.. autofunction:: histox.mil.TrainerConfig.run_metrics
+.. autofunction:: mil.TrainerConfig.to_dict
+.. autofunction:: mil.TrainerConfig.json_dump
+.. autofunction:: mil.TrainerConfig.is_classification
+.. autofunction:: mil.TrainerConfig.get_metrics
+.. autofunction:: mil.TrainerConfig.prepare_training
+.. autofunction:: mil.TrainerConfig.build_model
+.. autofunction:: mil.TrainerConfig.predict
+.. autofunction:: mil.TrainerConfig.batched_predict
+.. autofunction:: mil.TrainerConfig.train
+.. autofunction:: mil.TrainerConfig.eval
+.. autofunction:: mil.TrainerConfig.build_train_dataloader
+.. autofunction:: mil.TrainerConfig.build_val_dataloader
+.. autofunction:: mil.TrainerConfig.inspect_batch
+.. autofunction:: mil.TrainerConfig.run_metrics
 
 MILModelConfig
 **************
@@ -79,13 +79,13 @@ MILModelConfig
     MILModelConfig.model_type
     MILModelConfig.is_multimodal
 
-.. autofunction:: histox.mil.MILModelConfig.is_classification
-.. autofunction:: histox.mil.MILModelConfig.to_dict
-.. autofunction:: histox.mil.MILModelConfig.inspect_batch
-.. autofunction:: histox.mil.MILModelConfig.build_model
-.. autofunction:: histox.mil.MILModelConfig.predict
-.. autofunction:: histox.mil.MILModelConfig.batched_predict
-.. autofunction:: histox.mil.MILModelConfig.run_metrics
+.. autofunction:: mil.MILModelConfig.is_classification
+.. autofunction:: mil.MILModelConfig.to_dict
+.. autofunction:: mil.MILModelConfig.inspect_batch
+.. autofunction:: mil.MILModelConfig.build_model
+.. autofunction:: mil.MILModelConfig.predict
+.. autofunction:: mil.MILModelConfig.batched_predict
+.. autofunction:: mil.MILModelConfig.run_metrics
 
 CLAMModelConfig
 ***************
@@ -98,5 +98,5 @@ The CLAM model configuration class requires ``slideflow-gpl``, which can be inst
 
 Once installed, the class is available at ``histox.clam.CLAMModelConfig``.
 
-.. autoclass:: histox.clam.CLAMModelConfig
+.. autoclass:: clam.CLAMModelConfig
 

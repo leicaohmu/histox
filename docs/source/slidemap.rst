@@ -38,24 +38,24 @@ slide and the tile index in the slide TFRecord.
 Methods
 -------
 
-.. autofunction:: histox.SlideMap.activations
-.. autofunction:: histox.SlideMap.build_mosaic
-.. autofunction:: histox.SlideMap.cluster
-.. autofunction:: histox.SlideMap.neighbors
-.. autofunction:: histox.SlideMap.filter
-.. autofunction:: histox.SlideMap.umap_transform
-.. autofunction:: histox.SlideMap.label
-.. autofunction:: histox.SlideMap.label_by_preds
-.. autofunction:: histox.SlideMap.label_by_slide
-.. autofunction:: histox.SlideMap.label_by_uncertainty
-.. autofunction:: histox.SlideMap.load
-.. autofunction:: histox.SlideMap.load_coordinates
-.. autofunction:: histox.SlideMap.load_umap
-.. autofunction:: histox.SlideMap.plot
-.. autofunction:: histox.SlideMap.plot_3d
-.. autofunction:: histox.SlideMap.save
-.. autofunction:: histox.SlideMap.save_3d
-.. autofunction:: histox.SlideMap.save_plot
-.. autofunction:: histox.SlideMap.save_coordinates
-.. autofunction:: histox.SlideMap.save_umap
-.. autofunction:: histox.SlideMap.save_encoder
+.. autofunction:: SlideMap.activations
+.. autofunction:: SlideMap.build_mosaic
+.. autofunction:: SlideMap.cluster
+.. autofunction:: SlideMap.neighbors
+.. autofunction:: SlideMap.filter
+.. autofunction:: SlideMap.umap_transform
+.. autofunction:: SlideMap.label
+.. autofunction:: SlideMap.label_by_preds
+.. autofunction:: SlideMap.label_by_slide
+.. autofunction:: SlideMap.label_by_uncertainty
+.. autofunction:: SlideMap.load
+.. autofunction:: SlideMap.load_coordinates
+.. autofunction:: SlideMap.load_umap
+.. autofunction:: SlideMap.plot
+.. autofunction:: SlideMap.plot_3d
+.. autofunction:: SlideMap.save
+.. autofunction:: SlideMap.save_3d
+.. autofunction:: SlideMap.save_plot
+.. autofunction:: SlideMap.save_coordinates
+.. autofunction:: SlideMap.save_umap
+.. autofunction:: SlideMap.save_encoder

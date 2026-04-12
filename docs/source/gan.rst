@@ -3,7 +3,7 @@
 histox.gan
 =============
 
-.. automodule:: histox.gan
+.. automodule:: gan
    :members:
 
 See :ref:`stylegan` for more information on working with GANs.
@@ -17,5 +17,5 @@ StyleGAN2 Interpolator
 Utility functions
 -----------------
 
-.. automodule:: histox.gan.utils
+.. automodule:: gan.utils
    :members:

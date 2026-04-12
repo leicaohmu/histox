@@ -9,7 +9,7 @@ saliency, maps. See :ref:`saliency` for more information.
 .. autoclass:: SaliencyMap
     :inherited-members:
 
-.. automodule:: histox.grad
+.. automodule:: grad
    :members:
 
 .. autofunction:: comparison_plot

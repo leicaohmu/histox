@@ -25,9 +25,9 @@ See :ref:`mosaic_map` for an example of how a mosaic map can be used in the cont
 Methods
 -------
 
-.. autofunction:: histox.Mosaic.generate_grid
-.. autofunction:: histox.Mosaic.plot
-.. autofunction:: histox.Mosaic.points_at_grid_index
-.. autofunction:: histox.Mosaic.save
-.. autofunction:: histox.Mosaic.save_report
-.. autofunction:: histox.Mosaic.view
+.. autofunction:: Mosaic.generate_grid
+.. autofunction:: Mosaic.plot
+.. autofunction:: Mosaic.points_at_grid_index
+.. autofunction:: Mosaic.save
+.. autofunction:: Mosaic.save_report
+.. autofunction:: Mosaic.view

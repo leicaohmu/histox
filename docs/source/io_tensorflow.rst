@@ -8,5 +8,5 @@ TFRecord interleaving in the Tensorflow backend is accomplished with :func:`hist
 .. note::
     The TFRecord reading and interleaving implemented in this module is only compatible with Tensorflow models. The :mod:`histox.io.torch` module includes a PyTorch-specific TFRecord reader.
 
-.. automodule:: histox.io.tensorflow
+.. automodule:: io.tensorflow
     :members:

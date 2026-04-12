@@ -20,10 +20,10 @@ See :ref:`training` for a detailed look at how to train models.
 Trainer
 *******
 .. autoclass:: Trainer
-.. autofunction:: histox.model.Trainer.load
-.. autofunction:: histox.model.Trainer.evaluate
-.. autofunction:: histox.model.Trainer.predict
-.. autofunction:: histox.model.Trainer.train
+.. autofunction:: model.Trainer.load
+.. autofunction:: model.Trainer.evaluate
+.. autofunction:: model.Trainer.predict
+.. autofunction:: model.Trainer.train
 
 RegressionTrainer
 *****************
@@ -36,8 +36,8 @@ SurvivalTrainer
 Features
 ********
 .. autoclass:: Features
-.. autofunction:: histox.model.Features.from_model
-.. autofunction:: histox.model.Features.__call__
+.. autofunction:: model.Features.from_model
+.. autofunction:: model.Features.__call__
 
 Other functions
 ***************

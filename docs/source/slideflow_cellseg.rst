@@ -12,12 +12,12 @@ See :ref:`cellseg` for more information.
 Segmentation
 ************
 .. autoclass:: Segmentation
-.. autofunction:: histox.cellseg.Segmentation.apply_rois
-.. autofunction:: histox.cellseg.Segmentation.calculate_centroids
-.. autofunction:: histox.cellseg.Segmentation.calculate_outlines
-.. autofunction:: histox.cellseg.Segmentation.centroids
-.. autofunction:: histox.cellseg.Segmentation.centroid_to_image
-.. autofunction:: histox.cellseg.Segmentation.extract_centroids
-.. autofunction:: histox.cellseg.Segmentation.mask_to_image
-.. autofunction:: histox.cellseg.Segmentation.outline_to_image
-.. autofunction:: histox.cellseg.Segmentation.save
+.. autofunction:: cellseg.Segmentation.apply_rois
+.. autofunction:: cellseg.Segmentation.calculate_centroids
+.. autofunction:: cellseg.Segmentation.calculate_outlines
+.. autofunction:: cellseg.Segmentation.centroids
+.. autofunction:: cellseg.Segmentation.centroid_to_image
+.. autofunction:: cellseg.Segmentation.extract_centroids
+.. autofunction:: cellseg.Segmentation.mask_to_image
+.. autofunction:: cellseg.Segmentation.outline_to_image
+.. autofunction:: cellseg.Segmentation.save
