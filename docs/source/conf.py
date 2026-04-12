@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, types
 from unittest.mock import MagicMock
 
 sys.path.insert(0, os.path.abspath('../..'))
@@ -30,6 +30,13 @@ MOCK_MODULES = [
 ]
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = MagicMock()
+
+# ⬇️ 关键修复：给所有 mock 模块补上合法的 __spec__
+# 这样 importlib.util.find_spec() 就不会抛 ValueError
+for mod_name in MOCK_MODULES:
+    mock = sys.modules[mod_name]
+    spec = types.ModuleSpec(mod_name, None)
+    mock.__spec__ = spec
 # ─────────────────────────────────────────────────────
 
 project = 'histox'
