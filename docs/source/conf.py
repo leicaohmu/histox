@@ -1,3 +1,4 @@
+import io as _builtin_io   # ← 提前保护内置 io 模块，防止与 histox.io 冲突
 import os, sys
 import importlib
 import importlib.machinery
@@ -47,6 +48,8 @@ MOCK_MODULES = [
     'slideflow_gpl.clam',
     'slideflow_gpl.clam.models',
     'slideflow_gpl.clam.utils',
+    # cellseg 别名
+    'cellseg', 'cellseg.models',
     # RST 文件用类名/短名作为模块名，全部 mock
     'Dataset', 'DatasetFeatures',
     'Heatmap', 'Project', 'Mosaic',
@@ -115,6 +118,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
     'myst_parser',
+    'sphinxcontrib.video',    # ← 新增，修复 video 指令 ERROR
 ]
 
 html_theme = 'sphinx_rtd_theme'

@@ -19,7 +19,7 @@ This documentation starts with a high-level overview of the pipeline and include
 
    installation
    overview
-   extensions        ← 新增
+   extensions 
    quickstart
    project_setup
    datasets_and_val
