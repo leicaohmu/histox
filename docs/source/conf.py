@@ -20,9 +20,13 @@ MOCK_MODULES = [
     'cucim', 'cucim.clara',
     # GUI
     'glfw', 'imgui', 'OpenGL', 'OpenGL.GL',
-    # 地理/图形
-    'shapely', 'shapely.geometry',
-    'rasterio', 'rasterio.transform',
+    # 地理/图形 ── 补全所有子模块
+    'shapely',
+    'shapely.geometry',
+    'shapely.affinity',
+    'shapely.ops',
+    'shapely.validation',
+    'rasterio', 'rasterio.transform', 'rasterio.features',
     # 数值计算
     'numba', 'llvmlite',
     'umap', 'umap.umap_',
