@@ -83,7 +83,6 @@ REAL_SUBMODULES = {
     'studio':  'histox.studio',
     'util':    'histox.util',
     # ── 新增 io 系列 ──────────────────────────
-    'io':                         'histox.io',
     'io.torch':                   'histox.io.torch',
     'io.tensorflow':              'histox.io.tensorflow',
     'io.preservedsite':           'histox.io.preservedsite',
