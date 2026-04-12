@@ -59,6 +59,7 @@ MOCK_MODULES = [
     'mil', 'model',
     'norm', 'util', 'studio',
     'simclr', 'slide',
+    'io.torch', 'io.tensorflow', 'io.preservedsite', 'io.io_utils',
 ]
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = MagicMock()
@@ -81,6 +82,12 @@ REAL_SUBMODULES = {
     'slide':   'histox.slide',
     'studio':  'histox.studio',
     'util':    'histox.util',
+    # ── 新增 io 系列 ──────────────────────────
+    'io':                         'histox.io',
+    'io.torch':                   'histox.io.torch',
+    'io.tensorflow':              'histox.io.tensorflow',
+    'io.preservedsite':           'histox.io.preservedsite',
+    'io.io_utils':                'histox.io.io_utils',
 }
 for alias, full in REAL_SUBMODULES.items():
     try:
