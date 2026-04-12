@@ -11,8 +11,14 @@ interleaving is supervised by :func:`histox.io.torch.interleave`, while the
 
 .. automodule:: histox.io.torch
     :members:
-    :exclude-members: StyleGAN2Interleaver, TileLabelInterleaver, InterleaveIterator, IndexedInterleaver
+    :exclude-members: StyleGAN2Interleaver, TileLabelInterleaver
 
-.. autoclass:: io.torch.InterleaveIterator
+.. autoclass:: histox.io.torch.InterleaveIterator
+    :members:
+    :show-inheritance:
+    :special-members: __init__
 
-.. autoclass:: io.torch.IndexedInterleaver
+.. autoclass:: histox.io.torch.IndexedInterleaver
+    :members:
+    :show-inheritance:
+    :special-members: __init__
