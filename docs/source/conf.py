@@ -1,12 +1,12 @@
 import io as _builtin_io   # ← 提前保护内置 io 模块，防止与 histox.io 冲突
 import os, sys
+import importlib
 import importlib.machinery
 from unittest.mock import MagicMock
 
 sys.path.insert(0, os.path.abspath('../..'))
 
 # ── autodoc_mock_imports：Sphinx 官方机制，专为 autodoc 设计 ──────────
-# 所有有 C 扩展 / 重依赖的库都放这里，autodoc import 时自动走 mock
 autodoc_mock_imports = [
     # TensorFlow
     'tensorflow',
@@ -54,7 +54,6 @@ autodoc_mock_imports = [
 ]
 
 # ── 手动 mock：RST 文件里用到的短名别名模块 ──────────────────────────
-# 注意：histox 自身的子模块不在这里 mock，全部交给 autodoc 按需处理
 MOCK_MODULES = [
     # biscuit（slideflow-noncommercial）
     'biscuit', 'biscuit.hp', 'biscuit.threshold',
@@ -93,7 +92,6 @@ for mod_name in MOCK_MODULES:
     sys.modules[mod_name].__spec__ = importlib.machinery.ModuleSpec(mod_name, None)
 
 # ── 尝试用真实扩展包覆盖 biscuit/clam 的 mock ────────────────────────
-import importlib
 EXT_SUBMODULES = {
     'biscuit':           'slideflow_noncommercial.biscuit',
     'biscuit.hp':        'slideflow_noncommercial.biscuit.hp',
@@ -119,11 +117,18 @@ release = '0.1.4'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',
+    'sphinx.ext.linkcode',   # ← 直接跳转到 GitHub 源码
     'sphinx.ext.autosummary',
     'myst_parser',
     'sphinxcontrib.video',
 ]
+
+# ── linkcode：点击 [source] 直接跳转到 GitHub 对应文件 ───────────────
+def linkcode_resolve(domain, info):
+    if domain != 'py' or not info['module']:
+        return None
+    filename = info['module'].replace('.', '/')
+    return f"https://github.com/leicaohmu/histox/blob/master/{filename}.py"
 
 html_theme = 'sphinx_rtd_theme'
 html_logo = './_static/logo.png'
