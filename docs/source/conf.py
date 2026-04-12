@@ -4,37 +4,48 @@ from unittest.mock import MagicMock
 
 sys.path.insert(0, os.path.abspath('../..'))
 
-# ── 只 mock 真正没有安装的重量级依赖 ──
 MOCK_MODULES = [
-    # PyTorch (已在 docs/requirements.txt 安装，但需要 mock 防止 find_spec 问题)
     'torch', 'torch.nn', 'torch.nn.functional',
     'torch.utils', 'torch.utils.data',
     'torch.optim', 'torch.cuda', 'torch.distributed',
     'torchvision', 'torchvision.transforms', 'torchvision.models',
-    # TensorFlow (未安装)
     'tensorflow', 'tensorflow.keras',
     'tensorflow.keras.layers', 'tensorflow.keras.models',
     'tensorflow.keras.optimizers',
-    # 图像/WSI (未安装)
     'cv2', 'openslide', 'pyvips',
     'cucim', 'cucim.clara',
-    # GUI (未安装)
     'glfw', 'imgui', 'OpenGL', 'OpenGL.GL',
-    # 地理/图形 ── 注意：shapely 和 rasterio 已安装，不要 mock！
-    # 数值计算 (未安装)
     'numba', 'llvmlite',
     'umap', 'umap.umap_',
-    # 细胞分割 (未安装)
     'cellpose', 'cellpose.models',
+    'pytorch_lightning',
+    'pytorch_lightning.callbacks',
+    'pytorch_lightning.trainer',
+    'pytorch_lightning.core',
+    'pytorch_lightning.core.lightning',
 ]
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = MagicMock()
-
-# ⬇️ 给所有 mock 模块补上合法的 __spec__
 for mod_name in MOCK_MODULES:
-    mock = sys.modules[mod_name]
-    mock.__spec__ = importlib.machinery.ModuleSpec(mod_name, None)
-# ─────────────────────────────────────────────────────
+    sys.modules[mod_name].__spec__ = importlib.machinery.ModuleSpec(mod_name, None)
+
+# ⬇️ 关键修复：把 histox 子模块也注册为顶层别名
+# 这样 RST 里写 `from module 'biscuit'` 也能找到 histox.biscuit
+import histox
+HISTOX_SUBMODULES = [
+    'biscuit', 'cellseg', 'dataset', 'experimental',
+    'gan', 'grad', 'heatmap', 'io', 'mil', 'model',
+    'mosaic', 'norm', 'project', 'segment', 'simclr',
+    'slide', 'stats', 'studio', 'util',
+]
+for sub in HISTOX_SUBMODULES:
+    full = f'histox.{sub}'
+    try:
+        import importlib
+        mod = importlib.import_module(full)
+        sys.modules[sub] = mod          # 注册短名别名
+    except Exception:
+        pass                             # import 失败则跳过，不影响构建
 
 project = 'histox'
 copyright = '2026, histox team'
