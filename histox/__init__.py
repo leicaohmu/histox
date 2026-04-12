@@ -44,3 +44,32 @@ from histox.slide import WSI
 from histox.stats import SlideMap
 from histox.tfrecord import TFRecord, tfrecord_loader, multi_tfrecord_loader
 from histox.plugin import load_plugins
+
+# ── 扩展模块懒加载 ──────────────────────────────────────
+_NONCOMMERCIAL_MODULES = {'biscuit', 'stylegan2', 'stylegan3', 'extractors'}
+_GPL_MODULES = {'clam'}
+
+def __getattr__(name):
+    if name in _NONCOMMERCIAL_MODULES:
+        try:
+            import importlib
+            mod = importlib.import_module(f'slideflow_noncommercial.{name}')  # ✅ 显式导入子模块
+            globals()[name] = mod   # 缓存，下次直接访问不再走 __getattr__
+            return mod
+        except ImportError:
+            raise AttributeError(
+                f"histox.{name} requires the 'slideflow-noncommercial' package.\n"
+                f"Install it with:  pip install slideflow-noncommercial"
+            )
+    if name in _GPL_MODULES:
+        try:
+            import importlib
+            mod = importlib.import_module(f'slideflow_gpl.{name}')           # ✅ 显式导入子模块
+            globals()[name] = mod   # 缓存
+            return mod
+        except ImportError:
+            raise AttributeError(
+                f"histox.{name} requires the 'slideflow-gpl' package.\n"
+                f"Install it with:  pip install slideflow-gpl"
+            )
+    raise AttributeError(f"module 'histox' has no attribute {name!r}")

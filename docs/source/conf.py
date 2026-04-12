@@ -31,16 +31,29 @@ MOCK_MODULES = [
     'pytorch_lightning.trainer',
     'pytorch_lightning.core',
     'pytorch_lightning.core.lightning',
-    # biscuit（需要 slideflow-noncommercial，直接 mock）
+    # biscuit（slideflow-noncommercial，先 mock，后面用真实模块覆盖）
     'biscuit', 'biscuit.hp', 'biscuit.threshold',
     'biscuit.utils', 'biscuit.delong',
+    # clam（slideflow-gpl，先 mock，后面用真实模块覆盖）
+    'clam', 'clam.models', 'clam.utils',
+    # slideflow 扩展包本身（未安装时先 mock）
+    'slideflow_noncommercial',
+    'slideflow_noncommercial.biscuit',
+    'slideflow_noncommercial.biscuit.hp',
+    'slideflow_noncommercial.biscuit.threshold',
+    'slideflow_noncommercial.biscuit.utils',
+    'slideflow_noncommercial.biscuit.delong',
+    'slideflow_gpl',
+    'slideflow_gpl.clam',
+    'slideflow_gpl.clam.models',
+    'slideflow_gpl.clam.utils',
     # RST 文件用类名/短名作为模块名，全部 mock
     'Dataset', 'DatasetFeatures',
     'Heatmap', 'Project', 'Mosaic',
     'WSI', 'SlideMap',
     'ModelParams', 'TrainerConfig',
     'MILModelConfig', 'CLAMModelConfig',
-    'clam', 'mil', 'model',
+    'mil', 'model',
     'norm', 'util', 'studio',
     'simclr', 'slide',
 ]
@@ -49,7 +62,7 @@ for mod_name in MOCK_MODULES:
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name].__spec__ = importlib.machinery.ModuleSpec(mod_name, None)
 
-# ── 注册真实 histox 子模块为顶层别名（覆盖上面的 mock）──
+# ── 注册真实 histox 子模块为顶层别名（覆盖上面的 mock）──────────────
 REAL_SUBMODULES = {
     'gan':     'histox.gan',
     'grad':    'histox.grad',
@@ -73,10 +86,28 @@ for alias, full in REAL_SUBMODULES.items():
     except Exception:
         pass   # import 失败保留 mock，不影响构建
 
+# ── 尝试用真实扩展包覆盖 mock（RTD 安装了 slideflow-noncommercial/gpl 时生效）──
+EXT_SUBMODULES = {
+    'biscuit':           'slideflow_noncommercial.biscuit',
+    'biscuit.hp':        'slideflow_noncommercial.biscuit.hp',
+    'biscuit.threshold': 'slideflow_noncommercial.biscuit.threshold',
+    'biscuit.utils':     'slideflow_noncommercial.biscuit.utils',
+    'biscuit.delong':    'slideflow_noncommercial.biscuit.delong',
+    'clam':              'slideflow_gpl.clam',
+    'clam.models':       'slideflow_gpl.clam.models',
+    'clam.utils':        'slideflow_gpl.clam.utils',
+}
+for alias, full in EXT_SUBMODULES.items():
+    try:
+        mod = importlib.import_module(full)
+        sys.modules[alias] = mod
+    except Exception:
+        pass   # 未安装扩展包时保留 mock，不影响构建
+
 project = 'histox'
 copyright = '2026, histox team'
 author = 'histox team'
-release = '0.1.3'
+release = '0.1.4'
 
 extensions = [
     'sphinx.ext.autodoc',

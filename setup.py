@@ -90,5 +90,16 @@ setuptools.setup(
             'cucim',
             'cupy-cuda11x',
         ],
+        # ── 新增 ──────────────────────────
+        'noncommercial': [
+            'slideflow-noncommercial',
+        ],
+        'gpl': [
+            'slideflow-gpl',
+        ],
+        'all': [
+            'slideflow-noncommercial',
+            'slideflow-gpl',
+        ],
     },
 )
