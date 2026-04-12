@@ -1,4 +1,5 @@
 import os, sys
+import importlib
 import importlib.machinery
 from unittest.mock import MagicMock
 
@@ -29,23 +30,27 @@ for mod_name in MOCK_MODULES:
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name].__spec__ = importlib.machinery.ModuleSpec(mod_name, None)
 
-# ⬇️ 关键修复：把 histox 子模块也注册为顶层别名
-# 这样 RST 里写 `from module 'biscuit'` 也能找到 histox.biscuit
-import histox
+# ⬇️ 把 histox 子模块注册为顶层别名
+# ⚠️ 必须排除与 Python 标准库同名的模块！
+STDLIB_NAMES = {
+    'io', 'os', 'sys', 'test', 'stat', 'util',
+    'model', 'segment', 'stats', 'norm',
+}
 HISTOX_SUBMODULES = [
     'biscuit', 'cellseg', 'dataset', 'experimental',
-    'gan', 'grad', 'heatmap', 'io', 'mil', 'model',
-    'mosaic', 'norm', 'project', 'segment', 'simclr',
-    'slide', 'stats', 'studio', 'util',
+    'gan', 'grad', 'heatmap', 'mil',
+    'mosaic', 'project', 'simclr',
+    'slide', 'studio',
 ]
 for sub in HISTOX_SUBMODULES:
+    if sub in STDLIB_NAMES:
+        continue                         # 跳过与标准库冲突的名字
     full = f'histox.{sub}'
     try:
-        import importlib
         mod = importlib.import_module(full)
-        sys.modules[sub] = mod          # 注册短名别名
+        sys.modules[sub] = mod
     except Exception:
-        pass                             # import 失败则跳过，不影响构建
+        pass
 
 project = 'histox'
 copyright = '2026, histox team'
