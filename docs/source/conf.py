@@ -127,10 +127,16 @@ extensions = [
 def linkcode_resolve(domain, info):
     if domain != 'py' or not info['module']:
         return None
-    filename = info['module'].replace('.', '/')
-    return f"https://github.com/leicaohmu/histox/blob/master/{filename}.py"
-
-html_theme = 'sphinx_rtd_theme'
-html_logo = './_static/logo.png'
-html_static_path = ['_static']
-html_css_files = ['custom.css']
+    module = info['module']
+    filename = module.replace('.', '/')
+    # 如果是包目录，指向 __init__.py
+    import importlib, inspect
+    try:
+        mod = importlib.import_module(module)
+        if hasattr(mod, '__file__') and mod.__file__ and mod.__file__.endswith('__init__.py'):
+            filename = filename + '/__init__.py'
+        else:
+            filename = filename + '.py'
+    except Exception:
+        filename = filename + '.py'
+    return f"https://github.com/leicaohmu/histox/blob/master/{filename}"
