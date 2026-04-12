@@ -1,12 +1,10 @@
 import torch
-import torchvision
 import numpy as np
 from histox.io import convert_dtype
 from typing import Any, Optional, Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from histox.norm import StainNormalizer
-    from torchvision.transforms import InterpolationMode
 
 # -----------------------------------------------------------------------------
 
@@ -99,6 +97,7 @@ def preprocess_uint8(
     """
     if resize_px is not None:
         if resize_method is None:
+            import torchvision
             resize_method = torchvision.transforms.InterpolationMode.BICUBIC
         img = torchvision.transforms.functional.resize(
             img,
@@ -138,6 +137,7 @@ def decode_image(
     """
     if img_type != 'numpy':
         np_data = torch.from_numpy(np.fromstring(image, dtype=np.uint8))
+        import torchvision
         image = cwh_to_whc(torchvision.io.decode_image(np_data))
         # Alternative method using PIL decoding:
         # image = np.array(Image.open(BytesIO(img_string)))
