@@ -310,6 +310,7 @@ class MultiprocessProgress:
 def about(console=None) -> None:
     """Print a summary of the histox version and active backends.
 
+    ```
     Example
         >>> hx.about()
         ╭=======================╮
@@ -319,6 +320,7 @@ def about(console=None) -> None:
         │ Slide Backend: cucim  │
         │ https://histox.dev │
         ╰=======================╯
+    ```
 
     Args:
         console (rich.console.Console, optional): Active console, if one exists.

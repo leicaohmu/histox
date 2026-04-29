@@ -5,9 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="histox",
-    use_scm_version=True,
-    setup_requires=["setuptools-scm"],
-    cmdclass={},
+    version="0.2.0",
     author="Lei Cao",
     author_email="caolei@hrbmu.edu.cn",
     description="Deep learning tools for digital histology",
@@ -90,7 +88,6 @@ setuptools.setup(
             'cucim',
             'cupy-cuda11x',
         ],
-        # ── 新增 ──────────────────────────
         'noncommercial': [
             'slideflow-noncommercial',
         ],
