@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="histox",
-    version="0.2.0",
+    version="0.2.1",
     author="Lei Cao",
     author_email="caolei@hrbmu.edu.cn",
     description="Deep learning tools for digital histology",
