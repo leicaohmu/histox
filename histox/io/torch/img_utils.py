@@ -2,6 +2,7 @@ import torch
 import numpy as np
 from histox.io import convert_dtype
 from typing import Any, Optional, Union, TYPE_CHECKING
+from torchvision.transforms import InterpolationMode
 
 if TYPE_CHECKING:
     from histox.norm import StainNormalizer
@@ -74,7 +75,7 @@ def preprocess_uint8(
     normalizer: Optional["StainNormalizer"] = None,
     standardize: bool = True,
     resize_px: Optional[int] = None,
-    resize_method: Optional["InterpolationMode"] = None,
+    resize_method: Optional[InterpolationMode] = None,
     resize_aa: bool = True,
 ) -> torch.Tensor:
     """Process batch of tensorflow images, resizing, normalizing,
