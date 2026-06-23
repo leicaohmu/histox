@@ -3,7 +3,7 @@
 _tf_extractors = dict()
 _torch_extractors = dict()
 _known_extras_packages = {
-     'histox-gpl': ['retccl', 'ctranspath'],
+     'histox-contrib': ['retccl', 'ctranspath'],
      'histox-noncommercial': ['gigapath', 'gigapath.tile', 'gigapath.slide', 'histossl', 'plip']
 }
 _extras_extractors = {
@@ -18,7 +18,36 @@ __all__ = ['list_extractors', 'list_tensorflow_extractors', 'list_torch_extracto
 # -----------------------------------------------------------------------------
 
 def list_extractors():
-    """Return a list of all available feature extractors."""
+    """Return a list of all available feature extractors.
+
+    Scans both the Tensorflow and PyTorch extractor registries and returns
+    a deduplicated list of all registered extractor names.
+
+    Extractors are registered automatically via the ``@register_tf`` and
+    ``@register_torch`` decorators when the corresponding backend module
+    (``histox.model.tensorflow`` or ``histox.model.torch``) is imported.
+    Therefore, the returned list reflects only the extractors available
+    under the **currently active backend**.
+
+    Returns:
+        extractor_lists: list[str], a deduplicated list of extractor names. Note that the
+            order of the returned list is not guaranteed.
+
+    See Also:
+        - `list_tensorflow_extractors`: List only Tensorflow extractors.
+        - `list_torch_extractors`: List only PyTorch extractors.
+        - `build_feature_extractor`: Build an extractor by name.
+
+    Examples:
+        ```python
+        import histox as hx
+
+        # List all available extractors
+        extractors = hx.model.list_extractors()
+        print(extractors)
+        # ['vgg19_imagenet', 'resnet101_v2_imagenet', 'virchow', ...]
+        ```
+    """
     return list(set(list(_tf_extractors.keys()) + list(_torch_extractors.keys())))
 
 def list_tensorflow_extractors():

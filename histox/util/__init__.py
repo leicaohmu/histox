@@ -305,51 +305,96 @@ class MultiprocessProgress:
         self._thread.join()
 
 
-# --- Slideflow header --------------------------------------------------------
-
+# --- HistoX header --------------------------------------------------------
 def about(console=None) -> None:
     """Print a summary of the histox version and active backends.
 
-    ```
-    Example
-        >>> hx.about()
-        ╭=======================╮
-        │       Slideflow       │
-        │    Version: 3.0.1     │
-        │  Backend: torch       │
-        │ Slide Backend: cucim  │
-        │ https://histox.dev │
-        ╰=======================╯
-    ```
+    Display a styled panel in the terminal containing the HistoX ASCII logo,
+    current version, deep learning backend, slide reading backend, documentation
+    link, and Github repository link.
 
-    Args:
-        console (rich.console.Console, optional): Active console, if one exists.
-            Defaults to None.
+    Parameters
+    ----------
+    console : rich.console.Console, optional
+        An existing Rich Console instance to print to.
+        If ``None``, a new Console will be created. Defaults to ``None``.
+
+    Examples
+    --------
+    >>> import histox as hx
+    >>> hx.about()
+        ╭─────────────────────────────────────────────────────╮
+        │                                                     │
+        │       _   _ _     _        __  __                   │
+        │      | | | (_)___| |_ ___ \ \/ /                    │
+        │      | |_| | / __| __/ _ \ \  /                     │
+        │      |  _  | \__ \ || (_) |/  \                     │
+        │      |_| |_|_|___/\__\___//_/\_\                    │
+        │                                                     │
+        │    🔬 Version  0.2.0                                │
+        │    🔧 Backend  torch                                │
+        │    🎨 Slide    cucim                                │
+        │    🌐 Docs     lei-lab-site.pages.dev/api           │
+        |    🐙 Github   https://github.com/leicaohmu/histox  |
+        │                                                     │
+        ╰─────────── Computational Pathology Toolkit ─────────╯
     """
+    from rich.console import Console
+    from rich.panel import Panel
+    from rich.text import Text
+
     if console is None:
         console = Console()
-    col1 = 'yellow' if hx.backend() == 'tensorflow' else 'purple'
+
+    # ── Backend / Slide colors ──────────────────────────────
+    col1 = 'yellow' if hx.backend() == 'tensorflow' else '#FF4500'
     if hx.slide_backend() == 'libvips':
         try:
             import pyvips
-            _version = '{}.{}.{}'.format(
-                pyvips.major, pyvips.minor, pyvips.micro
-            )
+            _version = '{}.{}.{}'.format(pyvips.major, pyvips.minor, pyvips.micro)
         except Exception:
             _version = 'unknown'
-        col2 = 'cyan'
-        slide_backend = 'libvips ({})'.format(_version)
+        col2, slide_backend = 'cyan', 'libvips ({})'.format(_version)
     else:
-        slide_backend = hx.slide_backend()
-        col2 = 'green'
+        col2, slide_backend = 'green', hx.slide_backend()
+
+    # ── LOGO ────────────────────────────────────────────────
+    LOGO_LINES = [
+        " _   _ _     _        __  __ ",
+        "| | | (_)___| |_ ___ \\ \\/ / ",
+        "| |_| | / __| __/ _ \\ \\  /  ",
+        "|  _  | \\__ \\ || (_) |/  \\  ",
+        "|_| |_|_|___/\\__\\___//_/\\_\\ ",
+    ]
+    LOGO_W = 29
+    INFO_W = 50
+    PAD    = (INFO_W - LOGO_W) // 2   # = 5
+
+    output = Text()
+    for line in LOGO_LINES:
+        output.append(" " * PAD + line + "\n", style="#A00000 bold")
+    output.append("\n")
+    output.append("  🔬 Version  ", style="bold dim")
+    output.append(f"{hx.__version__}\n", style="white")
+    output.append("  🔧 Backend  ", style="bold dim")
+    output.append(f"{hx.backend()}\n", style=f"{col1} bold")
+    output.append("  🎨 Slide    ", style="bold dim")
+    output.append(f"{slide_backend}\n", style=f"{col2} bold")
+    output.append("  🌐 Docs     ", style="bold dim")
+    output.append("lei-lab-site.pages.dev/api\n", style="blue underline")
+    output.append("  🐙 GitHub   ", style="bold dim")
+    output.append("https://github.com/leicaohmu/histox", style="blue underline")
+
     console.print(
-        Panel(f"[white bold]Slideflow[/]"
-              f"\nVersion: {hx.__version__}"
-              f"\nBackend: [{col1}]{hx.backend()}[/]"
-              f"\nSlide Backend: [{col2}]{slide_backend}[/]"
-              "\n[blue]https://histox.dev[/]",
-              border_style='purple'),
-        justify='left')
+        Panel(
+            output,
+            border_style="#8B0000",
+            subtitle="[#8B0000 italic]Computational Pathology Toolkit[/]",
+            padding=(1, 2),
+            expand=False,
+        ),
+        justify="left",
+    )
 
 
 # --- Data download functions -------------------------------------------------
@@ -572,14 +617,132 @@ def is_slide(path: str) -> bool:
 
 
 def is_tensorflow_model_path(path: str) -> bool:
-    """Checks if the given path is a valid Slideflow/Tensorflow model."""
+    """Check if the given path points to a valid Histox/TensorFlow model.
+
+    A valid Histox TensorFlow model is identified by the following criteria:
+
+    1. The path points to an existing directory (TensorFlow saves models
+       in the SavedModel directory format via ``tf.keras.Model.save()``).
+    2. A ``params.json`` file exists either inside the directory itself
+       or in its parent directory, which stores the training
+       hyperparameters required to reconstruct the model architecture
+       before loading weights.
+
+    Parameters
+    ----------
+    path : str
+        Path to the directory to be checked.
+
+    Returns
+    -------
+    bool
+        ``True`` if the path points to a valid Histox/TensorFlow model,
+        ``False`` otherwise.
+
+    Notes
+    -----
+    Histox loads TensorFlow models in two steps, as implemented in
+    [`histox.model.load`][]:
+
+    1. **Reconstruct architecture**: ``params.json`` is read via
+       [`histox.util.get_model_config`][] to retrieve the saved
+       hyperparameters, which are then passed to
+       ``ModelParams.from_dict()`` and ``ModelParams.build_model()``
+       to rebuild the model structure.
+    2. **Load weights**: weights are loaded from
+       ``<path>/variables/variables`` via
+       ``tf.keras.Model.load_weights()``.
+
+    Both files must therefore be present for a model to be considered
+    valid. This check is performed before calling
+    [`histox.model.Features`][] or [`histox.model.load`][].
+
+    Unlike [`histox.util.is_torch_model_path`][], ``params.json`` is
+    accepted in either of two locations, accommodating both the flat
+    layout (before training completes) and the nested layout (after
+    ``params.json`` is copied into the model directory at the end of
+    each epoch by the training callback)::
+
+        outdir/                          # params.json written here at
+        │                                # training start (flat layout)
+        ├── params.json
+        └── <model_name>_epoch<N>/       # SavedModel directory
+            ├── variables/
+            │   └── variables            # Model weights
+            └── params.json              # Copied here at epoch end
+                                         # (nested layout)
+
+    Examples
+    --------
+    >>> is_tensorflow_model_path('/models/lung_model_epoch10')
+    True
+
+    >>> is_tensorflow_model_path('/models/lung_model_epoch10.zip')
+    False
+
+    >>> is_tensorflow_model_path('/models/not_a_model')
+    False
+    """
     return (isdir(path)
             and (exists(join(path, 'params.json'))
                  or exists(join(dirname(path), 'params.json'))))
 
 
 def is_torch_model_path(path: str) -> bool:
-    """Checks if the given path is a valid Slideflow/PyTorch model."""
+    """Check if the given path points to a valid Histox/PyTorch model.
+
+    A valid Histox PyTorch model is identified by the following criteria:
+
+    1. The path points to an existing file.
+    2. The file has a ``.zip`` extension (PyTorch saves model weights in
+       ZIP format via ``torch.save()``).
+    3. A ``params.json`` file exists in the same directory as the model
+       file, which stores the training hyperparameters required to
+       reconstruct the model architecture before loading weights.
+
+    Parameters
+    ----------
+    path : str
+        Path to the file to be checked.
+
+    Returns
+    -------
+    bool
+        ``True`` if the path points to a valid Histox/PyTorch model,
+        ``False`` otherwise.
+
+    Notes
+    -----
+    Histox loads PyTorch models in two steps:
+
+    1. **Reconstruct architecture**: ``params.json`` is read via
+       [`histox.util.get_model_config`][] to retrieve the saved
+       hyperparameters, which are then used to rebuild the model
+       structure via [`histox.ModelParams.build_model`][].
+    2. **Load weights**: the state dictionary is loaded from the
+       ``.zip`` file via ``torch.nn.Module.load_state_dict()``.
+
+    Both files must therefore be present for a model to be considered
+    valid. This check is performed before calling
+    [`histox.model.Features`][] or [`histox.model.load`][].
+
+    The minimum required directory structure of a saved Histox model is::
+
+        outdir/
+        ├── <model_name>_epoch<N>.zip   # Model weights saved by torch.save()
+        └── params.json                 # Training config and hyperparameters
+
+    Examples
+    --------
+    >>> is_torch_model_path('/models/lung_model_epoch10.zip')
+    True
+
+    >>> is_torch_model_path('/models/lung_model_epoch10.pt')
+    False
+
+    >>> is_torch_model_path('/models/not_a_model.zip')
+    False
+    """
     return (os.path.isfile(path)
             and hx.util.path_to_ext(path).lower() == 'zip'
             and exists(join(dirname(path), 'params.json')))

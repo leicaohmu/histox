@@ -27,9 +27,65 @@ def cycle(iterable: Iterable) -> Generator:
 
 def get_module_by_name(module: Union[torch.Tensor, torch.nn.Module],
                        access_string: str):
-    """Retrieve a module nested in another by its access string.
-
+    """
+    Retrieve a nested module from a parent module using a dot-separated path.
     Works even when there is a Sequential in the module.
+
+    This function performs a deep lookup in the model's attribute tree by
+    recursively applying `getattr`. It is particularly useful for extracting
+    intermediate layers during feature extraction.
+
+    Parameters
+    -----------
+    module : torch.nn.Module or torch.Tensor
+        The root object (typically a PyTorch model) to traverse.
+    access_string : str
+        A dot-separated string representing the path to the target
+        sub-module. Each segment corresponds to a name or index seen
+        when printing the model.
+
+    Returns
+    --------
+    target : torch.nn.Module
+        The sub-module located at the specified path.
+    
+    Raises
+    -------
+    AttributeError
+        If `access_string` is empty, ``None``, or contains a path segment
+        that does not exist in the module hierarchy.
+    
+    Examples
+    ---------
+    >>> import torch.nn as nn
+    >>> from histox.model.torch_utils import get_module_by_name
+    >>> # 1. Define a nested model and inspect its structure
+    >>> model = nn.ModuleDict({
+    ...     'backbone': nn.Sequential(
+    ...        nn.Conv2d(3, 64, 3),
+    ...        nn.ReLU()
+    ...        )
+    ...     ),
+    ...     'fc': nn.Linear(64, 10)
+    ... })
+    >>> print(model)
+    ModuleDict(
+      (backbone): Sequential(
+        (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1))
+        (1): Sequential(
+          (0): ReLU()
+        )
+      )
+      (fc): Linear(in_features=64, out_features=10, bias=True)
+    )
+
+    >>> # 2. Access modules based on the printed structure
+    >>> get_module_by_name(model, "fc")
+    Linear(in_features=64, out_features=10, bias=True)
+    >>> get_module_by_name(model, "backbone.0")
+    Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1))
+    >>> get_module_by_name(model, "backbone.1.0")
+    ReLU()
     """
     names = access_string.split(sep='.')
     return reduce(getattr, names, module)

@@ -64,12 +64,12 @@ def __getattr__(name):
     if name in _GPL_MODULES:
         try:
             import importlib
-            mod = importlib.import_module(f'slideflow_gpl.{name}')           # ✅ 显式导入子模块
+            mod = importlib.import_module(f'histox_contrib.{name}')           # ✅ 显式导入子模块
             globals()[name] = mod   # 缓存
             return mod
         except ImportError:
             raise AttributeError(
-                f"histox.{name} requires the 'slideflow-gpl' package.\n"
-                f"Install it with:  pip install slideflow-gpl"
+                f"histox.{name} requires the 'histox-contrib' package.\n"
+                f"Install it with:  pip install histox-contrib"
             )
     raise AttributeError(f"module 'histox' has no attribute {name!r}")

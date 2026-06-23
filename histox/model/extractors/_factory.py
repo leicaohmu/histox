@@ -26,100 +26,207 @@ def build_feature_extractor(
 
     The returned feature extractor is a callable object, which returns
     features (often layer activations) for either a batch of images or a
-    :class:`histox.WSI` object.
+    ``histox.WSI`` object.
 
     If generating features for a batch of images, images are expected to be in
-    (B, W, H, C) format and non-standardized (scaled 0-255) with dtype uint8.
-    The feature extractors perform all needed preprocessing on the fly.
+    ``(B, W, H, C)`` format, non-standardized (scaled 0-255), with dtype
+    ``uint8``. The feature extractor performs all needed preprocessing
+    (normalization, resizing, channel reordering) on the fly.
 
     If generating features for a slide, the slide is expected to be a
-    :class:`histox.WSI` object. The feature extractor will generate features
-    for each tile in the slide, returning a numpy array of shape (W, H, F),
-    where F is the number of features.
+    ``histox.WSI`` object. The feature extractor will generate features
+    for each tile in the slide, returning a numpy array of shape ``(W, H, F)``,
+    where ``F`` is the number of features.
 
-    Args:
-        name (str): Name of the feature extractor to build. Available
-            feature extractors are listed with
-            :func:`histox.model.list_extractors()`.
+    Parameters
+    ----------
+    name : str
+        Name of the feature extractor to build, or a path to a saved
+        histox model (Tensorflow or PyTorch). When a model path is
+        provided, a ``Features`` (or ``UncertaintyInterface`` if UQ is
+        enabled) object is returned directly from the saved model.
+        Available named extractors can be listed with [`histox.model.list_extractors`][].
+    backend : str, optional
+        Deep learning backend to use, one of ``{'tensorflow', 'torch'}``.
+        If ``None``, the backend is selected automatically based on the
+        ``name`` argument (see Notes). Defaults to ``None``.
+    **kwargs : Any
+        Additional keyword arguments passed to the feature extractor factory
+        function. Common options include:
 
-    Keyword arguments:
-        tile_px (int): Tile size (input image size), in pixels.
-        **kwargs (Any): All remaining keyword arguments are passed
-            to the feature extractor factory function, and may be different
-            for each extractor.
+        - **tile_px** (*int*) - Tile size (input image size), in pixels.
+          Required for ImageNet-pretrained models (e.g. ``resnet50_imagenet``).
+        - **layers** (*str or list of str*) - Layer name(s) at which to
+          intercept activations during the forward pass. A ``forward hook``
+          is registered on each specified layer; activations are captured
+          automatically at inference time and returned as the feature output.
+          The special value ``'postconv'`` registers a hook on the
+          post-convolutional layer, which is predefined for each supported
+          architecture (e.g. ``avgpool`` for ResNet, outputting a feature
+          vector of shape ``(B, 2048)`` for ResNet50). Any other string is
+          resolved by name against the model's module tree via
+          [`histox.model.torch_utils.get_module_by_name`][]; use
+          ``print(extractor.ftrs._model)`` to inspect available layer names.
+          When multiple layers are specified as a list, their outputs are
+          concatenated along the feature dimension, and ``num_features``
+          equals the sum of all individual layer output sizes.
+          Defaults to ``'postconv'``.
 
-    Returns:
-        A callable object which accepts a batch of images (B, W, H, C) of dtype
-        uint8 and returns a batch of features (dtype float32).
+        - **include_preds** (*bool*) - Whether to append model predictions
+          (final logits) to the output features. Defaults to ``False``.
+        - **mixed_precision** (*bool*) - Use FP16 mixed precision.
+          Defaults to ``True``.
+        - **pooling** (*str or Callable*) - Pooling applied to intermediate
+          feature maps before flattening. May be ``'avg'``
+          (adaptive average pooling), ``'max'`` (adaptive max pooling),
+          or a custom callable that accepts and returns a ``Tensor``.
+          Only applied to layers whose output has 4 dimensions ``(B, C, H, W)``.
+          Has no effect on ``'postconv'``, which uses its own pooling logic.
+          Defaults to ``None`` (no pooling).
+
+        The following preprocessing transform arguments are also accepted
+        for PyTorch ImageNet-pretrained extractors:
+
+        - **center_crop** (*int or bool*) - If an integer, center-crop
+          images to this size before inference. If ``True``, crop to
+          ``tile_px``. Defaults to ``None`` (no cropping).
+        - **resize** (*int or bool*) - If an integer, resize images to
+          this size before inference. If ``True``, resize to ``tile_px``.
+          Defaults to ``None`` (no resizing).
+        - **interpolation** (*str*) - Interpolation mode used when resizing.
+          One of ``'bilinear'``, ``'bicubic'``, ``'nearest'``,
+          ``'nearest_exact'``. Defaults to ``'bilinear'``.
+        - **antialias** (*bool*) - Apply antialiasing filter when resizing.
+          Defaults to ``False``.
+        - **norm_mean** (*tuple of float*) - Per-channel normalization mean
+          applied after scaling to ``[0, 1]``.
+          Defaults to ``(0.485, 0.456, 0.406)`` (ImageNet mean).
+        - **norm_std** (*tuple of float*) - Per-channel normalization std
+          applied after scaling to ``[0, 1]``.
+          Defaults to ``(0.229, 0.224, 0.225)`` (ImageNet std).
+
+    Returns
+    -------
+    BaseFeatureExtractor
+        A callable object which accepts either:
+
+        - A batch of images of shape ``(B, W, H, C)``, dtype ``uint8``,
+          and returns features of shape ``(B, F)``, dtype ``float32``.
+        - A ``histox.WSI`` object, and returns a spatially-mapped feature
+          array of shape ``(W, H, F)``, dtype ``float32``.
+
+    Raises
+    ------
+    ValueError
+        If ``backend`` is not one of ``{'tensorflow', 'torch'}``.
+    InvalidFeatureExtractor
+        If ``name`` is not a recognized feature extractor for the
+        specified or active backend. If the extractor requires an optional
+        package that is not installed, the error message will indicate
+        the package name and the install command.
+
+    Notes
+    -----
+    The ``name`` parameter supports two modes:
+
+    **1. Registered extractor name** (e.g. ``'resnet50_imagenet'``,
+    ``'ctranspath'``):
+    histox maintains an internal registry mapping extractor names to
+    their implementations, which may exist in one or both backends
+    (``'torch'`` and ``'tensorflow'``). When ``name`` is a registered
+    extractor name, the backend is resolved in the following order:
+
+    - Step 1: Use the manually specified ``backend`` argument, if provided.
+    - Step 2: If ``backend=None`` and ``name`` is only available in one
+      backend, that backend is used automatically.
+    - Step 3: If ``backend=None`` and ``name`` is available in both backends,
+      the currently active backend (``histox.backend()``) is used,
+      and a notice is logged.
+
+    For ImageNet-pretrained models, the ``_imagenet`` suffix in ``name``
+    may be omitted; e.g. ``'resnet50'`` is automatically resolved to
+    ``'resnet50_imagenet'``.
+
+    The models ``'xception_imagenet'`` and ``'nasnet_large_imagenet'``
+    use a different normalization strategy (mean and std of
+    ``[0.5, 0.5, 0.5]``) compared to the standard ImageNet normalization
+    used by other models. Custom ``norm_mean`` / ``norm_std`` kwargs are
+    ignored for these two models.
+
+    **2. Model path** (e.g. ``'/path/to/saved/model'``):
+    When ``name`` is a path to a saved histox model, a ``Features``
+    object (or ``UncertaintyInterface`` if UQ is enabled) is returned
+    directly, bypassing the extractor registry and backend resolution
+    entirely. The backend is inferred automatically from the saved
+    model format.
+
+    For PyTorch ImageNet-pretrained models, the underlying ``nn.Module``
+    is accessible via ``extractor.ftrs._model.model`` after construction.
+    To inspect available layer names for use with the ``layers`` argument,
+    print the model wrapper::
+
+        print(extractor.ftrs._model)
+
 
     Examples
-        Create an extractor that calculates post-convolutional layer activations
-        from an imagenet-pretrained Resnet50 model.
+    --------
+    Create an extractor using an ImageNet-pretrained ResNet50, extracting
+    from the default post-convolutional layer (``avgpool``, 2048-dim):
 
-            .. code-block:: python
+    >>> import histox as hx
+    >>> extractor = hx.build_feature_extractor(
+    ...     'resnet50_imagenet',
+    ...     tile_px=224
+    ... )
+    >>> extractor.num_features  # 2048
 
-                import histox as hx
+    Equivalently, specify ``'postconv'`` explicitly:
 
-                extractor = hx.build_feature_extractor(
-                    'resnet50_imagenet'
-                )
+    >>> extractor = hx.build_feature_extractor(
+    ...     'resnet50_imagenet',
+    ...     tile_px=224,
+    ...     layers='postconv'
+    ... )
 
-        Create an extractor that calculates 'conv4_block4_2_relu' activations
-        from an imagenet-pretrained Resnet50 model.
+    Extract activations from a specific intermediate layer by name
+    (use ``print(extractor.ftrs._model)`` to inspect available layer names):
 
-            .. code-block:: python
+    >>> extractor = hx.build_feature_extractor(
+    ...     'resnet50_imagenet',
+    ...     tile_px=224,
+    ...     layers='model.layer3'
+    ... )
+    >>> extractor.num_features  # 1024
 
-                extractor = hx.build_feature_extractor(
-                    'resnet50_imagenet',
-                    layers='conv4_block4_2_relu
-                )
+    Concatenate activations from multiple layers:
 
-        Create a pretrained "CTransPath" extractor.
+    >>> extractor = hx.build_feature_extractor(
+    ...     'resnet50_imagenet',
+    ...     tile_px=224,
+    ...     layers=['model.layer3', 'model.layer4']
+    ... )
+    >>> extractor.num_features  # 1024 + 2048 = 3072
 
-            .. code-block:: python
+    Create a pretrained CTransPath extractor:
 
-                extractor = hx.build_feature_extractor('ctranspath')
+    >>> extractor = hx.build_feature_extractor('ctranspath')
 
-        Use an extractor to calculate layer activations for an entire dataset.
+    Load a feature extractor from a saved finetuned model:
 
-            .. code-block:: python
+    >>> extractor = hx.build_feature_extractor('/path/to/saved/model')
 
-                import histox as hx
+    Calculate features for an entire dataset:
 
-                # Load a project and dataset
-                P = hx.load_project(...)
-                dataset = P.dataset(...)
+    >>> P = hx.load_project('/path/to/project')
+    >>> dataset = P.dataset(tile_px=224, tile_um=302)
+    >>> resnet = hx.build_feature_extractor('resnet50_imagenet', tile_px=224)
+    >>> features = hx.DatasetFeatures(resnet, dataset=dataset)
 
-                # Create a feature extractor
-                resnet = hx.build_feature_extractor(
-                    'resnet50_imagenet'
-                )
+    Generate a map of features across a whole-slide image:
 
-                # Calculate features for the entire dataset
-                features = hx.DatasetFeatures(
-                    resnet,
-                    dataset=dataset
-                )
-
-        Generate a map of features across a slide.
-
-            .. code-block:: python
-
-                import histox as hx
-
-                # Load a slide
-                wsi = hx.WSI(...)
-
-                # Create a feature extractor
-                retccl = hx.build_feature_extractor(
-                    'retccl',
-                    resize=True
-                )
-
-                # Create a feature map, a 2D array of shape
-                # (W, H, F), where F is the number of features.
-                features = retccl(wsi)
-
+    >>> wsi = hx.WSI('/path/to/slide.svs', tile_px=224, tile_um=302)
+    >>> retccl = hx.build_feature_extractor('retccl', resize=True)
+    >>> features = retccl(wsi)  # shape: (W, H, F)
     """
     # Build feature extractor according to manually specified backend
     if backend is not None and backend not in ('tensorflow', 'torch'):
