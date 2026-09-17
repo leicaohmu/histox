@@ -1,4 +1,7 @@
-"""MIL models from https://github.com/peng-lab/HistoBistro/"""
+"""Transformer MIL components adapted from HistoBistro (MIT).
+
+See THIRD_PARTY_NOTICES.md for pinned source revisions and license texts.
+"""
 
 import torch
 import torch.nn as nn
@@ -11,7 +14,9 @@ from histox.model.torch_utils import get_device
 # -----------------------------------------------------------------------------
 
 def _compute_rollout(all_layer_matrices, start_layer=0):
-    # adding residual consideration- code adapted from https://github.com/samiraabnar/attention_flow
+    # PyTorch rollout implementation adapted from Transformer-Explainability
+    # (MIT); the algorithm follows Abnar and Zuidema's attention rollout/flow.
+    # https://github.com/hila-chefer/Transformer-Explainability/commit/38071a7a0ae7836d0f2e6abc9ed47bf96ac149cd
     num_tokens = all_layer_matrices[0].shape[1]
     batch_size = all_layer_matrices[0].shape[0]
     eye = torch.eye(num_tokens).expand(batch_size, num_tokens, num_tokens).to(all_layer_matrices[0].device)

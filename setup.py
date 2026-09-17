@@ -12,6 +12,11 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/leicaohmu/histox",
+    license_files=[
+        'LICENSE',
+        'THIRD_PARTY_NOTICES.md',
+        'licenses/*.txt',
+    ],
     packages=setuptools.find_packages(),
     scripts=['scripts/histox-studio'],
     classifiers=[

@@ -1,6 +1,6 @@
-"""
-From https://github.com/wanghao14/Stain_Normalization
-Uses the spams package:
+"""Shared stain-normalization and color-conversion utilities.
+
+Some stain utilities use the spams package:
 
 http://spams-devel.gforge.inria.fr/index.html
 
@@ -169,7 +169,11 @@ xyz_to_rgb_kernels = {
     ) for dtype in ('float16', 'float32', 'float64')
 }
 
-######################################
+# The stain utility block below, through ``get_concentrations``, is adapted
+# from StainTools by Peter Byfield (MIT), with lineage through the
+# wanghao14/Stain_Normalization fork. See THIRD_PARTY_NOTICES.md.
+# Licensed source revision:
+# https://github.com/Peter554/StainTools/commit/54e97bbdce9d3a25289c96e5b732294d8ba49b6d
 
 
 def brightness_percentile(I):
