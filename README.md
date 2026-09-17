@@ -379,15 +379,26 @@ Contributions are welcome! Please:
 4. Push to the branch (`git push origin feature/your-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## 📄 License and provenance
 
-This project is licensed under the **Apache License 2.0**. See `LICENSE` file for details.
+HistoX is a modified fork of
+[Slideflow](https://github.com/slideflow/slideflow). The top-level
+[`LICENSE`](LICENSE) records the repository's Apache-2.0 license declaration.
+Some bundled source files and optional integrations remain under their original
+licenses.
 
-> **Note**: This project is built on [Slideflow](https://github.com/slideflow/slideflow). Please refer to the original project's license for additional terms.
+See [`PROVENANCE.md`](PROVENANCE.md) for repository lineage and
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for component-level notices
+and unresolved review items. Model weights, datasets and optional extensions are
+not automatically covered by the repository license; consult each artifact's
+terms before use or redistribution.
+
+Do not publish a new release until the unresolved license-review items in
+`THIRD_PARTY_NOTICES.md` are closed.
 
 ## 🙏 Acknowledgments
 
-- **[Slideflow](https://github.com/slideflow/slideflow)** - The powerful foundation this project is built upon
+- **[Slideflow](https://github.com/slideflow/slideflow)** - Upstream project from which HistoX is derived
 - **[TCGA](https://portal.gdc.cancer.gov/)** - The Cancer Genome Atlas for dataset resources
 - **PyTorch & TensorFlow** - Deep learning frameworks
 
