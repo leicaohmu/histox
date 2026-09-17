@@ -10,7 +10,7 @@ name: Trigger Docs Update
 on:
   push:
     branches:
-      - main
+      - master
   release:
     types: [published]   # 发布新版本到 PyPI 时也触发
 
@@ -25,4 +25,3 @@ jobs:
           repository: leicaohmu/lei-lab-site   # 文档仓库地址
           event-type: pypi-lib-updated
           client-payload: '{"version": "${{ github.ref_name }}"}'
-
