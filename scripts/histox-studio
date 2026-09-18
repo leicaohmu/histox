@@ -21,7 +21,7 @@ __version__ = "3.0.2"
 @click.command()
 @click.argument('slide', metavar='PATH', required=False)
 @click.option('--model', '-m', help='Classifier network for categorical predictions.', metavar='PATH')
-@click.option('--project', '-p', help='Slideflow project.', metavar='PATH')
+@click.option('--project', '-p', help='HistoX project.', metavar='PATH')
 @click.option('--low_memory', '-l', is_flag=True, help='Low memory mode.', metavar=bool)
 @click.option('--stylegan', '-g', is_flag=True, help='Enable StyleGAN support (requires PyTorch).', metavar=bool)
 @click.option('--picam', '-pc', is_flag=True, help='Enable Picamera2 view (experimental).', metavar=bool)
@@ -92,13 +92,13 @@ def import_with_splash():
 
     _imported = False
 
-    def _import_sildeflow():
+    def _import_histox():
         nonlocal _imported
         import histox.studio
         _imported = True
 
     # Start the import thread
-    _thread = threading.Thread(target=_import_sildeflow)
+    _thread = threading.Thread(target=_import_histox)
     _thread.start()
 
     # Send Tk to the background (used for future file dialogs)
@@ -108,9 +108,7 @@ def import_with_splash():
     # Load image
     sf_root = pkgutil.get_loader('histox').get_filename()
     splash_path = join(dirname(sf_root), 'studio', 'gui', 'splash.png')
-    icon_path = join(dirname(sf_root), 'studio', 'gui', 'icons', 'logo.png')
     img = np.array(Image.open(splash_path))
-    icon = np.array(Image.open(icon_path))
 
     # Start GLFW window
     if not glfw.init():
@@ -128,12 +126,10 @@ def import_with_splash():
         wscale, hscale = glfw.get_monitor_content_scale(glfw.get_primary_monitor())
     else:
         wscale, hscale = 1, 1
-    window = glfw.create_window(int(width/wscale), int(height/hscale), "Slideflow Studio", None, None)
+    window = glfw.create_window(int(width/wscale), int(height/hscale), "HistoX Studio", None, None)
     glfw.set_window_pos(window, (mw - int(width/wscale)) // 2, (mh - int(height/hscale)) // 2)
 
     _tex_bg = None
-    _tex_icon = None
-    _version_text = None
     _first_frame = True
 
     if not window:
@@ -163,13 +159,7 @@ def import_with_splash():
 
         if _tex_bg is None:
             _tex_bg = Texture(image=img, bilinear=False)
-        if _tex_icon is None:
-            _tex_icon = Texture(image=icon, bilinear=True)
-        if _version_text is None:
-            _version_text = text_texture(__version__, size=22)
         _tex_bg.draw(pos=0, zoom=1, align=0.5, rint=True, anchor='topleft')
-        _tex_icon.draw(pos=(width//2, int(height * 0.3)), zoom=0.25, align=0.5, rint=True, anchor='center')
-        _version_text.draw(pos=(width//2, int(height * 0.7)), zoom=1, align=0.5, rint=True, anchor='center')
 
         if not _first_frame:
             glfw.show_window(window)

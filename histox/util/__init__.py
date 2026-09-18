@@ -606,7 +606,7 @@ def is_model(path: str) -> bool:
 
 
 def is_project(path: str) -> bool:
-    """Checks if the given path is a valid Slideflow project."""
+    """Checks if the given path is a valid HistoX project."""
     return isdir(path) and exists(join(path, 'settings.json'))
 
 

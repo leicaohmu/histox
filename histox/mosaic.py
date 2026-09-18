@@ -624,7 +624,7 @@ class Mosaic:
         log.info(f'Mosaic report saved to [green]{filename}')
 
     def view(self, slides: List[str] = None) -> None:
-        """Open Mosaic in Slideflow Studio.
+        """Open Mosaic in HistoX Studio.
 
         See :ref:`studio` for more information.
 

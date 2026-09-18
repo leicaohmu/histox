@@ -467,7 +467,7 @@ def _train_multimodal_mil(
     if attention_heatmaps:
         raise ValueError(
                 "Attention heatmaps cannot yet be exported for multi-modal "
-                "models. Please use Slideflow Studio for visualization of "
+                "models. Please use HistoX Studio for visualization of "
                 "multi-modal attention."
             )
 

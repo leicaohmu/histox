@@ -141,7 +141,7 @@ class SlideAnnotationCapture(AnnotationCapture):
         """Capture an annotation on screen with clicking and dragging.
 
         Args:
-            viz (Studio): Slideflow Studio visualization object.
+            viz (Studio): HistoX Studio visualization object.
                 Used for tracking the current slide in view, to ensure
                 coordinates are scaled correctly.
             mouse_idx (int): Mouse index to trigger click-and-drag.
@@ -352,5 +352,4 @@ class SlideAnnotationCapture(AnnotationCapture):
                 color=(1, 0, 0),
                 linewidth=2
             )
-
 

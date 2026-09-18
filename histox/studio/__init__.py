@@ -47,7 +47,7 @@ class Studio(ImguiWindow):
     ) -> None:
         """Create the main Studio window.
 
-        Slideflow Studio is started by running the studio module.
+        HistoX Studio is started by running the studio module.
 
         .. code-block:: bash
 
@@ -68,7 +68,7 @@ class Studio(ImguiWindow):
             theme = StudioTheme()
 
         super().__init__(
-            title=f'Slideflow Studio',
+            title='HistoX Studio',
             background=theme.main_background
         )
 
@@ -203,7 +203,7 @@ class Studio(ImguiWindow):
 
     @property
     def P(self):
-        """Slideflow project currently in use."""
+        """HistoX project currently in use."""
         return self.project_widget.P
 
     @property
@@ -291,7 +291,7 @@ class Studio(ImguiWindow):
         self._heatmap_tex_img   = None
         self._heatmap_tex_obj   = None
         self.heatmap_widget.reset()
-        self.set_title("Slideflow Studio")
+        self.set_title("HistoX Studio")
 
     def _draw_about_dialog(self) -> None:
         """Draw the About dialog."""
@@ -332,7 +332,7 @@ class Studio(ImguiWindow):
 
                 imgui.text('')
                 with self.bold_font():
-                    self.center_text('Slideflow Studio')
+                    self.center_text('HistoX Studio')
                 imgui.text('')
 
                 for line in about_text.split('\n'):
@@ -1829,7 +1829,7 @@ class Studio(ImguiWindow):
         """Load the given project.
 
         Args:
-            project (str): Path to Slideflow project.
+            project (str): Path to HistoX project.
             ignore_errors (bool): Do not fail if an error is encountered.
                 Defaults to False.
         """

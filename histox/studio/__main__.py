@@ -7,7 +7,7 @@ from . import Studio
 @click.command()
 @click.argument('slide', metavar='PATH', required=False)
 @click.option('--model', '-m', help='Classifier network for categorical predictions.', metavar='PATH')
-@click.option('--project', '-p', help='Slideflow project.', metavar='PATH')
+@click.option('--project', '-p', help='HistoX project.', metavar='PATH')
 @click.option('--low_memory', '-l', is_flag=True, help='Low memory mode.', metavar=bool)
 @click.option('--stylegan', '-g', is_flag=True, help='Enable StyleGAN support (requires PyTorch).', metavar=bool)
 @click.option('--picam', '-pc', is_flag=True, help='Enable Picamera2 view (experimental).', metavar=bool)

@@ -248,7 +248,7 @@ class ExtractionPDF(FPDF):
 
     def header(self) -> None:
         package_directory = os.path.dirname(os.path.abspath(__file__))
-        logo = join(package_directory, 'histox-logo-name-small.jpg')
+        logo = join(package_directory, 'histox-logo-name-small.png')
 
         self.set_font('Arial', size=9)
         self.cell(70)  # Moves right
@@ -263,7 +263,7 @@ class ExtractionPDF(FPDF):
         self.cell(40, 10, self.title_msg, 0, 1)
         self.y = top
         self.cell(150)
-        self.image(logo, 160, 20, w=40)
+        self.image(logo, 160, 14, w=40)
         # Line break
         self.line(10, 30, 200, 30)
         self.ln(10)

@@ -26,7 +26,7 @@ class ROIWidget:
         """Widget for ROI processing control and information display.
 
         Args:
-            viz (:class:`histox.studio.Studio`): The parent Slideflow Studio
+            viz (:class:`histox.studio.Studio`): The parent HistoX Studio
                 object.
 
         """
@@ -2001,4 +2001,3 @@ class VertexEditor:
                     selected=self.selected_vertices['holes'][hole_id]
                 )
         self.draw_selection_box()
-

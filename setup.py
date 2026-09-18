@@ -18,6 +18,16 @@ setuptools.setup(
         'licenses/*.txt',
     ],
     packages=setuptools.find_packages(),
+    package_data={
+        'histox': [
+            'assets/branding/*.svg',
+            'assets/branding/README.md',
+            'slide/histox-logo-name-small.png',
+            'studio/gui/icons/logo.png',
+            'studio/gui/logo_dark_outline.png',
+            'studio/gui/splash.png',
+        ],
+    },
     scripts=['scripts/histox-studio'],
     classifiers=[
         "Programming Language :: Python :: 3",

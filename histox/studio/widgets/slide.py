@@ -63,7 +63,7 @@ class SlideWidget:
         """Widget for slide processing control and information display.
 
         Args:
-            viz (:class:`histox.studio.Studio`): The parent Slideflow Studio
+            viz (:class:`histox.studio.Studio`): The parent HistoX Studio
                 object.
 
         """

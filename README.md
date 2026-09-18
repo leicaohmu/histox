@@ -1,4 +1,8 @@
-# histox
+# HistoX
+
+<p align="center">
+  <img src="histox/assets/branding/histox-wordmark.svg" alt="HistoX — Deep Pathology Python Library" width="760">
+</p>
 
 ![Python Version](https://img.shields.io/badge/python->=3.7-blue)
 ![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen)

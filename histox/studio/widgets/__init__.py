@@ -1,4 +1,4 @@
-"""Widgets and extensions for Slideflow Studio."""
+"""Widgets and extensions for HistoX Studio."""
 
 from .capture import CaptureWidget
 from .heatmap import HeatmapWidget

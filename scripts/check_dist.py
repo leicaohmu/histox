@@ -16,6 +16,20 @@ FORBIDDEN_SDIST_PREFIXES = (
 )
 FORBIDDEN_PACKAGE_PATHS = {
     "histox/norm/norm_tile.jpg",
+    "histox/slide/slideflow-logo-name-small.jpg",
+}
+REQUIRED_BRAND_ASSETS = {
+    "histox/assets/branding/README.md",
+    "histox/assets/branding/histox-mark-dark.svg",
+    "histox/assets/branding/histox-mark-mono.svg",
+    "histox/assets/branding/histox-mark.svg",
+    "histox/assets/branding/histox-studio-splash.svg",
+    "histox/assets/branding/histox-wordmark-dark.svg",
+    "histox/assets/branding/histox-wordmark.svg",
+    "histox/slide/histox-logo-name-small.png",
+    "histox/studio/gui/icons/logo.png",
+    "histox/studio/gui/logo_dark_outline.png",
+    "histox/studio/gui/splash.png",
 }
 REQUIRED_SDIST_PATHS = {
     "LICENSE",
@@ -26,7 +40,7 @@ REQUIRED_SDIST_PATHS = {
     "licenses/MIT-Transformer-Explainability.txt",
     "pyproject.toml",
     "setup.py",
-}
+} | REQUIRED_BRAND_ASSETS
 REQUIRED_WHEEL_SUFFIXES = {
     "/LICENSE",
     "/MIT-HistoBistro.txt",
@@ -120,6 +134,13 @@ def _check_wheel(path):
         raise RuntimeError(
             "Wheel is missing required license files: {}".format(
                 ", ".join(missing)
+            )
+        )
+    missing_brand_assets = sorted(REQUIRED_BRAND_ASSETS - names)
+    if missing_brand_assets:
+        raise RuntimeError(
+            "Wheel is missing required HistoX brand assets: {}".format(
+                ", ".join(missing_brand_assets)
             )
         )
 

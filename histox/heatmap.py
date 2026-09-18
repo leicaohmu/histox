@@ -813,7 +813,7 @@ class Heatmap:
             log.info(f'Saved heatmaps for [green]{self.slide.name}')
 
     def view(self):
-        """Load the Heatmap into Slideflow Studio for interactive view.
+        """Load the Heatmap into HistoX Studio for interactive view.
 
         See :ref:`studio` for more information.
 

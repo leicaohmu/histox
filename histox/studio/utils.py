@@ -1,4 +1,4 @@
-"""Utilities for Slideflow Studio."""
+"""Utilities for HistoX Studio."""
 
 from typing import Any, List
 

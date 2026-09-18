@@ -3501,7 +3501,7 @@ class WSI:
         return compute_alignment_mse(theirs_gray, ours_gray)
 
     def view(self):
-        """Open the slide in Slideflow Studio for interactive display.
+        """Open the slide in HistoX Studio for interactive display.
 
         See :ref:`studio` for more information.
 

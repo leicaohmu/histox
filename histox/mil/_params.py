@@ -722,7 +722,7 @@ class MILModelConfig:
             if kwargs.get('attention_heatmaps'):
                 raise ValueError(
                     "Attention heatmaps cannot yet be exported for multi-modal "
-                    "models. Please use Slideflow Studio for visualization of "
+                    "models. Please use HistoX Studio for visualization of "
                     "multi-modal attention."
                 )
             if kwargs.get('heatmap_kwargs'):
@@ -901,4 +901,3 @@ class MILModelConfig:
             hx.stats.metrics.regression_metrics(df, level=level, data_dir=outdir)
 
 # -----------------------------------------------------------------------------
-
