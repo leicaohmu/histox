@@ -23,9 +23,6 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
-    package_data={
-        'histox': ['norm/norm_tile.jpg'],
-    },
     python_requires='>=3.7',
     install_requires=[
         'gast>=0.3.3',

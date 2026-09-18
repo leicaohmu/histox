@@ -16,7 +16,7 @@ from typing import Union, List, Tuple
 # -----------------------------------------------------------------------------
 
 # Stain normalizer default fits.
-# v1 is the fit with target hx.norm.norm_tile.jpg (default in version <1.6)
+# v1 preserves the historic pre-1.6 fit; its target image is no longer bundled.
 # v2 is a hand-tuned fit
 # v3 is fit using an average of ~50k tiles across ~450 slides from TCGA (default for versions >=1.6)
 

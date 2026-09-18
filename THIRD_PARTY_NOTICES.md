@@ -36,6 +36,15 @@ Earlier revisions of `histox/util/log_utils.py` contained a modified copy of
 licensed LGPL-3.0. That copied implementation has been removed. The current
 handler is composed from Python standard-library logging primitives.
 
+## Removed artifact
+
+Earlier revisions bundled `histox/norm/norm_tile.jpg`, a pathology image whose
+creator, source dataset and reuse license could not be recovered. The image was
+removed from the source tree and package data. Normalization path-input tests
+now generate a deterministic temporary image instead. Historic `v1` fit-preset
+arrays remain for backward compatibility; runtime normalization does not load
+the removed image.
+
 ## Bundled fonts
 
 The following files declare Apache-2.0 in their embedded font metadata:
@@ -60,14 +69,11 @@ models and public pathology datasets downloaded by users.
 
 ## Items that must still be resolved before a new release
 
-1. **Unknown-origin pathology image:** `histox/norm/norm_tile.jpg` has no
-   recoverable creator, dataset or reuse license. Replace the three tests that
-   load it, then remove the image from package data.
-2. **Legacy branding:** replace the inherited Slideflow logo and Studio
+1. **Legacy branding:** replace the inherited Slideflow logo and Studio
    logo/splash files with HistoX-owned artwork.
-3. **Studio icon glyphs:** document the underlying source and license for each
+2. **Studio icon glyphs:** document the underlying source and license for each
    retained glyph, or replace the set with a named permissive icon source.
-4. **Documentation images:** audit source examples separately from generated
+3. **Documentation images:** audit source examples separately from generated
    documentation output during the documentation rebuild.
 
 Until these items are closed and wheel/sdist contents are verified, the

@@ -3,6 +3,7 @@ import unittest
 import importlib.util
 import sys
 import os
+import tempfile
 import numpy as np
 import histox as hx
 from io import BytesIO
@@ -31,8 +32,19 @@ class TestSlide(unittest.TestCase):
         cls.px = 71  # type: ignore
         cls._orig_logging_level = hx.getLoggingLevel()  # type: ignore
         hx.setLoggingLevel(40)
-        float_img = np.random.random((cls.px, cls.px, 3))  # type: ignore
-        cls.img = (float_img * 255).clip(0, 255).astype(np.uint8)  # type: ignore
+        rng = np.random.default_rng(20260918)
+        cls.img = rng.integers(  # type: ignore
+            0,
+            256,
+            size=(cls.px, cls.px, 3),
+            dtype=np.uint8,
+        )
+        cls._temp_dir = tempfile.TemporaryDirectory()  # type: ignore
+        cls.img_path = os.path.join(  # type: ignore
+            cls._temp_dir.name,
+            'norm-target.png',
+        )
+        Image.fromarray(cls.img).save(cls.img_path, format="PNG")  # type: ignore
         with BytesIO() as output:
             Image.fromarray(cls.img).save(  # type: ignore
                 output,
@@ -50,6 +62,7 @@ class TestSlide(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
+        cls._temp_dir.cleanup()  # type: ignore
         hx.setLoggingLevel(cls._orig_logging_level)  # type: ignore
         return super().tearDownClass()
 
@@ -107,9 +120,7 @@ class TestSlide(unittest.TestCase):
         self._assert_valid_reinhard_fit(norm.get_fit())
 
     def _test_reinhard_fit_to_path(self, norm):
-        pkg_dir = os.path.dirname(os.path.abspath(__file__))
-        img_path = os.path.join(pkg_dir, '../norm/norm_tile.jpg')
-        norm.fit(img_path)
+        norm.fit(self.img_path)
         self._assert_valid_reinhard_fit(norm.get_fit())
 
     def _test_reinhard_set_fit(self, norm):
@@ -126,9 +137,7 @@ class TestSlide(unittest.TestCase):
         self._assert_valid_macenko_fit(norm.get_fit())
 
     def _test_macenko_fit_to_path(self, norm):
-        pkg_dir = os.path.dirname(os.path.abspath(__file__))
-        img_path = os.path.join(pkg_dir, '../norm/norm_tile.jpg')
-        norm.fit(img_path)
+        norm.fit(self.img_path)
         self._assert_valid_macenko_fit(norm.get_fit())
 
     def _test_macenko_set_fit(self, norm):
@@ -145,9 +154,7 @@ class TestSlide(unittest.TestCase):
         self._assert_valid_vahadane_fit(norm.get_fit())
 
     def _test_vahadane_fit_to_path(self, norm):
-        pkg_dir = os.path.dirname(os.path.abspath(__file__))
-        img_path = os.path.join(pkg_dir, '../norm/norm_tile.jpg')
-        norm.fit(img_path)
+        norm.fit(self.img_path)
         self._assert_valid_vahadane_fit(norm.get_fit())
 
     def _test_vahadane_set_fit(self, norm):

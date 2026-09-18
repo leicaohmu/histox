@@ -14,11 +14,13 @@ FORBIDDEN_SDIST_PREFIXES = (
     "docs/",
     "docs-source/",
 )
+FORBIDDEN_PACKAGE_PATHS = {
+    "histox/norm/norm_tile.jpg",
+}
 REQUIRED_SDIST_PATHS = {
     "LICENSE",
     "README.md",
     "THIRD_PARTY_NOTICES.md",
-    "histox/norm/norm_tile.jpg",
     "licenses/MIT-HistoBistro.txt",
     "licenses/MIT-StainTools.txt",
     "licenses/MIT-Transformer-Explainability.txt",
@@ -85,6 +87,13 @@ def _check_sdist(path):
                 ", ".join(forbidden[:10])
             )
         )
+    removed = sorted(FORBIDDEN_PACKAGE_PATHS & paths)
+    if removed:
+        raise RuntimeError(
+            "Source distribution contains removed paths: {}".format(
+                ", ".join(removed)
+            )
+        )
     missing = sorted(REQUIRED_SDIST_PATHS - paths)
     if missing:
         raise RuntimeError(
@@ -97,8 +106,11 @@ def _check_sdist(path):
 def _check_wheel(path):
     with zipfile.ZipFile(path) as archive:
         names = set(archive.namelist())
-    if "histox/norm/norm_tile.jpg" not in names:
-        raise RuntimeError("Wheel is missing histox/norm/norm_tile.jpg")
+    removed = sorted(FORBIDDEN_PACKAGE_PATHS & names)
+    if removed:
+        raise RuntimeError(
+            "Wheel contains removed paths: {}".format(", ".join(removed))
+        )
     missing = sorted(
         suffix
         for suffix in REQUIRED_WHEEL_SUFFIXES
