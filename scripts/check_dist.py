@@ -31,6 +31,9 @@ REQUIRED_BRAND_ASSETS = {
     "histox/studio/gui/logo_dark_outline.png",
     "histox/studio/gui/splash.png",
 }
+REQUIRED_DATA_ASSETS = {
+    "histox/data/registry.json",
+}
 REQUIRED_SDIST_PATHS = {
     "LICENSE",
     "README.md",
@@ -40,7 +43,7 @@ REQUIRED_SDIST_PATHS = {
     "licenses/MIT-Transformer-Explainability.txt",
     "pyproject.toml",
     "setup.py",
-} | REQUIRED_BRAND_ASSETS
+} | REQUIRED_BRAND_ASSETS | REQUIRED_DATA_ASSETS
 REQUIRED_WHEEL_SUFFIXES = {
     "/LICENSE",
     "/MIT-HistoBistro.txt",
@@ -141,6 +144,13 @@ def _check_wheel(path):
         raise RuntimeError(
             "Wheel is missing required HistoX brand assets: {}".format(
                 ", ".join(missing_brand_assets)
+            )
+        )
+    missing_data_assets = sorted(REQUIRED_DATA_ASSETS - names)
+    if missing_data_assets:
+        raise RuntimeError(
+            "Wheel is missing required HistoX data assets: {}".format(
+                ", ".join(missing_data_assets)
             )
         )
 

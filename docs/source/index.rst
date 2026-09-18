@@ -22,6 +22,7 @@ This documentation starts with a high-level overview of the pipeline and include
    extensions 
    quickstart
    project_setup
+   data
    datasets_and_val
    slide_processing
    training

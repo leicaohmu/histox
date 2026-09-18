@@ -39,28 +39,35 @@ Known limits:
 - the CI matrix currently validates packaging on Python 3.9, not every Python
   version accepted by package metadata;
 - documentation and examples are still being migrated;
-- dataset discovery, downloading, and caching do not yet share one public API;
+- A4b1 covers offline dataset discovery and storage planning, but provider
+  downloads and provenance output are not yet unified;
 - model/task outputs are not yet standardized across classification,
   prognosis, MIL, and vision-language workflows.
 
 ## A4b: dataset registry and local cache
 
-Introduce `histox.data` with a small provider-neutral contract:
+Introduce `histox.data` with a small provider-neutral contract.
+
+A4b1 establishes:
 
 - `list_datasets()` and `get_dataset(name, version=...)`;
 - registry records for source, access terms, citations, manifests, checksums,
   and supported tasks;
 - explicit download planning before large transfers;
-- resumable provider downloads where the provider supports them;
-- verification and a machine-readable local provenance record;
 - configurable cache roots using `HISTOX_CACHE_DIR`, `XDG_CACHE_HOME`, or
   `~/.cache/histox`;
 - a `path=` override for shared storage, object-storage mounts, and HPC
   filesystems.
 
-The first implementation should use a small unrestricted dataset or a
-metadata-only fixture. TCGA/GDC support should use official provider tools and the
-user's own credentials rather than a HistoX mirror.
+The first implementation uses a metadata-only fixture and performs no network
+transfers. Subsequent A4b patches will add:
+
+- resumable provider downloads where the provider supports them;
+- verification and a machine-readable local provenance record;
+- compatibility bridging for inherited project presets.
+
+TCGA/GDC support should use official provider tools and the user's own
+credentials rather than a HistoX mirror.
 
 ## A5: PyTorch model and task contracts
 

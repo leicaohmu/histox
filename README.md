@@ -151,8 +151,8 @@ HistoX does not intend to bundle public WSI datasets in the Python wheel, keep
 them in the Git repository, or operate the laboratory server as a public data
 mirror. Dataset providers remain the source of record.
 
-The planned `histox.data` layer will provide small, versioned registry records
-and download helpers. Those records will describe:
+The first `histox.data` interface provides small, versioned registry records
+and read-only download plans. Those records describe:
 
 - the authoritative provider and dataset identifier;
 - access and license requirements;
@@ -160,22 +160,36 @@ and download helpers. Those records will describe:
 - supported labels, cohorts, and HistoX adapters;
 - the local cache layout and provenance metadata.
 
+```python
+import histox as hx
+
+record = hx.data.get_dataset("histox-metadata-fixture")
+plan = hx.data.plan_download(record, path="/shared/pathology-data")
+print(plan.destination)
+```
+
+A4b1 deliberately performs no network transfers. It ships one metadata-only
+fixture so registry lookup and cache planning can be tested without bundling
+pathology data. Provider downloads, authentication, resumption, checksum
+enforcement, and provenance output are planned for subsequent A4b patches.
+
 Downloads will go directly from the provider to storage controlled by the
-user. The planned cache resolution order is:
+user. The cache resolution order is:
 
 1. `HISTOX_CACHE_DIR`, when set;
 2. `$XDG_CACHE_HOME/histox`, when `XDG_CACHE_HOME` is set;
 3. `~/.cache/histox` otherwise.
 
 Controlled-access datasets will continue to require the user's own provider
-account, approvals, and credentials. The unified registry and downloader are
-planned for A4b and are not part of the current `0.2.1` API.
+account, approvals, and credentials. The registry and planning contract do not
+bypass provider access controls.
 
 ## Core modules
 
 | Module | Current responsibility |
 | --- | --- |
 | `histox.project` | Project configuration and end-to-end workflow orchestration |
+| `histox.data` | Dataset registry, cache resolution, and download planning |
 | `histox.dataset` | Cohort filtering, slide/tile records, and dataset operations |
 | `histox.slide` | WSI reading, QC, ROI handling, and tile extraction |
 | `histox.norm` | Stain-normalization algorithms |

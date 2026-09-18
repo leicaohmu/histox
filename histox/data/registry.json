@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "datasets": [
+    {
+      "name": "histox-metadata-fixture",
+      "version": "1.0",
+      "default": true,
+      "title": "HistoX metadata-only registry fixture",
+      "description": "An asset-free record used to validate registry discovery, cache resolution, and download planning without network access.",
+      "provider": {
+        "name": "HistoX",
+        "dataset_id": "histox:metadata-fixture",
+        "url": "https://github.com/leicaohmu/histox"
+      },
+      "access": "open",
+      "license": "Apache-2.0",
+      "terms_url": "https://github.com/leicaohmu/histox/blob/master/LICENSE",
+      "citations": [],
+      "tasks": [],
+      "assets": []
+    }
+  ]
+}

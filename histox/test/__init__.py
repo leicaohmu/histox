@@ -11,8 +11,8 @@ from rich import print
 import histox as hx
 import histox.test.functional
 from histox import errors
-from histox.test import (dataset_test, slide_test, stats_test, norm_test,
-                            model_test)
+from histox.test import (data_test, dataset_test, slide_test, stats_test,
+                         norm_test, model_test)
 from histox.test.utils import (TaskWrapper, TestConfig,
                                   _assert_valid_results, process_isolate)
 from histox.util import log
@@ -841,7 +841,9 @@ class TestSuite:
         runner = unittest.TextTestRunner(verbosity=2)
         all_tests = [
             unittest.TestLoader().loadTestsFromModule(module)
-            for module in (norm_test, dataset_test, stats_test, model_test)
+            for module in (
+                data_test, norm_test, dataset_test, stats_test, model_test
+            )
         ]
         suite = unittest.TestSuite(all_tests)
 

@@ -22,6 +22,7 @@ setuptools.setup(
         'histox': [
             'assets/branding/*.svg',
             'assets/branding/README.md',
+            'data/registry.json',
             'slide/histox-logo-name-small.png',
             'studio/gui/icons/logo.png',
             'studio/gui/logo_dark_outline.png',
