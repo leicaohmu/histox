@@ -30,10 +30,13 @@ jobs:
           flake8 histox setup.py --count --select=E9,F63,F7,F82 --show-source --statistics
 
       - name: Build distributions
-        run: python -m build
+        run: |
+          rm -rf dist build *.egg-info
+          python -m build
 
       - name: Validate distributions
         run: |
           python -m twine check dist/*
+          python scripts/check_dist.py
           python -m pip install --no-deps dist/*.whl
           python -c "from importlib.metadata import version; print(version('histox'))"
