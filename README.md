@@ -4,386 +4,207 @@
   <img src="histox/assets/branding/histox-wordmark.svg" alt="HistoX — Deep Pathology Python Library" width="760">
 </p>
 
-![Python Version](https://img.shields.io/badge/python->=3.7-blue)
-![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen)
-![Language](https://img.shields.io/badge/language-Python-blue)
-[![Docs](https://readthedocs.org/projects/histox/badge/?version=latest)](https://histox.readthedocs.io/en/latest/)
+[![Package checks](https://github.com/leicaohmu/histox/actions/workflows/python-app.yml/badge.svg)](https://github.com/leicaohmu/histox/actions/workflows/python-app.yml)
+[![PyPI](https://img.shields.io/pypi/v/histox)](https://pypi.org/project/histox/)
+![Python](https://img.shields.io/badge/Python-%3E%3D3.7-blue)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](LICENSE)
 
-**histox** is a powerful, open-source deep learning library for digital pathology. Built on top of [Slideflow](https://github.com/slideflow/slideflow), it provides researchers and AI practitioners with a comprehensive toolkit for analyzing whole slide images (WSI) and building state-of-the-art computational pathology models.
+HistoX is an open-source Python library for computational pathology. It is a
+modified fork of [Slideflow](https://github.com/slideflow/slideflow) and is
+being developed into a PyTorch-first toolkit for whole-slide image (WSI)
+processing, model training, evaluation, and multimodal pathology research.
 
-🌐 **Documentation**: [histox.readthedocs.io](https://histox.readthedocs.io)
+> [!IMPORTANT]
+> HistoX is under active development. Version `0.2.x` retains a substantial
+> Slideflow-derived API, and parts of the documentation are still being
+> audited. Treat the current public API as pre-stable and pin the package
+> version in reproducible projects.
 
-## ✨ Key Features
+## What works today
 
-- **End-to-end WSI analysis pipeline** - From raw slides to trained models
-- **Robust slide processing** - Automatic tile extraction with stain normalization
-- **Flexible learning paradigms**
-  - Strongly-supervised and weakly-supervised learning
-  - Multiple Instance Learning (MIL) for slide-level labels
-  - Self-Supervised Learning (SSL) for representation learning
-  - Generative Adversarial Networks (GANs) for data augmentation
-- **Pre-trained foundation models** - Integrated support for modern architectures
-- **Interpretability tools** - Generate heatmaps, saliency maps, and mosaic visualizations
-- **Layer activation analysis** - Understand model decision-making
-- **Uncertainty quantification** - Measure model confidence
+The current package provides a working baseline for:
 
-## 📋 Requirements
+- project and cohort configuration;
+- WSI reading, tissue quality control, and tile extraction;
+- stain normalization;
+- PyTorch and legacy TensorFlow model backends;
+- supervised training and multiple-instance learning workflows;
+- feature extraction, heatmaps, mosaics, and the HistoX Studio viewer.
 
-- **Python**: >= 3.7
-- **Deep Learning Framework** (at least one):
-  - PyTorch >= 1.9
-  - TensorFlow >= 2.5, < 2.12
+PyTorch is selected automatically when it is installed and is the target for
+new model and task development. TensorFlow remains available for compatibility
+with inherited workflows, but new HistoX capabilities will be designed for
+PyTorch first. See [ROADMAP.md](ROADMAP.md) for the planned interfaces and
+milestones.
 
-## 📦 Installation
+## Requirements
 
-### From PyPI (Recommended)
+- Package metadata currently declares Python `>=3.7`.
+- Distribution builds are currently checked in CI with Python 3.9.
+- WSI reading requires a working libvips installation, unless a compatible
+  cuCIM backend is used.
+- Training requires at least one deep-learning backend.
+
+The Python-version declaration is not yet a full compatibility guarantee.
+Python 3.9 is the current development and CI baseline.
+
+## Installation
+
+Install the published package with the PyTorch extras:
 
 ```bash
-pip install histox
+python -m pip install "histox[torch]"
 ```
 
-### From Source
+For development from the current repository:
 
 ```bash
-git clone https://github.com/leicaohmu/histox
+git clone https://github.com/leicaohmu/histox.git
 cd histox
-pip install -e .
+python -m pip install -e ".[torch]"
 ```
 
-### With PyTorch Backend
+Optional installation groups are retained for existing workflows:
 
-```bash
-pip install histox[torch]
-# or from source
-pip install -e ".[torch]"
+| Command | Purpose |
+| --- | --- |
+| `python -m pip install histox` | Base dependency set; install a backend separately |
+| `python -m pip install "histox[torch]"` | PyTorch backend and related tools |
+| `python -m pip install "histox[tf]"` | Legacy TensorFlow compatibility |
+| `python -m pip install "histox[torch,cucim]"` | PyTorch plus cuCIM; manage CuPy separately |
+| `python -m pip install "histox[torch,cucim-cuda12]"` | PyTorch, cuCIM, and CUDA 12 CuPy |
+| `python -m pip install "histox[torch,cucim-cuda11]"` | PyTorch, cuCIM, and CUDA 11 CuPy |
+
+Do not install multiple `cupy-*` variants in the same environment. Match the
+CuPy package to the CUDA runtime reported by `nvidia-smi`.
+
+### Verify the installation
+
+```python
+import histox as hx
+
+print("HistoX:", hx.__version__)
+print("model backend:", hx.backend())
+print("slide backend:", hx.slide_backend())
 ```
 
-### With TensorFlow Backend
+With PyTorch installed, `hx.backend()` should report `torch` unless
+`HX_BACKEND` explicitly selects another supported backend.
 
-```bash
-pip install histox[tf]
-# or from source
-pip install -e ".[tf]"
-```
+## Minimal project workflow
 
-### With cuCIM GPU Acceleration (WSI Reading)
-
-cuCIM provides GPU-accelerated whole slide image reading. First check your CUDA version:
-
-```bash
-nvidia-smi
-```
-
-Then install the matching extra:
-
-```bash
-# CUDA 12.x
-pip install histox[torch,cucim-cuda12]
-
-# CUDA 11.x
-pip install histox[torch,cucim-cuda11]
-
-# cuCIM only (manage cupy manually)
-pip install histox[torch,cucim]
-```
-
-> ⚠️ **Important**: `cupy` is tightly coupled to your CUDA version. Do **not** install multiple `cupy-*` packages simultaneously, as this will cause conflicts.
-> If you encounter a conflict, clean up first:
-> ```bash
-> pip uninstall cupy cupy-cuda12x cupy-cuda11x -y
-> ```
-> Then reinstall the correct version.
-
-### Installation Summary
-
-| Command | Includes |
-|---------|----------|
-| `pip install histox` | Core only |
-| `pip install histox[torch]` | Core + PyTorch |
-| `pip install histox[tf]` | Core + TensorFlow |
-| `pip install histox[torch,cucim]` | Core + PyTorch + cuCIM |
-| `pip install histox[torch,cucim-cuda12]` | Core + PyTorch + cuCIM + CuPy (CUDA 12) |
-| `pip install histox[torch,cucim-cuda11]` | Core + PyTorch + cuCIM + CuPy (CUDA 11) |
-
-## 🚀 Quick Start Example
-
-This example demonstrates how to train a lung cancer adenocarcinoma classifier using the included TCGA dataset.
-
-### 1. Prepare Your Data Structure
-
-```
-project_root/
-├── slides/                    # WSI files (.svs, .ndpi, etc.)
-│   ├── TCGA-83-5908-01Z-00-DX1.svs
-│   ├── TCGA-62-A46V-01Z-00-DX1.svs
-│   └── ...
-├── annotations.csv            # Slide labels
-└── tfrecords/                # Output directory for processed data (auto-created)
-```
-
-### 2. Create Annotation File
-
-Create `annotations.csv` with slide-level labels:
+HistoX uses an annotation table to connect patient labels to slide names. A
+minimal table looks like this:
 
 ```csv
-patient,subtype,site,slide
-TCGA-83-5908,adenocarcinoma,Site-28,TCGA-83-5908-01Z-00-DX1
-TCGA-62-A46V,adenocarcinoma,Site-124,TCGA-62-A46V-01Z-00-DX1
-TCGA-44-2655,squamous,Site-29,TCGA-44-2655-01Z-00-DX1
+patient,slide,label
+P001,S001,tumor
+P002,S002,normal
 ```
 
-(A complete dataset example is available in `lung_labels.csv` in this repository)
-
-### 3. Initialize and Train
+Create a project and configure a PyTorch model:
 
 ```python
+from pathlib import Path
+
 import histox as hx
-import os
 
-# Define paths
-project_root = '/path/to/project'
-annotations_file = '/path/to/annotations.csv'
-slides_directory = '/path/to/slides'
-tfrecords_directory = os.path.join(project_root, 'tfrecords')
+workspace = Path("/path/to/workspace")
 
-# Create project
-print("[1/5] Creating project...")
 project = hx.create_project(
-    root=project_root,
-    annotations=annotations_file,
-    slides=slides_directory,
-    tfrecords=tfrecords_directory
+    root=str(workspace / "project"),
+    name="my-cohort",
+    annotations=str(workspace / "annotations.csv"),
+    slides=str(workspace / "slides"),
+    tfrecords=str(workspace / "tfrecords"),
 )
 
-# Extract tiles from slides
-print("[2/5] Extracting tiles...")
-project.extract_tiles(
-    tile_px=299,        # Tile size in pixels
-    tile_um=302,        # Tile size in micrometers
-    workers=8           # Number of parallel workers
-)
-
-# Define model parameters
-print("[3/5] Configuring model...")
 params = hx.ModelParams(
-    tile_px=299,
-    tile_um=302,
-    batch_size=32,
-    model='xception',            # Base architecture
-    learning_rate=0.0001,
-    epochs=50,
-    validation_fraction=0.2
+    tile_px=256,
+    tile_um="20x",
+    model="resnet50",
+    epochs=1,
 )
-
-# Train the model
-print("[4/5] Training model...")
-project.train(
-    'subtype',                   # Column name for classification target
-    params=params,
-    save_predictions=True,
-    multi_gpu=True               # Enable multi-GPU training if available
-)
-
-# Generate explanations
-print("[5/5] Generating interpretations...")
-project.generate_heatmaps()      # Attention/saliency visualizations
-project.generate_mosaic_maps()   # Tile-level predictions
-
-print("✓ Training complete!")
 ```
 
-### 4. Evaluate and Interpret Results
-
-```python
-# Access trained models and predictions
-results = project.get_results('subtype')
-
-# Generate patient-level predictions
-slide_predictions = project.predict_slides('subtype')
-
-# Create visualizations
-heatmap = hx.Heatmap.from_project(
-    project=project,
-    outcome_name='subtype',
-    model_idx=0
-)
-heatmap.save('/path/to/output/heatmap.png')
-
-# Access detailed metrics
-print(f"Validation Accuracy: {results['val_accuracy']:.4f}")
-print(f"Validation AUC: {results['val_auc']:.4f}")
-```
-
-## 📊 Complete Workflow Example (Lung Cancer Dataset)
-
-Here's a ready-to-run example using the included TCGA lung cancer data:
-
-```python
-import histox as hx
-import pandas as pd
-import os
-
-# Configuration
-data_root = './datasets/lung_adeno_squam'
-project_dir = './lung_project'
-
-annotations_file = os.path.join(data_root, 'lung_labels.csv')
-slides_dir = os.path.join(data_root, 'slides')
-tfrecords_dir = os.path.join(project_dir, 'tfrecords')
-
-# Check available data
-labels_df = pd.read_csv(annotations_file)
-print(f"Total slides: {len(labels_df)}")
-print(f"Subtypes: {labels_df['subtype'].unique()}")
-print(labels_df.head())
-
-# Step 1: Create project
-try:
-    project = hx.create_project(
-        root=project_dir,
-        annotations=annotations_file,
-        slides=slides_dir,
-        tfrecords=tfrecords_dir
-    )
-    print("✓ Project created successfully")
-except Exception as e:
-    print(f"Project already exists or error: {e}")
-
-# Step 2: Extract tiles (if slides are available)
-try:
-    project.extract_tiles(
-        tile_px=299,
-        tile_um=302,
-        workers=4,
-        verbose=True
-    )
-    print("✓ Tiles extracted")
-except Exception as e:
-    print(f"Could not extract tiles: {e}")
-
-# Step 3: Configure and train
-params = hx.ModelParams(
-    tile_px=299,
-    tile_um=302,
-    batch_size=32,
-    model='xception',
-    learning_rate=0.0001,
-    epochs=30,
-    validation_fraction=0.2
-)
-
-project.train(
-    'subtype',
-    params=params,
-    save_predictions=True,
-    multi_gpu=False
-)
-
-print("✓ Model training complete!")
-```
-
-## 🔧 Advanced Features
-
-### Multiple Instance Learning (MIL)
-
-Use when you only have slide-level labels, not individual tile annotations:
-
-```python
-params = hx.ModelParams(
-    tile_px=299,
-    model='xception',
-    mil=True,
-    mil_method='attention',   # 'attention' or 'max-pooling'
-    learning_rate=0.0001
-)
-
-project.train('diagnosis', params=params)
-```
-
-### Self-Supervised Pre-training
-
-Pre-train feature extractors without labeled data:
-
-```python
-project.train_ssl(
-    method='simclr',
-    epochs=100,
-    batch_size=64,
-    model='xception'
-)
-
-# Fine-tune on labeled data
-project.train('diagnosis', params=params)
-```
-
-### Stain Normalization
-
-Automatic handling of staining variations across labs:
+Once the slide files named by the annotation table are available, extraction
+and training use the following public methods:
 
 ```python
 project.extract_tiles(
-    tile_px=299,
-    tile_um=302,
-    stain_norm=True,
-    norm_method='macenko'     # 'macenko' or 'reinhard'
+    tile_px=256,
+    tile_um="20x",
+    qc="otsu",
+    normalizer="macenko",
 )
+
+results = project.train("label", params=params)
 ```
 
-### Generate Heatmaps
+Tile extraction and training are intentionally separate from project creation:
+they require real WSI files, sufficient local storage, and an environment
+configured for the selected slide and model backends.
 
-Visualize model predictions across slides:
+## Data and storage policy
 
-```python
-heatmap = hx.Heatmap.from_project(
-    project=project,
-    outcome_name='diagnosis',
-    model_idx=0,
-    cmap='RdYlBu_r'
-)
+HistoX does not intend to bundle public WSI datasets in the Python wheel, keep
+them in the Git repository, or operate the laboratory server as a public data
+mirror. Dataset providers remain the source of record.
 
-heatmap.save(
-    '/output/heatmap.png',
-    high_res=True,
-    stride=32
-)
-```
+The planned `histox.data` layer will provide small, versioned registry records
+and download helpers. Those records will describe:
 
-## 📚 Key Modules
+- the authoritative provider and dataset identifier;
+- access and license requirements;
+- file manifests and provider checksums when available;
+- supported labels, cohorts, and HistoX adapters;
+- the local cache layout and provenance metadata.
 
-| Module | Purpose |
-|--------|---------|
-| `histox.project` | Main Project class for pipeline management |
-| `histox.dataset` | Dataset handling and tile management |
-| `histox.model` | Model architecture and training |
-| `histox.slide` | WSI (Whole Slide Image) handling |
-| `histox.norm` | Stain normalization algorithms |
-| `histox.heatmap` | Heatmap generation and visualization |
-| `histox.stats` | Statistical analysis and reporting |
+Downloads will go directly from the provider to storage controlled by the
+user. The planned cache resolution order is:
 
-## 🎯 Supported Models
+1. `HISTOX_CACHE_DIR`, when set;
+2. `$XDG_CACHE_HOME/histox`, when `XDG_CACHE_HOME` is set;
+3. `~/.cache/histox` otherwise.
 
-- **CNN Architectures**: Xception, ResNet-50, EfficientNet, InceptionV3, DenseNet
-- **Vision Transformers**: ViT, DeiT
-- **Specialized Architectures**: Cellpose (instance segmentation)
+Controlled-access datasets will continue to require the user's own provider
+account, approvals, and credentials. The unified registry and downloader are
+planned for A4b and are not part of the current `0.2.1` API.
 
-## 📖 Documentation
+## Core modules
 
-For detailed documentation and API reference:
-- 📘 [histox Documentation](https://histox.readthedocs.io)
-- 🐛 [GitHub Issues](https://github.com/leicaohmu/histox/issues)
-- 📦 [PyPI Package](https://pypi.org/project/histox/)
+| Module | Current responsibility |
+| --- | --- |
+| `histox.project` | Project configuration and end-to-end workflow orchestration |
+| `histox.dataset` | Cohort filtering, slide/tile records, and dataset operations |
+| `histox.slide` | WSI reading, QC, ROI handling, and tile extraction |
+| `histox.norm` | Stain-normalization algorithms |
+| `histox.model` | Backend selection, model configuration, training, and features |
+| `histox.mil` | Multiple-instance learning workflows |
+| `histox.heatmap` | Spatial model visualization |
+| `histox.studio` | Interactive desktop viewer |
 
-## 🤝 Contributing
+## Documentation and support
 
-Contributions are welcome! Please:
+- [Documentation](https://histox.readthedocs.io/)
+- [Roadmap](ROADMAP.md)
+- [GitHub issues](https://github.com/leicaohmu/histox/issues)
+- [PyPI package](https://pypi.org/project/histox/)
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -am 'Add feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a Pull Request
+The hosted documentation contains inherited material that is still being
+migrated and audited. For installation and current project direction, this
+README and [ROADMAP.md](ROADMAP.md) are the source of truth.
 
-## 📄 License and provenance
+## Contributing
+
+Small, reviewable pull requests are preferred. Before opening a pull request:
+
+1. explain the user-facing behavior being changed;
+2. add or update the smallest relevant test or check;
+3. run the package checks used by GitHub Actions;
+4. keep new APIs PyTorch-first unless compatibility work is explicitly scoped.
+
+## License and provenance
 
 HistoX is a modified fork of
 [Slideflow](https://github.com/slideflow/slideflow). The top-level
@@ -393,33 +214,19 @@ licenses.
 
 See [`PROVENANCE.md`](PROVENANCE.md) for repository lineage and
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for component-level notices
-and unresolved review items. Model weights, datasets and optional extensions are
-not automatically covered by the repository license; consult each artifact's
-terms before use or redistribution.
+and unresolved review items. Model weights, datasets, and optional extensions
+are not automatically covered by the repository license; consult each
+artifact's terms before use or redistribution.
 
 Do not publish a new release until the unresolved license-review items in
 `THIRD_PARTY_NOTICES.md` are closed.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- **[Slideflow](https://github.com/slideflow/slideflow)** - Upstream project from which HistoX is derived
-- **[TCGA](https://portal.gdc.cancer.gov/)** - The Cancer Genome Atlas for dataset resources
-- **PyTorch & TensorFlow** - Deep learning frameworks
+- [Slideflow](https://github.com/slideflow/slideflow), the upstream project
+  from which HistoX is derived.
+- [The Cancer Genome Atlas](https://portal.gdc.cancer.gov/) and other data
+  providers that make computational pathology research possible.
+- The PyTorch, TensorFlow, libvips, and cuCIM communities.
 
-## 📞 Support & Contact
-
-- **Email**: caolei@hrbmu.edu.cn
-- **Documentation**: [histox.readthedocs.io](https://histox.readthedocs.io)
-- **Repository**: [github.com/leicaohmu/histox](https://github.com/leicaohmu/histox)
-
-## 🔗 Related Resources
-
-- [histox Documentation](https://histox.readthedocs.io)
-- [Slideflow Documentation](https://slideflow.dev)
-- [TCGA Data Portal](https://portal.gdc.cancer.gov/)
-- [Digital Pathology Resources](https://www.digipathonet.org/)
-
----
-
-**Status**: Active development  
-**Last Updated**: 2026-04-11
+Contact: [caolei@hrbmu.edu.cn](mailto:caolei@hrbmu.edu.cn)
