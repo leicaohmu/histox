@@ -57,6 +57,7 @@ This documentation starts with a high-level overview of the pipeline and include
    slideflow
    project
    dataset
+   data_api
    dataset_features
    heatmap
    model_params
