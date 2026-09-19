@@ -50,28 +50,7 @@ In A4b1, local asset status is based on file presence and expected byte size.
 Stored checksums are descriptive metadata; checksum execution is added with the
 provider download layer.
 
-API
----
+API reference
+-------------
 
-.. autofunction:: histox.data.list_datasets
-
-.. autofunction:: histox.data.get_dataset
-
-.. autofunction:: histox.data.resolve_cache_root
-
-.. autofunction:: histox.data.plan_download
-
-.. autoclass:: histox.data.ProviderRecord
-   :members:
-
-.. autoclass:: histox.data.AssetRecord
-   :members:
-
-.. autoclass:: histox.data.DatasetRecord
-   :members:
-
-.. autoclass:: histox.data.DownloadItem
-   :members:
-
-.. autoclass:: histox.data.DownloadPlan
-   :members:
+See :doc:`data_api` for the complete :mod:`histox.data` API reference.
