@@ -39,8 +39,9 @@ Known limits:
 - the CI matrix currently validates packaging on Python 3.9, not every Python
   version accepted by package metadata;
 - documentation and examples are still being migrated;
-- A4b1 covers offline dataset discovery and storage planning, but provider
-  downloads and provenance output are not yet unified;
+- A4b2 covers verified direct HTTP(S) downloads for open assets, but
+  authenticated provider clients and inherited project presets are not yet
+  unified;
 - model/task outputs are not yet standardized across classification,
   prognosis, MIL, and vision-language workflows.
 
@@ -59,11 +60,12 @@ A4b1 establishes:
 - a `path=` override for shared storage, object-storage mounts, and HPC
   filesystems.
 
-The first implementation uses a metadata-only fixture and performs no network
-transfers. Subsequent A4b patches will add:
+The first implementation uses a metadata-only fixture. A4b2 adds explicit
+direct HTTP(S) transfers for open records, safe Range resumption, atomic file
+publication, checksum verification, and a machine-readable local provenance
+record. Subsequent A4b patches will add:
 
-- resumable provider downloads where the provider supports them;
-- verification and a machine-readable local provenance record;
+- authenticated and provider-specific download clients;
 - compatibility bridging for inherited project presets.
 
 TCGA/GDC support should use official provider tools and the user's own

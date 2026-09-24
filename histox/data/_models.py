@@ -243,3 +243,51 @@ class DownloadPlan:
                 for item in self.items
             ],
         }
+
+
+@dataclass(frozen=True)
+class DownloadResult:
+    """Completed dataset transfer and its local provenance record."""
+
+    dataset: DatasetRecord
+    destination: Path
+    provenance_path: Path
+    downloaded_files: Tuple[Path, ...]
+    reused_files: Tuple[Path, ...]
+    resumed_files: Tuple[Path, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.dataset, DatasetRecord):
+            raise TypeError("download result dataset must be a DatasetRecord")
+        for field, value in (
+            ("destination", self.destination),
+            ("provenance_path", self.provenance_path),
+        ):
+            if not isinstance(value, Path):
+                raise TypeError("download result {} must be a pathlib.Path".format(field))
+        for field, values in (
+            ("downloaded_files", self.downloaded_files),
+            ("reused_files", self.reused_files),
+            ("resumed_files", self.resumed_files),
+        ):
+            if not all(isinstance(value, Path) for value in values):
+                raise TypeError("download result {} must contain Paths".format(field))
+            object.__setattr__(self, field, tuple(values))
+
+    @property
+    def downloaded_count(self) -> int:
+        """Number of assets transferred during this call."""
+
+        return len(self.downloaded_files)
+
+    @property
+    def reused_count(self) -> int:
+        """Number of existing assets that passed validation."""
+
+        return len(self.reused_files)
+
+    @property
+    def resumed_count(self) -> int:
+        """Number of transfers resumed from a partial file."""
+
+        return len(self.resumed_files)

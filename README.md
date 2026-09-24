@@ -151,8 +151,9 @@ HistoX does not intend to bundle public WSI datasets in the Python wheel, keep
 them in the Git repository, or operate the laboratory server as a public data
 mirror. Dataset providers remain the source of record.
 
-The first `histox.data` interface provides small, versioned registry records
-and read-only download plans. Those records describe:
+The `histox.data` interface provides small, versioned registry records,
+read-only download plans, and verified direct downloads for open HTTP(S)
+assets. Those records describe:
 
 - the authoritative provider and dataset identifier;
 - access and license requirements;
@@ -168,10 +169,11 @@ plan = hx.data.plan_download(record, path="/shared/pathology-data")
 print(plan.destination)
 ```
 
-A4b1 deliberately performs no network transfers. It ships one metadata-only
-fixture so registry lookup and cache planning can be tested without bundling
-pathology data. Provider downloads, authentication, resumption, checksum
-enforcement, and provenance output are planned for subsequent A4b patches.
+A4b1 ships one metadata-only fixture so registry lookup and cache planning can
+be tested without bundling pathology data. A4b2 adds explicit direct downloads,
+HTTP Range resumption, atomic file publication, checksum enforcement, and a
+machine-readable local provenance record. Authentication and provider-specific
+clients remain subsequent A4b work.
 
 Downloads will go directly from the provider to storage controlled by the
 user. The cache resolution order is:

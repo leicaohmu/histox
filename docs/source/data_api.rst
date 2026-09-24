@@ -6,8 +6,8 @@ histox.data
 ===========
 
 The :mod:`histox.data` module defines HistoX dataset metadata, cache
-resolution, and read-only download planning. See :doc:`data` for concepts and
-usage examples.
+resolution, read-only download planning, verified direct downloads, and local
+provenance. See :doc:`data` for concepts and usage examples.
 
 Registry
 --------
@@ -22,6 +22,11 @@ Storage planning
 .. autofunction:: resolve_cache_root
 
 .. autofunction:: plan_download
+
+Download execution
+------------------
+
+.. autofunction:: download_dataset
 
 Records
 -------
@@ -40,3 +45,17 @@ Records
 
 .. autoclass:: DownloadPlan
    :members:
+
+.. autoclass:: DownloadResult
+   :members:
+
+Errors
+------
+
+.. autoclass:: DatasetDownloadError
+
+.. autoclass:: DatasetAccessError
+
+.. autoclass:: DatasetConflictError
+
+.. autoclass:: DatasetIntegrityError

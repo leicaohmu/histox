@@ -18,6 +18,32 @@
       "citations": [],
       "tasks": [],
       "assets": []
+    },
+    {
+      "name": "histox-download-fixture",
+      "version": "1.0",
+      "default": true,
+      "title": "HistoX direct-download smoke fixture",
+      "description": "A small immutable text asset used to exercise direct downloads, checksum verification, and provenance without transferring pathology data.",
+      "provider": {
+        "name": "HistoX",
+        "dataset_id": "histox:download-fixture:25c06216",
+        "url": "https://github.com/leicaohmu/histox/tree/25c062161007cdf0bfbdf5ca306c714f4f4b2402"
+      },
+      "access": "open",
+      "license": "Apache-2.0",
+      "terms_url": "https://github.com/leicaohmu/histox/blob/25c062161007cdf0bfbdf5ca306c714f4f4b2402/LICENSE",
+      "citations": [],
+      "tasks": [],
+      "assets": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/leicaohmu/histox/25c062161007cdf0bfbdf5ca306c714f4f4b2402/LICENSE",
+          "size_bytes": 11357,
+          "checksum": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "checksum_algorithm": "sha256"
+        }
+      ]
     }
   ]
 }
