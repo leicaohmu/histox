@@ -1,6 +1,418 @@
-/* 控制侧边栏 logo 大小 */
-.wy-side-nav-search .wy-nav-top img,
-.wy-side-nav-search > a img {
-    max-width: 160px !important;  /* 改这个数值，越小logo越小 */
-    height: auto !important;
+/* HistoX documentation tokens layered on the official PyTorch Sphinx theme. */
+
+:root {
+  --histox-navy: #0b1f3a;
+  --histox-navy-2: #122d50;
+  --histox-plum: #8a2f86;
+  --histox-magenta: #c33eb6;
+  --histox-cyan: #159ea3;
+  --histox-ink: #172033;
+  --histox-muted: #5c667a;
+  --histox-border: #d9deea;
+  --histox-surface: #f6f8fb;
+  --histox-code: #101a2d;
+
+  --pst-color-primary: var(--histox-plum);
+  --pst-color-secondary: var(--histox-cyan);
+  --pst-color-link: #713078;
+  --pst-color-link-hover: #a22a99;
+  --pst-color-inline-code: #8a2f86;
+  --pst-font-family-base: "IBM Plex Sans", "Noto Sans", sans-serif;
+  --pst-font-family-heading: "IBM Plex Sans", "Noto Sans", sans-serif;
+  --pst-font-family-monospace: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
+html[data-theme="dark"] {
+  --histox-ink: #f4f6fb;
+  --histox-muted: #aeb8cb;
+  --histox-border: #34415a;
+  --histox-surface: #111b2e;
+  --histox-code: #09101e;
+
+  --pst-color-primary: #dc70d2;
+  --pst-color-secondary: #4ed5d5;
+  --pst-color-link: #dd7ad4;
+  --pst-color-link-hover: #69dddd;
+  --pst-color-inline-code: #ef91e7;
+}
+
+/* Header and wordmark */
+.bd-header {
+  border-bottom: 1px solid color-mix(in srgb, var(--histox-border) 78%, transparent);
+  box-shadow: 0 1px 0 rgb(11 31 58 / 4%);
+}
+
+.histox-navbar-brand {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.histox-navbar-brand__mark {
+  height: 2rem;
+  width: 2rem;
+  object-fit: contain;
+}
+
+.histox-navbar-brand__name {
+  color: var(--histox-navy);
+  font-size: 1.28rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+html[data-theme="dark"] .histox-navbar-brand__mark {
+  background: #fff;
+  border-radius: 50%;
+  padding: 0.16rem;
+}
+
+html[data-theme="dark"] .histox-navbar-brand__name {
+  color: #fff;
+}
+
+.bd-header .navbar-nav > li > a.nav-link {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.bd-header .navbar-nav > li > a.nav-link:hover,
+.bd-header .navbar-nav > li > a.nav-link.active {
+  color: var(--histox-plum);
+}
+
+/* Reading layout */
+.bd-main .bd-content .bd-article-container {
+  max-width: 78rem;
+}
+
+.bd-article {
+  color: var(--histox-ink);
+}
+
+.bd-article h1,
+.bd-article h2,
+.bd-article h3 {
+  color: var(--histox-ink);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.bd-article h1 {
+  font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.bd-article h2 {
+  margin-top: 2.5rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--histox-border);
+}
+
+.bd-sidebar-primary .sidebar-header-items__center,
+.bd-sidebar-primary .sidebar-header-items__end {
+  margin-top: 0.75rem;
+}
+
+.bd-sidebar-primary .caption,
+.bd-sidebar-primary p.caption {
+  color: var(--histox-muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bd-sidebar-primary .nav-link {
+  border-radius: 0.35rem;
+  font-size: 0.92rem;
+}
+
+.bd-sidebar-primary .nav-link.active {
+  color: var(--histox-plum);
+  background: color-mix(in srgb, var(--histox-plum) 10%, transparent);
+  box-shadow: inset 3px 0 0 var(--histox-magenta);
+}
+
+.bd-sidebar-secondary {
+  border-left: 1px solid var(--histox-border);
+}
+
+.bd-sidebar-secondary .onthispage {
+  color: var(--histox-muted);
+  font-weight: 750;
+  letter-spacing: 0.04em;
+}
+
+/* Home page: pathology-specific editorial hero, without a generic gradient. */
+#histox-documentation > h1:first-child {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.histox-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 2.75rem;
+  padding: clamp(2rem, 5vw, 4.75rem);
+  color: #fff;
+  background-color: var(--histox-navy);
+  background-image:
+    radial-gradient(circle at 87% 26%, rgb(21 158 163 / 28%) 0 6%, transparent 6.5%),
+    radial-gradient(circle at 79% 68%, rgb(195 62 182 / 25%) 0 8%, transparent 8.5%),
+    radial-gradient(circle at 94% 78%, rgb(255 255 255 / 12%) 0 4%, transparent 4.5%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 0.75rem;
+  box-shadow: 0 24px 70px rgb(11 31 58 / 18%);
+}
+
+.histox-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 62%;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(60deg, transparent 48%, #fff 49% 51%, transparent 52%),
+    linear-gradient(-60deg, transparent 48%, #fff 49% 51%, transparent 52%);
+  background-size: 46px 78px;
+  pointer-events: none;
+}
+
+.histox-hero > * {
+  position: relative;
+  z-index: 1;
+  max-width: 49rem;
+}
+
+.histox-hero__eyebrow {
+  margin-bottom: 0.9rem;
+  color: #72dfdf;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.histox-hero h2 {
+  margin: 0;
+  color: #fff;
+  border: 0;
+  padding: 0;
+  font-size: clamp(2.35rem, 4.3vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.histox-hero p {
+  margin: 1.4rem 0 0;
+  color: #dfe8f6;
+  font-size: clamp(1rem, 1.8vw, 1.28rem);
+  line-height: 1.65;
+}
+
+.histox-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
+}
+
+.histox-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.8rem;
+  padding: 0.65rem 1rem;
+  border-radius: 0.35rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+.histox-button:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.histox-button--primary {
+  color: #081628;
+  background: #58d2d1;
+  border: 1px solid #58d2d1;
+}
+
+.histox-button--primary:hover {
+  color: #081628;
+  background: #7de0df;
+  border-color: #7de0df;
+}
+
+.histox-button--secondary {
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 52%);
+}
+
+.histox-button--secondary:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
+.histox-home-grid .sd-card {
+  height: 100%;
+  border: 1px solid var(--histox-border);
+  border-top: 3px solid var(--histox-cyan);
+  border-radius: 0.45rem;
+  box-shadow: none;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.histox-home-grid .sd-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--histox-plum) 55%, var(--histox-border));
+  box-shadow: 0 12px 32px rgb(11 31 58 / 10%);
+}
+
+.histox-home-grid .sd-card-title {
+  color: var(--histox-ink);
+  font-weight: 750;
+}
+
+/* Code and API reference surfaces */
+.highlight,
+div[class*="highlight-"] {
+  border: 1px solid var(--histox-border);
+  border-radius: 0.45rem;
+  background: var(--histox-code);
+}
+
+.highlight pre {
+  padding: 1rem 1.15rem;
+  font-size: 0.88rem;
+  line-height: 1.62;
+}
+
+button.copybtn {
+  border-radius: 0.3rem;
+}
+
+dl.py > dt.sig,
+dl.class > dt.sig,
+dl.function > dt.sig {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--histox-border);
+  border-left: 4px solid var(--histox-plum);
+  border-radius: 0.35rem;
+  background: var(--histox-surface);
+}
+
+.sig-name,
+.sig-prename {
+  font-weight: 750;
+}
+
+.admonition {
+  border: 1px solid var(--histox-border);
+  border-left-width: 4px;
+  border-radius: 0.4rem;
+  box-shadow: none;
+}
+
+.admonition.tip,
+.admonition.note {
+  border-left-color: var(--histox-cyan);
+}
+
+@media (max-width: 959px) {
+  .histox-hero {
+    padding: 2rem 1.35rem;
+  }
+
+  .histox-hero::after {
+    inset: 0 0 0 52%;
+    opacity: 0.1;
+  }
+
+  .histox-navbar-brand__mark {
+    height: 1.85rem;
+    width: 1.85rem;
+  }
+
+  .histox-navbar-brand__name {
+    font-size: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .histox-button,
+  .histox-home-grid .sd-card {
+    transition: none;
+  }
+}
+
+/* The upstream PyTorch theme ships a PyTorch-specific footer. HistoX keeps the
+   familiar dark documentation footer treatment without third-party branding. */
+.histox-footer {
+  background: var(--histox-navy-950);
+  color: rgb(255 255 255 / 76%);
+  height: auto !important;
+  margin-top: 4rem;
+  padding: 2rem max(1.5rem, calc((100vw - 1440px) / 2));
+}
+
+.histox-footer__inner {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem 2rem;
+  grid-template-columns: 1fr auto;
+}
+
+.histox-footer p {
+  margin: 0;
+}
+
+.histox-footer nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.histox-footer a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.histox-footer a:hover,
+.histox-footer a:focus-visible {
+  color: var(--histox-cyan-300);
+  text-decoration: underline;
+  text-underline-offset: 0.24rem;
+}
+
+.histox-footer__meta {
+  font-size: 0.84rem;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 720px) {
+  .histox-footer__inner {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .histox-footer nav {
+    flex-wrap: wrap;
+  }
+
+  .histox-footer__meta {
+    grid-column: auto;
+  }
 }

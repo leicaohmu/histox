@@ -3,6 +3,8 @@ import os, sys
 import importlib.machinery
 from unittest.mock import MagicMock
 
+import pytorch_sphinx_theme2
+
 sys.path.insert(0, os.path.abspath('../..'))
 
 # ── autodoc_mock_imports：Sphinx 官方机制，专为 autodoc 设计 ──────────
@@ -122,10 +124,80 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
     'myst_parser',
+    'sphinx_copybutton',
+    'sphinx_design',
     'sphinxcontrib.video',
 ]
 
-html_theme = 'sphinx_rtd_theme'
-html_logo = './_static/logo.png'
+# -- HTML theme -----------------------------------------------------------
+#
+# HistoX uses the same maintained theme family as the current PyTorch docs,
+# with a small, project-owned token layer in ``_static/custom.css``.
+html_theme = 'pytorch_sphinx_theme2'
+html_theme_path = [pytorch_sphinx_theme2.get_html_theme_path()]
+templates_path = [
+    '_templates',
+    os.path.join(os.path.dirname(pytorch_sphinx_theme2.__file__), 'templates'),
+]
+html_title = 'HistoX documentation'
+html_logo = '_static/histox-wordmark.svg'
+html_favicon = '_static/histox-mark.svg'
 html_static_path = ['_static']
 html_css_files = ['custom.css']
+
+html_theme_options = {
+    'logo': {
+        'image_light': '_static/histox-wordmark.svg',
+        'image_dark': '_static/histox-wordmark-dark.svg',
+    },
+    'show_toc_level': 2,
+    'navigation_with_keys': True,
+    'navbar_align': 'left',
+    'navbar_start': ['navbar-logo'],
+    'navbar_center': ['navbar-nav'],
+    'navbar_end': [
+        'search-field-custom',
+        'theme-switcher',
+        'navbar-icon-links',
+    ],
+    'navbar_persistent': [],
+    'header_links_before_dropdown': 6,
+    'use_edit_page_button': True,
+    'show_version_warning_banner': False,
+    'show_lf_header': False,
+    'show_lf_footer': False,
+    'show_pytorch_org_link': False,
+    'external_links': [
+        {
+            'name': 'Tutorials',
+            'url': 'https://histox.readthedocs.io/en/latest/tutorial1.html',
+        },
+    ],
+    'icon_links': [
+        {
+            'name': 'GitHub',
+            'url': 'https://github.com/leicaohmu/histox',
+            'icon': 'fa-brands fa-github',
+        },
+        {
+            'name': 'PyPI',
+            'url': 'https://pypi.org/project/histox/',
+            'icon': 'fa-brands fa-python',
+        },
+    ],
+    'pytorch_project': 'docs',
+}
+
+html_context = {
+    'github_user': 'leicaohmu',
+    'github_repo': 'histox',
+    'github_version': 'develop',
+    'doc_path': 'docs/source',
+}
+
+html_show_sphinx = False
+html_last_updated_fmt = '%b %d, %Y'
+
+# Keep interactive prompts out of copied snippets while leaving output intact.
+copybutton_prompt_text = r'>>> |\.\.\. '
+copybutton_prompt_is_regexp = True
