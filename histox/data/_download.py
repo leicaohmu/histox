@@ -247,6 +247,51 @@ def download_dataset(
     This generic adapter accepts only records with ``access="open"`` and direct
     HTTP(S) asset URLs. Controlled-access datasets require their own official
     provider client and user credentials.
+
+    Args:
+        dataset: Built-in registry name or a provider-created record.
+        version: Optional version for a registry name. Cannot be combined with
+            a :class:`DatasetRecord`.
+        path: Optional storage root. See :func:`resolve_cache_root` for the
+            default resolution order.
+        overwrite: Replace an existing asset that fails size or checksum
+            validation. Defaults to ``False``.
+        resume: Request the remaining bytes when a partial file exists.
+            Defaults to ``True``; HistoX restarts safely if the provider does
+            not honor the Range request.
+        timeout: Per-request timeout in seconds. Defaults to ``60``.
+        chunk_size: Streaming and checksum chunk size in bytes. Defaults to
+            one MiB.
+
+    Returns:
+        DownloadResult: Downloaded, reused, and resumed paths plus the local
+        provenance path.
+
+    Raises:
+        DatasetAccessError: If the record is not open access.
+        DatasetConflictError: If an existing destination is unsafe or invalid
+            and ``overwrite`` is false.
+        DatasetDownloadError: If a direct URL is missing or the HTTP transfer
+            fails.
+        DatasetIntegrityError: If a transferred asset fails size or checksum
+            validation.
+        TypeError: If ``dataset``, ``timeout``, or ``chunk_size`` has an
+            unsupported type.
+        ValueError: If ``version`` conflicts with a record or a numeric option
+            is not positive.
+
+    Examples:
+        Download the built-in 11 KB smoke fixture into a local cache:
+
+        >>> from histox import data
+        >>> result = data.download_dataset(
+        ...     "histox-download-fixture", path="histox-data"
+        ... )
+        >>> result.provenance_path.name
+        '.histox-provenance.json'
+
+        Calling the function again verifies and reuses the cached file rather
+        than transferring it again.
     """
 
     if isinstance(timeout, bool) or not isinstance(timeout, (int, float)):

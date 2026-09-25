@@ -131,7 +131,19 @@ def _load_registry() -> Tuple[
 
 
 def list_datasets() -> Tuple[DatasetRecord, ...]:
-    """Return all built-in dataset records, ordered by name and version."""
+    """Return all built-in dataset records, ordered by name and version.
+
+    Returns:
+        Tuple[DatasetRecord, ...]: Immutable dataset records in deterministic
+        name and version order.
+
+    Examples:
+        >>> from histox import data
+        >>> for record in data.list_datasets():
+        ...     print(record.name, record.version)
+        histox-download-fixture 1.0
+        histox-metadata-fixture 1.0
+    """
 
     records, _ = _load_registry()
     return tuple(records[key] for key in sorted(records))
@@ -141,6 +153,24 @@ def get_dataset(name: str, version: Optional[str] = None) -> DatasetRecord:
     """Return one built-in dataset record.
 
     If ``version`` is omitted, the registry's explicit default version is used.
+
+    Args:
+        name: Case-insensitive built-in dataset name.
+        version: Dataset version. Uses the registry default when omitted.
+
+    Returns:
+        DatasetRecord: Versioned provider, access, citation, task, and asset
+        metadata.
+
+    Raises:
+        ValueError: If ``name`` is empty.
+        DatasetNotFoundError: If the name or selected version is not present.
+
+    Examples:
+        >>> from histox import data
+        >>> record = data.get_dataset("HISTOX-DOWNLOAD-FIXTURE")
+        >>> record.version, record.access, record.assets[0].path
+        ('1.0', 'open', 'LICENSE')
     """
 
     if not isinstance(name, str) or not name.strip():

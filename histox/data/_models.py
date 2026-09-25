@@ -247,7 +247,16 @@ class DownloadPlan:
 
 @dataclass(frozen=True)
 class DownloadResult:
-    """Completed dataset transfer and its local provenance record."""
+    """Completed dataset transfer and its local provenance record.
+
+    Attributes:
+        dataset: Versioned dataset metadata used for the transfer.
+        destination: Version-specific local dataset directory.
+        provenance_path: Machine-readable JSON record written after success.
+        downloaded_files: Assets transferred during this call.
+        reused_files: Existing assets that passed validation.
+        resumed_files: Transferred assets that continued from ``.part`` files.
+    """
 
     dataset: DatasetRecord
     destination: Path

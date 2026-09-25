@@ -24,6 +24,22 @@ def resolve_cache_root(path: Optional[PathLike] = None) -> Path:
 
     Resolution order is an explicit ``path``, ``HISTOX_CACHE_DIR``,
     ``XDG_CACHE_HOME/histox``, then ``~/.cache/histox``.
+
+    Args:
+        path: Optional explicit cache root. ``~`` is expanded, but the path is
+            not created.
+
+    Returns:
+        pathlib.Path: Resolved cache root.
+
+    Raises:
+        TypeError: If ``path`` is not a string or :class:`pathlib.Path`.
+        ValueError: If an explicit string path is empty.
+
+    Examples:
+        >>> from histox import data
+        >>> data.resolve_cache_root("~/histox-data").name
+        'histox-data'
     """
 
     if path is not None:
@@ -55,8 +71,34 @@ def plan_download(
     """Build a read-only plan for dataset assets.
 
     ``dataset`` may be a built-in registry name or a provider-created
-    :class:`DatasetRecord`.  ``path`` is the storage root; the resolved dataset
-    destination is ``<path>/<name>/<version>``.  No directories are created.
+    :class:`DatasetRecord`. ``path`` is the storage root; the resolved dataset
+    destination is ``<path>/<name>/<version>``. No directories are created.
+
+    Args:
+        dataset: Built-in registry name or a provider-created record.
+        version: Optional version for a registry name. Cannot be combined with
+            a :class:`DatasetRecord`.
+        path: Optional storage root. See :func:`resolve_cache_root` for the
+            default resolution order.
+
+    Returns:
+        DownloadPlan: Read-only local state and expected transfer size for all
+        assets.
+
+    Raises:
+        TypeError: If ``dataset`` has an unsupported type.
+        ValueError: If ``version`` is combined with a record.
+        DatasetNotFoundError: If a registry name or version is unknown.
+
+    Examples:
+        >>> from histox import data
+        >>> plan = data.plan_download(
+        ...     "histox-download-fixture", path="histox-data"
+        ... )
+        >>> plan.destination.as_posix()
+        'histox-data/histox-download-fixture/1.0'
+        >>> len(plan.items), plan.total_size_bytes
+        (1, 11357)
     """
 
     if isinstance(dataset, DatasetRecord):
