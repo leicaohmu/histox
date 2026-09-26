@@ -5,7 +5,7 @@
 Layer Activations
 =================
 
-Investigating the latent space of a neural network can provide useful insights into the structure of your data and what models have learned during training. Slideflow provides several tools for post-hoc latent space analysis of trained neural networks, primarily by calculating activations at one or more neural network layers for all images in a dataset. In the next sections, we will take a look at how these layer activations can be calculated for downstream analysis and provide examples of analyses that can be performed.
+Investigating the latent space of a neural network can provide useful insights into the structure of your data and what models have learned during training. HistoX provides several tools for post-hoc latent space analysis of trained neural networks, primarily by calculating activations at one or more neural network layers for all images in a dataset. In the next sections, we will take a look at how these layer activations can be calculated for downstream analysis and provide examples of analyses that can be performed.
 
 Calculating Layer Activations
 *****************************
@@ -28,9 +28,9 @@ Once initialized, the resulting object can be called on a batch of images and wi
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    sepconv3 = sf.model.Features('model/path', layer='sep_conv_3')
+    sepconv3 = hx.model.Features('model/path', layer='sep_conv_3')
     for img_batch in dataset:
         postconv_activations = sepconv3(img_batch)
 
@@ -38,7 +38,7 @@ If ``layer`` is a list of layer names, activations at each layer will be calcula
 
 .. code-block:: python
 
-    sepconv3_and_preds = sf.model.Features(..., include_preds=True)
+    sepconv3_and_preds = hx.model.Features(..., include_preds=True)
     layer_activations, preds = sepconv3_and_preds(img_batch)
 
 .. note::
@@ -54,10 +54,10 @@ Layer activations can also be calculated across an entire slide using the same :
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    slide = sf.WSI(...)
-    postconv = sf.model.Features('/model/path', layers='postconv')
+    slide = hx.WSI(...)
+    postconv = hx.model.Features('/model/path', layers='postconv')
     feature_grid = postconv(slide)
     print(feature_grid.shape)
 
@@ -82,10 +82,10 @@ Alternatively, you can create an instance of this class directly:
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     dataset = P.dataset(tile_px=299, tile_um=302)
-    dts_ftrs = sf.DatasetFeatures(
+    dts_ftrs = hx.DatasetFeatures(
       model='/path/to/trained_model',
       dataset=dataset,
     )
@@ -145,7 +145,7 @@ Finally, we can use :meth:`SlideMap.umap_transform` to project new data into two
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     import numpy as np
 
     # Create a SlideMap using layer activations reduced with UMAP
@@ -251,7 +251,7 @@ You can also generate a mosaic map where the images are tuples of `(tfrecord, tf
     coords = [(0.2, 0.9), ...]
 
     # Generate mosaic map
-    mosaic = sf.Mosaic(
+    mosaic = hx.Mosaic(
         images=[(tfr, idx) for tfr, idx in zip(tfrecords, idx)],
         coords=coords
     )

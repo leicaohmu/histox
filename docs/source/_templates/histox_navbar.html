@@ -1,0 +1,71 @@
+{% set tutorial_pages = [
+  'tutorials', 'tutorials_training', 'tutorials_evaluation',
+  'tutorials_slides', 'tutorials_mil', 'tutorial1', 'tutorial2',
+  'tutorial3', 'tutorial4', 'tutorial5', 'tutorial6', 'tutorial7',
+  'tutorial8'
+] %}
+{% set is_project_page = pagename == 'index' %}
+{% set is_tutorial_page = pagename in tutorial_pages %}
+
+<nav class="histox-global-nav{% if is_project_page %} histox-global-nav--project{% elif is_tutorial_page %} histox-global-nav--tutorial{% else %} histox-global-nav--docs{% endif %}"
+     aria-label="{% if is_project_page %}Project navigation{% elif is_tutorial_page %}Tutorial navigation{% else %}Documentation navigation{% endif %}">
+  {% if is_project_page %}
+    <a href="{{ pathto('quickstart') }}">Learn</a>
+    <a href="{{ pathto('tutorials') }}">Tutorials</a>
+    <a href="{{ pathto('data') }}">Data</a>
+    <a href="{{ pathto('docs') }}">Docs</a>
+    <a href="https://github.com/leicaohmu/histox">GitHub</a>
+    <a class="histox-global-nav__install" href="{{ pathto('installation') }}">Install</a>
+  {% elif is_tutorial_page %}
+    <a class="histox-tutorial-home{% if pagename == 'tutorials' %} is-active{% endif %}" href="{{ pathto('tutorials') }}">Tutorials</a>
+
+    <div class="histox-tutorial-category{% if pagename in ['tutorials_training', 'tutorial1', 'tutorial2', 'tutorial3', 'tutorial7'] %} is-current{% endif %}">
+      <a class="histox-tutorial-category__label" href="{{ pathto('tutorials_training') }}">Training</a>
+      <button class="histox-tutorial-category__toggle" type="button" aria-label="Show Training tutorials" aria-expanded="false"></button>
+      <div class="histox-tutorial-category__panel">
+        <a href="{{ pathto('tutorial1') }}">Train a first model</a>
+        <a href="{{ pathto('tutorial2') }}">Control the training loop</a>
+        <a href="{{ pathto('tutorial3') }}">Use a custom architecture</a>
+        <a href="{{ pathto('tutorial7') }}">Add custom augmentations</a>
+      </div>
+    </div>
+
+    <div class="histox-tutorial-category{% if pagename in ['tutorials_evaluation', 'tutorial4', 'tutorial5'] %} is-current{% endif %}">
+      <a class="histox-tutorial-category__label" href="{{ pathto('tutorials_evaluation') }}">Evaluation</a>
+      <button class="histox-tutorial-category__toggle" type="button" aria-label="Show Evaluation tutorials" aria-expanded="false"></button>
+      <div class="histox-tutorial-category__panel">
+        <a href="{{ pathto('tutorial4') }}">Evaluate and build heatmaps</a>
+        <a href="{{ pathto('tutorial5') }}">Create a mosaic map</a>
+      </div>
+    </div>
+
+    <div class="histox-tutorial-category{% if pagename in ['tutorials_slides', 'tutorial6'] %} is-current{% endif %}">
+      <a class="histox-tutorial-category__label" href="{{ pathto('tutorials_slides') }}">Slides</a>
+      <button class="histox-tutorial-category__toggle" type="button" aria-label="Show Slides tutorials" aria-expanded="false"></button>
+      <div class="histox-tutorial-category__panel">
+        <a href="{{ pathto('tutorial6') }}">Write a custom slide filter</a>
+      </div>
+    </div>
+
+    <div class="histox-tutorial-category{% if pagename in ['tutorials_mil', 'tutorial8'] %} is-current{% endif %}">
+      <a class="histox-tutorial-category__label" href="{{ pathto('tutorials_mil') }}">MIL</a>
+      <button class="histox-tutorial-category__toggle" type="button" aria-label="Show MIL tutorials" aria-expanded="false"></button>
+      <div class="histox-tutorial-category__panel histox-tutorial-category__panel--right">
+        <a href="{{ pathto('tutorial8') }}">Train a MIL model</a>
+      </div>
+    </div>
+
+    <a class="histox-global-nav__return" href="{{ pathto('docs') }}">Docs</a>
+  {% else %}
+    <span class="histox-version">v{{ release }}</span>
+    <a href="{{ pathto('installation') }}">Install HistoX</a>
+    <a href="{{ pathto('user_guide') }}">User Guide</a>
+    <a href="{{ pathto('api') }}">Reference API</a>
+    <a href="{{ pathto('developer') }}">Developer Notes</a>
+    <a href="{{ pathto('tutorials') }}">Tutorials</a>
+  {% endif %}
+
+  {% if is_project_page %}
+    <a class="histox-global-nav__search" href="{{ pathto('search') }}" aria-label="Search documentation"><span aria-hidden="true"></span></a>
+  {% endif %}
+</nav>

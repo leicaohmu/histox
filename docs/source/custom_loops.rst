@@ -10,7 +10,7 @@ The :class:`histox.Dataset` class includes functions to prepare a Tensorflow ``t
 
 .. code-block:: python
 
-    from slideflow import Project
+    from histox import Project
 
     P = Project('/project/path', ...)
     dts = P.dataset(tile_px=299, tile_um=302)

@@ -3,15 +3,15 @@
 Setting up a Project
 ====================
 
-Slideflow :ref:`Projects <project>` organize datasets, annotations, and results into a unified directory and provide a high-level API for common tasks.
+HistoX :ref:`Projects <project>` organize datasets, annotations, and results into a unified directory and provide a high-level API for common tasks.
 
-Use :func:`slideflow.create_project` to create a new project, supplying an annotations file (with patient labels) and path to slides. A new dataset source (collection of slides and tfrecords) will be configured. Additional keyword arguments can be used to specify the location of trecords and saved models.
+Use :func:`histox.create_project` to create a new project, supplying an annotations file (with patient labels) and path to slides. A new dataset source (collection of slides and tfrecords) will be configured. Additional keyword arguments can be used to specify the location of trecords and saved models.
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    P = sf.create_project(
+    P = hx.create_project(
       root='project_path',
       annotations="./annotations.csv"
       slides='/path/to/slides/'
@@ -44,8 +44,8 @@ Once a project has been initialized at a directory, you may then load the projec
 
 .. code-block:: python
 
-    import slideflow as sf
-    P = sf.load_project('/path/to/project/directory')
+    import histox as hx
+    P = hx.load_project('/path/to/project/directory')
 
 .. _dataset_sources:
 
@@ -66,7 +66,7 @@ A :ref:`dataset source <datasets_and_validation>` is a collection of slides, Reg
       }
     }
 
-When a project is created with :func:`slideflow.create_project`, a dataset source is automatically created. You can change where slides and extracted tiles are stored by editing the project's dataset configuration file.
+When a project is created with :func:`histox.create_project`, a dataset source is automatically created. You can change where slides and extracted tiles are stored by editing the project's dataset configuration file.
 
 It is possible for a project to have multiple dataset sources - for example, you may choose to organize data from multiple institutions into separate sources. You can add a new dataset source to a project with :meth:`Project.add_source`, which will update the project dataset configuration file accordingly.
 
@@ -112,4 +112,4 @@ An example annotations file is generated each time a new project is initialized.
 
     P.create_blank_annotations()
 
-The ``slide`` column may not need to be explicitly set in the annotations file by the user. Rather, once a dataset has been set up, slideflow will search through the linked slide directories and attempt to match slides to entries in the annotations file using **patient**. Entries that are blank in the **slide** column will be auto-populated with any detected and matching slides, if available.
+The ``slide`` column may not need to be explicitly set in the annotations file by the user. Rather, once a dataset has been set up, histox will search through the linked slide directories and attempt to match slides to entries in the annotations file using **patient**. Entries that are blank in the **slide** column will be auto-populated with any detected and matching slides, if available.

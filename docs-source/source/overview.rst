@@ -1,9 +1,9 @@
 Overview
 ========
 
-Slideflow provides tools for easily building and testing a variety of deep learning models for digital pathology.
+HistoX provides tools for easily building and testing a variety of deep learning models for digital pathology.
 
-This section provides a high-level overview of the most common application: building and testing a weakly supervised predictive model. Slideflow supports many other tasks, including :ref:`multiple-instance learning (MIL) <mil>`, :ref:`self-supervised learning (SSL) <simclr_ssl>`, :ref:`generative adversarial networks (GANs) <stylegan>`, :ref:`tissue <segmentation>` and :ref:`cell <cellseg>` segmentation, and :ref:`deployment & visualization <studio>`, which are discussed in subsequent sections.
+This section provides a high-level overview of the most common application: building and testing a weakly supervised predictive model. HistoX supports many other tasks, including :ref:`multiple-instance learning (MIL) <mil>`, :ref:`self-supervised learning (SSL) <simclr_ssl>`, :ref:`generative adversarial networks (GANs) <stylegan>`, :ref:`tissue <segmentation>` and :ref:`cell <cellseg>` segmentation, and :ref:`deployment & visualization <studio>`, which are discussed in subsequent sections.
 
 .. figure:: overview.png
 
@@ -60,6 +60,6 @@ Step 5: Make a Mosaic map
 
 Step 6: Live visualization
 **************************
-- **Deploy the model**: Finally, use a trained model to visualize predictions for whole-slide images with the interactive tool :ref:`Slideflow Studio <studio>`. This whole-slide image viewer includes deep learning tools enabling you to visualize model predictions on whole-slide images, standard JPG/PNG files, real-time camera feeds, and even Generative Adversarial Network (GAN)-generated images.
+- **Deploy the model**: Finally, use a trained model to visualize predictions for whole-slide images with the interactive tool :ref:`HistoX Studio <studio>`. This whole-slide image viewer includes deep learning tools enabling you to visualize model predictions on whole-slide images, standard JPG/PNG files, real-time camera feeds, and even Generative Adversarial Network (GAN)-generated images.
 
 .. image:: workbench_preview.png

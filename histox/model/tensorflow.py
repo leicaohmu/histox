@@ -280,7 +280,7 @@ class ModelParams(_base._ModelParams):
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
 
         Returns:
@@ -364,7 +364,7 @@ class ModelParams(_base._ModelParams):
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
         """
         tile_image_model, model_inputs = self._build_base(pretrain, load_method)
@@ -469,7 +469,7 @@ class ModelParams(_base._ModelParams):
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
         """
         activation = 'linear'
@@ -585,7 +585,7 @@ class ModelParams(_base._ModelParams):
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
         """
 
@@ -1103,7 +1103,7 @@ class Trainer:
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
             config (dict, optional): Training configuration dictionary, used
                 for logging and image format verification. Defaults to None.
@@ -2194,7 +2194,7 @@ class SurvivalTrainer(RegressionTrainer):
 
 class Features(BaseFeatureExtractor):
     """Interface for obtaining predictions and features from intermediate layer
-    activations from Slideflow models.
+    activations from HistoX models.
 
     Use by calling on either a batch of images (returning outputs for a single
     batch), or by calling on a :class:`histox.WSI` object, which will
@@ -2248,7 +2248,7 @@ class Features(BaseFeatureExtractor):
         predictions are returned last.
 
         Args:
-            path (str): Path to saved Slideflow model.
+            path (str): Path to saved HistoX model.
             layers (list(str), optional): Layers from which to generate
                 activations.  The post-convolution activation layer is accessed
                 via 'postconv'. Defaults to 'postconv'.
@@ -2260,7 +2260,7 @@ class Features(BaseFeatureExtractor):
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
         """
         super().__init__('tensorflow', include_preds=include_preds)
@@ -2597,17 +2597,17 @@ def load(
     custom_objects: Optional[Dict[str, Any]] = None,
     training: bool = False
 ) -> tf.keras.models.Model:
-    """Load a model trained with Slideflow.
+    """Load a model trained with HistoX.
 
     Args:
-        path (str): Path to saved model. Must be a model trained in Slideflow.
+        path (str): Path to saved model. Must be a model trained in HistoX.
         method (str): Method to use when loading the model; either 'full' or
             'weights'. If 'full', will load the saved model with
             ``tf.keras.models.load_model()``. If 'weights', will read the
             ``params.json`` configuration file, build the model architecture,
             and then load weights from the given model with
             ``Model.load_weights()``. Loading with 'full' may improve
-            compatibility across Slideflow versions. Loading with 'weights'
+            compatibility across HistoX versions. Loading with 'weights'
             may improve compatibility across hardware & environments.
         custom_objects (dict, Optional): Dictionary mapping names
             (strings) to custom classes or functions. Defaults to None.

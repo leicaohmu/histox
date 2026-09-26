@@ -1,6 +1,10 @@
 Tutorial 5: Creating a mosaic map
 =================================
 
+.. raw:: html
+
+   <div class="histox-tutorial-meta" aria-label="Tutorial status"><span><strong>Status</strong> Compatibility tutorial</span><span><strong>Runtime verification</strong> Pending</span><a href="https://github.com/leicaohmu/histox/blob/develop/docs/source/tutorial5.rst">View source</a></div>
+
 Mosaic maps are useful explainability tools used to describe the landscape of image features a model learned during training. In this tutorial, we will walk through the process of creating a mosaic map, reproducing results similar to what is shown in Figure 5 of `this article by Dolezal et al <https://arxiv.org/abs/2204.04516>`_.
 
 
@@ -11,10 +15,10 @@ The first step is to train a model, as described in :ref:`tutorial1`. For the pu
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a preconfigured project at some directory
-    P = sf.Project('/mnt/data/projects/TCGA_LUNG')
+    P = hx.Project('/mnt/data/projects/TCGA_LUNG')
 
     # Extract tiles
     P.extract_tiles(
@@ -24,7 +28,7 @@ The first step is to train a model, as described in :ref:`tutorial1`. For the pu
     )
 
     # Configure model parameters
-    hp = sf.ModelParams(
+    hp = hx.ModelParams(
       tile_px=299,
       tile_um=302,
       epochs=[1],

@@ -1,0 +1,2601 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>histox.mosaic &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=3ca669d2"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/histox/mosaic';</script>
+    <script src="../../_static/tutorials.js?v=3b8eb957"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="histox.mosaic - Documentation for histox, part of the PyTorch ecosystem.">
+
+
+
+
+
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
+
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
+
+  }
+</style>
+
+
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="../../_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="../../_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
+
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="../../index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="../../index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../../installation.html">Install HistoX</a>
+    <a href="../../user_guide.html">User Guide</a>
+    <a href="../../api.html">Reference API</a>
+    <a href="../../developer.html">Developer Notes</a>
+    <a href="../../tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../../installation.html">Install HistoX</a>
+    <a href="../../user_guide.html">User Guide</a>
+    <a href="../../api.html">Reference API</a>
+    <a href="../../developer.html">Developer Notes</a>
+    <a href="../../tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+
+
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="../../docs.html">Documentation home</a></li>
+    <li><a class="nav-link" href="../../user_guide.html">User guide</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="../../installation.html">Installation</a></li>
+    <li><a class="nav-link" href="../../overview.html">Overview</a></li>
+    <li><a class="nav-link" href="../../quickstart.html">Quickstart</a></li>
+    <li><a class="nav-link" href="../../project_setup.html">Project setup</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="../../data.html">Public data</a></li>
+    <li><a class="nav-link" href="../../datasets_and_val.html">Datasets</a></li>
+    <li><a class="nav-link" href="../../slide_processing.html">Slide processing</a></li>
+    <li><a class="nav-link" href="../../features.html">Feature extraction</a></li>
+    <li><a class="nav-link" href="../../segmentation.html">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="../../cellseg.html">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link" href="../../training.html">Training</a></li>
+    <li><a class="nav-link" href="../../evaluation.html">Evaluation</a></li>
+    <li><a class="nav-link" href="../../posthoc.html">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="../../uq.html">Uncertainty</a></li>
+    <li><a class="nav-link" href="../../mil.html">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="../../ssl.html">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="../../stylegan.html">Generative models</a></li>
+    <li><a class="nav-link" href="../../saliency.html">Interpretation</a></li>
+    <li><a class="nav-link" href="../../custom_loops.html">Custom loops</a></li>
+    <li><a class="nav-link" href="../../studio.html">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="../../developer.html">Developer notes home</a></li>
+    <li><a class="nav-link" href="../../extensions.html">Extensions</a></li>
+    <li><a class="nav-link" href="../../tfrecords.html">TFRecords</a></li>
+    <li><a class="nav-link" href="../../dataloaders.html">Dataloaders</a></li>
+    <li><a class="nav-link" href="../../custom_extractors.html">Custom extractors</a></li>
+    <li><a class="nav-link" href="../../tile_labels.html">Tile labels</a></li>
+    <li><a class="nav-link" href="../../plugins.html">Plugins</a></li>
+    <li><a class="nav-link" href="../../troubleshooting.html">Troubleshooting</a></li>
+    <li><a class="nav-link" href="../../io_tensorflow.html">TensorFlow data</a></li>
+    <li><a class="nav-link" href="../../model_tensorflow.html">TensorFlow models</a></li>
+  </ul>
+</nav>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+
+<div id="rtd-footer-container"></div>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">histox.mosaic</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="../index.html">
+      <meta itemprop="name" content="Module code">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="histox.mosaic">
+      <meta itemprop="position" content="2">
+    </div>
+  </div>
+
+  
+  
+
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for histox.mosaic</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing.dummy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pool</span> <span class="k">as</span> <span class="n">DPool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">join</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.progress</span><span class="w"> </span><span class="kn">import</span> <span class="n">track</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="kn">import</span> <span class="n">errors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">SlideMap</span><span class="p">,</span> <span class="n">get_centroid_index</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_centroid_index</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">histox.norm</span><span class="w"> </span><span class="kn">import</span> <span class="n">StainNormalizer</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">process_tile_image</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">decode_kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">point_index</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">display_size</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">image</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">point_index</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">tfr</span><span class="p">,</span> <span class="n">tfr_idx</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">get_tfrecord_by_index</span><span class="p">(</span><span class="n">tfr</span><span class="p">,</span> <span class="n">tfr_idx</span><span class="p">)[</span><span class="s1">&#39;image_raw&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">point_index</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">hx</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">is_tensorflow_tensor</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">decode_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="o">**</span><span class="n">decode_kwargs</span><span class="p">)</span>
+    <span class="n">extent</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">x</span> <span class="o">-</span> <span class="n">display_size</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">x</span> <span class="o">+</span> <span class="n">display_size</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">y</span> <span class="o">-</span> <span class="n">display_size</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">y</span> <span class="o">+</span> <span class="n">display_size</span><span class="o">/</span><span class="mi">2</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">point_index</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">alpha</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">decode_image</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">normalizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;StainNormalizer&quot;</span><span class="p">],</span>
+    <span class="n">img_format</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal method to convert an image string (as stored in TFRecords)</span>
+<span class="sd">    to an RGB array.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">normalizer</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">rgb_to_rgb</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">img_format</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;jpeg&#39;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">jpeg_to_rgb</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">img_format</span> <span class="o">==</span> <span class="s1">&#39;png&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">png_to_rgb</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error encountered during image normalization, &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;displaying image tile non-normalized. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">image</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">image_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">tile_image_bgr</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imdecode</span><span class="p">(</span><span class="n">image_arr</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_COLOR</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">tile_image_bgr</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_corresponding_points</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[((</span><span class="n">points</span><span class="o">.</span><span class="n">grid_x</span> <span class="o">==</span> <span class="n">row</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">grid_y</span> <span class="o">==</span> <span class="n">row</span><span class="o">.</span><span class="n">y</span><span class="p">))]</span><span class="o">.</span><span class="n">index</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Mosaic">
+<a class="viewcode-back" href="../../mosaic.html#histox.Mosaic">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Mosaic</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Visualization of plotted image tiles.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">images</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SlideMap</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]],</span>
+        <span class="n">coords</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">tfrecords</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">normalizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;StainNormalizer&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">normalizer_source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">grid_kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a mosaic map, which visualizes plotted image tiles.</span>
+
+<span class="sd">        Creating a mosaic map requires two components: a set of images and</span>
+<span class="sd">        corresponding coordinates. Images and coordinates can either be manually</span>
+<span class="sd">        provided, or the mosaic can dynamically read images from TFRecords as</span>
+<span class="sd">        needed, reducing memory requirements.</span>
+
+<span class="sd">        The first argument provides the images, and may be any of the following:</span>
+
+<span class="sd">        - A list or array of images (np.ndarray, HxWxC)</span>
+<span class="sd">        - A list of tuples, containing ``(slide_name, tfrecord_index)``</span>
+<span class="sd">        - A ``histox.SlideMap`` object</span>
+
+<span class="sd">        The second argument provides the coordinates, and may be any of:</span>
+
+<span class="sd">        - A list or array of (x, y) coordinates for each image</span>
+<span class="sd">        - None (if the first argument is a ``SlideMap``, which has coordinates)</span>
+
+<span class="sd">        If images are to be read dynamically from tfrecords (with a ``SlideMap``,</span>
+<span class="sd">        or by providing tfrecord indices directly), the keyword argument</span>
+<span class="sd">        ``tfrecords`` must be specified with paths to tfrecords.</span>
+
+<span class="sd">        Published examples:</span>
+
+<span class="sd">        - Figure 4: https://doi.org/10.1038/s41379-020-00724-3</span>
+<span class="sd">        - Figure 6: https://doi.org/10.1038/s41467-022-34025-x</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">            Generate a mosaic map from a list of images and coordinates.</span>
+
+<span class="sd">                .. code-block:: python</span>
+
+<span class="sd">                    # Example data (images are HxWxC, np.ndarray)</span>
+<span class="sd">                    images = [np.ndarray(...), ...]</span>
+<span class="sd">                    coords = [(0.2, 0.9), ...]</span>
+
+<span class="sd">                    # Generate the mosaic</span>
+<span class="sd">                    mosaic = Mosaic(images, coordinates)</span>
+
+<span class="sd">            Generate a mosaic map from tuples of TFRecord paths and indices.</span>
+
+<span class="sd">                .. code-block:: python</span>
+
+<span class="sd">                    # Example data</span>
+<span class="sd">                    paths = [&#39;/path/to/tfrecord.tfrecords&#39;, ...]</span>
+<span class="sd">                    idx = [253, 112, ...]</span>
+<span class="sd">                    coords = [(0.2, 0.9), ...]</span>
+<span class="sd">                    tuples = [(tfr, idx) for tfr, i in zip(paths, idx)]</span>
+
+<span class="sd">                    # Generate mosaic map</span>
+<span class="sd">                    mosaic = hx.Mosaic(tuples, coords)</span>
+
+<span class="sd">            Generate a mosaic map from a SlideMap and list of TFRecord paths.</span>
+
+<span class="sd">                .. code-block:: python</span>
+
+<span class="sd">                    # Prepare a SlideMap from a project</span>
+<span class="sd">                    P = hx.Project(&#39;/project/path&#39;)</span>
+<span class="sd">                    ftrs = P.generate_features(&#39;/path/to/model&#39;)</span>
+<span class="sd">                    slide_map = hx.SlideMap.from_features(ftrs)</span>
+
+<span class="sd">                    # Generate mosaic</span>
+<span class="sd">                    mosaic = Mosaic(slide_map, tfrecords=ftrs.tfrecords)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            images (list(np.ndarray), tuple, :class:`histox.SlideMap`):</span>
+<span class="sd">                Images from which to generate the mosaic. May be a list or</span>
+<span class="sd">                array of images (np.ndarray, HxWxC), a list of tuples,</span>
+<span class="sd">                containing ``(slide_name, tfrecord_index)``, or a</span>
+<span class="sd">                ``histox.SlideMap`` object.</span>
+<span class="sd">            coords (list(str)): Coordinates for images. May be a list or array</span>
+<span class="sd">                of (x, y) coordinates for each image (of same length</span>
+<span class="sd">                as ``images``), or None (if ``images`` is a ``SlideMap`` object).</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            tfrecords (list(str), optional): TFRecord paths. Required if</span>
+<span class="sd">                ``images`` is either a ``SlideMap`` object or a list of tuples</span>
+<span class="sd">                containing ``(slide_name, tfrecord_index)``. Defaults to None.</span>
+<span class="sd">            num_tiles_x (int, optional): Mosaic map grid size. Defaults to 50.</span>
+<span class="sd">            tile_select (str, optional): &#39;first&#39;, &#39;nearest&#39;, or &#39;centroid&#39;.</span>
+<span class="sd">                Determines how to choose a tile for display on each grid space.</span>
+<span class="sd">                If &#39;first&#39;, will display the first valid tile in a grid space</span>
+<span class="sd">                (fastest; recommended). If &#39;nearest&#39;, will display tile nearest</span>
+<span class="sd">                to center of grid space. If &#39;centroid&#39;, for each grid, will</span>
+<span class="sd">                calculate which tile is nearest to centroid tile_meta.</span>
+<span class="sd">                Defaults to &#39;nearest&#39;.</span>
+<span class="sd">            tile_meta (dict, optional): Tile metadata, used for tile_select.</span>
+<span class="sd">                Dictionary should have slide names as keys, mapped to list of</span>
+<span class="sd">                metadata (length of list = number of tiles in slide).</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            normalizer ((str or :class:`histox.norm.StainNormalizer`), optional):</span>
+<span class="sd">                Normalization strategy to use on image tiles. Defaults to None.</span>
+<span class="sd">            normalizer_source (str, optional): Stain normalization preset or</span>
+<span class="sd">                path to a source image. Valid presets include &#39;v1&#39;, &#39;v2&#39;, and</span>
+<span class="sd">                &#39;v3&#39;. If None, will use the default present (&#39;v3&#39;).</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tile_point_distances</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type: List[Dict]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slide_map</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span> <span class="o">=</span> <span class="n">tfrecords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_images</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_coords</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># type: np.ndarray</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span> <span class="o">=</span> <span class="p">[]</span>      <span class="c1"># type: np.ndarray</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">SlideMap</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">tfrecords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If building a Mosaic from a SlideMap, must &quot;</span>
+                                 <span class="s2">&quot;provide paths to tfrecords via keyword arg &quot;</span>
+                                 <span class="s2">&quot;tfrecords=...&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tfrecords</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">tfrecords</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">TFRecordsNotFoundError</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_from_slidemap</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_from_tuples</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_from_coords</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+        <span class="c1"># ---------------------------------------------------------------------</span>
+
+        <span class="c1"># Detect tfrecord image format</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_format</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">detect_tfrecord_format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">img_format</span> <span class="o">=</span> <span class="s1">&#39;numpy&#39;</span>
+
+        <span class="c1"># Setup normalization</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">normalizer</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using realtime </span><span class="si">{</span><span class="n">normalizer</span><span class="si">}</span><span class="s1"> normalization&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">autoselect</span><span class="p">(</span>
+                <span class="n">method</span><span class="o">=</span><span class="n">normalizer</span><span class="p">,</span>
+                <span class="n">source</span><span class="o">=</span><span class="n">normalizer_source</span>
+            <span class="p">)</span>  <span class="c1"># type: Optional[StainNormalizer]</span>
+        <span class="k">elif</span> <span class="n">normalizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">normalizer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_grid</span><span class="p">(</span><span class="o">**</span><span class="n">grid_kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_from_coords</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">images</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">coords</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare the Mosaic map from a set of images and coordinates.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading coordinates and plotting points...&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images</span> <span class="o">=</span> <span class="n">images</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type: List[int]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s1">&#39;coord&#39;</span><span class="p">:</span> <span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;global_index&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;has_paired_tile&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">))]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_from_slidemap</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slide_map</span><span class="p">:</span> <span class="n">SlideMap</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">tile_meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare the Mosaic map from a ``SlideMap`` object.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading coordinates from SlideMap and plotting points...&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slide_map</span> <span class="o">=</span> <span class="n">slide_map</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># type: Dict[str, List[int]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">slide_map</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;has_paired_tile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;points_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="k">if</span> <span class="n">tile_meta</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">tile_meta</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">slide</span><span class="p">][</span><span class="n">row</span><span class="o">.</span><span class="n">tfr_index</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loading complete.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_from_tuples</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">images</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+        <span class="n">coords</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare from a list of tuples with TFRecord names/indices.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading coordinates from SlideMap and plotting points...&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># type: Dict[str, List[int]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">tfr</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;coord&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                <span class="s1">&#39;global_index&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+                <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;slide&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">tfr</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                          <span class="k">else</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">path_to_name</span><span class="p">(</span><span class="n">tfr</span><span class="p">)),</span>
+                <span class="s1">&#39;tfrecord&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">tfr</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span> <span class="ow">is</span> <span class="kc">None</span>
+                             <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tfrecords_from_slide</span><span class="p">(</span><span class="n">tfr</span><span class="p">)),</span>
+                <span class="s1">&#39;tfrecord_index&#39;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+                <span class="s1">&#39;has_paired_tile&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_image_from_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;tfr_index&#39;</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+            <span class="n">tfr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tfrecords_from_slide</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">slide</span><span class="p">)</span>
+            <span class="n">tfr_idx</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">tfr_index</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">tfr</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TFRecord </span><span class="si">{</span><span class="n">tfr</span><span class="si">}</span><span class="s2"> not found in slide_map&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">get_tfrecord_by_index</span><span class="p">(</span><span class="n">tfr</span><span class="p">,</span> <span class="n">tfr_idx</span><span class="p">)[</span><span class="s1">&#39;image_raw&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">image</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_tfrecords_from_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Using the internal list of TFRecord paths, returns the path to a</span>
+<span class="sd">        TFRecord for a given corresponding slide.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">tfr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">path_to_name</span><span class="p">(</span><span class="n">tfr</span><span class="p">)</span> <span class="o">==</span> <span class="n">slide</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">tfr</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to find TFRecord path for slide [green]</span><span class="si">{</span><span class="n">slide</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_initialize_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="p">,</span> <span class="n">background</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="n">background</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span>
+            <span class="n">left</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+            <span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">right</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span>
+            <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">hspace</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="s1">&#39;box&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_plot_tile_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+            <span class="n">image</span><span class="p">,</span>
+            <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span>
+            <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span>
+            <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">99</span><span class="p">,</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_finalize_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">autoscale</span><span class="p">(</span><span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tight</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_record_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;tfr_index&#39;</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+            <span class="n">tfr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tfrecords_from_slide</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">slide</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tfr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">tfr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span><span class="p">[</span><span class="n">tfr</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">tfr_index</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span><span class="p">[</span><span class="n">tfr</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">tfr_index</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span> <span class="o">+=</span> <span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decode_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="p">,</span> <span class="n">img_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">img_format</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">points_at_grid_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[((</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">grid_x</span> <span class="o">==</span> <span class="n">x</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">grid_y</span> <span class="o">==</span> <span class="n">y</span><span class="p">))]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">selected_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">selected</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_grid</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_tiles_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">tile_meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tile_select</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span>
+        <span class="n">max_dist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the mosaic map grid.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_tiles_x (int, optional): Mosaic map grid size. Defaults to 50.</span>
+<span class="sd">            tile_meta (dict, optional): Tile metadata, used for tile_select.</span>
+<span class="sd">                Dictionary should have slide names as keys, mapped to list of</span>
+<span class="sd">                metadata (length of list = number of tiles in slide).</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            tile_select (str, optional): &#39;first&#39;, &#39;nearest&#39;, or &#39;centroid&#39;.</span>
+<span class="sd">                Determines how to choose a tile for display on each grid space.</span>
+<span class="sd">                If &#39;first&#39;, will display the first valid tile in a grid space</span>
+<span class="sd">                (fastest; recommended). If &#39;nearest&#39;, will display tile nearest</span>
+<span class="sd">                to center of grid space. If &#39;centroid&#39;, for each grid, will</span>
+<span class="sd">                calculate which tile is nearest to centroid tile_meta.</span>
+<span class="sd">                Defaults to &#39;nearest&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Initial validation checks</span>
+        <span class="k">if</span> <span class="n">tile_select</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="s1">&#39;centroid&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown tile selection method </span><span class="si">{</span><span class="n">tile_select</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tile selection method: </span><span class="si">{</span><span class="n">tile_select</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_x</span> <span class="o">=</span> <span class="n">num_tiles_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_images</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Build the grid</span>
+        <span class="n">x_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">y_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">max_x</span> <span class="o">=</span> <span class="n">x_points</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">min_x</span> <span class="o">=</span> <span class="n">x_points</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">max_y</span> <span class="o">=</span> <span class="n">y_points</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">min_y</span> <span class="o">=</span> <span class="n">y_points</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s1"> points.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_x</span> <span class="o">-</span> <span class="n">min_x</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">max_y</span> <span class="o">-</span> <span class="n">min_y</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_y</span><span class="p">))),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_y</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">_grid_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">min_x</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">min_y</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_coords</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="p">)</span> <span class="o">+</span> <span class="n">_grid_offset</span>
+
+        <span class="n">points_added</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">x_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span><span class="p">,</span> <span class="p">((</span><span class="n">max_x</span> <span class="o">-</span> <span class="n">min_x</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_x</span><span class="p">))[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">y_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span><span class="p">,</span> <span class="p">((</span><span class="n">max_y</span> <span class="o">-</span> <span class="n">min_y</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tiles_y</span><span class="p">))[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;grid_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">x_bins</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;grid_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">y_bins</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;selected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">points_added</span><span class="si">}</span><span class="s1"> points added to grid&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Then, calculate distances from each point to each spot on the grid</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">select_nearest_points</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+            <span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">grid_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_coords</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="c1"># Calculate distance for each point within the grid tile from</span>
+            <span class="c1"># center of the grid tile</span>
+            <span class="n">_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_at_grid_index</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_points</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tile_select</span> <span class="o">==</span> <span class="s1">&#39;nearest&#39;</span><span class="p">:</span>
+                    <span class="n">point_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">_points</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">_points</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                        <span class="n">point_coords</span> <span class="o">-</span> <span class="n">grid_coords</span><span class="p">,</span>
+                        <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">axis</span><span class="o">=</span><span class="mf">1.</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">max_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">masked_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="p">(</span><span class="n">dist</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">max_dist</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="p">)))</span>
+                        <span class="k">if</span> <span class="n">masked_dist</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">_points</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">masked_dist</span><span class="p">)],</span> <span class="s1">&#39;selected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">_points</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dist</span><span class="p">)],</span> <span class="s1">&#39;selected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="n">tile_meta</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">MosaicError</span><span class="p">(</span>
+                        <span class="s1">&#39;Mosaic centroid option requires tile_meta.&#39;</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">centroid_index</span> <span class="o">=</span> <span class="n">get_centroid_index</span><span class="p">(</span><span class="n">_points</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">_points</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">centroid_index</span><span class="p">],</span> <span class="s1">&#39;selected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">tile_select</span> <span class="o">==</span> <span class="s1">&#39;first&#39;</span><span class="p">:</span>
+            <span class="n">grid_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;grid_x&#39;</span><span class="p">,</span> <span class="s1">&#39;grid_y&#39;</span><span class="p">])</span>
+            <span class="n">first_indices</span> <span class="o">=</span> <span class="n">grid_group</span><span class="o">.</span><span class="n">nth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">points_index</span><span class="o">.</span><span class="n">values</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">first_indices</span><span class="p">,</span> <span class="s1">&#39;selected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">tile_select</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="s1">&#39;centroid&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;selected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">dist_fn</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">select_nearest_points</span><span class="p">)</span>
+            <span class="n">pool</span> <span class="o">=</span> <span class="n">DPool</span><span class="p">(</span><span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">num_cpu</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">track</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">imap_unordered</span><span class="p">(</span><span class="n">dist_fn</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span><span class="p">))),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span><span class="p">)):</span>
+                <span class="k">pass</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Unrecognized value for tile_select: &quot;</span><span class="si">{</span><span class="n">tile_select</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+            <span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">hx</span><span class="o">.</span><span class="n">getLoggingLevel</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r\033</span><span class="s1">[K&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tile image selection complete (</span><span class="si">{</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> sec)&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export SlideMap and configuration for later loading.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): Directory in which to save configuration.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slide_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Mosaic.export() requires a Mosaic built from a SlideMap.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slide_map</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">tfr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tfr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span><span class="p">)</span>
+        <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">write_json</span><span class="p">(</span><span class="n">tfr</span><span class="p">,</span> <span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;tfrecords.json&#39;</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mosaic configuration exported to </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+        <span class="n">focus</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">focus_slide</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">background</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;#dfdfdf&#39;</span><span class="p">,</span>
+        <span class="n">pool</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes figures and places image tiles.</span>
+
+<span class="sd">        If in a Jupyter notebook, the heatmap will be displayed in the cell</span>
+<span class="sd">        output. If running via script or shell, the heatmap can then be</span>
+<span class="sd">        shown on screen using matplotlib ``plt.show()``:</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            import histox as hx</span>
+<span class="sd">            import matplotlib.pyplot as plt</span>
+
+<span class="sd">            heatmap = hx.Heatmap(...)</span>
+<span class="sd">            heatmap.plot()</span>
+<span class="sd">            plt.show()</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            figsize (Tuple[int, int], optional): Figure size. Defaults to</span>
+<span class="sd">                (200, 200).</span>
+<span class="sd">            focus (list, optional): List of tfrecords (paths) to highlight</span>
+<span class="sd">                on the mosaic. Defaults to None.</span>
+<span class="sd">            focus_slide (str, optional): Highlight tiles from this slide.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">focus</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">focus_slide</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to plot with focus; slides/tfrecords not configured.&quot;</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Initializing figure...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="n">background</span><span class="p">)</span>
+
+        <span class="c1"># Reset alpha and display size</span>
+        <span class="k">if</span> <span class="n">focus_slide</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;display_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span>
+
+        <span class="k">if</span> <span class="n">focus_slide</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_idx</span><span class="p">:</span>
+                <span class="n">_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_at_grid_index</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">idx</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">_points</span><span class="o">.</span><span class="n">empty</span> <span class="ow">and</span> <span class="n">focus_slide</span><span class="p">:</span>
+                    <span class="n">n_matching</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">_points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">_points</span><span class="o">.</span><span class="n">slide</span> <span class="o">==</span> <span class="n">focus_slide</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">_points</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_matching</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">_points</span><span class="p">)</span>
+
+        <span class="c1"># Then, pair grid tiles and points according to their distances</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Placing image tiles...&#39;</span><span class="p">)</span>
+        <span class="n">placed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">to_map</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">should_close_pool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">has_tfr</span> <span class="o">=</span> <span class="s1">&#39;tfr_index&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">columns</span>
+        <span class="n">selected_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_points</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">selected_points</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">has_tfr</span><span class="p">:</span>
+                <span class="n">tfr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tfrecords_from_slide</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">slide</span><span class="p">)</span>
+                <span class="n">tfr_idx</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">tfr_index</span>
+                <span class="k">if</span> <span class="n">tfr</span><span class="p">:</span>
+                    <span class="n">image</span> <span class="o">=</span> <span class="p">(</span><span class="n">tfr</span><span class="p">,</span> <span class="n">tfr_idx</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TFRecord </span><span class="si">{</span><span class="n">tfr</span><span class="si">}</span><span class="s2"> not found in slide_map&quot;</span><span class="p">)</span>
+                    <span class="n">image</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">to_map</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">grid_x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">grid_y</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">display_size</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">image</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">pool</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pool</span> <span class="o">=</span> <span class="n">DPool</span><span class="p">(</span><span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">num_cpu</span><span class="p">())</span>
+            <span class="n">should_close_pool</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">point_idx</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span> <span class="ow">in</span> <span class="n">track</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">process_tile_image</span><span class="p">,</span> <span class="n">decode_kwargs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decode_kwargs</span><span class="p">),</span> <span class="n">to_map</span><span class="p">)),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_points</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">point_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_record_point</span><span class="p">(</span><span class="n">point_idx</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_plot_tile_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">point_idx</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grid_images</span><span class="p">[(</span><span class="n">point</span><span class="o">.</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">grid_y</span><span class="p">)]</span> <span class="o">=</span> <span class="n">image</span>
+                <span class="n">placed</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">should_close_pool</span><span class="p">:</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tile images placed: </span><span class="si">{</span><span class="n">placed</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">s)&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">focus</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">focus</span><span class="p">(</span><span class="n">focus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_figure</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves the mosaic map figure to the given filename.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): Path at which to save the mosiac image.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            figsize (Tuple[int, int], optional): Figure size. Defaults to</span>
+<span class="sd">                (200, 200).</span>
+<span class="sd">            focus (list, optional): List of tfrecords (paths) to highlight on</span>
+<span class="sd">                the mosaic.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">matplotlib_backend</span><span class="p">(</span><span class="s1">&#39;Agg&#39;</span><span class="p">):</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Exporting figure...&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">)):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved figure to [green]</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves a report of which tiles (and their corresponding slide)</span>
+<span class="sd">            were displayed on the Mosaic map, in CSV format.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;slide&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">tfr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span><span class="p">[</span><span class="n">tfr</span><span class="p">]:</span>
+                        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">tfr</span><span class="p">,</span> <span class="n">idx</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapped_tiles</span><span class="p">:</span>
+                        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mosaic report saved to [green]</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slides</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Open Mosaic in HistoX Studio.</span>
+
+<span class="sd">        See :ref:`studio` for more information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slides (list(str), optional): Path to whole-slide images. Used for</span>
+<span class="sd">                displaying image tile context when hovering over a mosaic grid.</span>
+<span class="sd">                Defaults to None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.studio.widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">MosaicWidget</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.studio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Studio</span>
+
+        <span class="n">studio</span> <span class="o">=</span> <span class="n">Studio</span><span class="p">(</span><span class="n">widgets</span><span class="o">=</span><span class="p">[</span><span class="n">MosaicWidget</span><span class="p">])</span>
+        <span class="n">mosaic</span> <span class="o">=</span> <span class="n">studio</span><span class="o">.</span><span class="n">get_widget</span><span class="p">(</span><span class="s1">&#39;MosaicWidget&#39;</span><span class="p">)</span>
+        <span class="n">mosaic</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">slide_map</span><span class="p">,</span>
+            <span class="n">tfrecords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tfrecords</span><span class="p">,</span>
+            <span class="n">slides</span><span class="o">=</span><span class="n">slides</span><span class="p">,</span>
+            <span class="n">normalizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span>
+        <span class="p">)</span>
+        <span class="n">studio</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+</pre></div>
+
+                </article>
+              
+</div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
+  </div>
+</div>
+
+<div class="prev-next-area">
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="../../index.html">Home</a>
+      <a href="../../docs.html">Docs</a>
+      <a href="../../tutorials.html">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
+</footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "histox.mosaic",
+       "headline": "histox.mosaic",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/_modules/histox/mosaic.html",
+       "articleBody": "Source code for histox.mosaic from __future__ import absolute_import, division, print_function import csv import os import sys import time import warnings from functools import partial from multiprocessing.dummy import Pool as DPool from os.path import join from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union import cv2 import numpy as np from rich.progress import track import histox as hx from histox import errors from histox.stats import SlideMap, get_centroid_index from histox.util import log from histox.stats import get_centroid_index if TYPE_CHECKING: from histox.norm import StainNormalizer # ----------------------------------------------------------------------------- def process_tile_image(args, decode_kwargs): if args is None: return None, None, None, None point_index, x, y, display_size, alpha, image = args if not point_index: return None, None, None, None if isinstance(image, tuple): tfr, tfr_idx = image image = hx.io.get_tfrecord_by_index(tfr, tfr_idx)[\u0027image_raw\u0027] if image is None: return point_index, None, None, None if hx.model.is_tensorflow_tensor(image): image = image.numpy() image = decode_image(image, **decode_kwargs) extent = [ x - display_size/2, x + display_size/2, y - display_size/2, y + display_size/2 ] return point_index, image, extent, alpha def decode_image( image: Union[str, np.ndarray], normalizer: Optional[\"StainNormalizer\"], img_format: str ) -\u003e np.ndarray: \"\"\"Internal method to convert an image string (as stored in TFRecords) to an RGB array.\"\"\" if normalizer: try: if isinstance(image, np.ndarray): return normalizer.rgb_to_rgb(image) elif img_format in (\u0027jpg\u0027, \u0027jpeg\u0027): return normalizer.jpeg_to_rgb(image) elif img_format == \u0027png\u0027: return normalizer.png_to_rgb(image) else: return normalizer.transform(image) except Exception as e: log.error(\"Error encountered during image normalization, \" f\"displaying image tile non-normalized. {e}\") if isinstance(image, np.ndarray): return image else: image_arr = np.fromstring(image, np.uint8) tile_image_bgr = cv2.imdecode(image_arr, cv2.IMREAD_COLOR) return cv2.cvtColor(tile_image_bgr, cv2.COLOR_BGR2RGB) def find_corresponding_points(row, points): return points.loc[((points.grid_x == row.x) \u0026 (points.grid_y == row.y))].index # ----------------------------------------------------------------------------- [docs] class Mosaic: \"\"\"Visualization of plotted image tiles.\"\"\" def __init__( self, images: Union[SlideMap, List[np.ndarray], np.ndarray, List[Tuple[str, int]]], coords: Optional[Union[Tuple[int, int], np.ndarray]] = None, *, tfrecords: List[str] = None, normalizer: Optional[Union[str, \"StainNormalizer\"]] = None, normalizer_source: Optional[str] = None, **grid_kwargs ) -\u003e None: \"\"\"Generate a mosaic map, which visualizes plotted image tiles. Creating a mosaic map requires two components: a set of images and corresponding coordinates. Images and coordinates can either be manually provided, or the mosaic can dynamically read images from TFRecords as needed, reducing memory requirements. The first argument provides the images, and may be any of the following: - A list or array of images (np.ndarray, HxWxC) - A list of tuples, containing ``(slide_name, tfrecord_index)`` - A ``histox.SlideMap`` object The second argument provides the coordinates, and may be any of: - A list or array of (x, y) coordinates for each image - None (if the first argument is a ``SlideMap``, which has coordinates) If images are to be read dynamically from tfrecords (with a ``SlideMap``, or by providing tfrecord indices directly), the keyword argument ``tfrecords`` must be specified with paths to tfrecords. Published examples: - Figure 4: https://doi.org/10.1038/s41379-020-00724-3 - Figure 6: https://doi.org/10.1038/s41467-022-34025-x Examples Generate a mosaic map from a list of images and coordinates. .. code-block:: python # Example data (images are HxWxC, np.ndarray) images = [np.ndarray(...), ...] coords = [(0.2, 0.9), ...] # Generate the mosaic mosaic = Mosaic(images, coordinates) Generate a mosaic map from tuples of TFRecord paths and indices. .. code-block:: python # Example data paths = [\u0027/path/to/tfrecord.tfrecords\u0027, ...] idx = [253, 112, ...] coords = [(0.2, 0.9), ...] tuples = [(tfr, idx) for tfr, i in zip(paths, idx)] # Generate mosaic map mosaic = hx.Mosaic(tuples, coords) Generate a mosaic map from a SlideMap and list of TFRecord paths. .. code-block:: python # Prepare a SlideMap from a project P = hx.Project(\u0027/project/path\u0027) ftrs = P.generate_features(\u0027/path/to/model\u0027) slide_map = hx.SlideMap.from_features(ftrs) # Generate mosaic mosaic = Mosaic(slide_map, tfrecords=ftrs.tfrecords) Args: images (list(np.ndarray), tuple, :class:`histox.SlideMap`): Images from which to generate the mosaic. May be a list or array of images (np.ndarray, HxWxC), a list of tuples, containing ``(slide_name, tfrecord_index)``, or a ``histox.SlideMap`` object. coords (list(str)): Coordinates for images. May be a list or array of (x, y) coordinates for each image (of same length as ``images``), or None (if ``images`` is a ``SlideMap`` object). Keyword args: tfrecords (list(str), optional): TFRecord paths. Required if ``images`` is either a ``SlideMap`` object or a list of tuples containing ``(slide_name, tfrecord_index)``. Defaults to None. num_tiles_x (int, optional): Mosaic map grid size. Defaults to 50. tile_select (str, optional): \u0027first\u0027, \u0027nearest\u0027, or \u0027centroid\u0027. Determines how to choose a tile for display on each grid space. If \u0027first\u0027, will display the first valid tile in a grid space (fastest; recommended). If \u0027nearest\u0027, will display tile nearest to center of grid space. If \u0027centroid\u0027, for each grid, will calculate which tile is nearest to centroid tile_meta. Defaults to \u0027nearest\u0027. tile_meta (dict, optional): Tile metadata, used for tile_select. Dictionary should have slide names as keys, mapped to list of metadata (length of list = number of tiles in slide). Defaults to None. normalizer ((str or :class:`histox.norm.StainNormalizer`), optional): Normalization strategy to use on image tiles. Defaults to None. normalizer_source (str, optional): Stain normalization preset or path to a source image. Valid presets include \u0027v1\u0027, \u0027v2\u0027, and \u0027v3\u0027. If None, will use the default present (\u0027v3\u0027). Defaults to None. \"\"\" self.tile_point_distances = [] # type: List[Dict] self.slide_map = None self.tfrecords = tfrecords self.grid_images = {} self.grid_coords = [] # type: np.ndarray self.grid_idx = [] # type: np.ndarray if isinstance(images, SlideMap): if tfrecords is None: raise ValueError(\"If building a Mosaic from a SlideMap, must \" \"provide paths to tfrecords via keyword arg \" \"tfrecords=...\") elif isinstance(tfrecords, list) and not len(tfrecords): raise errors.TFRecordsNotFoundError() self._prepare_from_slidemap(images) elif isinstance(images[0], (tuple, list)) and isinstance(images[0][0], str): self._prepare_from_tuples(images, coords) # type: ignore else: assert coords is not None assert len(images) == len(coords) self._prepare_from_coords(images, coords) # type: ignore # --------------------------------------------------------------------- # Detect tfrecord image format if self.tfrecords is not None: _, self.img_format = hx.io.detect_tfrecord_format(self.tfrecords[0]) else: self.img_format = \u0027numpy\u0027 # Setup normalization if isinstance(normalizer, str): log.info(f\u0027Using realtime {normalizer} normalization\u0027) self.normalizer = hx.norm.autoselect( method=normalizer, source=normalizer_source ) # type: Optional[StainNormalizer] elif normalizer is not None: self.normalizer = normalizer else: self.normalizer = None self.generate_grid(**grid_kwargs) def _prepare_from_coords( self, images: Union[List[np.ndarray], np.ndarray], coords: List[Union[Tuple[int, int], np.ndarray]] ) -\u003e None: \"\"\"Prepare the Mosaic map from a set of images and coordinates.\"\"\" log.info(\u0027Loading coordinates and plotting points...\u0027) self.images = images self.mapped_tiles = [] # type: List[int] self.points = [{ \u0027coord\u0027: coords[i], \u0027global_index\u0027: i, \u0027category\u0027: \u0027none\u0027, \u0027has_paired_tile\u0027: False, } for i in range(len(coords))] def _prepare_from_slidemap( self, slide_map: SlideMap, *, tile_meta: Optional[Dict] = None, ) -\u003e None: \"\"\"Prepare the Mosaic map from a ``SlideMap`` object.\"\"\" log.info(\u0027Loading coordinates from SlideMap and plotting points...\u0027) self.slide_map = slide_map self.mapped_tiles = {} # type: Dict[str, List[int]] self.points = slide_map.data.copy() self.points[\u0027has_paired_tile\u0027] = False self.points[\u0027points_index\u0027] = self.points.index self.points[\u0027alpha\u0027] = 1. if tile_meta: self.points[\u0027meta\u0027] = self.points.apply(lambda row: tile_meta[row.slide][row.tfr_index], axis=1) log.debug(\"Loading complete.\") def _prepare_from_tuples( self, images: List[Tuple[str, int]], coords: List[Union[Tuple[int, int], np.ndarray]], ) -\u003e None: \"\"\"Prepare from a list of tuples with TFRecord names/indices.\"\"\" log.info(\u0027Loading coordinates from SlideMap and plotting points...\u0027) self.mapped_tiles = {} # type: Dict[str, List[int]] self.points = [] for i, (tfr, idx) in enumerate(images): self.points.append({ \u0027coord\u0027: np.array(coords[i]), \u0027global_index\u0027: i, \u0027category\u0027: \u0027none\u0027, \u0027slide\u0027: (tfr if self.tfrecords is not None else hx.util.path_to_name(tfr)), \u0027tfrecord\u0027: (tfr if self.tfrecords is None else self._get_tfrecords_from_slide(tfr)), \u0027tfrecord_index\u0027: idx, \u0027has_paired_tile\u0027: None, }) def _get_image_from_point(self, index): point = self.points.loc[index] if \u0027tfr_index\u0027 in point: tfr = self._get_tfrecords_from_slide(point.slide) tfr_idx = point.tfr_index if not tfr: log.error(f\"TFRecord {tfr} not found in slide_map\") return None image = hx.io.get_tfrecord_by_index(tfr, tfr_idx)[\u0027image_raw\u0027] else: image = self.images[index] return image def _get_tfrecords_from_slide(self, slide: str) -\u003e Optional[str]: \"\"\"Using the internal list of TFRecord paths, returns the path to a TFRecord for a given corresponding slide.\"\"\" for tfr in self.tfrecords: if hx.util.path_to_name(tfr) == slide: return tfr log.error(f\u0027Unable to find TFRecord path for slide [green]{slide}\u0027) return None def _initialize_figure(self, figsize, background): import matplotlib.pyplot as plt fig = plt.figure(figsize=figsize) self.ax = fig.add_subplot(111, aspect=\u0027equal\u0027) self.ax.set_facecolor(background) fig.tight_layout() plt.subplots_adjust( left=0.02, bottom=0, right=0.98, top=1, wspace=0.1, hspace=0 ) self.ax.set_aspect(\u0027equal\u0027, \u0027box\u0027) self.ax.set_xticklabels([]) self.ax.set_yticklabels([]) def _plot_tile_image(self, image, extent, alpha=1): return self.ax.imshow( image, aspect=\u0027equal\u0027, origin=\u0027lower\u0027, extent=extent, zorder=99, alpha=alpha ) def _finalize_figure(self): self.ax.autoscale(enable=True, tight=None) def _record_point(self, index): point = self.points.loc[index] if \u0027tfr_index\u0027 in point: tfr = self._get_tfrecords_from_slide(point.slide) if tfr is None: return if tfr in self.mapped_tiles: self.mapped_tiles[tfr] += [point.tfr_index] else: self.mapped_tiles[tfr] = [point.tfr_index] else: self.mapped_tiles += [index] @property def decode_kwargs(self): return dict(normalizer=self.normalizer, img_format=self.img_format) def points_at_grid_index(self, x, y): return self.points.loc[((self.points.grid_x == x) \u0026 (self.points.grid_y == y))] def selected_points(self): return self.points.loc[self.points.selected] def generate_grid( self, num_tiles_x: int = 50, tile_meta: Optional[Dict] = None, tile_select: str = \u0027first\u0027, max_dist: Optional[float] = None, ): \"\"\"Generate the mosaic map grid. Args: num_tiles_x (int, optional): Mosaic map grid size. Defaults to 50. tile_meta (dict, optional): Tile metadata, used for tile_select. Dictionary should have slide names as keys, mapped to list of metadata (length of list = number of tiles in slide). Defaults to None. tile_select (str, optional): \u0027first\u0027, \u0027nearest\u0027, or \u0027centroid\u0027. Determines how to choose a tile for display on each grid space. If \u0027first\u0027, will display the first valid tile in a grid space (fastest; recommended). If \u0027nearest\u0027, will display tile nearest to center of grid space. If \u0027centroid\u0027, for each grid, will calculate which tile is nearest to centroid tile_meta. Defaults to \u0027nearest\u0027. \"\"\" # Initial validation checks if tile_select not in (\u0027nearest\u0027, \u0027centroid\u0027, \u0027first\u0027): raise TypeError(f\u0027Unknown tile selection method {tile_select}\u0027) else: log.debug(f\u0027Tile selection method: {tile_select}\u0027) self.num_tiles_x = num_tiles_x self.grid_images = {} # Build the grid x_points = self.points.x.values y_points = self.points.y.values max_x = x_points.max() min_x = x_points.min() max_y = y_points.max() min_y = y_points.min() log.debug(f\u0027Loaded {len(self.points)} points.\u0027) self.tile_size = (max_x - min_x) / self.num_tiles_x self.num_tiles_y = int((max_y - min_y) / self.tile_size) self.grid_idx = np.reshape(np.dstack(np.indices((self.num_tiles_x, self.num_tiles_y))), (self.num_tiles_x * self.num_tiles_y, 2)) _grid_offset = np.array([(self.tile_size/2) + min_x, (self.tile_size/2) + min_y]) self.grid_coords = (self.grid_idx * self.tile_size) + _grid_offset points_added = 0 x_bins = np.arange(min_x, max_x, ((max_x - min_x) / self.num_tiles_x))[1:] y_bins = np.arange(min_y, max_y, ((max_y - min_y) / self.num_tiles_y))[1:] self.points[\u0027grid_x\u0027] = np.digitize(self.points.x.values, x_bins, right=False) self.points[\u0027grid_y\u0027] = np.digitize(self.points.y.values, y_bins, right=False) self.points[\u0027selected\u0027] = False log.debug(f\u0027{points_added} points added to grid\u0027) # Then, calculate distances from each point to each spot on the grid def select_nearest_points(idx): grid_x, grid_y = self.grid_idx[idx][0], self.grid_idx[idx][1] grid_coords = self.grid_coords[idx] # Calculate distance for each point within the grid tile from # center of the grid tile _points = self.points_at_grid_index(grid_x, grid_y) if not _points.empty: if tile_select == \u0027nearest\u0027: point_coords = np.stack([_points.x.values, _points.y.values], axis=-1) dist = np.linalg.norm( point_coords - grid_coords, ord=2, axis=1. ) if max_dist is not None: masked_dist = np.ma.masked_array(dist, (dist \u003e= (max_dist * self.tile_size))) if masked_dist.count(): self.points.loc[_points.index[np.argmin(masked_dist)], \u0027selected\u0027] = True else: self.points.loc[_points.index[np.argmin(dist)], \u0027selected\u0027] = True elif not tile_meta: raise errors.MosaicError( \u0027Mosaic centroid option requires tile_meta.\u0027 ) else: centroid_index = get_centroid_index(_points.meta.values) self.points.loc[_points.index[centroid_index], \u0027selected\u0027] = True start = time.time() if tile_select == \u0027first\u0027: grid_group = self.points.groupby([\u0027grid_x\u0027, \u0027grid_y\u0027]) first_indices = grid_group.nth(0).points_index.values self.points.loc[first_indices, \u0027selected\u0027] = True elif tile_select in (\u0027nearest\u0027, \u0027centroid\u0027): self.points[\u0027selected\u0027] = False dist_fn = partial(select_nearest_points) pool = DPool(hx.util.num_cpu()) for i, _ in track(enumerate(pool.imap_unordered(dist_fn, range(len(self.grid_idx))), 1), total=len(self.grid_idx)): pass pool.close() pool.join() else: raise ValueError( f\u0027Unrecognized value for tile_select: \"{tile_select}\"\u0027 ) end = time.time() if hx.getLoggingLevel() \u003c= 20: sys.stdout.write(\u0027\\r\\033[K\u0027) log.debug(f\u0027Tile image selection complete ({end - start:.1f} sec)\u0027) def export(self, path: str) -\u003e None: \"\"\"Export SlideMap and configuration for later loading. Args: path (str): Directory in which to save configuration. \"\"\" if self.slide_map is None: raise ValueError( \"Mosaic.export() requires a Mosaic built from a SlideMap.\" ) self.slide_map.save(path) if isinstance(self.tfrecords, list): tfr = self.tfrecords else: tfr = list(self.tfrecords) hx.util.write_json(tfr, join(path, \u0027tfrecords.json\u0027)) log.info(f\"Mosaic configuration exported to {path}\") def plot( self, figsize: Tuple[int, int] = (200, 200), focus: Optional[List[str]] = None, focus_slide: Optional[str] = None, background: str = \u0027#dfdfdf\u0027, pool: Optional[Any] = None, ) -\u003e None: \"\"\"Initializes figures and places image tiles. If in a Jupyter notebook, the heatmap will be displayed in the cell output. If running via script or shell, the heatmap can then be shown on screen using matplotlib ``plt.show()``: .. code-block:: import histox as hx import matplotlib.pyplot as plt heatmap = hx.Heatmap(...) heatmap.plot() plt.show() Args: figsize (Tuple[int, int], optional): Figure size. Defaults to (200, 200). focus (list, optional): List of tfrecords (paths) to highlight on the mosaic. Defaults to None. focus_slide (str, optional): Highlight tiles from this slide. Defaults to None. \"\"\" if (focus is not None or focus_slide is not None) and self.tfrecords is None: raise ValueError(\"Unable to plot with focus; slides/tfrecords not configured.\") log.debug(\"Initializing figure...\") self._initialize_figure(figsize=figsize, background=background) # Reset alpha and display size if focus_slide: self.points[\u0027alpha\u0027] = 1. self.points[\u0027display_size\u0027] = self.tile_size if focus_slide: for idx in self.grid_idx: _points = self.points_at_grid_index(x=idx[0], y=idx[1]) if not _points.empty and focus_slide: n_matching = len(_points.loc[_points.slide == focus_slide]) self.points.loc[_points.index, \u0027alpha\u0027] = n_matching / len(_points) # Then, pair grid tiles and points according to their distances log.info(\u0027Placing image tiles...\u0027) placed = 0 start = time.time() to_map = [] should_close_pool = False has_tfr = \u0027tfr_index\u0027 in self.points.columns selected_points = self.selected_points() for idx, point in selected_points.iterrows(): if has_tfr: tfr = self._get_tfrecords_from_slide(point.slide) tfr_idx = point.tfr_index if tfr: image = (tfr, tfr_idx) else: log.error(f\"TFRecord {tfr} not found in slide_map\") image = None else: image = self.images[idx] to_map.append((idx, point.grid_x * self.tile_size, point.grid_y * self.tile_size, point.display_size, point.alpha, image)) if pool is None: pool = DPool(hx.util.num_cpu()) should_close_pool = True for i, (point_idx, image, extent, alpha) in track(enumerate(pool.imap(partial(process_tile_image, decode_kwargs=self.decode_kwargs), to_map)), total=len(selected_points)): if point_idx is not None: self._record_point(point_idx) self._plot_tile_image(image, extent, alpha) point = self.points.loc[point_idx] self.grid_images[(point.grid_x, point.grid_y)] = image placed += 1 if should_close_pool: pool.close() pool.join() log.debug(f\u0027Tile images placed: {placed} ({time.time()-start:.2f}s)\u0027) if focus: self.focus(focus) self._finalize_figure() def save(self, filename: str, **kwargs: Any) -\u003e None: \"\"\"Saves the mosaic map figure to the given filename. Args: filename (str): Path at which to save the mosiac image. Keyword args: figsize (Tuple[int, int], optional): Figure size. Defaults to (200, 200). focus (list, optional): List of tfrecords (paths) to highlight on the mosaic. \"\"\" with hx.util.matplotlib_backend(\u0027Agg\u0027): import matplotlib.pyplot as plt self.plot(**kwargs) log.info(\u0027Exporting figure...\u0027) try: if not os.path.exists(os.path.dirname(filename)): os.makedirs(os.path.dirname(filename)) except FileNotFoundError: pass plt.savefig(filename, bbox_inches=\u0027tight\u0027) log.info(f\u0027Saved figure to [green]{filename}\u0027) plt.close() def save_report(self, filename: str) -\u003e None: \"\"\"Saves a report of which tiles (and their corresponding slide) were displayed on the Mosaic map, in CSV format.\"\"\" with open(filename, \u0027w\u0027) as f: writer = csv.writer(f) writer.writerow([\u0027slide\u0027, \u0027index\u0027]) if isinstance(self.mapped_tiles, dict): for tfr in self.mapped_tiles: for idx in self.mapped_tiles[tfr]: writer.writerow([tfr, idx]) else: for idx in self.mapped_tiles: writer.writerow([idx]) log.info(f\u0027Mosaic report saved to [green]{filename}\u0027) def view(self, slides: List[str] = None) -\u003e None: \"\"\"Open Mosaic in HistoX Studio. See :ref:`studio` for more information. Args: slides (list(str), optional): Path to whole-slide images. Used for displaying image tile context when hovering over a mosaic grid. Defaults to None. \"\"\" from histox.studio.widgets import MosaicWidget from histox.studio import Studio studio = Studio(widgets=[MosaicWidget]) mosaic = studio.get_widget(\u0027MosaicWidget\u0027) mosaic.load( self.slide_map, tfrecords=self.tfrecords, slides=slides, normalizer=self.normalizer ) studio.run()",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/_modules/histox/mosaic.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
+      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
+  </script>
+  
+  </body>
+</html>

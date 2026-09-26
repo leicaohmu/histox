@@ -1,0 +1,25 @@
+Evaluation tutorials
+====================
+
+Evaluate trained models and inspect the visual evidence they learn from
+whole-slide images.
+
+.. warning::
+
+   These compatibility tutorials still contain inherited HistoX examples.
+   Use them as migration references until each page is marked as verified for
+   the current HistoX release.
+
+.. raw:: html
+
+   <div class="histox-tutorial-grid histox-tutorial-grid--category">
+     <a class="histox-tutorial-card" href="tutorial4.html"><span>Evaluation</span><h3>Evaluate and build heatmaps</h3><p>Run held-out evaluation and localize predictive regions on a slide.</p><strong>Compatibility tutorial</strong></a>
+     <a class="histox-tutorial-card" href="tutorial5.html"><span>Interpretation</span><h3>Create a mosaic map</h3><p>Explore the visual feature landscape learned by a pathology model.</p><strong>Compatibility tutorial</strong></a>
+   </div>
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   tutorial4
+   tutorial5

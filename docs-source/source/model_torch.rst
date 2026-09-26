@@ -1,10 +1,10 @@
-.. currentmodule:: slideflow.model.torch
+.. currentmodule:: histox.model.torch
 
-slideflow.model.torch
+histox.model.torch
 ==========================
 
 This submodule contains PyTorch-specific utility functions when working in the PyTorch backend.
 
-.. autofunction:: slideflow.model.torch.lazy_load_pretrained
-.. autofunction:: slideflow.model.torch.load
-.. autofunction:: slideflow.model.torch.log_manifest
+.. autofunction:: histox.model.torch.lazy_load_pretrained
+.. autofunction:: histox.model.torch.load
+.. autofunction:: histox.model.torch.log_manifest

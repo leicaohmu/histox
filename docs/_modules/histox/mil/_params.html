@@ -1,0 +1,2859 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>histox.mil._params &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=3ca669d2"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/histox/mil/_params';</script>
+    <script src="../../../_static/tutorials.js?v=3b8eb957"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="histox.mil._params - Documentation for histox, part of the PyTorch ecosystem.">
+
+
+
+
+
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
+
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
+
+  }
+</style>
+
+
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="../../../_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="../../../_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
+
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="../../../index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="../../../index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../../../installation.html">Install HistoX</a>
+    <a href="../../../user_guide.html">User Guide</a>
+    <a href="../../../api.html">Reference API</a>
+    <a href="../../../developer.html">Developer Notes</a>
+    <a href="../../../tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../../../installation.html">Install HistoX</a>
+    <a href="../../../user_guide.html">User Guide</a>
+    <a href="../../../api.html">Reference API</a>
+    <a href="../../../developer.html">Developer Notes</a>
+    <a href="../../../tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+
+
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="../../../docs.html">Documentation home</a></li>
+    <li><a class="nav-link" href="../../../user_guide.html">User guide</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="../../../installation.html">Installation</a></li>
+    <li><a class="nav-link" href="../../../overview.html">Overview</a></li>
+    <li><a class="nav-link" href="../../../quickstart.html">Quickstart</a></li>
+    <li><a class="nav-link" href="../../../project_setup.html">Project setup</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="../../../data.html">Public data</a></li>
+    <li><a class="nav-link" href="../../../datasets_and_val.html">Datasets</a></li>
+    <li><a class="nav-link" href="../../../slide_processing.html">Slide processing</a></li>
+    <li><a class="nav-link" href="../../../features.html">Feature extraction</a></li>
+    <li><a class="nav-link" href="../../../segmentation.html">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="../../../cellseg.html">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link" href="../../../training.html">Training</a></li>
+    <li><a class="nav-link" href="../../../evaluation.html">Evaluation</a></li>
+    <li><a class="nav-link" href="../../../posthoc.html">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="../../../uq.html">Uncertainty</a></li>
+    <li><a class="nav-link" href="../../../mil.html">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="../../../ssl.html">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="../../../stylegan.html">Generative models</a></li>
+    <li><a class="nav-link" href="../../../saliency.html">Interpretation</a></li>
+    <li><a class="nav-link" href="../../../custom_loops.html">Custom loops</a></li>
+    <li><a class="nav-link" href="../../../studio.html">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="../../../developer.html">Developer notes home</a></li>
+    <li><a class="nav-link" href="../../../extensions.html">Extensions</a></li>
+    <li><a class="nav-link" href="../../../tfrecords.html">TFRecords</a></li>
+    <li><a class="nav-link" href="../../../dataloaders.html">Dataloaders</a></li>
+    <li><a class="nav-link" href="../../../custom_extractors.html">Custom extractors</a></li>
+    <li><a class="nav-link" href="../../../tile_labels.html">Tile labels</a></li>
+    <li><a class="nav-link" href="../../../plugins.html">Plugins</a></li>
+    <li><a class="nav-link" href="../../../troubleshooting.html">Troubleshooting</a></li>
+    <li><a class="nav-link" href="../../../io_tensorflow.html">TensorFlow data</a></li>
+    <li><a class="nav-link" href="../../../model_tensorflow.html">TensorFlow models</a></li>
+  </ul>
+</nav>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+
+<div id="rtd-footer-container"></div>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">histox.mil._params</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="../../index.html">
+      <meta itemprop="name" content="Module code">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="histox.mil._params">
+      <meta itemprop="position" content="2">
+    </div>
+  </div>
+
+  
+  
+
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for histox.mil._params</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Model and trainer configuration for MIL models.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">Dataset</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">._registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_trainer</span><span class="p">,</span> <span class="n">build_model_config</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">fastai.learner</span><span class="w"> </span><span class="kn">import</span> <span class="n">Learner</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="mil_config">
+<a class="viewcode-back" href="../../../mil_module.html#histox.mil.mil_config">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mil_config</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">],</span> <span class="n">trainer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;fastai&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a multiple-instance learning (MIL) training configuration.</span>
+
+<span class="sd">    All models by default are trained with the FastAI trainer. Additional</span>
+<span class="sd">    trainers and additional models can be installed with ``histox-extras``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (str, Callable): Either the name of a model, or a custom torch</span>
+<span class="sd">            module. Valid model names include ``&quot;attention_mil&quot;``,</span>
+<span class="sd">            ``&quot;transmil&quot;``, and ``&quot;bistro.transformer&quot;``.</span>
+<span class="sd">        trainer (str): Type of MIL trainer to use. Only &#39;fastai&#39; is available,</span>
+<span class="sd">            unless additional trainers are installed.</span>
+<span class="sd">        **kwargs: All additional keyword arguments are passed to</span>
+<span class="sd">            :class:`histox.mil.TrainerConfig`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">get_trainer</span><span class="p">(</span><span class="n">trainer</span><span class="p">)(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TrainerConfig</span><span class="p">:</span>
+
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;fastai&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;attention_mil&#39;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">aggregation_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;slide&#39;</span><span class="p">,</span>
+        <span class="n">lr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">wd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
+        <span class="n">bag_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">512</span><span class="p">,</span>
+        <span class="n">max_val_bag_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fit_one_cycle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+        <span class="n">drop_last</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">save_monitor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;valid_loss&#39;</span><span class="p">,</span>
+        <span class="n">weighted_loss</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Training configuration for FastAI MIL models.</span>
+
+<span class="sd">        This configuration should not be created directly, but rather should</span>
+<span class="sd">        be created through :func:`histox.mil.mil_config`, which will create</span>
+<span class="sd">        and prepare an appropriate trainer configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (str, Callable): Either the name of a model, or a custom torch</span>
+<span class="sd">                module. Valid model names include ``&quot;attention_mil&quot;``,</span>
+<span class="sd">                ``&quot;transmil&quot;``, and ``&quot;bistro.transformer&quot;``.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            aggregation_level (str): When equal to ``&#39;slide&#39;`` each bag</span>
+<span class="sd">                contains tiles from a single slide. When equal to ``&#39;patient&#39;``</span>
+<span class="sd">                tiles from all slides of a patient are grouped together.</span>
+<span class="sd">            lr (float, optional): Learning rate. If ``fit_one_cycle=True``,</span>
+<span class="sd">                this is the maximum learning rate. If None, uses the Leslie</span>
+<span class="sd">                Smith `LR Range test &lt;https://arxiv.org/abs/1506.01186&gt;`_ to</span>
+<span class="sd">                find an optimal learning rate. Defaults to None.</span>
+<span class="sd">            wd (float): Weight decay. Only used if ``fit_one_cycle=False``.</span>
+<span class="sd">                Defaults to 1e-5.</span>
+<span class="sd">            bag_size (int): Bag size. Defaults to 512.</span>
+<span class="sd">            max_val_bag_size (int, optional): Maximum validation bag size. If</span>
+<span class="sd">                None, all validation bags will be unclipped and unpadded (full size).</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            fit_one_cycle (bool): Use `1cycle &lt;https://sgugger.github.io/the-1cycle-policy.html&gt;`_</span>
+<span class="sd">                learning rate schedule. Defaults to True.</span>
+<span class="sd">            epochs (int): Maximum number of epochs. Defaults to 32.</span>
+<span class="sd">            batch_size (int): Batch size. Defaults to 64.</span>
+<span class="sd">            **kwargs: All additional keyword arguments are passed to</span>
+<span class="sd">                :class:`histox.mil.MILModelConfig`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_aggregation_level</span> <span class="o">=</span> <span class="n">aggregation_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wd</span> <span class="o">=</span> <span class="n">wd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bag_size</span> <span class="o">=</span> <span class="n">bag_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_val_bag_size</span> <span class="o">=</span> <span class="n">max_val_bag_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_one_cycle</span> <span class="o">=</span> <span class="n">fit_one_cycle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span> <span class="o">=</span> <span class="n">epochs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span> <span class="o">=</span> <span class="n">drop_last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_monitor</span> <span class="o">=</span> <span class="n">save_monitor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weighted_loss</span> <span class="o">=</span> <span class="n">weighted_loss</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="n">build_model_config</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hx</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Attempting to load custom model class for MIL training.&quot;</span><span class="p">)</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">MILModelConfig</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="n">MILModelConfig</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">verify_trainer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(&quot;</span>
+        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="s1">&#39;model_config&#39;</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  </span><span class="si">{}</span><span class="s1">=</span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">)&#39;</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;MIL model architecture (class/module).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model_fn</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;MIL loss function.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">loss_fn</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_multimodal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the model is multimodal.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">is_multimodal</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Type of model (classification or regression).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model_type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">aggregation_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Aggregation level for MIL training.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_aggregation_level&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregation_level</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;slide&#39;</span>
+
+    <span class="nd">@aggregation_level</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">aggregation_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;slide&#39;</span><span class="p">,</span> <span class="s1">&#39;patient&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Aggregation level must be either &#39;slide&#39; or &#39;patient&#39;.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_aggregation_level</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_verify_eval_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_classification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the model is a classification model.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">is_classification</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get model metrics.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Callable]: List of metrics to use for model evaluation.</span>
+<span class="sd">            Defaults to RocAuc for classification models, and mse and Pearson</span>
+<span class="sd">            correlation coefficient for regression models.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">fastai.vision.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">RocAuc</span><span class="p">,</span> <span class="n">mse</span><span class="p">,</span> <span class="n">PearsonCorrCoef</span>
+
+        <span class="n">model_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_classification</span><span class="p">():</span>
+            <span class="n">fallback</span> <span class="o">=</span> <span class="p">[</span><span class="n">RocAuc</span><span class="p">()]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fallback</span> <span class="o">=</span> <span class="p">[</span><span class="n">mse</span><span class="p">,</span> <span class="n">PearsonCorrCoef</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">model_metrics</span> <span class="ow">or</span> <span class="n">fallback</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">prepare_training</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">outcomes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+        <span class="n">exp_label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">outdir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare for training.</span>
+
+<span class="sd">        Sets up the output directory for the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            outcomes (str, list(str)): Outcomes.</span>
+<span class="sd">            exp_label (str): Experiment label.</span>
+<span class="sd">            outdir (str): Output directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Output directory.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Training FastAI MIL model with config:&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Set up experiment label</span>
+        <span class="k">if</span> <span class="n">exp_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="n">exp_label</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">model_name</span><span class="p">,</span>
+                    <span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outcomes</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outcomes</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">outcomes</span><span class="p">])</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">exp_label</span> <span class="o">=</span> <span class="s1">&#39;no_label&#39;</span>
+        <span class="c1"># Set up output model directory</span>
+        <span class="k">if</span> <span class="n">outdir</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outdir</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">outdir</span><span class="p">)</span>
+            <span class="n">outdir</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">create_new_model_dir</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="n">exp_label</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outdir</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_in</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_out</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n_in (int): Number of input features.</span>
+<span class="sd">            n_out (int): Number of output features.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            **kwargs: Additional keyword arguments to pass to the model constructor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.nn.Module: PyTorch model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model_kwargs</span><span class="p">:</span>
+            <span class="n">model_kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">model_kwargs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_out</span><span class="p">,</span> <span class="o">**</span><span class="n">model_kw</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts this training configuration to a dictionary.&quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span>
+                    <span class="s1">&#39;self&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;model_fn&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;loss_fn&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;build_model&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;is_multimodal&#39;</span>
+                <span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">d</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+            <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;model_config&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">d</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">json_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts this training configuration to a JSON-compatible dict.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">trainer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">bags</span><span class="p">,</span> <span class="n">attention</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate model prediction from bags.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (torch.nn.Module): Loaded PyTorch MIL model.</span>
+<span class="sd">            bags (torch.Tensor): Bags, with shape ``(n_bags, n_tiles, n_features)``.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            attention (bool): Whether to return attention maps.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verify_eval_params</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">bags</span><span class="p">,</span> <span class="n">attention</span><span class="o">=</span><span class="n">attention</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">batched_predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="s2">&quot;torch.nn.Module&quot;</span><span class="p">,</span>
+        <span class="n">loaded_bags</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate predictions from a batch of bags.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (torch.nn.Module): Loaded PyTorch MIL model.</span>
+<span class="sd">            loaded_bags (torch.Tensor): Loaded bags, with shape ``(n_bags, n_tiles, n_features)``.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            device (torch.device, optional): Device on which to run the model.</span>
+<span class="sd">                If None, uses the default device.</span>
+<span class="sd">            forward_kwargs (dict, optional): Additional keyword arguments to</span>
+<span class="sd">                pass to the model&#39;s forward function.</span>
+<span class="sd">            attention (bool): Whether to return attention maps.</span>
+<span class="sd">            attention_pooling (str): Attention pooling strategy. Either &#39;avg&#39;</span>
+<span class="sd">                or &#39;max&#39;. Defaults to &#39;avg&#39;.</span>
+<span class="sd">            uq (bool): Whether to return uncertainty quantification.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">batched_predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loaded_bags</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">train_dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
+        <span class="n">val_dataset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dataset</span><span class="p">],</span>
+        <span class="n">outcomes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+        <span class="n">bags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;mil&#39;</span><span class="p">,</span>
+        <span class="n">exp_label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Learner&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train a multiple-instance learning (MIL) model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (:class:`histox.mil.TrainerConfig`):</span>
+<span class="sd">                Trainer and model configuration.</span>
+<span class="sd">            train_dataset (:class:`histox.Dataset`): Training dataset.</span>
+<span class="sd">            val_dataset (:class:`histox.Dataset`): Validation dataset.</span>
+<span class="sd">            outcomes (str): Outcome column (annotation header) from which to</span>
+<span class="sd">                derive category labels.</span>
+<span class="sd">            bags (str): Either a path to directory with \*.pt files, or a list</span>
+<span class="sd">                of paths to individual \*.pt files. Each file should contain</span>
+<span class="sd">                exported feature vectors, with each file containing all tile</span>
+<span class="sd">                features for one patient.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            outdir (str): Directory in which to save model and results.</span>
+<span class="sd">            exp_label (str): Experiment label, used for naming the subdirectory</span>
+<span class="sd">                in the ``{project root}/mil`` folder, where training history</span>
+<span class="sd">                and the model will be saved.</span>
+<span class="sd">            attention_heatmaps (bool): Generate attention heatmaps for slides.</span>
+<span class="sd">                Not available for multi-modal MIL models. Defaults to False.</span>
+<span class="sd">            interpolation (str, optional): Interpolation strategy for smoothing</span>
+<span class="sd">                attention heatmaps. Defaults to &#39;bicubic&#39;.</span>
+<span class="sd">            cmap (str, optional): Matplotlib colormap for heatmap. Can be any</span>
+<span class="sd">                valid matplotlib colormap. Defaults to &#39;inferno&#39;.</span>
+<span class="sd">            norm (str, optional): Normalization strategy for assigning heatmap</span>
+<span class="sd">                values to colors. Either &#39;two_slope&#39;, or any other valid value</span>
+<span class="sd">                for the ``norm`` argument of ``matplotlib.pyplot.imshow``.</span>
+<span class="sd">                If &#39;two_slope&#39;, normalizes values less than 0 and greater than 0</span>
+<span class="sd">                separately. Defaults to None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil.train</span><span class="w"> </span><span class="kn">import</span> <span class="n">_train_mil</span><span class="p">,</span> <span class="n">_train_multimodal_mil</span>
+
+        <span class="c1"># Prepare output directory</span>
+        <span class="n">outdir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_training</span><span class="p">(</span><span class="n">outcomes</span><span class="p">,</span> <span class="n">exp_label</span><span class="p">,</span> <span class="n">outdir</span><span class="p">)</span>
+
+        <span class="c1"># Use training data as validation if no validation set is provided</span>
+        <span class="k">if</span> <span class="n">val_dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">hx</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Training without validation; metrics will be calculated on training data.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">val_dataset</span> <span class="o">=</span> <span class="n">train_dataset</span>
+
+        <span class="c1"># Check if multimodal training</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multimodal</span><span class="p">:</span>
+            <span class="n">train_fn</span> <span class="o">=</span> <span class="n">_train_multimodal_mil</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">train_fn</span> <span class="o">=</span> <span class="n">_train_mil</span>
+
+        <span class="c1"># Execute training</span>
+        <span class="k">return</span> <span class="n">train_fn</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">train_dataset</span><span class="p">,</span>
+            <span class="n">val_dataset</span><span class="p">,</span>
+            <span class="n">outcomes</span><span class="p">,</span>
+            <span class="n">bags</span><span class="p">,</span>
+            <span class="n">outdir</span><span class="o">=</span><span class="n">outdir</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">eval</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+        <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
+        <span class="n">outcomes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+        <span class="n">bags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;mil&#39;</span><span class="p">,</span>
+        <span class="n">attention_heatmaps</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">uq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">aggregation_level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">heatmap_kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate a multiple-instance learning model.</span>
+
+<span class="sd">        Saves results for the evaluation in the target folder, including</span>
+<span class="sd">        predictions (parquet format), attention (Numpy format for each slide),</span>
+<span class="sd">        and attention heatmaps (if ``attention_heatmaps=True``).</span>
+
+<span class="sd">        Logs classifier metrics (AUROC and AP) to the console.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (torch.nn.Module): Loaded PyTorch MIL model.</span>
+<span class="sd">            dataset (hx.Dataset): Dataset to evaluation.</span>
+<span class="sd">            outcomes (str, list(str)): Outcomes.</span>
+<span class="sd">            bags (str, list(str)): Path to bags, or list of bag file paths.</span>
+<span class="sd">                Each bag should contain PyTorch array of features from all tiles in</span>
+<span class="sd">                a slide, with the shape ``(n_tiles, n_features)``.</span>
+
+<span class="sd">        Keyword arguments:</span>
+<span class="sd">            outdir (str): Path at which to save results.</span>
+<span class="sd">            attention_heatmaps (bool): Generate attention heatmaps for slides.</span>
+<span class="sd">                Not available for multi-modal MIL models. Defaults to False.</span>
+<span class="sd">            interpolation (str, optional): Interpolation strategy for smoothing</span>
+<span class="sd">                attention heatmaps. Defaults to &#39;bicubic&#39;.</span>
+<span class="sd">            cmap (str, optional): Matplotlib colormap for heatmap. Can be any</span>
+<span class="sd">                valid matplotlib colormap. Defaults to &#39;inferno&#39;.</span>
+<span class="sd">            norm (str, optional): Normalization strategy for assigning heatmap</span>
+<span class="sd">                values to colors. Either &#39;two_slope&#39;, or any other valid value</span>
+<span class="sd">                for the ``norm`` argument of ``matplotlib.pyplot.imshow``.</span>
+<span class="sd">                If &#39;two_slope&#39;, normalizes values less than 0 and greater than 0</span>
+<span class="sd">                separately. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: Dataframe of predictions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil.eval</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_eval</span>
+
+        <span class="n">params_to_verify</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">attention_heatmaps</span><span class="o">=</span><span class="n">attention_heatmaps</span><span class="p">,</span>
+            <span class="n">heatmap_kwargs</span><span class="o">=</span><span class="n">heatmap_kwargs</span><span class="p">,</span>
+            <span class="n">uq</span><span class="o">=</span><span class="n">uq</span><span class="p">,</span>
+            <span class="n">aggregation_level</span><span class="o">=</span><span class="n">aggregation_level</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verify_eval_params</span><span class="p">(</span><span class="o">**</span><span class="n">params_to_verify</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">_verify_eval_params</span><span class="p">(</span><span class="o">**</span><span class="n">params_to_verify</span><span class="p">)</span>
+
+        <span class="n">eval_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+            <span class="n">outcomes</span><span class="o">=</span><span class="n">outcomes</span><span class="p">,</span>
+            <span class="n">bags</span><span class="o">=</span><span class="n">bags</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">outdir</span><span class="o">=</span><span class="n">outdir</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+            <span class="n">aggregation_level</span><span class="o">=</span><span class="p">(</span><span class="n">aggregation_level</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregation_level</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">run_eval</span><span class="p">(</span>
+            <span class="n">model</span><span class="p">,</span>
+            <span class="n">attention_heatmaps</span><span class="o">=</span><span class="n">attention_heatmaps</span><span class="p">,</span>
+            <span class="n">uq</span><span class="o">=</span><span class="n">uq</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">heatmap_kwargs</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">eval_kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_dataloader</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">bags</span><span class="p">,</span>
+        <span class="n">targets</span><span class="p">,</span>
+        <span class="n">encoder</span><span class="p">,</span>
+        <span class="n">dataset_kwargs</span><span class="p">,</span>
+        <span class="n">dataloader_kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;torch.utils.DataLoader&quot;</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">_build_dataloader</span><span class="p">(</span>
+            <span class="n">bags</span><span class="p">,</span>
+            <span class="n">targets</span><span class="p">,</span>
+            <span class="n">encoder</span><span class="p">,</span>
+            <span class="n">dataset_kwargs</span><span class="o">=</span><span class="n">dataset_kwargs</span><span class="p">,</span>
+            <span class="n">dataloader_kwargs</span><span class="o">=</span><span class="n">dataloader_kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_train_dataloader</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">bags</span><span class="p">,</span>
+        <span class="n">targets</span><span class="p">,</span>
+        <span class="n">encoder</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">dataset_kwargs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;torch.utils.DataLoader&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a training dataloader.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            bags (list): List of bags.</span>
+<span class="sd">            targets (list): List of targets.</span>
+<span class="sd">            encoder (torch.nn.Module): Encoder for bags.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            dataset_kwargs (dict): Keyword arguments for the dataset.</span>
+<span class="sd">            dataloader_kwargs (dict): Keyword arguments for the dataloader.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.utils.DataLoader: Training dataloader.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataset_kwargs</span> <span class="o">=</span> <span class="n">dataset_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="n">dataloader_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># Dataset kwargs</span>
+        <span class="k">if</span> <span class="s1">&#39;bag_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_kwargs</span><span class="p">:</span>
+            <span class="n">dataset_kwargs</span><span class="p">[</span><span class="s1">&#39;bag_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bag_size</span>
+
+        <span class="c1"># Dataloader kwargs</span>
+        <span class="k">if</span> <span class="s1">&#39;drop_last&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataloader_kwargs</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span><span class="p">[</span><span class="s1">&#39;drop_last&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span>
+        <span class="k">if</span> <span class="s1">&#39;batch_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataloader_kwargs</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+        <span class="k">if</span> <span class="s1">&#39;shuffle&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataloader_kwargs</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span><span class="p">[</span><span class="s1">&#39;shuffle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_dataloader</span><span class="p">(</span>
+            <span class="n">bags</span><span class="p">,</span>
+            <span class="n">targets</span><span class="p">,</span>
+            <span class="n">encoder</span><span class="p">,</span>
+            <span class="n">dataset_kwargs</span><span class="o">=</span><span class="n">dataset_kwargs</span><span class="p">,</span>
+            <span class="n">dataloader_kwargs</span><span class="o">=</span><span class="n">dataloader_kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_val_dataloader</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">bags</span><span class="p">,</span>
+        <span class="n">targets</span><span class="p">,</span>
+        <span class="n">encoder</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">dataset_kwargs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;torch.utils.DataLoader&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a validation dataloader.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            bags (list): List of bags.</span>
+<span class="sd">            targets (list): List of targets.</span>
+<span class="sd">            encoder (torch.nn.Module): Encoder for bags.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            dataset_kwargs (dict): Keyword arguments for the dataset.</span>
+<span class="sd">            dataloader_kwargs (dict): Keyword arguments for the dataloader.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.utils.DataLoader: Validation dataloader.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataset_kwargs</span> <span class="o">=</span> <span class="n">dataset_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="n">dataloader_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># Dataset kwargs</span>
+        <span class="k">if</span> <span class="s1">&#39;bag_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_kwargs</span><span class="p">:</span>
+            <span class="n">dataset_kwargs</span><span class="p">[</span><span class="s1">&#39;bag_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s1">&#39;max_bag_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_kwargs</span><span class="p">:</span>
+            <span class="n">dataset_kwargs</span><span class="p">[</span><span class="s1">&#39;max_bag_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_val_bag_size</span>
+
+        <span class="c1"># Dataloader kwargs</span>
+        <span class="k">if</span> <span class="s1">&#39;batch_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataloader_kwargs</span><span class="p">:</span>
+            <span class="n">dataloader_kwargs</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_dataloader</span><span class="p">(</span>
+            <span class="n">bags</span><span class="p">,</span>
+            <span class="n">targets</span><span class="p">,</span>
+            <span class="n">encoder</span><span class="p">,</span>
+            <span class="n">dataset_kwargs</span><span class="o">=</span><span class="n">dataset_kwargs</span><span class="p">,</span>
+            <span class="n">dataloader_kwargs</span><span class="o">=</span><span class="n">dataloader_kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">inspect_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Inspect a batch of data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch: One batch of data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[int, int]: Number of input and output features.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">inspect_batch</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;slide&#39;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run metrics and save plots to disk.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (pd.DataFrame): Dataframe with predictions and outcomes.</span>
+<span class="sd">            level (str): Level at which to calculate metrics. Either &#39;slide&#39; or &#39;patient&#39;.</span>
+<span class="sd">            outdir (str): Output directory for saving metrics.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">run_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">outdir</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MILModelConfig">
+<a class="viewcode-back" href="../../../mil_module.html#histox.mil.MILModelConfig">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MILModelConfig</span><span class="p">:</span>
+
+    <span class="n">losses</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;cross_entropy&#39;</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">,</span>
+        <span class="s1">&#39;mse&#39;</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">,</span>
+        <span class="s1">&#39;mae&#39;</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">L1Loss</span><span class="p">,</span>
+        <span class="s1">&#39;huber&#39;</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">SmoothL1Loss</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;attention_mil&#39;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">use_lens</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">apply_softmax</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">model_kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">validate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">loss</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cross_entropy&#39;</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Model configuration for an MIL model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (str, Callable): Either the name of a model, or a custom torch</span>
+<span class="sd">                module. Valid model names include ``&quot;attention_mil&quot;`` and</span>
+<span class="sd">                ``&quot;transmil&quot;``. Defaults to &#39;attention_mil&#39;.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            use_lens (bool, optional): Whether the model expects a second</span>
+<span class="sd">                argument to its ``.forward()`` function, an array with the</span>
+<span class="sd">                bag size for each slide. If None, will default to True for</span>
+<span class="sd">                ``&#39;attention_mil&#39;`` models and False otherwise.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            apply_softmax (bool): Whether to apply softmax to model outputs.</span>
+<span class="sd">                Defaults to True. Ignored if the model is not a classification</span>
+<span class="sd">                model.</span>
+<span class="sd">            model_kwargs (dict, optional): Additional keyword arguments to pass</span>
+<span class="sd">                to the model constructor. Defaults to None.</span>
+<span class="sd">            validate (bool): Whether to validate the keyword arguments. If True,</span>
+<span class="sd">                will raise an error if any unrecognized keyword arguments are</span>
+<span class="sd">                passed. Defaults to True.</span>
+<span class="sd">            loss (str, Callable): Loss function. Defaults to &#39;cross_entropy&#39;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_softmax</span> <span class="o">=</span> <span class="n">apply_softmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_kwargs</span> <span class="o">=</span> <span class="n">model_kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span>
+        <span class="k">if</span> <span class="n">use_lens</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_fn</span><span class="p">,</span> <span class="s1">&#39;use_lens&#39;</span><span class="p">)</span>
+                                 <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_fn</span><span class="o">.</span><span class="n">use_lens</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_lens</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">use_lens</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_lens</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_lens</span> <span class="o">=</span> <span class="n">use_lens</span>
+        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">validate</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UnrecognizedHyperparameterError</span><span class="p">(</span><span class="s2">&quot;Unrecognized parameters: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="p">))</span>
+        <span class="k">elif</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Ignoring unrecognized parameters: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_softmax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether softmax will be applied to model outputs.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_classification</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_softmax</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;MIL model architecture (class/module).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
+        <span class="k">return</span> <span class="n">hx</span><span class="o">.</span><span class="n">mil</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;MIL loss function.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">losses</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_multimodal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the model is multimodal.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">((</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;mm_attention_mil&#39;</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_fn</span><span class="p">,</span> <span class="s1">&#39;is_multimodal&#39;</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_fn</span><span class="o">.</span><span class="n">is_multimodal</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rich_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[bold]</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_fn</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">[/]&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Type of model (classification or regression).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">==</span> <span class="s1">&#39;cross_entropy&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;classification&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;regression&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_classification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the model is a classification model.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;classification&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">verify_trainer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts this model configuration to a dictionary.&quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span>
+                    <span class="s1">&#39;self&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;model_fn&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;loss_fn&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;build_model&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;is_multimodal&#39;</span>
+                <span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">d</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_verify_eval_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Verify evaluation parameters for the model.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multimodal</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;attention_heatmaps&#39;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Attention heatmaps cannot yet be exported for multi-modal &quot;</span>
+                    <span class="s2">&quot;models. Please use HistoX Studio for visualization of &quot;</span>
+                    <span class="s2">&quot;multi-modal attention.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heatmap_kwargs&#39;</span><span class="p">):</span>
+                <span class="n">kwarg_names</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;heatmap_kwargs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Unrecognized keyword arguments: &#39;</span><span class="si">{</span><span class="n">kwarg_names</span><span class="si">}</span><span class="s2">&#39;. Attention &quot;</span>
+                    <span class="s2">&quot;heatmap keyword arguments are not currently supported for &quot;</span>
+                    <span class="s2">&quot;multi-modal models.&quot;</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">inspect_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Inspect a batch of data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch: One batch of data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[int, int]: Number of input and output features.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multimodal</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_lens</span><span class="p">:</span>
+                <span class="n">n_in</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_in</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_in</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">n_out</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_out</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">n_in</span><span class="p">,</span> <span class="n">n_out</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_in</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_out</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n_in (int): Number of input features.</span>
+<span class="sd">            n_out (int): Number of output features.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            **kwargs: Additional keyword arguments to pass to the model constructor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.nn.Module: PyTorch model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Building model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rich_name</span><span class="si">}</span><span class="s2"> (n_in=</span><span class="si">{</span><span class="n">n_in</span><span class="si">}</span><span class="s2">, n_out=</span><span class="si">{</span><span class="n">n_out</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_fn</span><span class="p">(</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_out</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_dataloader</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">bags</span><span class="p">,</span>
+        <span class="n">targets</span><span class="p">,</span>
+        <span class="n">encoder</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">dataset_kwargs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;torch.utils.DataLoader&quot;</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">fastai.vision.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span> <span class="k">as</span> <span class="n">data_utils</span>
+
+        <span class="n">dataset_kwargs</span> <span class="o">=</span> <span class="n">dataset_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">dataloader_kwargs</span> <span class="o">=</span> <span class="n">dataloader_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="s1">&#39;use_lens&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_kwargs</span><span class="p">:</span>
+            <span class="n">dataset_kwargs</span><span class="p">[</span><span class="s1">&#39;use_lens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_lens</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multimodal</span><span class="p">:</span>
+            <span class="n">dts_fn</span> <span class="o">=</span> <span class="n">data_utils</span><span class="o">.</span><span class="n">build_multibag_dataset</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dts_fn</span> <span class="o">=</span> <span class="n">data_utils</span><span class="o">.</span><span class="n">build_dataset</span>
+
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dts_fn</span><span class="p">(</span><span class="n">bags</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="o">**</span><span class="n">dataset_kwargs</span><span class="p">)</span>
+        <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="o">**</span><span class="n">dataloader_kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataloader</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">bags</span><span class="p">,</span> <span class="n">attention</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">apply_softmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate model prediction from bags.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (torch.nn.Module): Loaded PyTorch MIL model.</span>
+<span class="sd">            bags (torch.Tensor): Bags, with shape ``(n_bags, n_tiles, n_features)``.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            attention (bool): Whether to return attention maps.</span>
+<span class="sd">            apply_softmax (bool): Whether to apply softmax to model outputs.</span>
+<span class="sd">            attention_pooling (bool): Whether to pool attention maps with</span>
+<span class="sd">                average pooling. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verify_eval_params</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil.eval</span><span class="w"> </span><span class="kn">import</span> <span class="n">predict_from_bags</span><span class="p">,</span> <span class="n">predict_from_multimodal_bags</span>
+
+        <span class="k">if</span> <span class="n">apply_softmax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">apply_softmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_softmax</span>
+
+        <span class="n">pred_fn</span> <span class="o">=</span> <span class="n">predict_from_multimodal_bags</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multimodal</span> <span class="k">else</span> <span class="n">predict_from_bags</span>
+        <span class="k">return</span> <span class="n">pred_fn</span><span class="p">(</span>
+            <span class="n">model</span><span class="p">,</span>
+            <span class="n">bags</span><span class="p">,</span>
+            <span class="n">attention</span><span class="o">=</span><span class="n">attention</span><span class="p">,</span>
+            <span class="n">use_lens</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_lens</span><span class="p">,</span>
+            <span class="n">apply_softmax</span><span class="o">=</span><span class="n">apply_softmax</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">batched_predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="s2">&quot;torch.nn.Module&quot;</span><span class="p">,</span>
+        <span class="n">loaded_bags</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">forward_kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">attention</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">attention_pooling</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">uq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">apply_softmax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate predictions from a batch of bags.</span>
+
+<span class="sd">        More efficient than calling :meth:`predict` multiple times.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (torch.nn.Module): Loaded PyTorch MIL model.</span>
+<span class="sd">            loaded_bags (torch.Tensor): Loaded bags, with shape ``(n_bags, n_tiles, n_features)``.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            device (torch.device, optional): Device on which to run the model.</span>
+<span class="sd">                If None, uses the default device.</span>
+<span class="sd">            forward_kwargs (dict, optional): Additional keyword arguments to</span>
+<span class="sd">                pass to the model&#39;s forward function.</span>
+<span class="sd">            attention (bool): Whether to return attention maps.</span>
+<span class="sd">            attention_pooling (str): Attention pooling strategy. Either &#39;avg&#39;</span>
+<span class="sd">                or &#39;max&#39;. Defaults to None.</span>
+<span class="sd">            uq (bool): Whether to return uncertainty quantification.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil.eval</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_inference</span>
+
+        <span class="k">if</span> <span class="n">apply_softmax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">apply_softmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_softmax</span>
+
+        <span class="k">return</span> <span class="n">run_inference</span><span class="p">(</span>
+            <span class="n">model</span><span class="p">,</span>
+            <span class="n">loaded_bags</span><span class="p">,</span>
+            <span class="n">attention</span><span class="o">=</span><span class="n">attention</span><span class="p">,</span>
+            <span class="n">attention_pooling</span><span class="o">=</span><span class="n">attention_pooling</span><span class="p">,</span>
+            <span class="n">forward_kwargs</span><span class="o">=</span><span class="n">forward_kwargs</span><span class="p">,</span>
+            <span class="n">apply_softmax</span><span class="o">=</span><span class="n">apply_softmax</span><span class="p">,</span>
+            <span class="n">use_lens</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_lens</span><span class="p">,</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">uq</span><span class="o">=</span><span class="n">uq</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s1">&#39;slide&#39;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run metrics and save plots to disk.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (pd.DataFrame): Dataframe with predictions and outcomes.</span>
+<span class="sd">            level (str): Level at which to calculate metrics. Either &#39;slide&#39; or &#39;patient&#39;.</span>
+<span class="sd">            outdir (str): Output directory for saving metrics.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_classification</span><span class="p">():</span>
+            <span class="n">hx</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">classification_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">outdir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hx</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">regression_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">outdir</span><span class="p">)</span></div>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+</pre></div>
+
+                </article>
+              
+</div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
+  </div>
+</div>
+
+<div class="prev-next-area">
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="../../../index.html">Home</a>
+      <a href="../../../docs.html">Docs</a>
+      <a href="../../../tutorials.html">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
+</footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "histox.mil._params",
+       "headline": "histox.mil._params",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/_modules/histox/mil/_params.html",
+       "articleBody": "Source code for histox.mil._params \"\"\"Model and trainer configuration for MIL models.\"\"\" import numpy as np import os import torch import histox as hx import pandas as pd from torch import nn from typing import Optional, Union, Callable, List, Tuple, Any, TYPE_CHECKING from histox import log, errors, Dataset from ._registry import get_trainer, build_model_config if TYPE_CHECKING: from fastai.learner import Learner # ----------------------------------------------------------------------------- [docs] def mil_config(model: Union[str, Callable], trainer: str = \u0027fastai\u0027, **kwargs): \"\"\"Create a multiple-instance learning (MIL) training configuration. All models by default are trained with the FastAI trainer. Additional trainers and additional models can be installed with ``histox-extras``. Args: model (str, Callable): Either the name of a model, or a custom torch module. Valid model names include ``\"attention_mil\"``, ``\"transmil\"``, and ``\"bistro.transformer\"``. trainer (str): Type of MIL trainer to use. Only \u0027fastai\u0027 is available, unless additional trainers are installed. **kwargs: All additional keyword arguments are passed to :class:`histox.mil.TrainerConfig` \"\"\" return get_trainer(trainer)(model=model, **kwargs) # ----------------------------------------------------------------------------- class TrainerConfig: tag = \u0027fastai\u0027 def __init__( self, model: Union[str, Callable] = \u0027attention_mil\u0027, *, aggregation_level: str = \u0027slide\u0027, lr: Optional[float] = None, wd: float = 1e-5, bag_size: int = 512, max_val_bag_size: Optional[int] = None, fit_one_cycle: bool = True, epochs: int = 32, batch_size: int = 64, drop_last: bool = True, save_monitor: str = \u0027valid_loss\u0027, weighted_loss: bool = True, **kwargs ): r\"\"\"Training configuration for FastAI MIL models. This configuration should not be created directly, but rather should be created through :func:`histox.mil.mil_config`, which will create and prepare an appropriate trainer configuration. Args: model (str, Callable): Either the name of a model, or a custom torch module. Valid model names include ``\"attention_mil\"``, ``\"transmil\"``, and ``\"bistro.transformer\"``. Keyword args: aggregation_level (str): When equal to ``\u0027slide\u0027`` each bag contains tiles from a single slide. When equal to ``\u0027patient\u0027`` tiles from all slides of a patient are grouped together. lr (float, optional): Learning rate. If ``fit_one_cycle=True``, this is the maximum learning rate. If None, uses the Leslie Smith `LR Range test \u003chttps://arxiv.org/abs/1506.01186\u003e`_ to find an optimal learning rate. Defaults to None. wd (float): Weight decay. Only used if ``fit_one_cycle=False``. Defaults to 1e-5. bag_size (int): Bag size. Defaults to 512. max_val_bag_size (int, optional): Maximum validation bag size. If None, all validation bags will be unclipped and unpadded (full size). Defaults to None. fit_one_cycle (bool): Use `1cycle \u003chttps://sgugger.github.io/the-1cycle-policy.html\u003e`_ learning rate schedule. Defaults to True. epochs (int): Maximum number of epochs. Defaults to 32. batch_size (int): Batch size. Defaults to 64. **kwargs: All additional keyword arguments are passed to :class:`histox.mil.MILModelConfig`. \"\"\" self._aggregation_level = aggregation_level self.lr = lr self.wd = wd self.bag_size = bag_size self.max_val_bag_size = max_val_bag_size self.fit_one_cycle = fit_one_cycle self.epochs = epochs self.batch_size = batch_size self.drop_last = drop_last self.save_monitor = save_monitor self.weighted_loss = weighted_loss if isinstance(model, str): self.model_config = build_model_config(model, **kwargs) else: hx.log.info(\"Attempting to load custom model class for MIL training.\") from histox.mil import MILModelConfig self.model_config = MILModelConfig(model, **kwargs) self.model_config.verify_trainer(self) def __str__(self): out = f\"{self.__class__.__name__}(\" for p, val in self.to_dict().items(): if p != \u0027model_config\u0027: out += \u0027\\n {}={!r}\u0027.format(p, val) out += \u0027\\n)\u0027 return out @property def model_fn(self): \"\"\"MIL model architecture (class/module).\"\"\" return self.model_config.model_fn @property def loss_fn(self): \"\"\"MIL loss function.\"\"\" return self.model_config.loss_fn @property def is_multimodal(self): \"\"\"Whether the model is multimodal.\"\"\" return self.model_config.is_multimodal @property def model_type(self): \"\"\"Type of model (classification or regression).\"\"\" return self.model_config.model_type @property def aggregation_level(self): \"\"\"Aggregation level for MIL training.\"\"\" if hasattr(self, \u0027_aggregation_level\u0027): return self._aggregation_level else: return \u0027slide\u0027 @aggregation_level.setter def aggregation_level(self, value): if value not in (\u0027slide\u0027, \u0027patient\u0027): raise ValueError(\"Aggregation level must be either \u0027slide\u0027 or \u0027patient\u0027.\") self._aggregation_level = value def _verify_eval_params(self, **kwargs): pass def is_classification(self): \"\"\"Whether the model is a classification model.\"\"\" return self.model_config.is_classification() def get_metrics(self): \"\"\"Get model metrics. Returns: List[Callable]: List of metrics to use for model evaluation. Defaults to RocAuc for classification models, and mse and Pearson correlation coefficient for regression models. \"\"\" from fastai.vision.all import RocAuc, mse, PearsonCorrCoef model_metrics = self.model_config.get_metrics() if self.is_classification(): fallback = [RocAuc()] else: fallback = [mse, PearsonCorrCoef()] return model_metrics or fallback def prepare_training( self, outcomes: Union[str, List[str]], exp_label: Optional[str], outdir: Optional[str] ) -\u003e str: \"\"\"Prepare for training. Sets up the output directory for the model. Args: outcomes (str, list(str)): Outcomes. exp_label (str): Experiment label. outdir (str): Output directory. Returns: str: Output directory. \"\"\" log.info(\"Training FastAI MIL model with config:\") log.info(f\"{str(self)}\") # Set up experiment label if exp_label is None: try: if isinstance(self.model_config.model, str): model_name = self.model_config.model else: model_name = self.model_config.model.__name__ exp_label = \u0027{}-{}\u0027.format( model_name, \"-\".join(outcomes if isinstance(outcomes, list) else [outcomes]) ) except Exception: exp_label = \u0027no_label\u0027 # Set up output model directory if outdir: if not os.path.exists(outdir): os.makedirs(outdir) outdir = hx.util.create_new_model_dir(outdir, exp_label) return outdir def build_model(self, n_in: int, n_out: int, **kwargs): \"\"\"Build the model. Args: n_in (int): Number of input features. n_out (int): Number of output features. Keyword args: **kwargs: Additional keyword arguments to pass to the model constructor. Returns: torch.nn.Module: PyTorch model. \"\"\" if self.model_config.model_kwargs: model_kw = self.model_config.model_kwargs else: model_kw = dict() return self.model_config.build_model(n_in, n_out, **model_kw, **kwargs) def to_dict(self): \"\"\"Converts this training configuration to a dictionary.\"\"\" d = {k:v for k,v in vars(self).items() if k not in ( \u0027self\u0027, \u0027model_fn\u0027, \u0027loss_fn\u0027, \u0027build_model\u0027, \u0027is_multimodal\u0027 ) and not k.startswith(\u0027_\u0027)} if self.model_config is None: return d else: d.update(self.model_config.to_dict()) del d[\u0027model_config\u0027] return d def json_dump(self): \"\"\"Converts this training configuration to a JSON-compatible dict.\"\"\" return dict( trainer=self.tag, params=self.to_dict() ) def predict(self, model, bags, attention=False, **kwargs): \"\"\"Generate model prediction from bags. Args: model (torch.nn.Module): Loaded PyTorch MIL model. bags (torch.Tensor): Bags, with shape ``(n_bags, n_tiles, n_features)``. Keyword args: attention (bool): Whether to return attention maps. Returns: Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention. \"\"\" self._verify_eval_params(**kwargs) return self.model_config.predict(model, bags, attention=attention, **kwargs) def batched_predict( self, model: \"torch.nn.Module\", loaded_bags: torch.Tensor, **kwargs ) -\u003e Tuple[np.ndarray, List[np.ndarray]]: \"\"\"Generate predictions from a batch of bags. Args: model (torch.nn.Module): Loaded PyTorch MIL model. loaded_bags (torch.Tensor): Loaded bags, with shape ``(n_bags, n_tiles, n_features)``. Keyword args: device (torch.device, optional): Device on which to run the model. If None, uses the default device. forward_kwargs (dict, optional): Additional keyword arguments to pass to the model\u0027s forward function. attention (bool): Whether to return attention maps. attention_pooling (str): Attention pooling strategy. Either \u0027avg\u0027 or \u0027max\u0027. Defaults to \u0027avg\u0027. uq (bool): Whether to return uncertainty quantification. Returns: Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention. \"\"\" return self.model_config.batched_predict(model, loaded_bags, **kwargs) def train( self, train_dataset: Dataset, val_dataset: Optional[Dataset], outcomes: Union[str, List[str]], bags: Union[str, List[str]], *, outdir: str = \u0027mil\u0027, exp_label: Optional[str] = None, **kwargs ) -\u003e \"Learner\": \"\"\"Train a multiple-instance learning (MIL) model. Args: config (:class:`histox.mil.TrainerConfig`): Trainer and model configuration. train_dataset (:class:`histox.Dataset`): Training dataset. val_dataset (:class:`histox.Dataset`): Validation dataset. outcomes (str): Outcome column (annotation header) from which to derive category labels. bags (str): Either a path to directory with \\*.pt files, or a list of paths to individual \\*.pt files. Each file should contain exported feature vectors, with each file containing all tile features for one patient. Keyword args: outdir (str): Directory in which to save model and results. exp_label (str): Experiment label, used for naming the subdirectory in the ``{project root}/mil`` folder, where training history and the model will be saved. attention_heatmaps (bool): Generate attention heatmaps for slides. Not available for multi-modal MIL models. Defaults to False. interpolation (str, optional): Interpolation strategy for smoothing attention heatmaps. Defaults to \u0027bicubic\u0027. cmap (str, optional): Matplotlib colormap for heatmap. Can be any valid matplotlib colormap. Defaults to \u0027inferno\u0027. norm (str, optional): Normalization strategy for assigning heatmap values to colors. Either \u0027two_slope\u0027, or any other valid value for the ``norm`` argument of ``matplotlib.pyplot.imshow``. If \u0027two_slope\u0027, normalizes values less than 0 and greater than 0 separately. Defaults to None. \"\"\" from histox.mil.train import _train_mil, _train_multimodal_mil # Prepare output directory outdir = self.prepare_training(outcomes, exp_label, outdir) # Use training data as validation if no validation set is provided if val_dataset is None: hx.log.info( \"Training without validation; metrics will be calculated on training data.\" ) val_dataset = train_dataset # Check if multimodal training if self.is_multimodal: train_fn = _train_multimodal_mil else: train_fn = _train_mil # Execute training return train_fn( self, train_dataset, val_dataset, outcomes, bags, outdir=outdir, **kwargs ) def eval( self, model: torch.nn.Module, dataset: Dataset, outcomes: Union[str, List[str]], bags: Union[str, List[str]], *, outdir: str = \u0027mil\u0027, attention_heatmaps: bool = False, uq: bool = False, aggregation_level: Optional[str] = None, params: Optional[dict] = None, **heatmap_kwargs ) -\u003e pd.DataFrame: \"\"\"Evaluate a multiple-instance learning model. Saves results for the evaluation in the target folder, including predictions (parquet format), attention (Numpy format for each slide), and attention heatmaps (if ``attention_heatmaps=True``). Logs classifier metrics (AUROC and AP) to the console. Args: model (torch.nn.Module): Loaded PyTorch MIL model. dataset (hx.Dataset): Dataset to evaluation. outcomes (str, list(str)): Outcomes. bags (str, list(str)): Path to bags, or list of bag file paths. Each bag should contain PyTorch array of features from all tiles in a slide, with the shape ``(n_tiles, n_features)``. Keyword arguments: outdir (str): Path at which to save results. attention_heatmaps (bool): Generate attention heatmaps for slides. Not available for multi-modal MIL models. Defaults to False. interpolation (str, optional): Interpolation strategy for smoothing attention heatmaps. Defaults to \u0027bicubic\u0027. cmap (str, optional): Matplotlib colormap for heatmap. Can be any valid matplotlib colormap. Defaults to \u0027inferno\u0027. norm (str, optional): Normalization strategy for assigning heatmap values to colors. Either \u0027two_slope\u0027, or any other valid value for the ``norm`` argument of ``matplotlib.pyplot.imshow``. If \u0027two_slope\u0027, normalizes values less than 0 and greater than 0 separately. Defaults to None. Returns: pd.DataFrame: Dataframe of predictions. \"\"\" from histox.mil.eval import run_eval params_to_verify = dict( attention_heatmaps=attention_heatmaps, heatmap_kwargs=heatmap_kwargs, uq=uq, aggregation_level=aggregation_level ) self._verify_eval_params(**params_to_verify) self.model_config._verify_eval_params(**params_to_verify) eval_kwargs = dict( dataset=dataset, outcomes=outcomes, bags=bags, config=self, outdir=outdir, params=params, aggregation_level=(aggregation_level or self.aggregation_level) ) return run_eval( model, attention_heatmaps=attention_heatmaps, uq=uq, **heatmap_kwargs, **eval_kwargs ) def _build_dataloader( self, bags, targets, encoder, dataset_kwargs, dataloader_kwargs, ) -\u003e \"torch.utils.DataLoader\": return self.model_config._build_dataloader( bags, targets, encoder, dataset_kwargs=dataset_kwargs, dataloader_kwargs=dataloader_kwargs ) def build_train_dataloader( self, bags, targets, encoder, *, dataset_kwargs = None, dataloader_kwargs = None ) -\u003e \"torch.utils.DataLoader\": \"\"\"Build a training dataloader. Args: bags (list): List of bags. targets (list): List of targets. encoder (torch.nn.Module): Encoder for bags. Keyword args: dataset_kwargs (dict): Keyword arguments for the dataset. dataloader_kwargs (dict): Keyword arguments for the dataloader. Returns: torch.utils.DataLoader: Training dataloader. \"\"\" dataset_kwargs = dataset_kwargs or dict() dataloader_kwargs = dataloader_kwargs or dict() # Dataset kwargs if \u0027bag_size\u0027 not in dataset_kwargs: dataset_kwargs[\u0027bag_size\u0027] = self.bag_size # Dataloader kwargs if \u0027drop_last\u0027 not in dataloader_kwargs: dataloader_kwargs[\u0027drop_last\u0027] = self.drop_last if \u0027batch_size\u0027 not in dataloader_kwargs: dataloader_kwargs[\u0027batch_size\u0027] = self.batch_size if \u0027shuffle\u0027 not in dataloader_kwargs: dataloader_kwargs[\u0027shuffle\u0027] = True return self._build_dataloader( bags, targets, encoder, dataset_kwargs=dataset_kwargs, dataloader_kwargs=dataloader_kwargs ) def build_val_dataloader( self, bags, targets, encoder, *, dataset_kwargs = None, dataloader_kwargs = None ) -\u003e \"torch.utils.DataLoader\": \"\"\"Build a validation dataloader. Args: bags (list): List of bags. targets (list): List of targets. encoder (torch.nn.Module): Encoder for bags. Keyword args: dataset_kwargs (dict): Keyword arguments for the dataset. dataloader_kwargs (dict): Keyword arguments for the dataloader. Returns: torch.utils.DataLoader: Validation dataloader. \"\"\" dataset_kwargs = dataset_kwargs or dict() dataloader_kwargs = dataloader_kwargs or dict() # Dataset kwargs if \u0027bag_size\u0027 not in dataset_kwargs: dataset_kwargs[\u0027bag_size\u0027] = None if \u0027max_bag_size\u0027 not in dataset_kwargs: dataset_kwargs[\u0027max_bag_size\u0027] = self.max_val_bag_size # Dataloader kwargs if \u0027batch_size\u0027 not in dataloader_kwargs: dataloader_kwargs[\u0027batch_size\u0027] = 1 return self._build_dataloader( bags, targets, encoder, dataset_kwargs=dataset_kwargs, dataloader_kwargs=dataloader_kwargs ) def inspect_batch(self, batch) -\u003e Tuple[int, int]: \"\"\"Inspect a batch of data. Args: batch: One batch of data. Returns: Tuple[int, int]: Number of input and output features. \"\"\" return self.model_config.inspect_batch(batch) def run_metrics(self, df, level=\u0027slide\u0027, outdir=None): \"\"\"Run metrics and save plots to disk. Args: df (pd.DataFrame): Dataframe with predictions and outcomes. level (str): Level at which to calculate metrics. Either \u0027slide\u0027 or \u0027patient\u0027. outdir (str): Output directory for saving metrics. \"\"\" self.model_config.run_metrics(df, level=level, outdir=outdir) # ----------------------------------------------------------------------------- [docs] class MILModelConfig: losses = { \u0027cross_entropy\u0027: nn.CrossEntropyLoss, \u0027mse\u0027: nn.MSELoss, \u0027mae\u0027: nn.L1Loss, \u0027huber\u0027: nn.SmoothL1Loss } def __init__( self, model: Union[str, Callable] = \u0027attention_mil\u0027, *, use_lens: Optional[bool] = None, apply_softmax: bool = True, model_kwargs: Optional[dict] = None, validate: bool = True, loss: Union[str, Callable] = \u0027cross_entropy\u0027, **kwargs ) -\u003e None: \"\"\"Model configuration for an MIL model. Args: model (str, Callable): Either the name of a model, or a custom torch module. Valid model names include ``\"attention_mil\"`` and ``\"transmil\"``. Defaults to \u0027attention_mil\u0027. Keyword args: use_lens (bool, optional): Whether the model expects a second argument to its ``.forward()`` function, an array with the bag size for each slide. If None, will default to True for ``\u0027attention_mil\u0027`` models and False otherwise. Defaults to None. apply_softmax (bool): Whether to apply softmax to model outputs. Defaults to True. Ignored if the model is not a classification model. model_kwargs (dict, optional): Additional keyword arguments to pass to the model constructor. Defaults to None. validate (bool): Whether to validate the keyword arguments. If True, will raise an error if any unrecognized keyword arguments are passed. Defaults to True. loss (str, Callable): Loss function. Defaults to \u0027cross_entropy\u0027. \"\"\" self.model = model self._apply_softmax = apply_softmax self.model_kwargs = model_kwargs self.loss = loss if use_lens is None and (hasattr(self.model_fn, \u0027use_lens\u0027) and self.model_fn.use_lens): self.use_lens = True elif use_lens is None: self.use_lens = False else: self.use_lens = use_lens if kwargs and validate: raise errors.UnrecognizedHyperparameterError(\"Unrecognized parameters: {}\".format( \u0027, \u0027.join(list(kwargs.keys())) )) elif kwargs: log.warning(\"Ignoring unrecognized parameters: {}\".format( \u0027, \u0027.join(list(kwargs.keys())) )) @property def apply_softmax(self): \"\"\"Whether softmax will be applied to model outputs.\"\"\" return self.is_classification() and self._apply_softmax @property def model_fn(self): \"\"\"MIL model architecture (class/module).\"\"\" if not isinstance(self.model, str): return self.model return hx.mil.get_model(self.model) @property def loss_fn(self): \"\"\"MIL loss function.\"\"\" return self.losses[self.loss] @property def is_multimodal(self): \"\"\"Whether the model is multimodal.\"\"\" return ((isinstance(self.model, str) and self.model.lower() == \u0027mm_attention_mil\u0027) or (hasattr(self.model_fn, \u0027is_multimodal\u0027) and self.model_fn.is_multimodal)) @property def rich_name(self): return f\"[bold]{self.model_fn.__name__}[/]\" @property def model_type(self): \"\"\"Type of model (classification or regression).\"\"\" if self.loss == \u0027cross_entropy\u0027: return \u0027classification\u0027 else: return \u0027regression\u0027 def is_classification(self): \"\"\"Whether the model is a classification model.\"\"\" return self.model_type == \u0027classification\u0027 def verify_trainer(self, trainer): pass def get_metrics(self): return None def to_dict(self): \"\"\"Converts this model configuration to a dictionary.\"\"\" d = {k:v for k,v in vars(self).items() if k not in ( \u0027self\u0027, \u0027model_fn\u0027, \u0027loss_fn\u0027, \u0027build_model\u0027, \u0027is_multimodal\u0027 ) and not k.startswith(\u0027_\u0027)} if not isinstance(d[\u0027model\u0027], str): d[\u0027model\u0027] = d[\u0027model\u0027].__name__ return d def _verify_eval_params(self, **kwargs): \"\"\"Verify evaluation parameters for the model.\"\"\" if self.is_multimodal: if kwargs.get(\u0027attention_heatmaps\u0027): raise ValueError( \"Attention heatmaps cannot yet be exported for multi-modal \" \"models. Please use HistoX Studio for visualization of \" \"multi-modal attention.\" ) if kwargs.get(\u0027heatmap_kwargs\u0027): kwarg_names = \u0027, \u0027.join(list(kwargs[\u0027heatmap_kwargs\u0027].keys())) raise ValueError( f\"Unrecognized keyword arguments: \u0027{kwarg_names}\u0027. Attention \" \"heatmap keyword arguments are not currently supported for \" \"multi-modal models.\" ) def inspect_batch(self, batch) -\u003e Tuple[int, int]: \"\"\"Inspect a batch of data. Args: batch: One batch of data. Returns: Tuple[int, int]: Number of input and output features. \"\"\" if self.is_multimodal: if self.use_lens: n_in = [b[0].shape[-1] for b in batch[:-1]] else: n_in = [b.shape[-1] for b in batch[:-1][0]] else: n_in = batch[0].shape[-1] targets = batch[-1] if len(targets.shape) == 1: n_out = 1 else: n_out = targets.shape[-1] return n_in, n_out def build_model(self, n_in: int, n_out: int, **kwargs): \"\"\"Build the model. Args: n_in (int): Number of input features. n_out (int): Number of output features. Keyword args: **kwargs: Additional keyword arguments to pass to the model constructor. Returns: torch.nn.Module: PyTorch model. \"\"\" log.info(f\"Building model {self.rich_name} (n_in={n_in}, n_out={n_out})\") return self.model_fn(n_in, n_out, **kwargs) def _build_dataloader( self, bags, targets, encoder, *, dataset_kwargs = None, dataloader_kwargs = None ) -\u003e \"torch.utils.DataLoader\": from fastai.vision.all import DataLoader from histox.mil import data as data_utils dataset_kwargs = dataset_kwargs or dict() dataloader_kwargs = dataloader_kwargs or dict() if \u0027use_lens\u0027 not in dataset_kwargs: dataset_kwargs[\u0027use_lens\u0027] = self.use_lens if self.is_multimodal: dts_fn = data_utils.build_multibag_dataset else: dts_fn = data_utils.build_dataset dataset = dts_fn(bags, targets, encoder=encoder, **dataset_kwargs) dataloader = DataLoader(dataset, **dataloader_kwargs) return dataloader def predict(self, model, bags, attention=False, apply_softmax=None, **kwargs): \"\"\"Generate model prediction from bags. Args: model (torch.nn.Module): Loaded PyTorch MIL model. bags (torch.Tensor): Bags, with shape ``(n_bags, n_tiles, n_features)``. Keyword args: attention (bool): Whether to return attention maps. apply_softmax (bool): Whether to apply softmax to model outputs. attention_pooling (bool): Whether to pool attention maps with average pooling. Defaults to None. Returns: Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention. \"\"\" self._verify_eval_params(**kwargs) from histox.mil.eval import predict_from_bags, predict_from_multimodal_bags if apply_softmax is None: apply_softmax = self.apply_softmax pred_fn = predict_from_multimodal_bags if self.is_multimodal else predict_from_bags return pred_fn( model, bags, attention=attention, use_lens=self.use_lens, apply_softmax=apply_softmax, **kwargs ) def batched_predict( self, model: \"torch.nn.Module\", loaded_bags: torch.Tensor, *, device: Optional[Any] = None, forward_kwargs: Optional[dict] = None, attention: bool = False, attention_pooling: Optional[str] = None, uq: bool = False, apply_softmax: Optional[bool] = None ) -\u003e Tuple[np.ndarray, List[np.ndarray]]: \"\"\"Generate predictions from a batch of bags. More efficient than calling :meth:`predict` multiple times. Args: model (torch.nn.Module): Loaded PyTorch MIL model. loaded_bags (torch.Tensor): Loaded bags, with shape ``(n_bags, n_tiles, n_features)``. Keyword args: device (torch.device, optional): Device on which to run the model. If None, uses the default device. forward_kwargs (dict, optional): Additional keyword arguments to pass to the model\u0027s forward function. attention (bool): Whether to return attention maps. attention_pooling (str): Attention pooling strategy. Either \u0027avg\u0027 or \u0027max\u0027. Defaults to None. uq (bool): Whether to return uncertainty quantification. Returns: Tuple[np.ndarray, List[np.ndarray]]: Predictions and attention. \"\"\" from histox.mil.eval import run_inference if apply_softmax is None: apply_softmax = self.apply_softmax return run_inference( model, loaded_bags, attention=attention, attention_pooling=attention_pooling, forward_kwargs=forward_kwargs, apply_softmax=apply_softmax, use_lens=self.use_lens, device=device, uq=uq, ) def run_metrics(self, df, level=\u0027slide\u0027, outdir=None) -\u003e None: \"\"\"Run metrics and save plots to disk. Args: df (pd.DataFrame): Dataframe with predictions and outcomes. level (str): Level at which to calculate metrics. Either \u0027slide\u0027 or \u0027patient\u0027. outdir (str): Output directory for saving metrics. \"\"\" if self.is_classification(): hx.stats.metrics.classification_metrics(df, level=level, data_dir=outdir) else: hx.stats.metrics.regression_metrics(df, level=level, data_dir=outdir) # -----------------------------------------------------------------------------",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/_modules/histox/mil/_params.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
+      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
+  </script>
+  
+  </body>
+</html>

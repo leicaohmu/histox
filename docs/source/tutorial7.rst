@@ -3,21 +3,25 @@
 Tutorial 7: Training with custom augmentations
 ==============================================
 
-In this tutorial, we'll take a look at how you can use custom image augmentations when training a model with Slideflow. This tutorial builds off of :ref:`tutorial2`, so if you haven't already, you should read that tutorial first.
+.. raw:: html
+
+   <div class="histox-tutorial-meta" aria-label="Tutorial status"><span><strong>Status</strong> Compatibility tutorial</span><span><strong>Runtime verification</strong> Pending</span><a href="https://github.com/leicaohmu/histox/blob/develop/docs/source/tutorial7.rst">View source</a></div>
+
+In this tutorial, we'll take a look at how you can use custom image augmentations when training a model with HistoX. This tutorial builds off of :ref:`tutorial2`, so if you haven't already, you should read that tutorial first.
 
 Our goal will be to train a model on a sparse outcome, such as ER status (roughly 4:1 positive:negative), with a custom augmentation that will oversample the minority class.  This tutorial will use PyTorch, but the same principles apply when using Tensorflow.
 
 .. code-block:: python
 
     >>> import os
-    >>> os.environ['SF_BACKEND'] = 'torch'
+    >>> os.environ['HX_BACKEND'] = 'torch'
 
 First, we'll start by loading a project and preparing our datasets, just like in :ref:`tutorial2`:
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> P = sf.load_project('/home/er_project')
+    >>> import histox as hx
+    >>> P = hx.load_project('/home/er_project')
     >>> full_dataset = P.dataset(
     ...   tile_px=256,
     ...   tile_um=128,
@@ -38,17 +42,17 @@ If tiles have not yet been extracted from slides, do that now.
 
     >>> dataset.extract_tiles(qc='otsu')
 
-By default, Slideflow will equally sample from all slides / TFRecords during training, resulting in oversampling of slides with fewer tiles. In this case, we want to oversample the minority class (ER negative), so we'll use category-level balancing. Sampling strategies are discussed in detail in the :ref:`Developer Notes <balancing>`.
+By default, HistoX will equally sample from all slides / TFRecords during training, resulting in oversampling of slides with fewer tiles. In this case, we want to oversample the minority class (ER negative), so we'll use category-level balancing. Sampling strategies are discussed in detail in the :ref:`Developer Notes <balancing>`.
 
 .. code-block:: python
 
     >>> train = train.balance('er_status_by_ihc', strategy='category')
 
-Next, we'll set up our model hyperparameters, using the same parameters as in :ref:`tutorial2`. We still want to use Slideflow's default augmentation (random flip/rotation and JPEG compression), so we'll use the hyperparameter ``augment=True``. Our custom augmentation will be applied after the default augmentation.
+Next, we'll set up our model hyperparameters, using the same parameters as in :ref:`tutorial2`. We still want to use HistoX's default augmentation (random flip/rotation and JPEG compression), so we'll use the hyperparameter ``augment=True``. Our custom augmentation will be applied after the default augmentation.
 
 .. code-block:: python
 
-    >>> hp = sf.ModelParams(
+    >>> hp = hx.ModelParams(
     ...   tile_px=256,
     ...   tile_um=128,
     ...   model='xception',
@@ -73,7 +77,7 @@ Transformations can be applied to training or validation data by passing a dicti
 
 .. code-block:: python
 
-    >>> trainer = sf.model.build_trainer(
+    >>> trainer = hx.model.build_trainer(
     ...   hp=hp,
     ...   outdir='/some/directory',
     ...   labels=labels,

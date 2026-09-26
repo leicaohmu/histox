@@ -1061,7 +1061,7 @@ class SlideMap:
         If ZIP saving is enabled, will save to range_clip.npz, with the
         attributes ``"range"`` and ``"clip"``.
 
-        If ZIP saving is disabled (SF_ALLOW_ZIP=0, for databricks compatibility),
+        If ZIP saving is disabled (HX_ALLOW_ZIP=0, for databricks compatibility),
         will save these attributes to range.npy and clip.npy, separately.
 
         Args:

@@ -890,7 +890,7 @@ class ModelHeatmap(Heatmap):
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
             apply_softmax (bool): Apply softmax transformation to logits.
                 Only used for PyTorch models (raises an error if this argument

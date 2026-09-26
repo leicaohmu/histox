@@ -4,7 +4,7 @@ _tf_extractors = dict()
 _torch_extractors = dict()
 _known_extras_packages = {
      'histox-contrib': ['retccl', 'ctranspath'],
-     'histox-noncommercial': ['gigapath', 'gigapath.tile', 'gigapath.slide', 'histossl', 'plip']
+     'slideflow-noncommercial': ['gigapath', 'gigapath.tile', 'gigapath.slide', 'histossl', 'plip']
 }
 _extras_extractors = {
     extractor: package 

@@ -7,9 +7,9 @@ Slide Processing
 
 |
 
-Whole-slide histopathological images present many challenges for machine learning researchers, as these large gigapixel images may contain out-of-focus regions, pen marks, uneven staining, or varying optical resolutions. Slideflow provides tools for both flexible and computationally efficient slide processing in order to build datasets ready for machine learning applications.
+Whole-slide histopathological images present many challenges for machine learning researchers, as these large gigapixel images may contain out-of-focus regions, pen marks, uneven staining, or varying optical resolutions. HistoX provides tools for both flexible and computationally efficient slide processing in order to build datasets ready for machine learning applications.
 
-Most tools in Slideflow work with image tiles - extracted sub-regions of a whole-slide image - as the primary data source. For efficiency, image tiles are first buffered into :ref:`TFRecords <tfrecords>` , a binary file format that greatly improves IO throughput. Although training can be performed without using TFRecords (see :ref:`from_wsi`), we recommend tile extraction as the first step for most projects.
+Most tools in HistoX work with image tiles - extracted sub-regions of a whole-slide image - as the primary data source. For efficiency, image tiles are first buffered into :ref:`TFRecords <tfrecords>` , a binary file format that greatly improves IO throughput. Although training can be performed without using TFRecords (see :ref:`from_wsi`), we recommend tile extraction as the first step for most projects.
 
 Tile extraction
 ***************
@@ -50,9 +50,9 @@ Regions of Interest
 
 Tile extraction can be optionally restricted based on pathologist-annotated Regions of Interest (ROI), allowing you to enrich your dataset by only using relevant sections of a slide.
 
-We offer two methods for annotating ROIs - :ref:`Slideflow Studio <studio_roi>` and `QuPath <https://qupath.github.io/>`_. Please see the Slideflow Studio section for instructions on generating ROI annotations using the Slideflow interface.
+We offer two methods for annotating ROIs - :ref:`HistoX Studio <studio_roi>` and `QuPath <https://qupath.github.io/>`_. Please see the HistoX Studio section for instructions on generating ROI annotations using the HistoX interface.
 
-If you are using QuPath, annotate whole-slide images using the Polygon tool. Then, click **Automate** -> **Show script editor**. In the box that comes up, click **File** -> **Open** and load the ``qupath_roi.groovy`` script (QuPath 0.2 or greater) or ``qupath_roi_legacy.groovy`` (QuPath 0.1.x), scripts `available on GitHub <https://github.com/slideflow/slideflow>`_. Click **Run** -> **Run** if using QuPath 0.2 or greater, or **Run** -> **Run for Project** if using QuPath 0.1.x. ROIs will be exported in CSV format in the QuPath project directory, in the subdirectory "ROI".
+If you are using QuPath, annotate whole-slide images using the Polygon tool. Then, click **Automate** -> **Show script editor**. In the box that comes up, click **File** -> **Open** and load the ``qupath_roi.groovy`` script (QuPath 0.2 or greater) or ``qupath_roi_legacy.groovy`` (QuPath 0.1.x), scripts `available on GitHub <https://github.com/leicaohmu/histox>`_. Click **Run** -> **Run** if using QuPath 0.2 or greater, or **Run** -> **Run for Project** if using QuPath 0.1.x. ROIs will be exported in CSV format in the QuPath project directory, in the subdirectory "ROI".
 
 Once ROI CSV files are generated, ensure they are placed in the folder expected by your :ref:`Project <project_setup>` or :ref:`Dataset <datasets_and_validation>` based on their respective configurations.
 
@@ -75,7 +75,7 @@ By default, ROIs filter tiles based on the center point of the tile. Alternative
 
 .. _roi_labels:
 
-ROIs can optionally be assigned a label. Labels can be added or changed using :ref:`Slideflow Studio <studio_roi>`, or by adding a "label" column in the ROI CSV file. Labels can be used to train strongly supervised models, where each tile is assigned a label based on the ROI it is extracted from, rather than inheriting the label of the whole-slide image. See the developer note :ref:`tile_labels` for more information.
+ROIs can optionally be assigned a label. Labels can be added or changed using :ref:`HistoX Studio <studio_roi>`, or by adding a "label" column in the ROI CSV file. Labels can be used to train strongly supervised models, where each tile is assigned a label based on the ROI it is extracted from, rather than inheriting the label of the whole-slide image. See the developer note :ref:`tile_labels` for more information.
 
 To retrieve the ROI name (and label, if present) for all tiles in a slide, use :meth:`histox.WSI.get_tile_dataframe`. This will return a Pandas DataFrame with the following columns:
 
@@ -95,7 +95,7 @@ You can also retrieve this information for all slides in a dataset by using :met
 Masking & Filtering
 *******************
 
-Slideflow provides two approaches for refining where image tiles should be extracted from whole-slide images: **slide-level masking** and **tile-level filtering**. In these next sections, we'll review options for both approaches.
+HistoX provides two approaches for refining where image tiles should be extracted from whole-slide images: **slide-level masking** and **tile-level filtering**. In these next sections, we'll review options for both approaches.
 
 Otsu's thresholding
 -------------------
@@ -121,7 +121,7 @@ You can also apply Otsu's thresholding to a single slide with the :meth:`histox.
 .. code-block:: python
 
   # Apply Otsu's thresholding to a WSI object
-  wsi = sf.WSI(...)
+  wsi = hx.WSI(...)
   wsi.qc(qc).show()
 
 
@@ -134,7 +134,7 @@ Gaussian blur filtering
 
 Gaussian blur masking is another **slide-based method** that can detect pen marks and out-of-focus areas, and is particularly useful for datasets lacking annotated Regions of Interest (ROIs). Gaussian blur masking is applied similarly, using the ``qc`` argument.
 
-Two versions of Gaussian blur masking are available: ``qc.Gaussian`` and ``qc.GaussianV2`` (new in Slideflow 2.1.0). The latter is the default and recommended version, as it is more computationally efficient. The former is provided for backwards compatibility.
+Two versions of Gaussian blur masking are available: ``qc.Gaussian`` and ``qc.GaussianV2`` (new in HistoX 2.1.0). The latter is the default and recommended version, as it is more computationally efficient. The former is provided for backwards compatibility.
 
 .. code-block:: python
 
@@ -167,12 +167,12 @@ You can also use multiple slide-level masking methods by providing a list to ``q
   ]
   P.extract_tiles(qc=qc)
 
-If both Otsu's thresholding and blur detection are being used, Slideflow will calculate Blur Burden, a metric used to assess the degree to which non-background tiles are either out-of-focus or contain artifact. In the tile extraction PDF report that is generated (see next section), the distribution of blur burden for slides in the dataset will be plotted on the first page. The report will contain the number of slides meeting criteria for warning, when the blur burden exceeds 5% for a given slide. A text file containing names of slides with high blur burden will be saved in the exported TFRecords directory. These slides should be manually reviewed to ensure they are of high enough quality to include in the dataset.
+If both Otsu's thresholding and blur detection are being used, HistoX will calculate Blur Burden, a metric used to assess the degree to which non-background tiles are either out-of-focus or contain artifact. In the tile extraction PDF report that is generated (see next section), the distribution of blur burden for slides in the dataset will be plotted on the first page. The report will contain the number of slides meeting criteria for warning, when the blur burden exceeds 5% for a given slide. A text file containing names of slides with high blur burden will be saved in the exported TFRecords directory. These slides should be manually reviewed to ensure they are of high enough quality to include in the dataset.
 
 DeepFocus
 ---------
 
-Slideflow also provides an interface for using `DeepFocus <https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0205387&type=printable>`_ to identify in-focus regions. DeepFocus is a lightweight neural network that predicts whether a section of a slide is in- or out-of-focus. When used as a slide-level masking method, DeepFocus will filter out-of-focus tiles from a slide. By default, DeepFocus is applied to slides at 40X magnification, although this can be customized with the ``tile_um`` argument.
+HistoX also provides an interface for using `DeepFocus <https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0205387&type=printable>`_ to identify in-focus regions. DeepFocus is a lightweight neural network that predicts whether a section of a slide is in- or out-of-focus. When used as a slide-level masking method, DeepFocus will filter out-of-focus tiles from a slide. By default, DeepFocus is applied to slides at 40X magnification, although this can be customized with the ``tile_um`` argument.
 
 .. code-block:: python
 
@@ -222,7 +222,7 @@ See :ref:`qc` for more information on the API for further QC customization.
 Segmentation Models (U-Net)
 ---------------------------
 
-Slideflow also provides an interface for both training and using segmentation models (e.g. U-Net, FPN, DeepLabV3) for slide-level masking. This is discussed separately in :ref:`segmentation`.
+HistoX also provides an interface for both training and using segmentation models (e.g. U-Net, FPN, DeepLabV3) for slide-level masking. This is discussed separately in :ref:`segmentation`.
 
 Grayspace filtering
 --------------------
@@ -287,7 +287,7 @@ Image tiles can be normalized during tile extraction by using the ``normalizer``
 On-the-fly
 ----------
 
-The stain normalization implementations in Slideflow are fast and efficient, with separate Tensorflow-native, PyTorch-native, and Numpy/OpenCV implementations. In most instances, we recommend performing stain normalization on-the-fly as a part of image pre-processing, as this provides flexibility for changing normalization strategies without re-extracting all of your image tiles.
+The stain normalization implementations in HistoX are fast and efficient, with separate Tensorflow-native, PyTorch-native, and Numpy/OpenCV implementations. In most instances, we recommend performing stain normalization on-the-fly as a part of image pre-processing, as this provides flexibility for changing normalization strategies without re-extracting all of your image tiles.
 
 Real-time normalization can be performed by setting the ``normalizer`` and/or ``normalizer_source`` hyperparameters.
 
@@ -296,7 +296,7 @@ Real-time normalization can be performed by setting the ``normalizer`` and/or ``
     from histox.model import ModelParams
     hp = ModelParams(..., normalizer='reinhard')
 
-If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, ``params.json``, in the saved model folder. Any Slideflow function that uses this model will automatically process images using the same normalization strategy.
+If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, ``params.json``, in the saved model folder. Any HistoX function that uses this model will automatically process images using the same normalization strategy.
 
 When stain normalizing on-the-fly, stain augmentation becomes available as a training augmentation technique. Read more about :ref:`stain augmentation <stain_augmentation>`.
 

@@ -1,0 +1,2776 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>histox.norm &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=73a1cd52"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/histox/norm';</script>
+    <script src="../../../_static/tutorials.js?v=3b8eb957"></script>
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="histox.norm - Documentation for histox, part of the PyTorch ecosystem.">
+
+
+
+
+
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
+
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
+
+  }
+</style>
+
+
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="../../../_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="../../../_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
+
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="../../../">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="../../../">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../../../installation/">Install HistoX</a>
+    <a href="../../../user_guide/">User Guide</a>
+    <a href="../../../api/">Reference API</a>
+    <a href="../../../developer/">Developer Notes</a>
+    <a href="../../../tutorials/">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../../../installation/">Install HistoX</a>
+    <a href="../../../user_guide/">User Guide</a>
+    <a href="../../../api/">Reference API</a>
+    <a href="../../../developer/">Developer Notes</a>
+    <a href="../../../tutorials/">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+
+
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="../../../docs/">Documentation home</a></li>
+    <li><a class="nav-link" href="../../../user_guide/">User guide</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="../../../installation/">Installation</a></li>
+    <li><a class="nav-link" href="../../../overview/">Overview</a></li>
+    <li><a class="nav-link" href="../../../quickstart/">Quickstart</a></li>
+    <li><a class="nav-link" href="../../../project_setup/">Project setup</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="../../../data/">Public data</a></li>
+    <li><a class="nav-link" href="../../../datasets_and_val/">Datasets</a></li>
+    <li><a class="nav-link" href="../../../slide_processing/">Slide processing</a></li>
+    <li><a class="nav-link" href="../../../features/">Feature extraction</a></li>
+    <li><a class="nav-link" href="../../../segmentation/">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="../../../cellseg/">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link" href="../../../training/">Training</a></li>
+    <li><a class="nav-link" href="../../../evaluation/">Evaluation</a></li>
+    <li><a class="nav-link" href="../../../posthoc/">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="../../../uq/">Uncertainty</a></li>
+    <li><a class="nav-link" href="../../../mil/">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="../../../ssl/">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="../../../stylegan/">Generative models</a></li>
+    <li><a class="nav-link" href="../../../saliency/">Interpretation</a></li>
+    <li><a class="nav-link" href="../../../custom_loops/">Custom loops</a></li>
+    <li><a class="nav-link" href="../../../studio/">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="../../../developer/">Developer notes home</a></li>
+    <li><a class="nav-link" href="../../../extensions/">Extensions</a></li>
+    <li><a class="nav-link" href="../../../tfrecords/">TFRecords</a></li>
+    <li><a class="nav-link" href="../../../dataloaders/">Dataloaders</a></li>
+    <li><a class="nav-link" href="../../../custom_extractors/">Custom extractors</a></li>
+    <li><a class="nav-link" href="../../../tile_labels/">Tile labels</a></li>
+    <li><a class="nav-link" href="../../../plugins/">Plugins</a></li>
+    <li><a class="nav-link" href="../../../troubleshooting/">Troubleshooting</a></li>
+    <li><a class="nav-link" href="../../../io_tensorflow/">TensorFlow data</a></li>
+    <li><a class="nav-link" href="../../../model_tensorflow/">TensorFlow models</a></li>
+  </ul>
+</nav>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+
+<div id="rtd-footer-container"></div>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">histox.norm</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="../../">
+      <meta itemprop="name" content="Module code">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="histox.norm">
+      <meta itemprop="position" content="2">
+    </div>
+  </div>
+
+  
+  
+
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for histox.norm</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;H&amp;E stain normalization and augmentation tools.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.progress</span><span class="w"> </span><span class="kn">import</span> <span class="n">Progress</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="kn">import</span> <span class="n">errors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">detuple</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">cleanup_progress</span><span class="p">,</span> <span class="n">_as_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.norm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">augment</span><span class="p">,</span> <span class="n">macenko</span><span class="p">,</span> <span class="n">reinhard</span><span class="p">,</span> <span class="n">vahadane</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+
+<div class="viewcode-block" id="StainNormalizer">
+<a class="viewcode-back" href="../../../norm/#histox.norm.StainNormalizer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StainNormalizer</span><span class="p">:</span>
+
+    <span class="n">vectorized</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">normalizers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;macenko&#39;</span><span class="p">:</span>  <span class="n">macenko</span><span class="o">.</span><span class="n">MacenkoNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;macenko_fast&#39;</span><span class="p">:</span>  <span class="n">macenko</span><span class="o">.</span><span class="n">MacenkoFastNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;reinhard&#39;</span><span class="p">:</span> <span class="n">reinhard</span><span class="o">.</span><span class="n">ReinhardNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;reinhard_fast&#39;</span><span class="p">:</span> <span class="n">reinhard</span><span class="o">.</span><span class="n">ReinhardFastNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;reinhard_mask&#39;</span><span class="p">:</span> <span class="n">reinhard</span><span class="o">.</span><span class="n">ReinhardMaskNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;reinhard_fast_mask&#39;</span><span class="p">:</span> <span class="n">reinhard</span><span class="o">.</span><span class="n">ReinhardFastMaskNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;vahadane&#39;</span><span class="p">:</span> <span class="n">vahadane</span><span class="o">.</span><span class="n">VahadaneSpamsNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;vahadane_sklearn&#39;</span><span class="p">:</span> <span class="n">vahadane</span><span class="o">.</span><span class="n">VahadaneSklearnNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;vahadane_spams&#39;</span><span class="p">:</span> <span class="n">vahadane</span><span class="o">.</span><span class="n">VahadaneSpamsNormalizer</span><span class="p">,</span>
+        <span class="s1">&#39;augment&#39;</span><span class="p">:</span> <span class="n">augment</span><span class="o">.</span><span class="n">AugmentNormalizer</span>
+    <span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;H&amp;E Stain normalizer supporting various normalization methods.</span>
+
+<span class="sd">        The stain normalizer supports numpy images, PNG or JPG strings,</span>
+<span class="sd">        Tensorflow tensors, and PyTorch tensors. The default ``.transform()``</span>
+<span class="sd">        method will attempt to preserve the original image type while</span>
+<span class="sd">        minimizing conversions to and from Tensors.</span>
+
+<span class="sd">        Alternatively, you can manually specify the image conversion type</span>
+<span class="sd">        by using the appropriate function. For example, to convert a Tensor</span>
+<span class="sd">        to a normalized numpy RGB image, use ``.tf_to_rgb()``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            method (str): Normalization method. Options include &#39;macenko&#39;,</span>
+<span class="sd">                &#39;reinhard&#39;, &#39;reinhard_fast&#39;, &#39;reinhard_mask&#39;,</span>
+<span class="sd">                &#39;reinhard_fast_mask&#39;, &#39;vahadane&#39;, &#39;vahadane_spams&#39;,</span>
+<span class="sd">                &#39;vahadane_sklearn&#39;, and &#39;augment&#39;.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            stain_matrix_target (np.ndarray, optional): Set the stain matrix</span>
+<span class="sd">                target for the normalizer. May raise an error if the normalizer</span>
+<span class="sd">                does not have a stain_matrix_target fit attribute.</span>
+<span class="sd">            target_concentrations (np.ndarray, optional): Set the target</span>
+<span class="sd">                concentrations for the normalizer. May raise an error if the</span>
+<span class="sd">                normalizer does not have a target_concentrations fit attribute.</span>
+<span class="sd">            target_means (np.ndarray, optional): Set the target means for the</span>
+<span class="sd">                normalizer. May raise an error if the normalizer does not have</span>
+<span class="sd">                a target_means fit attribute.</span>
+<span class="sd">            target_stds (np.ndarray, optional): Set the target standard</span>
+<span class="sd">                deviations for the normalizer. May raise an error if the</span>
+<span class="sd">                normalizer does not have a target_stds fit attribute.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the specified normalizer method is not available.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">            Normalize a numpy image using the default fit.</span>
+
+<span class="sd">                &gt;&gt;&gt; import histox as hx</span>
+<span class="sd">                &gt;&gt;&gt; macenko = hx.norm.StainNormalizer(&#39;macenko&#39;)</span>
+<span class="sd">                &gt;&gt;&gt; macenko.transform(image)</span>
+
+<span class="sd">            Fit the normalizer to a target image (numpy or path).</span>
+
+<span class="sd">                &gt;&gt;&gt; macenko.fit(target_image)</span>
+
+<span class="sd">            Fit the normalizer using a preset configuration.</span>
+
+<span class="sd">                &gt;&gt;&gt; macenko.fit(&#39;v2&#39;)</span>
+
+<span class="sd">            Fit the normalizer to all images in a Dataset.</span>
+
+<span class="sd">                &gt;&gt;&gt; dataset = hx.Dataset(...)</span>
+<span class="sd">                &gt;&gt;&gt; macenko.fit(dataset)</span>
+
+<span class="sd">            Normalize an image and convert from Tensor to numpy array (RGB).</span>
+
+<span class="sd">                &gt;&gt;&gt; macenko.tf_to_rgb(image)</span>
+
+<span class="sd">            Normalize images during DataLoader pre-processing.</span>
+
+<span class="sd">                &gt;&gt;&gt; dataset = hx.Dataset(...)</span>
+<span class="sd">                &gt;&gt;&gt; dataloader = dataset.torch(..., normalizer=macenko)</span>
+<span class="sd">                &gt;&gt;&gt; dts = dataset.tensorflow(..., normalizer=macenko)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalizers</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized normalizer method </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalizers</span><span class="p">[</span><span class="n">method</span><span class="p">]()</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">base</span> <span class="o">+=</span> <span class="s2">&quot;  method = </span><span class="si">{!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fit_param</span><span class="p">,</span> <span class="n">fit_val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fit</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">base</span> <span class="o">+=</span> <span class="s2">&quot;  </span><span class="si">{}</span><span class="s2"> = </span><span class="si">{!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fit_param</span><span class="p">,</span> <span class="n">fit_val</span><span class="p">)</span>
+        <span class="n">base</span> <span class="o">+=</span> <span class="s2">&quot;)&quot;</span>
+        <span class="k">return</span> <span class="n">base</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;cpu&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_transform</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">inp</span><span class="p">:</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a torch uint8 image (CWH).</span>
+
+<span class="sd">        Normalization ocurs via intermediate conversion to WHC.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inp (torch.Tensor): Image, uint8. Images are normalized in</span>
+<span class="sd">                W x H x C space. Images provided as C x W x H will be</span>
+<span class="sd">                auto-converted and permuted back after normalization.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.Tensor:   Image, uint8.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.io.torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">cwh_to_whc</span><span class="p">,</span> <span class="n">whc_to_cwh</span><span class="p">,</span> <span class="n">is_cwh</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_torch_transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">inp</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">is_cwh</span><span class="p">(</span><span class="n">inp</span><span class="p">):</span>
+            <span class="c1"># Convert from CWH -&gt; WHC (normalize) -&gt; CWH</span>
+            <span class="k">return</span> <span class="n">whc_to_cwh</span><span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rgb_to_rgb</span><span class="p">(</span>
+                        <span class="n">cwh_to_whc</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                        <span class="n">augment</span><span class="o">=</span><span class="n">augment</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rgb_to_rgb</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torch_augment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Augment a torch uint8 image (CWH).</span>
+
+<span class="sd">        Augmentation ocurs via intermediate conversion to WHC.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inp (torch.Tensor): Image, uint8. Images are normalized in</span>
+<span class="sd">                W x H x C space. Images provided as C x W x H will be</span>
+<span class="sd">                auto-converted and permuted back after normalization.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.Tensor:   Image, uint8.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">histox.io.torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">cwh_to_whc</span><span class="p">,</span> <span class="n">whc_to_cwh</span><span class="p">,</span> <span class="n">is_cwh</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_torch_augment</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">inp</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">is_cwh</span><span class="p">(</span><span class="n">inp</span><span class="p">):</span>
+            <span class="c1"># Convert from CWH -&gt; WHC (normalize) -&gt; CWH</span>
+            <span class="k">return</span> <span class="n">whc_to_cwh</span><span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">augment_rgb</span><span class="p">(</span><span class="n">cwh_to_whc</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">augment_rgb</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">arg1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+        <span class="n">num_threads</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;StainNormalizer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit the normalizer to a target image or dataset of images.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            arg1: (Dataset, np.ndarray, str): Target to fit. May be a str,</span>
+<span class="sd">                numpy image array (uint8), path to an image, or a HistoX</span>
+<span class="sd">                Dataset. If this is a string, will fit to the corresponding</span>
+<span class="sd">                preset fit (either &#39;v1&#39;, &#39;v2&#39;, or &#39;v3&#39;).</span>
+<span class="sd">                If a Dataset is provided, will average fit values across</span>
+<span class="sd">                all images in the dataset.</span>
+<span class="sd">            batch_size (int, optional): Batch size during fitting, if fitting</span>
+<span class="sd">                to dataset. Defaults to 64.</span>
+<span class="sd">            num_threads (Union[str, int], optional): Number of threads to use</span>
+<span class="sd">                during fitting, if fitting to a dataset. Defaults to &#39;auto&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Fit to a dataset</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
+            <span class="c1"># Set up thread pool</span>
+            <span class="k">if</span> <span class="n">num_threads</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+                <span class="n">num_threads</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">num_cpu</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting up pool (size=</span><span class="si">{</span><span class="n">num_threads</span><span class="si">}</span><span class="s2">) for norm fitting&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using normalizer batch size of </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">pool</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">dummy</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">arg1</span>
+            <span class="k">if</span> <span class="n">hx</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">:</span>
+                <span class="n">dts</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">tensorflow</span><span class="p">(</span>
+                    <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="p">,</span>
+                    <span class="n">standardize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">infinite</span><span class="o">=</span><span class="kc">False</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">hx</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;torch&#39;</span><span class="p">:</span>
+                <span class="n">dts</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">torch</span><span class="p">(</span>
+                    <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="p">,</span>
+                    <span class="n">standardize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">infinite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span>
+                <span class="p">)</span>
+            <span class="n">all_fit_vals</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type: ignore</span>
+            <span class="n">pb</span> <span class="o">=</span> <span class="n">Progress</span><span class="p">(</span><span class="n">transient</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s1">&#39;Fitting normalizer...&#39;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">num_tiles</span><span class="p">)</span>
+            <span class="n">pb</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">with</span> <span class="n">cleanup_progress</span><span class="p">(</span><span class="n">pb</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">img_batch</span><span class="p">,</span> <span class="n">slide</span> <span class="ow">in</span> <span class="n">dts</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">hx</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">is_torch_tensor</span><span class="p">(</span><span class="n">img_batch</span><span class="p">):</span>
+                        <span class="n">img_batch</span> <span class="o">=</span> <span class="n">img_batch</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># BCWH -&gt; BWHC</span>
+
+                    <span class="n">mapped</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()),</span> <span class="n">img_batch</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">fit_vals</span> <span class="ow">in</span> <span class="n">mapped</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">all_fit_vals</span> <span class="o">==</span> <span class="p">[]:</span>
+                            <span class="n">all_fit_vals</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fit_vals</span><span class="p">))]</span>
+                        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fit_vals</span><span class="p">):</span>
+                            <span class="n">all_fit_vals</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">val</span><span class="p">)]</span>
+                    <span class="n">pb</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">set_fit</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">all_fit_vals</span><span class="p">])</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># Fit to numpy image</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Fit to a preset</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+              <span class="ow">and</span> <span class="n">arg1</span> <span class="ow">in</span> <span class="n">hx</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">fit_presets</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">preset_tag</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">fit_preset</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Fit to a path to an image</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">src_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">arg1</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">src_img</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">arg1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_fit</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unrecognized args for fit: </span><span class="si">{</span><span class="n">arg1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Fit normalizer: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fit_key</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">fit_val</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">fit_key</span><span class="p">,</span> <span class="n">fit_val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fit</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">as_list</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current normalizer fit.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            as_list (bool). Convert the fit values (numpy arrays) to list</span>
+<span class="sd">                format. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[str, np.ndarray]: Dictionary mapping fit parameters (e.g.</span>
+<span class="sd">            &#39;target_concentrations&#39;) to their respective fit values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_fit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">get_fit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">as_list</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_as_list</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_fit</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_fit</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the normalizer fit to the given values.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            stain_matrix_target (np.ndarray, optional): Set the stain matrix</span>
+<span class="sd">                target for the normalizer. May raise an error if the normalizer</span>
+<span class="sd">                does not have a stain_matrix_target fit attribute.</span>
+<span class="sd">            target_concentrations (np.ndarray, optional): Set the target</span>
+<span class="sd">                concentrations for the normalizer. May raise an error if the</span>
+<span class="sd">                normalizer does not have a target_concentrations fit attribute.</span>
+<span class="sd">            target_means (np.ndarray, optional): Set the target means for the</span>
+<span class="sd">                normalizer. May raise an error if the normalizer does not have</span>
+<span class="sd">                a target_means fit attribute.</span>
+<span class="sd">            target_stds (np.ndarray, optional): Set the target standard</span>
+<span class="sd">                deviations for the normalizer. May raise an error if the</span>
+<span class="sd">                normalizer does not have a target_stds fit attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">set_fit</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_augment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the normalizer augmentation space.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            preset (str, optional): Augmentation preset. Defaults to None.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            matrix_stdev (np.ndarray): Standard deviation</span>
+<span class="sd">                of the stain matrix target. Must have the shape (3, 2).</span>
+<span class="sd">                Used for Macenko normalizers.</span>
+<span class="sd">                Defaults to None (will not augment stain matrix).</span>
+<span class="sd">            concentrations_stdev (np.ndarray): Standard deviation</span>
+<span class="sd">                of the target concentrations. Must have the shape (2,).</span>
+<span class="sd">                Used for Macenko normalizers.</span>
+<span class="sd">                Defaults to None (will not augment target concentrations).</span>
+<span class="sd">            means_stdev (np.ndarray): Standard deviation</span>
+<span class="sd">                of the target means. Must have the shape (3,).</span>
+<span class="sd">                Used for Reinhard normalizers.</span>
+<span class="sd">                Defaults to None (will not augment target means).</span>
+<span class="sd">            stds_stdev (np.ndarray): Standard deviation</span>
+<span class="sd">                of the target stds. Must have the shape (3,).</span>
+<span class="sd">                Used for Reinhard normalizers.</span>
+<span class="sd">                Defaults to None (will not augment target stds).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">preset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">augment_preset</span><span class="p">(</span><span class="n">preset</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">set_augment</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a target image, attempting to preserve the original type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (np.ndarray, tf.Tensor, or torch.Tensor): Image as a uint8</span>
+<span class="sd">                array. Numpy and Tensorflow images are normalized in W x H x C</span>
+<span class="sd">                space. PyTorch images provided as C x W x H will be</span>
+<span class="sd">                auto-converted and permuted back after normalization.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Normalized image of the original type (uint8).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to auto-transform bytes or str; please &quot;</span>
+                             <span class="s2">&quot;use .png_to_png() or .jpeg_to_jpeg().&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_to_tf</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;torch&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">torch_to_torch</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgb_to_rgb</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized image type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="si">}</span><span class="s2">; expected &quot;</span>
+                         <span class="s2">&quot;np.ndarray, tf.Tensor, or torch.Tensor&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">augment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Augment a target image, attempting to preserve the original type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (np.ndarray, tf.Tensor, or torch.Tensor): Image as a uint8</span>
+<span class="sd">                array. Numpy and Tensorflow images are normalized in W x H x C</span>
+<span class="sd">                space. PyTorch images provided as C x W x H will be</span>
+<span class="sd">                auto-converted and permuted back after normalization.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Augmented image of the original type (uint8).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="s1">&#39;augment&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">AugmentationNotSupportedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Normalizer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2"> does not support augmentation.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to augment bytes or str; image &quot;</span>
+                             <span class="s2">&quot;must first be converted to an array or Tensor.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">image</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">py_function</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">augment_rgb</span><span class="p">,</span>
+                        <span class="p">[</span><span class="n">image</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">]],</span>
+                        <span class="n">tf</span><span class="o">.</span><span class="n">uint8</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">augment_rgb</span><span class="p">(</span><span class="n">_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">_i</span> <span class="ow">in</span> <span class="n">image</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">py_function</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">augment_rgb</span><span class="p">,</span>
+                        <span class="p">[</span><span class="n">image</span><span class="p">],</span>
+                        <span class="n">tf</span><span class="o">.</span><span class="n">uint8</span>
+                    <span class="p">)</span>
+                <span class="k">return</span> <span class="n">image</span>
+
+        <span class="k">if</span> <span class="s1">&#39;torch&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">to_return</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">image</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;tile_image&#39;</span>
+                    <span class="p">}</span>
+                    <span class="n">to_return</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_augment</span><span class="p">(</span>
+                        <span class="n">image</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">to_return</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_augment</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">augment_rgb</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized image type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="si">}</span><span class="s2">; expected &quot;</span>
+                            <span class="s2">&quot;np.ndarray, tf.Tensor, or torch.Tensor&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">augment_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Augment a numpy array (uint8), returning a numpy array (uint8).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (np.ndarray): Image (uint8).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Augmented image, uint8, W x H x C.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">augment</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">jpeg_to_jpeg</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">jpeg_string</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">quality</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a JPEG image, returning a JPEG image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            jpeg_string (str, bytes): JPEG image data.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+<span class="sd">            quality (int, optional): Quality level for creating the resulting</span>
+<span class="sd">                normalized JPEG image. Defaults to 100.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes:  Normalized JPEG image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cv_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jpeg_to_rgb</span><span class="p">(</span><span class="n">jpeg_string</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">BytesIO</span><span class="p">()</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">cv_image</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+                <span class="n">output</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;JPEG&quot;</span><span class="p">,</span>
+                <span class="n">quality</span><span class="o">=</span><span class="n">quality</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">jpeg_to_rgb</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">jpeg_string</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a JPEG image, returning a numpy uint8 array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            jpeg_string (str, bytes): JPEG image data.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Normalized image, uint8, W x H x C.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cv_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imdecode</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">jpeg_string</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_COLOR</span>
+        <span class="p">)</span>
+        <span class="n">cv_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgb_to_rgb</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">png_to_png</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">png_string</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a PNG image, returning a PNG image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            png_string (str, bytes): PNG image data.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes: Normalized PNG image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cv_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">png_to_rgb</span><span class="p">(</span><span class="n">png_string</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">BytesIO</span><span class="p">()</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">cv_image</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">png_to_rgb</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">png_string</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a PNG image, returning a numpy uint8 array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            png_string (str, bytes): PNG image data.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Normalized image, uint8, W x H x C.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">jpeg_to_rgb</span><span class="p">(</span><span class="n">png_string</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>  <span class="c1"># It should auto-detect format</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">rgb_to_rgb</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a numpy array (uint8), returning a numpy array (uint8).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (np.ndarray): Image (uint8).</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Normalized image, uint8, W x H x C.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">tf_to_rgb</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a tf.Tensor (uint8), returning a numpy array (uint8).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (tf.Tensor): Image (uint8).</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Normalized image, uint8, W x H x C.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgb_to_rgb</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">tf_to_tf</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">],</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">],</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a tf.Tensor (uint8), returning a numpy array (uint8).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (tf.Tensor, Dict): Image (uint8) either as a raw Tensor,</span>
+<span class="sd">                or a Dictionary with the image under the key &#39;tile_image&#39;.</span>
+<span class="sd">            args (Any, optional): Any additional arguments, which will be passed</span>
+<span class="sd">                and returned unmodified.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple containing the normalized tf.Tensor image (uint8,</span>
+<span class="sd">            W x H x C) and any additional arguments provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">image</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">py_function</span><span class="p">(</span>
+                <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_to_rgb</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">),</span>
+                <span class="p">[</span><span class="n">image</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">]],</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">uint8</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_to_tf</span><span class="p">(</span><span class="n">_i</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">)</span> <span class="k">for</span> <span class="n">_i</span> <span class="ow">in</span> <span class="n">image</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">py_function</span><span class="p">(</span>
+                <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_to_rgb</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">),</span>
+                <span class="p">[</span><span class="n">image</span><span class="p">],</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">uint8</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">detuple</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">torch_to_torch</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">],</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">augment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">],</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize a torch.Tensor (uint8), returning a numpy array (uint8).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (torch.Tensor, Dict): Image (uint8) either as a raw Tensor,</span>
+<span class="sd">                or a Dictionary with the image under the key &#39;tile_image&#39;.</span>
+<span class="sd">            args (Any, optional): Any additional arguments, which will be passed</span>
+<span class="sd">                and returned unmodified.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            augment (bool): Transform using stain aumentation.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple containing</span>
+
+<span class="sd">                np.ndarray: Normalized torch.Tensor image, uint8 (channel dimension matching the input image)</span>
+
+<span class="sd">                args (Any, optional): Any additional arguments provided, unmodified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">to_return</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">image</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;tile_image&#39;</span>
+            <span class="p">}</span>
+            <span class="n">to_return</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_transform</span><span class="p">(</span>
+                <span class="n">image</span><span class="p">[</span><span class="s1">&#39;tile_image&#39;</span><span class="p">],</span>
+                <span class="n">augment</span><span class="o">=</span><span class="n">augment</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">detuple</span><span class="p">(</span><span class="n">to_return</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">detuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_torch_transform</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="n">augment</span><span class="p">),</span> <span class="n">args</span><span class="p">)</span>
+
+    <span class="c1"># --- Context management --------------------------------------------------</span>
+
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">context</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">context</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;hx.WSI&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the whole-slide context for the stain normalizer.</span>
+
+<span class="sd">        With contextual normalization, max concentrations are determined</span>
+<span class="sd">        from the context (whole-slide image) rather than the image being</span>
+<span class="sd">        normalized. This may improve stain normalization for sections of</span>
+<span class="sd">        a slide that are predominantly eosin (e.g. necrosis or low cellularity).</span>
+
+<span class="sd">        When calculating max concentrations from the image context,</span>
+<span class="sd">        white pixels (255) will be masked.</span>
+
+<span class="sd">        This function is a context manager used for temporarily setting the</span>
+<span class="sd">        image context. For example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            with normalizer.context(slide):</span>
+<span class="sd">                normalizer.transform(target)</span>
+
+<span class="sd">        If a slide (``hx.WSI``) is used for context, any existing QC filters</span>
+<span class="sd">        and regions of interest will be used to mask out background as white</span>
+<span class="sd">        pixels, and the masked thumbnail will be used for creating the</span>
+<span class="sd">        normalizer context. If no QC has been applied to the slide and the</span>
+<span class="sd">        slide does not have any Regions of Interest, then both otsu&#39;s</span>
+<span class="sd">        thresholding and Gaussian blur filtering will be applied</span>
+<span class="sd">        to the thumbnail for masking.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            I (np.ndarray, hx.WSI): Context to use for normalization, e.g.</span>
+<span class="sd">                a whole-slide image thumbnail, optionally masked with masked</span>
+<span class="sd">                areas set to (255, 255, 255).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="k">yield</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_context</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_context</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">context</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;hx.WSI&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="s2">&quot;tf.Tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the whole-slide context for the stain normalizer.</span>
+
+<span class="sd">        With contextual normalization, max concentrations are determined</span>
+<span class="sd">        from the context (whole-slide image) rather than the image being</span>
+<span class="sd">        normalized. This may improve stain normalization for sections of</span>
+<span class="sd">        a slide that are predominantly eosin (e.g. necrosis or low cellularity).</span>
+
+<span class="sd">        When calculating max concentrations from the image context,</span>
+<span class="sd">        white pixels (255) will be masked.</span>
+
+<span class="sd">        If a slide (``hx.WSI``) is used for context, any existing QC filters</span>
+<span class="sd">        and regions of interest will be used to mask out background as white</span>
+<span class="sd">        pixels, and the masked thumbnail will be used for creating the</span>
+<span class="sd">        normalizer context. If no QC has been applied to the slide and the</span>
+<span class="sd">        slide does not have any Regions of Interest, then both otsu&#39;s</span>
+<span class="sd">        thresholding and Gaussian blur filtering will be applied</span>
+<span class="sd">        to the thumbnail for masking.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            I (np.ndarray, hx.WSI): Context to use for normalization, e.g.</span>
+<span class="sd">                a whole-slide image thumbnail, optionally masked with masked</span>
+<span class="sd">                areas set to (255, 255, 255).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="s1">&#39;set_context&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hx</span><span class="o">.</span><span class="n">WSI</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">thumb</span><span class="p">(</span><span class="n">mpp</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">hx</span><span class="o">.</span><span class="n">WSI</span><span class="p">):</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">masked_thumb</span><span class="p">(</span><span class="n">mpp</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">context</span>  <span class="c1"># type: ignore</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove any previously set stain normalizer context.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="s1">&#39;clear_context&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">clear_context</span><span class="p">()</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">autoselect</span><span class="p">(</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StainNormalizer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select the best normalizer for a given method, and fit to a given source.</span>
+
+<span class="sd">    If a normalizer method has a native implementation in the current backend</span>
+<span class="sd">    (Tensorflow or PyTorch), the native normalizer will be used.</span>
+<span class="sd">    If not, the default numpy implementation will be used.</span>
+
+<span class="sd">    Currently, the PyTorch-native normalizers are NOT used by default, as they</span>
+<span class="sd">    are slower than the numpy implementations. Thus, with the PyTorch backend,</span>
+<span class="sd">    all normalizers will be the default numpy implementations.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        method (str): Normalization method. Options include &#39;macenko&#39;,</span>
+<span class="sd">            &#39;reinhard&#39;, &#39;reinhard_fast&#39;, &#39;reinhard_mask&#39;, &#39;reinhard_fast_mask&#39;,</span>
+<span class="sd">            &#39;vahadane&#39;, &#39;vahadane_spams&#39;, &#39;vahadane_sklearn&#39;, and &#39;augment&#39;.</span>
+<span class="sd">        source (str, optional): Stain normalization preset or path to a source</span>
+<span class="sd">            image. Valid presets include &#39;v1&#39;, &#39;v2&#39;, and &#39;v3&#39;. If None, will</span>
+<span class="sd">            use the default present (&#39;v3&#39;). Defaults to None.</span>
+<span class="sd">        backend (str): Backend to use for native normalizers. Options include</span>
+<span class="sd">            &#39;tensorflow&#39;, &#39;torch&#39;, and &#39;opencv&#39;. If None, will use the current</span>
+<span class="sd">            backend, falling back to opencv/numpy if a native normalizer is</span>
+<span class="sd">            not available. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        StainNormalizer:    Initialized StainNormalizer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">histox.norm.tensorflow</span>
+        <span class="n">BackendNormalizer</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">TensorflowStainNormalizer</span>
+    <span class="k">elif</span> <span class="n">backend</span> <span class="o">==</span> <span class="s1">&#39;torch&#39;</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">histox.norm.torch</span>
+        <span class="n">BackendNormalizer</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">torch</span><span class="o">.</span><span class="n">TorchStainNormalizer</span>  <span class="c1"># type: ignore</span>
+    <span class="k">elif</span> <span class="n">backend</span> <span class="o">==</span> <span class="s1">&#39;opencv&#39;</span><span class="p">:</span>
+        <span class="n">BackendNormalizer</span> <span class="o">=</span> <span class="n">StainNormalizer</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UnrecognizedBackendError</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">BackendNormalizer</span><span class="o">.</span><span class="n">normalizers</span><span class="p">:</span>
+        <span class="n">normalizer</span> <span class="o">=</span> <span class="n">BackendNormalizer</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">normalizer</span> <span class="o">=</span> <span class="n">StainNormalizer</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">source</span> <span class="o">!=</span> <span class="s1">&#39;dataset&#39;</span><span class="p">:</span>
+        <span class="n">normalizer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">normalizer</span>
+</pre></div>
+
+                </article>
+              
+</div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
+  </div>
+</div>
+
+<div class="prev-next-area">
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="../../../">Home</a>
+      <a href="../../../docs/">Docs</a>
+      <a href="../../../tutorials/">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
+</footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "histox.norm",
+       "headline": "histox.norm",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/_modules/histox/norm.html",
+       "articleBody": "Source code for histox.norm \"\"\"H\u0026E stain normalization and augmentation tools.\"\"\" from __future__ import absolute_import import os import sys import multiprocessing as mp from io import BytesIO from functools import partial from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple, Union import cv2 import numpy as np import histox as hx from PIL import Image from contextlib import contextmanager from rich.progress import Progress from histox import errors from histox.dataset import Dataset from histox.util import detuple, log, cleanup_progress, _as_list from histox.norm import (augment, macenko, reinhard, vahadane) if TYPE_CHECKING: import tensorflow as tf import torch [docs] class StainNormalizer: vectorized = False normalizers = { \u0027macenko\u0027: macenko.MacenkoNormalizer, \u0027macenko_fast\u0027: macenko.MacenkoFastNormalizer, \u0027reinhard\u0027: reinhard.ReinhardNormalizer, \u0027reinhard_fast\u0027: reinhard.ReinhardFastNormalizer, \u0027reinhard_mask\u0027: reinhard.ReinhardMaskNormalizer, \u0027reinhard_fast_mask\u0027: reinhard.ReinhardFastMaskNormalizer, \u0027vahadane\u0027: vahadane.VahadaneSpamsNormalizer, \u0027vahadane_sklearn\u0027: vahadane.VahadaneSklearnNormalizer, \u0027vahadane_spams\u0027: vahadane.VahadaneSpamsNormalizer, \u0027augment\u0027: augment.AugmentNormalizer } # type: Dict[str, Any] def __init__(self, method: str, **kwargs) -\u003e None: \"\"\"H\u0026E Stain normalizer supporting various normalization methods. The stain normalizer supports numpy images, PNG or JPG strings, Tensorflow tensors, and PyTorch tensors. The default ``.transform()`` method will attempt to preserve the original image type while minimizing conversions to and from Tensors. Alternatively, you can manually specify the image conversion type by using the appropriate function. For example, to convert a Tensor to a normalized numpy RGB image, use ``.tf_to_rgb()``. Args: method (str): Normalization method. Options include \u0027macenko\u0027, \u0027reinhard\u0027, \u0027reinhard_fast\u0027, \u0027reinhard_mask\u0027, \u0027reinhard_fast_mask\u0027, \u0027vahadane\u0027, \u0027vahadane_spams\u0027, \u0027vahadane_sklearn\u0027, and \u0027augment\u0027. Keyword args: stain_matrix_target (np.ndarray, optional): Set the stain matrix target for the normalizer. May raise an error if the normalizer does not have a stain_matrix_target fit attribute. target_concentrations (np.ndarray, optional): Set the target concentrations for the normalizer. May raise an error if the normalizer does not have a target_concentrations fit attribute. target_means (np.ndarray, optional): Set the target means for the normalizer. May raise an error if the normalizer does not have a target_means fit attribute. target_stds (np.ndarray, optional): Set the target standard deviations for the normalizer. May raise an error if the normalizer does not have a target_stds fit attribute. Raises: ValueError: If the specified normalizer method is not available. Examples Normalize a numpy image using the default fit. \u003e\u003e\u003e import histox as hx \u003e\u003e\u003e macenko = hx.norm.StainNormalizer(\u0027macenko\u0027) \u003e\u003e\u003e macenko.transform(image) Fit the normalizer to a target image (numpy or path). \u003e\u003e\u003e macenko.fit(target_image) Fit the normalizer using a preset configuration. \u003e\u003e\u003e macenko.fit(\u0027v2\u0027) Fit the normalizer to all images in a Dataset. \u003e\u003e\u003e dataset = hx.Dataset(...) \u003e\u003e\u003e macenko.fit(dataset) Normalize an image and convert from Tensor to numpy array (RGB). \u003e\u003e\u003e macenko.tf_to_rgb(image) Normalize images during DataLoader pre-processing. \u003e\u003e\u003e dataset = hx.Dataset(...) \u003e\u003e\u003e dataloader = dataset.torch(..., normalizer=macenko) \u003e\u003e\u003e dts = dataset.tensorflow(..., normalizer=macenko) \"\"\" if method not in self.normalizers: raise ValueError(f\"Unrecognized normalizer method {method}\") self.method = method self.n = self.normalizers[method]() if kwargs: self.n.fit(**kwargs) def __repr__(self): base = \"{}(\\n\".format(self.__class__.__name__) base += \" method = {!r},\\n\".format(self.method) for fit_param, fit_val in self.get_fit().items(): base += \" {} = {!r},\\n\".format(fit_param, fit_val) base += \")\" return base @property def device(self) -\u003e str: return \u0027cpu\u0027 def _torch_transform( self, inp: \"torch.Tensor\", *, augment: bool = False ) -\u003e \"torch.Tensor\": \"\"\"Normalize a torch uint8 image (CWH). Normalization ocurs via intermediate conversion to WHC. Args: inp (torch.Tensor): Image, uint8. Images are normalized in W x H x C space. Images provided as C x W x H will be auto-converted and permuted back after normalization. Returns: torch.Tensor: Image, uint8. \"\"\" import torch from histox.io.torch import cwh_to_whc, whc_to_cwh, is_cwh if len(inp.shape) == 4: return torch.stack([self._torch_transform(img) for img in inp]) elif is_cwh(inp): # Convert from CWH -\u003e WHC (normalize) -\u003e CWH return whc_to_cwh( torch.from_numpy( self.rgb_to_rgb( cwh_to_whc(inp).cpu().numpy(), augment=augment ) ) ) else: return torch.from_numpy( self.rgb_to_rgb(inp.cpu().numpy(), augment=augment) ) def _torch_augment(self, inp: \"torch.Tensor\") -\u003e \"torch.Tensor\": \"\"\"Augment a torch uint8 image (CWH). Augmentation ocurs via intermediate conversion to WHC. Args: inp (torch.Tensor): Image, uint8. Images are normalized in W x H x C space. Images provided as C x W x H will be auto-converted and permuted back after normalization. Returns: torch.Tensor: Image, uint8. \"\"\" import torch from histox.io.torch import cwh_to_whc, whc_to_cwh, is_cwh if len(inp.shape) == 4: return torch.stack([self._torch_augment(img) for img in inp]) elif is_cwh(inp): # Convert from CWH -\u003e WHC (normalize) -\u003e CWH return whc_to_cwh( torch.from_numpy( self.augment_rgb(cwh_to_whc(inp).cpu().numpy()) ) ) else: return torch.from_numpy(self.augment_rgb(inp.cpu().numpy())) def fit( self, arg1: Optional[Union[Dataset, np.ndarray, str]], batch_size: int = 64, num_threads: Union[str, int] = \u0027auto\u0027, **kwargs, ) -\u003e \"StainNormalizer\": \"\"\"Fit the normalizer to a target image or dataset of images. Args: arg1: (Dataset, np.ndarray, str): Target to fit. May be a str, numpy image array (uint8), path to an image, or a HistoX Dataset. If this is a string, will fit to the corresponding preset fit (either \u0027v1\u0027, \u0027v2\u0027, or \u0027v3\u0027). If a Dataset is provided, will average fit values across all images in the dataset. batch_size (int, optional): Batch size during fitting, if fitting to dataset. Defaults to 64. num_threads (Union[str, int], optional): Number of threads to use during fitting, if fitting to a dataset. Defaults to \u0027auto\u0027. \"\"\" # Fit to a dataset if isinstance(arg1, Dataset): # Set up thread pool if num_threads == \u0027auto\u0027: num_threads = hx.util.num_cpu(default=8) # type: ignore log.debug(f\"Setting up pool (size={num_threads}) for norm fitting\") log.debug(f\"Using normalizer batch size of {batch_size}\") pool = mp.dummy.Pool(num_threads) # type: ignore dataset = arg1 if hx.backend() == \u0027tensorflow\u0027: dts = dataset.tensorflow( None, batch_size, standardize=False, infinite=False ) elif hx.backend() == \u0027torch\u0027: dts = dataset.torch( None, batch_size, standardize=False, infinite=False, num_workers=8 ) all_fit_vals = [] # type: ignore pb = Progress(transient=True) task = pb.add_task(\u0027Fitting normalizer...\u0027, total=dataset.num_tiles) pb.start() with cleanup_progress(pb): for img_batch, slide in dts: if hx.model.is_torch_tensor(img_batch): img_batch = img_batch.permute(0, 2, 3, 1) # BCWH -\u003e BWHC mapped = pool.imap(lambda x: self.n.fit(x.numpy()), img_batch) for fit_vals in mapped: if all_fit_vals == []: all_fit_vals = [[] for _ in range(len(fit_vals))] for v, val in enumerate(fit_vals): all_fit_vals[v] += [np.squeeze(val)] pb.advance(task, batch_size) self.n.set_fit(*[np.array(v).mean(axis=0) for v in all_fit_vals]) pool.close() # Fit to numpy image elif isinstance(arg1, np.ndarray): self.n.fit(arg1, **kwargs) # Fit to a preset elif (isinstance(arg1, str) and arg1 in hx.norm.utils.fit_presets[self.n.preset_tag]): self.n.fit_preset(arg1, **kwargs) # Fit to a path to an image elif isinstance(arg1, str): self.src_img = cv2.cvtColor(cv2.imread(arg1), cv2.COLOR_BGR2RGB) self.n.fit(self.src_img, **kwargs) elif arg1 is None and kwargs: self.set_fit(**kwargs) else: raise ValueError(f\u0027Unrecognized args for fit: {arg1}\u0027) log.debug(\u0027Fit normalizer: {}\u0027.format( \u0027, \u0027.join([f\"{fit_key} = {fit_val}\" for fit_key, fit_val in self.get_fit().items()]) )) return self def get_fit(self, as_list: bool = False): \"\"\"Get the current normalizer fit. Args: as_list (bool). Convert the fit values (numpy arrays) to list format. Defaults to False. Returns: Dict[str, np.ndarray]: Dictionary mapping fit parameters (e.g. \u0027target_concentrations\u0027) to their respective fit values. \"\"\" _fit = self.n.get_fit() if as_list: return {k: _as_list(v) for k, v in _fit.items()} else: return _fit def set_fit(self, **kwargs) -\u003e None: \"\"\"Set the normalizer fit to the given values. Keyword args: stain_matrix_target (np.ndarray, optional): Set the stain matrix target for the normalizer. May raise an error if the normalizer does not have a stain_matrix_target fit attribute. target_concentrations (np.ndarray, optional): Set the target concentrations for the normalizer. May raise an error if the normalizer does not have a target_concentrations fit attribute. target_means (np.ndarray, optional): Set the target means for the normalizer. May raise an error if the normalizer does not have a target_means fit attribute. target_stds (np.ndarray, optional): Set the target standard deviations for the normalizer. May raise an error if the normalizer does not have a target_stds fit attribute. \"\"\" self.n.set_fit(**{k:v for k, v in kwargs.items() if v is not None}) def set_augment(self, preset: Optional[str] = None, **kwargs) -\u003e None: \"\"\"Set the normalizer augmentation space. Args: preset (str, optional): Augmentation preset. Defaults to None. Keyword args: matrix_stdev (np.ndarray): Standard deviation of the stain matrix target. Must have the shape (3, 2). Used for Macenko normalizers. Defaults to None (will not augment stain matrix). concentrations_stdev (np.ndarray): Standard deviation of the target concentrations. Must have the shape (2,). Used for Macenko normalizers. Defaults to None (will not augment target concentrations). means_stdev (np.ndarray): Standard deviation of the target means. Must have the shape (3,). Used for Reinhard normalizers. Defaults to None (will not augment target means). stds_stdev (np.ndarray): Standard deviation of the target stds. Must have the shape (3,). Used for Reinhard normalizers. Defaults to None (will not augment target stds). \"\"\" if preset is not None: return self.n.augment_preset(preset) if kwargs: self.n.set_augment(**{k:v for k, v in kwargs.items() if v is not None}) def transform( self, image: Union[np.ndarray, \"tf.Tensor\", \"torch.Tensor\"], *, augment: bool = False ) -\u003e Union[np.ndarray, \"tf.Tensor\", \"torch.Tensor\"]: \"\"\"Normalize a target image, attempting to preserve the original type. Args: image (np.ndarray, tf.Tensor, or torch.Tensor): Image as a uint8 array. Numpy and Tensorflow images are normalized in W x H x C space. PyTorch images provided as C x W x H will be auto-converted and permuted back after normalization. Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: Normalized image of the original type (uint8). \"\"\" if isinstance(image, (str, bytes)): raise ValueError(\"Unable to auto-transform bytes or str; please \" \"use .png_to_png() or .jpeg_to_jpeg().\") if \u0027tensorflow\u0027 in sys.modules: import tensorflow as tf if isinstance(image, tf.Tensor): return self.tf_to_tf(image, augment=augment) if \u0027torch\u0027 in sys.modules: import torch if isinstance(image, torch.Tensor): return self.torch_to_torch(image, augment=augment) if isinstance(image, np.ndarray): return self.rgb_to_rgb(image, augment=augment) raise ValueError(f\"Unrecognized image type {type(image)}; expected \" \"np.ndarray, tf.Tensor, or torch.Tensor\") def augment( self, image: Union[np.ndarray, \"tf.Tensor\", \"torch.Tensor\"] ) -\u003e Union[np.ndarray, \"tf.Tensor\", \"torch.Tensor\"]: \"\"\"Augment a target image, attempting to preserve the original type. Args: image (np.ndarray, tf.Tensor, or torch.Tensor): Image as a uint8 array. Numpy and Tensorflow images are normalized in W x H x C space. PyTorch images provided as C x W x H will be auto-converted and permuted back after normalization. Returns: Augmented image of the original type (uint8). \"\"\" if not hasattr(self.n, \u0027augment\u0027): raise errors.AugmentationNotSupportedError( f\"Normalizer {self.method} does not support augmentation.\") if isinstance(image, (str, bytes)): raise ValueError(\"Unable to augment bytes or str; image \" \"must first be converted to an array or Tensor.\") if \u0027tensorflow\u0027 in sys.modules: import tensorflow as tf if isinstance(image, tf.Tensor): if isinstance(image, dict): image[\u0027tile_image\u0027] = tf.py_function( self.augment_rgb, [image[\u0027tile_image\u0027]], tf.uint8 ) elif len(image.shape) == 4: image = tf.stack([self.augment_rgb(_i) for _i in image]) else: image = tf.py_function( self.augment_rgb, [image], tf.uint8 ) return image if \u0027torch\u0027 in sys.modules: import torch if isinstance(image, torch.Tensor): if isinstance(image, dict): to_return = { k: v for k, v in image.items() if k != \u0027tile_image\u0027 } to_return[\u0027tile_image\u0027] = self._torch_augment( image[\u0027tile_image\u0027] ) return to_return else: return self._torch_augment(image) if isinstance(image, np.ndarray): return self.augment_rgb(image) raise ValueError(f\"Unrecognized image type {type(image)}; expected \" \"np.ndarray, tf.Tensor, or torch.Tensor\") def augment_rgb(self, image: np.ndarray) -\u003e np.ndarray: \"\"\"Augment a numpy array (uint8), returning a numpy array (uint8). Args: image (np.ndarray): Image (uint8). Returns: np.ndarray: Augmented image, uint8, W x H x C. \"\"\" return self.n.augment(image) def jpeg_to_jpeg( self, jpeg_string: Union[str, bytes], *, quality: int = 100, augment: bool = False ) -\u003e bytes: \"\"\"Normalize a JPEG image, returning a JPEG image. Args: jpeg_string (str, bytes): JPEG image data. Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. quality (int, optional): Quality level for creating the resulting normalized JPEG image. Defaults to 100. Returns: bytes: Normalized JPEG image. \"\"\" cv_image = self.jpeg_to_rgb(jpeg_string, augment=augment) with BytesIO() as output: Image.fromarray(cv_image).save( output, format=\"JPEG\", quality=quality ) return output.getvalue() def jpeg_to_rgb( self, jpeg_string: Union[str, bytes], *, augment: bool = False ) -\u003e np.ndarray: \"\"\"Normalize a JPEG image, returning a numpy uint8 array. Args: jpeg_string (str, bytes): JPEG image data. Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: np.ndarray: Normalized image, uint8, W x H x C. \"\"\" cv_image = cv2.imdecode( np.fromstring(jpeg_string, dtype=np.uint8), cv2.IMREAD_COLOR ) cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB) return self.rgb_to_rgb(cv_image, augment=augment) def png_to_png( self, png_string: Union[str, bytes], *, augment: bool = False ) -\u003e bytes: \"\"\"Normalize a PNG image, returning a PNG image. Args: png_string (str, bytes): PNG image data. Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: bytes: Normalized PNG image. \"\"\" cv_image = self.png_to_rgb(png_string, augment=augment) with BytesIO() as output: Image.fromarray(cv_image).save(output, format=\"PNG\") return output.getvalue() def png_to_rgb( self, png_string: Union[str, bytes], *, augment: bool = False ) -\u003e np.ndarray: \"\"\"Normalize a PNG image, returning a numpy uint8 array. Args: png_string (str, bytes): PNG image data. Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: np.ndarray: Normalized image, uint8, W x H x C. \"\"\" return self.jpeg_to_rgb(png_string, augment=augment) # It should auto-detect format def rgb_to_rgb( self, image: np.ndarray, *, augment: bool = False ) -\u003e np.ndarray: \"\"\"Normalize a numpy array (uint8), returning a numpy array (uint8). Args: image (np.ndarray): Image (uint8). Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: np.ndarray: Normalized image, uint8, W x H x C. \"\"\" return self.n.transform(image, augment=augment) def tf_to_rgb( self, image: \"tf.Tensor\", *, augment: bool = False ) -\u003e np.ndarray: \"\"\"Normalize a tf.Tensor (uint8), returning a numpy array (uint8). Args: image (tf.Tensor): Image (uint8). Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: np.ndarray: Normalized image, uint8, W x H x C. \"\"\" return self.rgb_to_rgb(np.array(image), augment=augment) def tf_to_tf( self, image: Union[Dict, \"tf.Tensor\"], *args: Any, augment: bool = False ) -\u003e Tuple[Union[Dict, \"tf.Tensor\"], ...]: \"\"\"Normalize a tf.Tensor (uint8), returning a numpy array (uint8). Args: image (tf.Tensor, Dict): Image (uint8) either as a raw Tensor, or a Dictionary with the image under the key \u0027tile_image\u0027. args (Any, optional): Any additional arguments, which will be passed and returned unmodified. Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: A tuple containing the normalized tf.Tensor image (uint8, W x H x C) and any additional arguments provided. \"\"\" import tensorflow as tf if isinstance(image, dict): image[\u0027tile_image\u0027] = tf.py_function( partial(self.tf_to_rgb, augment=augment), [image[\u0027tile_image\u0027]], tf.uint8 ) elif len(image.shape) == 4: image = tf.stack([self.tf_to_tf(_i, augment=augment) for _i in image]) else: image = tf.py_function( partial(self.tf_to_rgb, augment=augment), [image], tf.uint8 ) return detuple(image, args) def torch_to_torch( self, image: Union[Dict, \"torch.Tensor\"], *args, augment: bool = False ) -\u003e Tuple[Union[Dict, \"torch.Tensor\"], ...]: \"\"\"Normalize a torch.Tensor (uint8), returning a numpy array (uint8). Args: image (torch.Tensor, Dict): Image (uint8) either as a raw Tensor, or a Dictionary with the image under the key \u0027tile_image\u0027. args (Any, optional): Any additional arguments, which will be passed and returned unmodified. Keyword args: augment (bool): Transform using stain aumentation. Defaults to False. Returns: A tuple containing np.ndarray: Normalized torch.Tensor image, uint8 (channel dimension matching the input image) args (Any, optional): Any additional arguments provided, unmodified. \"\"\" if isinstance(image, dict): to_return = { k: v for k, v in image.items() if k != \u0027tile_image\u0027 } to_return[\u0027tile_image\u0027] = self._torch_transform( image[\u0027tile_image\u0027], augment=augment ) return detuple(to_return, args) else: return detuple(self._torch_transform(image, augment=augment), args) # --- Context management -------------------------------------------------- @contextmanager def context( self, context: Union[str, \"hx.WSI\", np.ndarray, \"tf.Tensor\", \"torch.Tensor\"] ): \"\"\"Set the whole-slide context for the stain normalizer. With contextual normalization, max concentrations are determined from the context (whole-slide image) rather than the image being normalized. This may improve stain normalization for sections of a slide that are predominantly eosin (e.g. necrosis or low cellularity). When calculating max concentrations from the image context, white pixels (255) will be masked. This function is a context manager used for temporarily setting the image context. For example: .. code-block:: python with normalizer.context(slide): normalizer.transform(target) If a slide (``hx.WSI``) is used for context, any existing QC filters and regions of interest will be used to mask out background as white pixels, and the masked thumbnail will be used for creating the normalizer context. If no QC has been applied to the slide and the slide does not have any Regions of Interest, then both otsu\u0027s thresholding and Gaussian blur filtering will be applied to the thumbnail for masking. Args: I (np.ndarray, hx.WSI): Context to use for normalization, e.g. a whole-slide image thumbnail, optionally masked with masked areas set to (255, 255, 255). \"\"\" self.set_context(context) yield self.clear_context() def set_context( self, context: Union[str, \"hx.WSI\", np.ndarray, \"tf.Tensor\", \"torch.Tensor\"] ) -\u003e bool: \"\"\"Set the whole-slide context for the stain normalizer. With contextual normalization, max concentrations are determined from the context (whole-slide image) rather than the image being normalized. This may improve stain normalization for sections of a slide that are predominantly eosin (e.g. necrosis or low cellularity). When calculating max concentrations from the image context, white pixels (255) will be masked. If a slide (``hx.WSI``) is used for context, any existing QC filters and regions of interest will be used to mask out background as white pixels, and the masked thumbnail will be used for creating the normalizer context. If no QC has been applied to the slide and the slide does not have any Regions of Interest, then both otsu\u0027s thresholding and Gaussian blur filtering will be applied to the thumbnail for masking. Args: I (np.ndarray, hx.WSI): Context to use for normalization, e.g. a whole-slide image thumbnail, optionally masked with masked areas set to (255, 255, 255). \"\"\" if hasattr(self.n, \u0027set_context\u0027): if isinstance(context, str): image = np.asarray(hx.WSI(context, 500, 500).thumb(mpp=4)) elif isinstance(context, hx.WSI): image = context.masked_thumb(mpp=4, background=\u0027white\u0027) else: image = context # type: ignore self.n.set_context(image) return True else: return False def clear_context(self) -\u003e None: \"\"\"Remove any previously set stain normalizer context.\"\"\" if hasattr(self.n, \u0027clear_context\u0027): self.n.clear_context() def autoselect( method: str, source: Optional[str] = None, backend: Optional[str] = None, **kwargs ) -\u003e StainNormalizer: \"\"\"Select the best normalizer for a given method, and fit to a given source. If a normalizer method has a native implementation in the current backend (Tensorflow or PyTorch), the native normalizer will be used. If not, the default numpy implementation will be used. Currently, the PyTorch-native normalizers are NOT used by default, as they are slower than the numpy implementations. Thus, with the PyTorch backend, all normalizers will be the default numpy implementations. Args: method (str): Normalization method. Options include \u0027macenko\u0027, \u0027reinhard\u0027, \u0027reinhard_fast\u0027, \u0027reinhard_mask\u0027, \u0027reinhard_fast_mask\u0027, \u0027vahadane\u0027, \u0027vahadane_spams\u0027, \u0027vahadane_sklearn\u0027, and \u0027augment\u0027. source (str, optional): Stain normalization preset or path to a source image. Valid presets include \u0027v1\u0027, \u0027v2\u0027, and \u0027v3\u0027. If None, will use the default present (\u0027v3\u0027). Defaults to None. backend (str): Backend to use for native normalizers. Options include \u0027tensorflow\u0027, \u0027torch\u0027, and \u0027opencv\u0027. If None, will use the current backend, falling back to opencv/numpy if a native normalizer is not available. Defaults to None. Returns: StainNormalizer: Initialized StainNormalizer. \"\"\" if backend is None: backend = hx.backend() if backend == \u0027tensorflow\u0027: import histox.norm.tensorflow BackendNormalizer = hx.norm.tensorflow.TensorflowStainNormalizer elif backend == \u0027torch\u0027: import histox.norm.torch BackendNormalizer = hx.norm.torch.TorchStainNormalizer # type: ignore elif backend == \u0027opencv\u0027: BackendNormalizer = StainNormalizer else: raise errors.UnrecognizedBackendError if method in BackendNormalizer.normalizers: normalizer = BackendNormalizer(method, **kwargs) else: normalizer = StainNormalizer(method, **kwargs) # type: ignore if source is not None and source != \u0027dataset\u0027: normalizer.fit(source) return normalizer",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/_modules/histox/norm.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
+      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
+  </script>
+  
+  </body>
+</html>

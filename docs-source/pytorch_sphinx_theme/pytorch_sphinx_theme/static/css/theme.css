@@ -9739,7 +9739,7 @@ pre {
 .header-logo {
   height: 48px;
   width: 200px;
-  background-image: url("../images/slideflow-logo-name-small.png");
+  background-image: url("../images/histox-logo-name-small.png");
   background-repeat: no-repeat;
   background-size: 160px;
   display: block;
@@ -10345,7 +10345,7 @@ ul.pytorch-breadcrumbs a {
 }
 
 .tutorials-header .header-logo {
-  background-image: url("../images/slideflow-logo-name-large.png");
+  background-image: url("../images/histox-logo-name-large.png");
 }
 .tutorials-header .main-menu ul li a {
   color: #262626;

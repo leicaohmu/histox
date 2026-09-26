@@ -5,9 +5,9 @@
 Self-Supervised Learning (SSL)
 ==============================
 
-Slideflow provides easy access to training the self-supervised, contrastive learning framework `SimCLR <https://arxiv.org/abs/2002.05709>`_. Self-supervised learning provides an avenue for learning useful visual representations in your dataset without requiring ground-truth labels. These visual representations can be exported as feature vectors and used for downstream analyses such as :ref:`dimensionality reduction <slidemap>` or :ref:`multi-instance learning <mil>`.
+HistoX provides easy access to training the self-supervised, contrastive learning framework `SimCLR <https://arxiv.org/abs/2002.05709>`_. Self-supervised learning provides an avenue for learning useful visual representations in your dataset without requiring ground-truth labels. These visual representations can be exported as feature vectors and used for downstream analyses such as :ref:`dimensionality reduction <slidemap>` or :ref:`multi-instance learning <mil>`.
 
-The ``histox.simclr`` module contains a `forked Tensorflow implementation <https://github.com/jamesdolezal/simclr/>`_ minimally modified to interface with Slideflow. SimCLR models can be trained with :meth:`histox.Project.train_simclr`, and SimCLR features can be calculated as with other models using :meth:`histox.Project.generate_features`.
+The ``histox.simclr`` module contains a `forked Tensorflow implementation <https://github.com/jamesdolezal/simclr/>`_ minimally modified to interface with HistoX. SimCLR models can be trained with :meth:`histox.Project.train_simclr`, and SimCLR features can be calculated as with other models using :meth:`histox.Project.generate_features`.
 
 Training SimCLR
 ***************
@@ -16,7 +16,7 @@ First, determine the SimCLR training parameters with :func:`histox.simclr.get_ar
 
 .. code-block:: python
 
-    from slideflow import simclr
+    from histox import simclr
 
     args = simclr.get_args(
         temperature=0.1,
@@ -29,10 +29,10 @@ Next, assemble a training and (optionally) a validation dataset. The validation 
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a project and dataset
-    P = sf.load_project('path')
+    P = hx.load_project('path')
     dataset = P.dataset(tile_px=299, tile_um=302)
 
     # Split dataset into training/validation
@@ -82,7 +82,7 @@ The SimCLR model checkpoints and final saved model will be saved in the ``simclr
 Training DINOv2
 ***************
 
-A lightly modified version of `DINOv2 <https://arxiv.org/abs/2304.07193>`__ with Slideflow integration is available on `GitHub <https://github.com/jamesdolezal/dinov2>`_. This version facilitates training DINOv2 with Slideflow datasets and adds stain augmentation to the training pipeline.
+A lightly modified version of `DINOv2 <https://arxiv.org/abs/2304.07193>`__ with HistoX integration is available on `GitHub <https://github.com/jamesdolezal/dinov2>`_. This version facilitates training DINOv2 with HistoX datasets and adds stain augmentation to the training pipeline.
 
 To train DINOv2, first install the package:
 
@@ -90,14 +90,14 @@ To train DINOv2, first install the package:
 
     pip install git+https://github.com/jamesdolezal/dinov2.git
 
-Next, configure the training parameters and datsets by providing a configuration YAML file. This configuration file should contain a ``slideflow`` section, which specifies the Slideflow project and dataset to use for training. An example YAML file is shown below:
+Next, configure the training parameters and datsets by providing a configuration YAML file. This configuration file should contain a ``histox`` section, which specifies the HistoX project and dataset to use for training. An example YAML file is shown below:
 
 .. code-block:: yaml
 
     train:
-      dataset_path: slideflow
+      dataset_path: histox
       batch_size_per_gpu: 32
-      slideflow:
+      histox:
         project: "/mnt/data/projects/TCGA_THCA_BRAF"
         dataset:
           tile_px: 299
@@ -130,10 +130,10 @@ Generating features from a trained SSL is straightforward - use the same :meth:`
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Create the SimCLR feature extractor
-    simclr = sf.build_feature_extractor(
+    simclr = hx.build_feature_extractor(
         'simclr',
         ckpt='/path/to/simclr.ckpt'
     )

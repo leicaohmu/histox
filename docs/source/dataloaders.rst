@@ -3,7 +3,7 @@
 Dataloaders: Sampling and Augmentation
 ======================================
 
-With support for both Tensorflow and PyTorch, Slideflow provides several options for dataset sampling, processing, and augmentation. Here, we'll review the options for creating dataloaders - objects that read and process TFRecord data and return images and labels - in each framework. In all cases, data are read from TFRecords generated through :ref:`filtering`. The TFRecord data format is discussed in more detail in the :ref:`tfrecords` note.
+With support for both Tensorflow and PyTorch, HistoX provides several options for dataset sampling, processing, and augmentation. Here, we'll review the options for creating dataloaders - objects that read and process TFRecord data and return images and labels - in each framework. In all cases, data are read from TFRecords generated through :ref:`filtering`. The TFRecord data format is discussed in more detail in the :ref:`tfrecords` note.
 
 Tensorflow
 **********
@@ -11,7 +11,7 @@ Tensorflow
 .. |TFRecordDataset| replace:: ``tf.data.TFRecordDataset``
 .. _TFRecordDataset: https://www.tensorflow.org/api_docs/python/tf/data/TFRecordDataset
 
-The :meth:`histox.Dataset.tensorflow()` method provides an easy interface for creating a ``tf.data.Dataset`` that reads and interleaves from tfrecords in a Slideflow dataset. Behind the scenes, this method uses the |TFRecordDataset|_ class for reading and parsing each TFRecord.
+The :meth:`histox.Dataset.tensorflow()` method provides an easy interface for creating a ``tf.data.Dataset`` that reads and interleaves from tfrecords in a HistoX dataset. Behind the scenes, this method uses the |TFRecordDataset|_ class for reading and parsing each TFRecord.
 
 The returned ``tf.data.Dataset`` object is an iterable-only dataset whose returned values depend on the arguments provided to the ``.tensorflow()`` function.
 
@@ -21,10 +21,10 @@ If the ``labels`` argument is provided (dictionary mapping slide names to a nume
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Create a dataset object
-    project = sf.load_project(...)
+    project = hx.load_project(...)
     dataset = project.dataset(...)
 
     # Get the labels
@@ -100,15 +100,15 @@ As with Tensorflow, the :meth:`histox.Dataset.torch()` method creates a |DataLoa
 
 The returned |DataLoader|_ is an iterable-only dataloader whose returned values depend on the arguments provided to the ``.torch()`` function. An indexable, map-style dataset is also available when using PyTorch, as described in :ref:`indexable_dataloader`.
 
-If no arguments are provided, the returned dataloader will yield a tuple of ``(image, None)``, where the image is a ``torch.Tensor`` of shape ``[num_channels, tile_height, tile_width]`` and type ``torch.uint8``. Labels are assigned as described above. Slide names and tile location can also be returned, using the same arguments as `described above <https://histox.dev/dataloaders/#slide-names-and-tile-locations>`_.
+If no arguments are provided, the returned dataloader will yield a tuple of ``(image, None)``, where the image is a ``torch.Tensor`` of shape ``[num_channels, tile_height, tile_width]`` and type ``torch.uint8``. Labels are assigned as described above. Slide names and tile location can also be returned, using the same arguments as `described above <https://histox.readthedocs.io/en/latest/dataloaders/#slide-names-and-tile-locations>`_.
 
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Create a dataset object
-    project = sf.load_project(...)
+    project = hx.load_project(...)
     dataset = project.dataset(...)
 
     # Create a tensorflow dataset
@@ -298,14 +298,14 @@ Undersampling via dataset clipping is automatically applied to dataloaders creat
 During training
 ---------------
 
-If you are training a Slideflow model by directly providing a training and validation dataset to the :meth:`histox.Project.train` method, you can configure the datasets to perform oversampling and undersampling as described above. For example:
+If you are training a HistoX model by directly providing a training and validation dataset to the :meth:`histox.Project.train` method, you can configure the datasets to perform oversampling and undersampling as described above. For example:
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a project
-    project = sf.load_project(...)
+    project = hx.load_project(...)
 
     # Configure a training dataset with tile-level balancing
     # and clipping to max 100 tiles per TFRecord
@@ -325,14 +325,14 @@ Alternatively, you can configure oversampling during training through the ``trai
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a project
-    project = sf.load_project(...)
+    project = hx.load_project(...)
 
     # Configure hyperparameters with tile-level
     # balancing/oversampling for the training data
-    hp = sf.ModelParams(
+    hp = hx.ModelParams(
         ...,
         training_balance='tile',
         validation_balance=None,
@@ -361,7 +361,7 @@ This indexable dataset is created from a list of TFRecords and accepts many argu
     from histox.io.torch import IndexedInterleaver
 
     # Create a dataset object
-    project = sf.load_project(...)
+    project = hx.load_project(...)
     dataset = project.dataset(...)
 
     # Get the TFRecords

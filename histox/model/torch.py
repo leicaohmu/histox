@@ -2086,7 +2086,7 @@ class SurvivalTrainer(Trainer):
 
 class Features(BaseFeatureExtractor):
     """Interface for obtaining predictions and features from intermediate layer
-    activations from Slideflow models.
+    activations from HistoX models.
 
     Use by calling on either a batch of images (returning outputs for a single
     batch), or by calling on a :class:`histox.WSI` object, which will
@@ -2145,7 +2145,7 @@ class Features(BaseFeatureExtractor):
         predictions are returned last.
 
         Args:
-            path (str): Path to saved Slideflow model.
+            path (str): Path to saved HistoX model.
             layers (list(str), optional): Layers from which to generate
                 activations.  The post-convolution activation layer is accessed
                 via 'postconv'. Defaults to 'postconv'.
@@ -2626,10 +2626,10 @@ class UncertaintyInterface(Features):
 # -----------------------------------------------------------------------------
 
 def load(path: str) -> torch.nn.Module:
-    """Load a model trained with Slideflow.
+    """Load a model trained with HistoX.
 
     Args:
-        path (str): Path to saved model. Must be a model trained in Slideflow.
+        path (str): Path to saved model. Must be a model trained in HistoX.
 
     Returns:
         torch.nn.Module: Loaded model.
@@ -2666,7 +2666,7 @@ def lazy_load_pretrained(
     Args:
         module (torch.nn.Module): Destination module for weights.
         to_load (str, torch.nn.Module): Module with weights to load. Either
-            path to PyTorch Slideflow model, or an existing PyTorch module.
+            path to PyTorch HistoX model, or an existing PyTorch module.
 
     Returns:
         None

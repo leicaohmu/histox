@@ -1,6 +1,6 @@
-.. currentmodule:: slideflow.stats
+.. currentmodule:: histox.stats
 
-slideflow.stats
+histox.stats
 ===============
 
 This module contains internal utility functions for generating and evaluating model predictions and metrics.

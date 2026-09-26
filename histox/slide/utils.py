@@ -451,7 +451,7 @@ def predict(
 
     Args:
         slide (str): Path to slide.
-        model (str): Path to saved model trained in Slideflow.
+        model (str): Path to saved model trained in HistoX.
 
     Keyword args:
         stride_div (int, optional): Divisor for stride when convoluting

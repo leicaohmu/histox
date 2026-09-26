@@ -151,9 +151,9 @@ ch = RichHandler(
     rich_tracebacks=True
 )
 ch.setFormatter(log_utils.LogFormatter())
-if 'SF_LOGGING_LEVEL' in os.environ:
+if 'HX_LOGGING_LEVEL' in os.environ:
     try:
-        intLevel = int(os.environ['SF_LOGGING_LEVEL'])
+        intLevel = int(os.environ['HX_LOGGING_LEVEL'])
         ch.setLevel(intLevel)
     except ValueError:
         pass
@@ -448,14 +448,14 @@ def make_cache_dir_path(path: str) -> str:
 
 
 def get_gdc_manifest() -> pd.DataFrame:
-    sf_cache = make_cache_dir_path('gdc')
-    manifest = join(sf_cache, 'gdc_manifest.tsv')
+    hx_cache = make_cache_dir_path('gdc')
+    manifest = join(hx_cache, 'gdc_manifest.tsv')
     if not exists(manifest):
         tar = 'gdc_manifest.tar.xz'
         r = requests.get(f'https://raw.githubusercontent.com/leicaohmu/histox/master/datasets/{tar}')
-        open(join(sf_cache, tar), 'wb').write(r.content)
-        tarfile.open(join(sf_cache, tar)).extractall(sf_cache)
-        os.remove(join(sf_cache, tar))
+        open(join(hx_cache, tar), 'wb').write(r.content)
+        tarfile.open(join(hx_cache, tar)).extractall(hx_cache)
+        os.remove(join(hx_cache, tar))
         if not exists(manifest):
             log.error("Failed to download GDC manifest.")
     return pd.read_csv(manifest, delimiter='\t')
@@ -488,14 +488,14 @@ class EasyDict(dict):
         del self[name]
 
 def zip_allowed() -> bool:
-    return not ('SF_ALLOW_ZIP' in os.environ and os.environ['SF_ALLOW_ZIP'] == '0')
+    return not ('HX_ALLOW_ZIP' in os.environ and os.environ['HX_ALLOW_ZIP'] == '0')
 
 @contextmanager
 def enable_zip(enable: bool) -> Iterator[None]:
     _zip_allowed = zip_allowed()
-    os.environ['SF_ALLOW_ZIP'] = '1' if enable else '0'
+    os.environ['HX_ALLOW_ZIP'] = '1' if enable else '0'
     yield
-    os.environ['SF_ALLOW_ZIP'] = '0' if not _zip_allowed else '1'
+    os.environ['HX_ALLOW_ZIP'] = '0' if not _zip_allowed else '1'
 
 def md5(path: str) -> str:
     """Calculate and return MD5 checksum for a file."""
@@ -601,7 +601,7 @@ def is_mag(arg1: str) -> bool:
 
 
 def is_model(path: str) -> bool:
-    """Checks if the given path is a valid Slideflow model."""
+    """Checks if the given path is a valid HistoX model."""
     return is_tensorflow_model_path(path) or is_torch_model_path(path)
 
 
@@ -1231,7 +1231,7 @@ def get_model_normalizer(
        and version.parse(config['histox_version']) <= version.parse("1.2.2")
        and config['hp']['normalizer'] in ('vahadane', 'macenko')):
         log.warn("Detected model trained with Macenko or Vahadane "
-                 "normalization with Slideflow version <= 1.2.2. Macenko "
+                 "normalization with HistoX version <= 1.2.2. Macenko "
                  "and Vahadane algorithms were optimized in 1.2.3 and may "
                  "now yield slightly different results. ")
 
@@ -1249,7 +1249,7 @@ def get_preprocess_fn(model_path: str):
     """Returns a function which preprocesses a uint8 image for a model.
 
     Args:
-        model_path (str): Path to a saved Slideflow model.
+        model_path (str): Path to a saved HistoX model.
 
     Returns:
         A function which accepts a single image or batch of uint8 images,

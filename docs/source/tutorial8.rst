@@ -3,14 +3,18 @@
 Tutorial 8: Multiple-Instance Learning
 ======================================
 
+.. raw:: html
+
+   <div class="histox-tutorial-meta" aria-label="Tutorial status"><span><strong>Status</strong> Compatibility tutorial</span><span><strong>Runtime verification</strong> Pending</span><a href="https://github.com/leicaohmu/histox/blob/develop/docs/source/tutorial8.rst">View source</a></div>
+
 In contrast with tutorials 1-4, which focused on training and evaluating traditional tile-based models, this tutorial provides an example of training a multiple-instance learning (MIL) model. MIL models are particularly useful for heterogeneous tumors, when only parts of a whole-slide image may carry a distinctive histological signature. In this tutorial, we'll train a MIL model to predict the ER status of breast cancer patients from whole slide images. Note: MIL models require PyTorch.
 
 We'll start the same way as :ref:`tutorial1`, loading a project and preparing a dataset.
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> P = sf.load_project('/home/er_project')
+    >>> import histox as hx
+    >>> P = hx.load_project('/home/er_project')
     >>> dataset = P.dataset(
     ...   tile_px=256,
     ...   tile_um=128,
@@ -28,7 +32,7 @@ Once a dataset has been prepared, the next step in training an MIL model is :ref
 
 .. code-block:: python
 
-    >>> virchow = sf.build_feature_extractor('virchow', center_crop=True)
+    >>> virchow = hx.build_feature_extractor('virchow', center_crop=True)
     >>> virchow.cite()
     @misc{vorontsov2024virchowmillionslidedigitalpathology,
         title={Virchow: A Million-Slide Digital Pathology Foundation Model},
@@ -162,4 +166,4 @@ After training has completed, the output directory, ``/model/path``, should look
 
 The final model weights are saved in ``models/best_valid.pth``. Validation dataset predictions are saved in the "predictions.parquet" file. A manifest of training/validation data is saved in the "slide_manifest.csv" file, and training history is saved in the "history.csv" file. Attention values for all tiles in each slide are saved in the ``attention/`` directory.
 
-The final saved model can be used for evaluation (:class:`histox.mil.eval_mil`) or inference (:class:`histox.mil.predict_slide` or :ref:`Slideflow Studio <studio_mil>`). The saved model path should be referenced by the parent directory (in this case, "/model/path") rather than the model file itself. For more information on MIL models, see :ref:`mil`.
+The final saved model can be used for evaluation (:class:`histox.mil.eval_mil`) or inference (:class:`histox.mil.predict_slide` or :ref:`HistoX Studio <studio_mil>`). The saved model path should be referenced by the parent directory (in this case, "/model/path") rather than the model file itself. For more information on MIL models, see :ref:`mil`.

@@ -1,0 +1,22 @@
+Whole-slide tutorials
+=====================
+
+Customize preprocessing and quality control for whole-slide pathology images.
+
+.. warning::
+
+   This compatibility tutorial still contains inherited HistoX examples.
+   Use it as a migration reference until the page is marked as verified for
+   the current HistoX release.
+
+.. raw:: html
+
+   <div class="histox-tutorial-grid histox-tutorial-grid--category">
+     <a class="histox-tutorial-card" href="tutorial6.html"><span>Slides</span><h3>Write a custom slide filter</h3><p>Implement and preview a bespoke whole-slide quality-control method.</p><strong>Compatibility tutorial</strong></a>
+   </div>
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   tutorial6

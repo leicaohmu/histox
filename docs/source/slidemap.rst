@@ -18,7 +18,7 @@ model, then using :meth:`histox.DatasetFeatures.map_activations`, which returns 
 
 .. code-block:: python
 
-    ftrs = sf.DatasetFeatures(model='/path/', ...)
+    ftrs = hx.DatasetFeatures(model='/path/', ...)
     slide_map = ftrs.map_activations()
 
 Alternatively, if you would like to map slides from a dataset in two-dimensional space using pre-calculated *x* and *y*
@@ -31,7 +31,7 @@ slide and the tile index in the slide TFRecord.
     x = np.array(...)
     y = np.array(...)
     slides = ['slide1', 'slide1', 'slide5', ...]
-    slide_map = sf.SlideMap.from_xy(x=x, y=y, slides=slides)
+    slide_map = hx.SlideMap.from_xy(x=x, y=y, slides=slides)
 
 .. autoclass:: SlideMap
 

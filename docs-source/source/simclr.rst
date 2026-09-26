@@ -1,16 +1,16 @@
-.. currentmodule:: slideflow.simclr
+.. currentmodule:: histox.simclr
 
-slideflow.simclr
+histox.simclr
 ================
 
 This module contains utility functions for training a SimCLR model. Please see
 :ref:`simclr_ssl` for more information on the high-level API and recommended use.
 
-.. autofunction:: slideflow.simclr.get_args
-.. autofunction:: slideflow.simclr.load
-.. autofunction:: slideflow.simclr.load_model_args
-.. autofunction:: slideflow.simclr.run_simclr
+.. autofunction:: histox.simclr.get_args
+.. autofunction:: histox.simclr.load
+.. autofunction:: histox.simclr.load_model_args
+.. autofunction:: histox.simclr.run_simclr
 
-.. autoclass:: slideflow.simclr.SimCLR
-.. autoclass:: slideflow.simclr.SimCLR_Args
-.. autoclass:: slideflow.simclr.DatasetBuilder
+.. autoclass:: histox.simclr.SimCLR
+.. autoclass:: histox.simclr.SimCLR_Args
+.. autoclass:: histox.simclr.DatasetBuilder

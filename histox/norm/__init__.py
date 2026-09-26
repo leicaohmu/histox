@@ -207,7 +207,7 @@ class StainNormalizer:
 
         Args:
             arg1: (Dataset, np.ndarray, str): Target to fit. May be a str,
-                numpy image array (uint8), path to an image, or a Slideflow
+                numpy image array (uint8), path to an image, or a HistoX
                 Dataset. If this is a string, will fit to the corresponding
                 preset fit (either 'v1', 'v2', or 'v3').
                 If a Dataset is provided, will average fit values across

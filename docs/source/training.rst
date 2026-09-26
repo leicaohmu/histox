@@ -3,7 +3,7 @@
 Training
 ========
 
-Slideflow offers tools for training many types of neural networks, including:
+HistoX offers tools for training many types of neural networks, including:
 
 - **Weakly supervised, tile-based models**: Models trained on image tiles, with labels inherited from the parent slide.
 - **Weakly supervised, multi-instance learning**: Models trained on feature vectors, with labels inherited from the parent slide.
@@ -21,9 +21,9 @@ The first step of training a weakly-supervised model is configuring model parame
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    hp = sf.ModelParams(
+    hp = hx.ModelParams(
       epochs=[1, 5],
       model='xception',
       learning_rate=0.0001,
@@ -40,14 +40,14 @@ See the :class:`histox.ModelParams` API documentation for a list of available hy
 Training a model
 ****************
 
-Slideflow provides two methods for training models: with the high-level :meth:`histox.Project.train` function or with the lower-level :class:`histox.model.Trainer`. The former provides an easier interface for executing complex training tasks with a single function call, while the latter provides lower-level access for greater customizability.
+HistoX provides two methods for training models: with the high-level :meth:`histox.Project.train` function or with the lower-level :class:`histox.model.Trainer`. The former provides an easier interface for executing complex training tasks with a single function call, while the latter provides lower-level access for greater customizability.
 
 .. _training_with_project:
 
 Training with a Project
 -----------------------
 
-:meth:`histox.Project.train` provides an easy API for executing complex training plans and organizing results in the project directory. This is the recommended way to train models in Slideflow. There are two required arguments for this function:
+:meth:`histox.Project.train` provides an easy API for executing complex training plans and organizing results in the project directory. This is the recommended way to train models in HistoX. There are two required arguments for this function:
 
 - ``outcomes``: Name (or list of names) of annotation header columns, from which to determine slide labels.
 - ``params``: Model parameters.
@@ -62,7 +62,7 @@ For example, you can use the ``filters`` argument to train/validate only using s
 
     results = P.train(
       outcomes="tumor_type",
-      params=sf.ModelParams(...),
+      params=hx.ModelParams(...),
       filters={"dataset": ["train_and_val"]}
     )
 
@@ -75,7 +75,7 @@ Alternatively, you can restrict the training/validation dataset by providing a :
 
     results = P.train(
       outcomes="tumor_type",
-      params=sf.ModelParams(...),
+      params=hx.ModelParams(...),
       dataset=dataset
     )
 
@@ -91,7 +91,7 @@ For more granular control over the validation dataset used, you can supply a :cl
 
     results = P.train(
       outcomes="tumor_type",
-      params=sf.ModelParams(...),
+      params=hx.ModelParams(...),
       dataset=train_dataset
       val_dataset=val_dataset
     )
@@ -126,7 +126,7 @@ For this training approach, start by building a trainer with :func:`histox.model
     val_dataset = dataset.filter({"dataset": ["val"]})
 
     # Determine model parameters
-    hp = sf.ModelParams(
+    hp = hx.ModelParams(
         tile_px=299,
         tile_um=302,
         batch_size=32,
@@ -134,7 +134,7 @@ For this training approach, start by building a trainer with :func:`histox.model
     )
 
     # Prepare a Trainer
-    trainer = sf.model.build_trainer(
+    trainer = hx.model.build_trainer(
         hp=hp,
         outdir='path',
         labels=labels
@@ -191,7 +191,7 @@ Read more about the ``Trainer`` class and available keyword arguments in the :cl
 Multiple outcomes
 *****************
 
-Slideflow supports both classification and regression, as well as training to single or multiple outcomes at once. To train with multiple outcomes simultaneously, simply pass multiple annotation headers to the ``outcomes`` argument of :meth:`histox.Project.train`.
+HistoX supports both classification and regression, as well as training to single or multiple outcomes at once. To train with multiple outcomes simultaneously, simply pass multiple annotation headers to the ``outcomes`` argument of :meth:`histox.Project.train`.
 
 Time-to-event / survival outcomes
 *********************************
@@ -213,7 +213,7 @@ If desired, models can also be trained with clinical input data alone, without i
 Hyperparameter optimization
 ***************************
 
-Slideflow includes several tools for assisting with hyperparameter optimization, as described in the next sections.
+HistoX includes several tools for assisting with hyperparameter optimization, as described in the next sections.
 
 Testing multiple combinations
 -----------------------------
@@ -222,8 +222,8 @@ You can easily test a series of hyperparameter combinations by passing a list of
 
 .. code-block:: python
 
-    hp1 = sf.ModelParams(..., batch_size=32)
-    hp2 = sf.ModelParams(..., batch_size=64)
+    hp1 = hx.ModelParams(..., batch_size=32)
+    hp2 = hx.ModelParams(..., batch_size=64)
 
     P.create_hp_sweep(
       ...,
@@ -258,13 +258,13 @@ Bayesian optimization
 
 You can also perform Bayesian hyperparameter optimization using `SMAC3 <https://automl.github.io/SMAC3/master/>`_, which uses a `configuration space <https://automl.github.io/ConfigSpace/master/>`_ to determine the types and ranges of hyperparameters to search.
 
-Slideflow provides several functions to assist with building these configuration spaces. :func:`histox.util.create_search_space` allows you to define a range to search for each hyperparameter via keyword arguments:
+HistoX provides several functions to assist with building these configuration spaces. :func:`histox.util.create_search_space` allows you to define a range to search for each hyperparameter via keyword arguments:
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    config_space = sf.util.create_search_space(
+    config_space = hx.util.create_search_space(
         normalizer=['macenko', 'reinhard', 'none'],
         dropout=(0.1, 0.5),
         learning_rate=(1e-4, 1e-5)
@@ -274,9 +274,9 @@ Slideflow provides several functions to assist with building these configuration
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    config_space = sf.util.broad_search_space(l1=None)
+    config_space = hx.util.broad_search_space(l1=None)
 
 See the linked API documentation for each function for more details about the respective search spaces.
 
@@ -285,10 +285,10 @@ Once the search space is determined, you can perform the hyperparameter optimiza
 .. code-block:: python
 
     # Base hyperparameters
-    hp = sf.ModelParams(tile_px=299, ...)
+    hp = hx.ModelParams(tile_px=299, ...)
 
     # Configuration space to optimize
-    config_space = sf.util.shallow_search_space()
+    config_space = hx.util.shallow_search_space()
 
     # Run the Bayesian optimization
     best_config, history = P.smac_search(
@@ -320,7 +320,7 @@ See the API documentation for available customization via keyword arguments.
 Customizing model or loss
 *************************
 
-Slideflow supports dozens of model architectures, but you can also train with a custom architecture, as demonstrated in :ref:`tutorial3`.
+HistoX supports dozens of model architectures, but you can also train with a custom architecture, as demonstrated in :ref:`tutorial3`.
 
 Similarly, you can also train with a custom loss function by supplying a dictionary to the ``loss`` argument in ``ModelParams``, with the keys ``type`` (which must be either ``'classification'``, ``'regression'``, or ``'survival'``) and ``fn`` (a callable loss function).
 
@@ -350,13 +350,13 @@ In both cases, the loss function is applied as follows:
 
 .. code-block:: python
 
-  hp = sf.ModelParams(..., loss={'type': 'regression', 'fn': custom_regression_loss})
+  hp = hx.ModelParams(..., loss={'type': 'regression', 'fn': custom_regression_loss})
 
 
 Using multiple GPUs
 *******************
 
-Slideflow can perform distributed training if multiple GPUs are available. Enable distributed training by passing the argument ``multi_gpu=True``, which will allow Slideflow to use all available (and visible) GPUs.
+HistoX can perform distributed training if multiple GPUs are available. Enable distributed training by passing the argument ``multi_gpu=True``, which will allow HistoX to use all available (and visible) GPUs.
 
 .. _from_wsi:
 
@@ -390,8 +390,8 @@ Neptune.ai
 
 Experiments can be automatically logged with `Neptune.ai <https://app.neptune.ai>`_. To enable logging, first locate your Neptune API token and workspace ID, and configure the environmental variables ``NEPTUNE_API_TOKEN`` and ``NEPTUNE_WORKSPACE``.
 
-With the environmental variables set, Neptune logs are enabled by passing ``use_neptune=True`` to ``sf.load_project``.
+With the environmental variables set, Neptune logs are enabled by passing ``use_neptune=True`` to ``hx.load_project``.
 
 .. code-block:: python
 
-    P = sf.load_project('/project/path', use_neptune=True)
+    P = hx.load_project('/project/path', use_neptune=True)

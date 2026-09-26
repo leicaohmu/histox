@@ -1,4 +1,4 @@
-'''Slideflow module errors.'''
+'''HistoX module errors.'''
 
 import os
 
@@ -170,7 +170,7 @@ class SlideMapError(Exception):
 # --- Backend errors ----------------------------------------------------------
 class UnrecognizedBackendError(Exception):
     def __init__(self):
-        super().__init__(f"Unrecognized backend: {os.environ['SF_BACKEND']}")
+        super().__init__(f"Unrecognized backend: {os.environ['HX_BACKEND']}")
 
 
 # --- Features errors ---------------------------------------------------------

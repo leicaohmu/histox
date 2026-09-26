@@ -127,13 +127,13 @@ class WSI:
                 If a tuple of int, interprets the bounds as ``(top_left_x,
                 top_left_y, width, height)``. If False, use the full slide
                 dimensions. **Only available when using Libvips**
-                (``SF_SLIDE_BACKEND=libvips``). Defaults to False.
+                (``HX_SLIDE_BACKEND=libvips``). Defaults to False.
             transforms (list(int), optional): List of transforms to apply to
                 the slide before establishing coordinate grid. Options include
                 any combination of ``ROTATE_90_CLOCKWISE``,
                 ``ROTATE_180_CLOCKWISE``, ``ROTATE_270_CLOCKWISE``,
                 ``FLIP_HORIZONTAL``, and ``FLIP_VERTICAL``. **Only available
-                when using Libvips** (``SF_SLIDE_BACKEND=libvips``).
+                when using Libvips** (``HX_SLIDE_BACKEND=libvips``).
                 Defaults to None.
             artifact_labels (list(str), optional): List of ROI issue labels
                 to treat as artifacts. Whenever this is not None, all the ROIs with
@@ -2839,7 +2839,7 @@ class WSI:
         """Generate a whole-slide prediction from a saved model.
 
         Args:
-            model (str): Path to saved model trained in Slideflow.
+            model (str): Path to saved model trained in HistoX.
 
         Keyword args:
             batch_size (int, optional): Batch size for calculating predictions.

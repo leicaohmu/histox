@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">HistoX mark</title>
+  <desc id="desc">A cellular pathology O connected to a computational X.</desc>
+  <g fill="none" stroke="#0B1F3A" stroke-width="38">
+    <circle cx="190" cy="256" r="142"/>
+    <path d="M320 120L446 392M446 120L320 392" stroke-width="72"/>
+  </g>
+
+  <g>
+    <path d="M162 148C177 127 211 128 226 149C238 166 228 194 204 201C181 208 151 193 150 170C150 161 154 154 162 148Z" fill="#D84BCB"/>
+    <path d="M94 218C103 193 135 181 157 194C176 205 179 235 165 255C151 275 118 281 99 265C86 254 87 237 94 218Z" fill="#21D4D8"/>
+    <path d="M164 229C181 211 213 211 230 229C247 247 244 281 226 298C208 314 177 308 162 289C148 271 149 246 164 229Z" fill="#D84BCB"/>
+    <path d="M236 194C259 181 291 193 300 218C307 237 308 254 295 265C276 281 243 275 229 255C215 235 218 205 236 194Z" fill="#21D4D8"/>
+    <path d="M160 318C175 299 208 294 228 309C249 325 246 357 227 376C209 393 177 390 160 371C145 354 145 336 160 318Z" fill="#D84BCB"/>
+  </g>
+
+  <g fill="#0B1F3A">
+    <circle cx="190" cy="166" r="13"/>
+    <circle cx="130" cy="233" r="13"/>
+    <circle cx="196" cy="261" r="15"/>
+    <circle cx="264" cy="233" r="13"/>
+    <circle cx="194" cy="342" r="13"/>
+  </g>
+
+  <g fill="none" stroke="#21D4D8" stroke-linecap="round" stroke-width="18">
+    <path d="M319 220L356 204"/>
+    <path d="M319 292L356 308"/>
+  </g>
+  <g fill="#21D4D8">
+    <circle cx="319" cy="220" r="13"/>
+    <circle cx="319" cy="292" r="13"/>
+  </g>
+  <g fill="#D84BCB" stroke="#FFFFFF" stroke-width="7">
+    <circle cx="362" cy="201" r="16"/>
+    <circle cx="362" cy="311" r="16"/>
+  </g>
+</svg>

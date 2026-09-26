@@ -1,11 +1,11 @@
-.. currentmodule:: slideflow.cellseg
+.. currentmodule:: histox.cellseg
 
 .. _cellseg:
 
 Cell Segmentation
 =================
 
-Many tasks in digital pathology rely on analysis of cellular features, as opposed to higher-level architectural features. Slideflow supports whole-slide analysis of cellular features with a cell detection and segmentation pipeline based on `Cellpose <https://www.nature.com/articles/s41592-020-01018-x>`_. To start, ensure ``cellpose`` has been installed via pip:
+Many tasks in digital pathology rely on analysis of cellular features, as opposed to higher-level architectural features. HistoX supports whole-slide analysis of cellular features with a cell detection and segmentation pipeline based on `Cellpose <https://www.nature.com/articles/s41592-020-01018-x>`_. To start, ensure ``cellpose`` has been installed via pip:
 
 .. code-block:: bash
 
@@ -16,18 +16,18 @@ Approach
 
 .. figure:: cell_segmentation.png
 
-The general approach for cell detection and segmentation in Slideflow is illustrated above, and will be discussed in the following sections. In short, the general approach is to tune the cell segmentation parameters on a single slide, use these parameters to detect cells in all of your slides, then extract cell images at these locations.
+The general approach for cell detection and segmentation in HistoX is illustrated above, and will be discussed in the following sections. In short, the general approach is to tune the cell segmentation parameters on a single slide, use these parameters to detect cells in all of your slides, then extract cell images at these locations.
 
-Slideflow Studio
+HistoX Studio
 *****************
 
-Cellpose models have several configurable parameters which will affect the quality of your segmentation masks, namely the **pretrained model** and **cell diameter**. The best way to determine the optimal parameters to use for your dataset is through interactive visualization using :ref:`Slideflow Studio <studio>`.
+Cellpose models have several configurable parameters which will affect the quality of your segmentation masks, namely the **pretrained model** and **cell diameter**. The best way to determine the optimal parameters to use for your dataset is through interactive visualization using :ref:`HistoX Studio <studio>`.
 
-Use Cellpose-based cell segmentation in Slideflow Studio by :ref:`enabling the extension <extensions>`, or start Studio with the ``--cellpose`` flag:
+Use Cellpose-based cell segmentation in HistoX Studio by :ref:`enabling the extension <extensions>`, or start Studio with the ``--cellpose`` flag:
 
 .. code-block:: bash
 
-    python -m slideflow.studio --cellpose
+    python -m histox.studio --cellpose
 
 Control panel
 -------------
@@ -110,12 +110,12 @@ Segmenting cells
 Single slide segmentation
 -------------------------
 
-Once the segmentation parameters have been determined, you can run segmentation for a single slide using :func:`slideflow.cellseg.segment_slide`.
+Once the segmentation parameters have been determined, you can run segmentation for a single slide using :func:`histox.cellseg.segment_slide`.
 
 .. code-block::
 
-    import slideflow as sf
-    from slideflow.cellseg import segment_slide
+    import histox as hx
+    from histox.cellseg import segment_slide
 
     segmentation = segment_slide(
         '.../slide.svs',
@@ -128,15 +128,15 @@ Once the segmentation parameters have been determined, you can run segmentation 
 Project-wide segmentation
 -------------------------
 
-Cell segmentation can also be performed automatically for all slides in a Slideflow project.
-Cell segmentation masks (and associated cell centroids) are calculated for all slides in the project using :meth:`slideflow.Project.cell_segmentation`.
+Cell segmentation can also be performed automatically for all slides in a HistoX project.
+Cell segmentation masks (and associated cell centroids) are calculated for all slides in the project using :meth:`histox.Project.cell_segmentation`.
 
 .. code-block::
 
-    import slideflow as sf
+    import histox as hx
 
-    # Load a slideflow project
-    P = sf.Project(...)
+    # Load a histox project
+    P = hx.Project(...)
 
     # Perform cell segmentation
     P.cell_segmentation(
@@ -167,11 +167,11 @@ section.
 Accessing segmentation masks
 ----------------------------
 
-Saved cell segmentation masks (in \*.zip format) can be loaded with :class:`slideflow.cellseg.Segmentation`.
+Saved cell segmentation masks (in \*.zip format) can be loaded with :class:`histox.cellseg.Segmentation`.
 
 .. code-block:: python
 
-    from slideflow.cellseg import Segmentation
+    from histox.cellseg import Segmentation
     seg = Segmentation.load('.../slide-masks.zip')
 
 The mask array, ``Segmentation.masks`` , is a ``np.ndarray`` with dtype of np.uint32. Zero values are background, and masks for each cell are represented by a unique integer. Flows/gradients,
@@ -186,7 +186,7 @@ There are some caveats to the cell segmentation process, including:
 
 - **Memory usage**: Cell segmentation requires at minimum 32 GB of RAM. Larger slides (particularly cytology) may require up to 64 GB of RAM.
 - **Stitching artifacts**: At present, due to the algorithm by which whole-slide cell segmentations are stitched together, you may see some cells that are not detected, missing in a grid-like pattern. Work is ongoing to reduce these stitching artifacts.
-- **Cell diameter**: The quality of cell segmentation results is highly dependent on an appropriately chosen cell diameter. Use Slideflow Studio to find the best cell diameter for your application.
+- **Cell diameter**: The quality of cell segmentation results is highly dependent on an appropriately chosen cell diameter. Use HistoX Studio to find the best cell diameter for your application.
 
 Extracting cells from slides
 ****************************
@@ -196,15 +196,15 @@ Once segmentation masks have been calculated, images of individual cells can be 
 From a single slide
 -------------------
 
-Start by loading the saved segmentation, as described above. Then, use :meth:`slideflow.WSI.apply_segmentation`, followed by :meth:`slideflow.WSI.extract_cells`.
+Start by loading the saved segmentation, as described above. Then, use :meth:`histox.WSI.apply_segmentation`, followed by :meth:`histox.WSI.extract_cells`.
 
 .. code-block:: python
 
-    import slideflow as sf
-    from slideflow.cellseg import Segmentation
+    import histox as hx
+    from histox.cellseg import Segmentation
 
     # Load WSI.
-    wsi = sf.WSI('../slide.svs', tile_px=96, tile_um='40x')
+    wsi = hx.WSI('../slide.svs', tile_px=96, tile_um='40x')
 
     # Load cell segmentations.
     seg = Segmentation.load('.../slide-masks.zip')
@@ -228,13 +228,13 @@ Start by loading the saved segmentation, as described above. Then, use :meth:`sl
 
       - .. image:: cell_unmasked.png
 
-Tile extraction is then performed as usual. Cell images (tiles) can either be saved as loose images or in TFRecord format. See :meth:`slideflow.WSI.extract_cells` for more information.
+Tile extraction is then performed as usual. Cell images (tiles) can either be saved as loose images or in TFRecord format. See :meth:`histox.WSI.extract_cells` for more information.
 
 From all slides
 ---------------
 
 Additionally, cell images can be extracted from all slides in a project. This should only be
-done after :meth:`slideflow.Project.cell_segmentation`.
+done after :meth:`histox.Project.cell_segmentation`.
 
 .. code-block:: python
 
@@ -245,7 +245,7 @@ done after :meth:`slideflow.Project.cell_segmentation`.
     )
 
 Extracted cell images are saved by default in TFRecord format, and are otherwise handled
-identically to tile images generated through :meth:`slideflow.Project.extract_tiles`.
+identically to tile images generated through :meth:`histox.Project.extract_tiles`.
 
 Complete example
 ****************
@@ -253,23 +253,23 @@ Complete example
 An example of a complete cell segmentation pipeline is shown below, from parameter tuning
 to final tile extraction from detected cells.
 
-1. Slideflow Studio
+1. HistoX Studio
 -------------------
 
 Determine optimal cell segmenation parameters using Studio, as described above:
 
 .. code-block:: bash
 
-    python -m slideflow.studio --cellpose
+    python -m histox.studio --cellpose
 
 2. Cell segmentation
 --------------------
 
-Segment cells for all slides in a Slideflow project.
+Segment cells for all slides in a HistoX project.
 
 .. code-block:: python
 
-    P = sf.Project(...)
+    P = hx.Project(...)
     P.cell_segmentation(
         model='cyto2',
         diam_um=10,

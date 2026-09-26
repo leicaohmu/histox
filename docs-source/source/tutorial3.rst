@@ -3,12 +3,12 @@
 Tutorial 3: Using a custom architecture
 =======================================
 
-Out of the box, Slideflow includes support for 21 model architectures in the Tensorflow backend and 17 with the PyTorch backend. In this tutorial, we will demonstrate how to train a custom model architecture (ViT) in either backend.
+Out of the box, HistoX includes support for 21 model architectures in the Tensorflow backend and 17 with the PyTorch backend. In this tutorial, we will demonstrate how to train a custom model architecture (ViT) in either backend.
 
 Custom Tensorflow model
 ***********************
 
-Any Tensorflow/Keras model (:class:`tf.keras.Model`) can be trained in Slideflow by setting the ``model`` parameter of a :class:`slideflow.ModelParams` object to a function which initalizes the model.
+Any Tensorflow/Keras model (:class:`tf.keras.Model`) can be trained in HistoX by setting the ``model`` parameter of a :class:`histox.ModelParams` object to a function which initalizes the model.
 
 First, define the model in a file that can be imported. In this example, we will define a vision transformer (ViT) model in a file ``vit_tensorflow.py``:
 
@@ -202,11 +202,11 @@ Next, define a function that accepts any combination of the keyword arguments ``
             mlp_dim=2048
         )
 
-Then, create a :class:`slideflow.ModelParams` object with your training parameters, setting the ``model`` argument equal to the function you just defined:
+Then, create a :class:`histox.ModelParams` object with your training parameters, setting the ``model`` argument equal to the function you just defined:
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     from vit_tensorflow impport ViT
 
     def vit_model(image_shape, **kwargs):
@@ -235,7 +235,7 @@ Next, define a function which accepts any combination of the keyword arguments `
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     from vit_pytorch impport ViT
 
     def vit_model(image_shape, **kwargs):
@@ -253,11 +253,11 @@ Next, define a function which accepts any combination of the keyword arguments `
         model.out_features = 1000
         return model
 
-Finally, set the ``model`` argument of a :class:`slideflow.ModelParams` object equal to this function:
+Finally, set the ``model`` argument of a :class:`histox.ModelParams` object equal to this function:
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     from vit_pytorch impport ViT
 
     def vit_model(image_shape, **kwargs):

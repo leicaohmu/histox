@@ -3,12 +3,12 @@
 Evaluation
 ==========
 
-Slideflow includes several tools for evaluating trained models. In the next sections, we'll review how to evaluate a model on a held-out test set, generate predictions without ground-truth labels, and visualize predictions with heatmaps.
+HistoX includes several tools for evaluating trained models. In the next sections, we'll review how to evaluate a model on a held-out test set, generate predictions without ground-truth labels, and visualize predictions with heatmaps.
 
 Evaluating a test set
 *********************
 
-The :meth:`slideflow.Project.evaluate` provides an easy interface for evaluating model performance on a held-out test set. Locate the saved model to evaluate (which will be in the project ``models/`` folder). :ref:`As with training <training_with_project>`, the dataset to evaluate can be specified using either the ``filters`` or ``dataset`` arguments. If neither is provided, all slides in the project will be evaluated.
+The :meth:`histox.Project.evaluate` provides an easy interface for evaluating model performance on a held-out test set. Locate the saved model to evaluate (which will be in the project ``models/`` folder). :ref:`As with training <training_with_project>`, the dataset to evaluate can be specified using either the ``filters`` or ``dataset`` arguments. If neither is provided, all slides in the project will be evaluated.
 
 .. code-block:: python
 
@@ -36,7 +36,7 @@ Generating predictions
 For a dataset
 -------------
 
-:meth:`slideflow.Project.predict` provides an interface for generating model predictions on an entire dataset. As above, locate the saved model from which to generate predictions, and specify the dataset with either ``filters`` or ``dataset`` arguments.
+:meth:`histox.Project.predict` provides an interface for generating model predictions on an entire dataset. As above, locate the saved model from which to generate predictions, and specify the dataset with either ``filters`` or ``dataset`` arguments.
 
 .. code-block:: python
 
@@ -68,15 +68,15 @@ Results are returned as a dictionary of pandas DataFrames (with the keys ``'tile
 For a single slide
 ------------------
 
-You can also generate predictions for a single slide with either :func:`slideflow.slide.predict` or :meth:`slideflow.WSI.predict`.
+You can also generate predictions for a single slide with either :func:`histox.slide.predict` or :meth:`histox.WSI.predict`.
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     slide = '/path/to/slide.svs'
     model = '/path/to/model_epoch1'
-    sf.slide.predict(slide, model)
+    hx.slide.predict(slide, model)
 
 .. rst-class:: sphx-glr-script-out
 
@@ -94,7 +94,7 @@ Heatmaps
 For a dataset
 -------------
 
-Predictive heatmaps can be created for an entire dataset using :meth:`slideflow.Project.generate_heatmaps`. Heatmaps will be saved and exported in the project directory. See the linked API documentation for arguments and customization.
+Predictive heatmaps can be created for an entire dataset using :meth:`histox.Project.generate_heatmaps`. Heatmaps will be saved and exported in the project directory. See the linked API documentation for arguments and customization.
 
 .. code-block:: python
 
@@ -103,34 +103,34 @@ Predictive heatmaps can be created for an entire dataset using :meth:`slideflow.
 For a single slide
 ------------------
 
-:class:`slideflow.Heatmap` provides more granular control for calculating and displaying a heatmap for a given slide. The required arguments are:
+:class:`histox.Heatmap` provides more granular control for calculating and displaying a heatmap for a given slide. The required arguments are:
 
-- ``slide``: Either a path to a slide, or a :class:`slideflow.WSI` object.
-- ``model``: Path to a saved Slideflow model.
+- ``slide``: Either a path to a slide, or a :class:`histox.WSI` object.
+- ``model``: Path to a saved HistoX model.
 
 Additional keyword arguments can be used to customize and optimize the heatmap. In this example, we'll increase the batch size to 64 and allow multiprocessing by setting ``num_processes`` equal to our CPU core count, 16.
 
 .. code-block:: python
 
-    heatmap = sf.Heatmap(
+    heatmap = hx.Heatmap(
       slide='/path/to/slide.svs',
       model='/path/to/model'
       batch_size=64,
       num_processes=16
     )
 
-If ``slide`` is a :class:`slideflow.WSI`, the heatmap will be calculated only within non-masked areas and ROIs, if applicable.
+If ``slide`` is a :class:`histox.WSI`, the heatmap will be calculated only within non-masked areas and ROIs, if applicable.
 
 .. code-block:: python
 
-    from slideflow.slide import qc
+    from histox.slide import qc
 
     # Prepare the slide
-    wsi = sf.WSI('slide.svs', tile_px=299, tile_um=302, rois='/path')
+    wsi = hx.WSI('slide.svs', tile_px=299, tile_um=302, rois='/path')
     wsi.qc([qc.Otsu(), qc.Gaussian()])
 
     # Generate a heatmap
-    heatmap = sf.Heatmap(
+    heatmap = hx.Heatmap(
       slide=wsi,
       model='/path/to/model'
       batch_size=64,
@@ -139,13 +139,13 @@ If ``slide`` is a :class:`slideflow.WSI`, the heatmap will be calculated only wi
 
 If ``slide`` is a path to a slide, Regions of Interest can be provided through the optional ``roi_dir`` or ``rois`` arguments.
 
-Once generated, heatmaps can be rendered and displayed (ie. in a Jupyter notebook) with :meth:`slideflow.Heatmap.plot`.
+Once generated, heatmaps can be rendered and displayed (ie. in a Jupyter notebook) with :meth:`histox.Heatmap.plot`.
 
 .. code-block:: python
 
     heatmap.plot(class_idx=0, cmap='inferno')
 
-Insets showing zoomed-in portions of the heatmap can be added with :meth:`slideflow.Heatmap.add_inset`:
+Insets showing zoomed-in portions of the heatmap can be added with :meth:`histox.Heatmap.add_inset`:
 
 .. code-block:: python
 
@@ -157,4 +157,4 @@ Insets showing zoomed-in portions of the heatmap can be added with :meth:`slidef
 
 |
 
-Save rendered heatmaps for each outcome category with :meth:`slideflow.Heatmap.save`. The spatial map of predictions, as calculated across the input slide, can be accessed through ``Heatmap.predictions``. You can save the numpy array with calculated predictions (and uncertainty, if applicable) as an \*.npz file using :meth:`slideflow.Heatmap.save_npz`.
+Save rendered heatmaps for each outcome category with :meth:`histox.Heatmap.save`. The spatial map of predictions, as calculated across the input slide, can be accessed through ``Heatmap.predictions``. You can save the numpy array with calculated predictions (and uncertainty, if applicable) as an \*.npz file using :meth:`histox.Heatmap.save_npz`.

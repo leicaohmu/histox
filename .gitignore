@@ -10,9 +10,9 @@ docs-source/pytorch_sphinx_theme/yarn.lock.backup
 build/*
 dist/*
 tutorials/*
-slideflow_test/*
+histox_test/*
 torch_test/*
 warn_report*.txt
-slideflow.log
+histox.log
 .DS_Store
 *.log

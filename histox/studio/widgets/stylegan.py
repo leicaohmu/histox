@@ -49,7 +49,7 @@ class StyleGANWidget(Widget):
 
         self.pkl            = None
         self.opt            = None
-        self.sf_opt         = None
+        self.hx_opt         = None
         self._clicking      = False
         self._show_popup    = False
         self._show_layers   = False
@@ -79,8 +79,8 @@ class StyleGANWidget(Widget):
         try:
             from histox.gan.stylegan3.stylegan3.viz.renderer import Renderer
         except ImportError:
-            raise ImportError("StyleGAN functions require 'histox-noncommercial'. "
-                               "Please install with 'pip install histox-noncommercial'")
+            raise ImportError("StyleGAN functions require 'slideflow-noncommercial'. "
+                               "Please install with 'pip install slideflow-noncommercial'")
         viz.add_to_render_pipeline(Renderer(), name='stylegan')
 
     @property
@@ -126,14 +126,14 @@ class StyleGANWidget(Widget):
                 with open(training_options, 'r') as f:
                     self.opt = json.load(f)
                 if 'histox_kwargs' in self.opt:
-                    self.sf_opt = self.opt['histox_kwargs']
-                    if 'resize' in self.sf_opt and self.sf_opt['resize']:
-                        gan_px = self.sf_opt['resize']
+                    self.hx_opt = self.opt['histox_kwargs']
+                    if 'resize' in self.hx_opt and self.hx_opt['resize']:
+                        gan_px = self.hx_opt['resize']
                     else:
-                        gan_px = self.sf_opt['tile_px']
-                    gan_um = self.sf_opt['tile_um']
+                        gan_px = self.hx_opt['tile_px']
+                    gan_um = self.hx_opt['tile_um']
                 else:
-                    self.sf_opt = None
+                    self.hx_opt = None
 
             if gan_px or gan_um:
                 renderer = self.viz.get_renderer('stylegan')
@@ -223,18 +223,18 @@ class StyleGANWidget(Widget):
         return_val = None
 
         # Skip if this is a non-conditioned GAN
-        if self.sf_opt['outcome_labels'] is None:
+        if self.hx_opt['outcome_labels'] is None:
             return
 
         with imgui_utils.item_width(viz.font_size * 6):
             _changed, _idx = imgui.input_int(name, value, step=1, flags=imgui.INPUT_TEXT_ENTER_RETURNS_TRUE)
-            if _changed and self.sf_opt and _idx >= 0 and str(_idx) not in self.sf_opt['outcome_labels']:
+            if _changed and self.hx_opt and _idx >= 0 and str(_idx) not in self.hx_opt['outcome_labels']:
                 viz.create_toast(f'Invalid class index: {_idx}', icon='warn')
             elif _changed:
                 return_val = _idx
-            if self.sf_opt and value >= 0:
+            if self.hx_opt and value >= 0:
                 imgui.same_line()
-                _outcome_label = self.sf_opt['outcome_labels'][str(value)]
+                _outcome_label = self.hx_opt['outcome_labels'][str(value)]
                 imgui.text(_outcome_label)
                 if imgui.is_item_hovered():
                     imgui.set_tooltip(_outcome_label)
@@ -277,16 +277,16 @@ class StyleGANWidget(Widget):
 
         imgui.text_colored('Tile (px)', *viz.theme.dim)
         imgui.same_line(viz.font_size * 6)
-        imgui.text(str('-' if not self.sf_opt else self.sf_opt['tile_px']))
+        imgui.text(str('-' if not self.hx_opt else self.hx_opt['tile_px']))
 
         imgui.text_colored('Tile (um)', *viz.theme.dim)
         imgui.same_line(viz.font_size * 6)
-        imgui.text(str('-' if not self.sf_opt else self.sf_opt['tile_um']))
+        imgui.text(str('-' if not self.hx_opt else self.hx_opt['tile_um']))
 
-        if self.sf_opt and 'outcomes' in self.sf_opt:
-            outcomes = self.sf_opt['outcomes']
-        elif self.sf_opt and 'outcome_label_headers' in self.sf_opt:
-            outcomes = self.sf_opt['outcome_label_headers']
+        if self.hx_opt and 'outcomes' in self.hx_opt:
+            outcomes = self.hx_opt['outcomes']
+        elif self.hx_opt and 'outcome_label_headers' in self.hx_opt:
+            outcomes = self.hx_opt['outcome_label_headers']
         else:
             outcomes = '-'
         if isinstance(outcomes, list):

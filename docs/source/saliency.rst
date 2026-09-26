@@ -3,7 +3,7 @@
 Saliency Maps
 =============
 
-Slideflow provides an API for calculating gradient-based pixel attribution (saliency maps), as implemented by `PAIR <https://github.com/PAIR-code/saliency>`_. Saliency maps can be calculated manually (as described below), or interactively in :ref:`Slideflow Studio <studio>`.
+HistoX provides an API for calculating gradient-based pixel attribution (saliency maps), as implemented by `PAIR <https://github.com/PAIR-code/saliency>`_. Saliency maps can be calculated manually (as described below), or interactively in :ref:`HistoX Studio <studio>`.
 
 :class:`histox.grad.SaliencyMap` provides an interface for preparing a saliency map generator from a loaded model (Tensorflow or PyTorch) and calculating maps from preprocessed images. Supported methods include:
 
@@ -21,11 +21,11 @@ Creating a saliency map with :class:`histox.grad.SaliencyMap` requires two compo
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a trained model and preprocessing function.
-    model = sf.model.load('../saved_model')
-    preprocess = sf.util.get_preprocess_fn('../saved_model')
+    model = hx.model.load('../saved_model')
+    preprocess = hx.util.get_preprocess_fn('../saved_model')
 
     # Prepare a SaliencyMap
     sal_map = SaliencyMap(model, class_idx=0)
@@ -35,10 +35,10 @@ There are several ways you might acquire an image to use for a saliency map. To 
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a whole-slide image.
-    wsi = sf.WSI('slide.svs', tile_px=299, tile_um=302)
+    wsi = hx.WSI('slide.svs', tile_px=299, tile_um=302)
 
     # Extract a tile using grid indexing.
     image = wsi[10, 25]
@@ -52,10 +52,10 @@ Alternatively, if you know the coordinates for an image tile and want to extract
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a project and dataset.
-    P = sf.Project(...)
+    P = hx.Project(...)
     dataset = P.dataset(tile_px=299, tile_um=302)
 
     # Get the tile from slide "12345" at location (2000, 2000)
@@ -113,18 +113,18 @@ The following is a complete example for how to calculate and plot a saliency map
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     from histox.grad import SaliencyMap
     from histox.grad.plot_utils import overlay
     from PIL import Image
 
     # Load a slide and find the desired image tile.
-    wsi = sf.WSI('slide.svs', tile_px=299, tile_um=302)
+    wsi = hx.WSI('slide.svs', tile_px=299, tile_um=302)
     image = wsi[20, 20]
 
     # Load a model and preprocessing function.
-    model = sf.model.load_model(../saved_model)
-    preprocess = sf.util.get_preprocess_fn('../saved_model')
+    model = hx.model.load_model(../saved_model)
+    preprocess = hx.util.get_preprocess_fn('../saved_model')
 
     # Prepare the saliency map
     sal_map = SaliencyMap(model, class_idx=0)

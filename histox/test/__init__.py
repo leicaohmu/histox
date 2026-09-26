@@ -19,7 +19,7 @@ from histox.util import log
 
 
 class TestSuite:
-    """Supervises functional testing of the Slideflow pipeline."""
+    """Supervises functional testing of the HistoX pipeline."""
     def __init__(
         self,
         root: str,
@@ -44,7 +44,7 @@ class TestSuite:
 
         Raises:
             errors.UnrecognizedBackendError: If the environmental variable
-                SF_BACKEND is something other than  "tensorflow" or "torch".
+                HX_BACKEND is something other than  "tensorflow" or "torch".
         """
         self.tile_px = tile_px
 

@@ -3,10 +3,10 @@
 _mil_trainers = dict()
 _mil_models = dict()
 _known_extras_trainers = {
-    'histox-gpl': ['legacy_clam'],
+    'slideflow-gpl': ['legacy_clam'],
 }
 _known_extras_models = {
-    'histox-gpl': ['clam_mb', 'clam_sb', 'mil_fc', 'mil_fc_mc'],
+    'slideflow-gpl': ['clam_mb', 'clam_sb', 'mil_fc', 'mil_fc_mc'],
 }
 _extras_trainers = {
     trainer: package 

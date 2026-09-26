@@ -11,7 +11,7 @@ image tiles are determined through :ref:`Region of Interest (ROI) <roi_labels>` 
 Labeling ROIs
 *************
 
-The first step is to create regions of interest (ROIs). The fastest way to create labeled ROIs is with :ref:`Slideflow Studio <studio_roi>`, which includes integrated tools for quickly assigning labels to both new and existing ROIs. However, it is also possible to create ROIs with other tools, such as QuPath or ImageScope (as described :ref:`here <roi_labels>`), and modify the generated ROI CSV file to add labels.
+The first step is to create regions of interest (ROIs). The fastest way to create labeled ROIs is with :ref:`HistoX Studio <studio_roi>`, which includes integrated tools for quickly assigning labels to both new and existing ROIs. However, it is also possible to create ROIs with other tools, such as QuPath or ImageScope (as described :ref:`here <roi_labels>`), and modify the generated ROI CSV file to add labels.
 
 ROI CSV files are formatted with three required columns: "roi_name", "x_base", and "y_base". Each row is a single point in an ROI, with the "x_base" and "y_base" columns specifying the X/Y coordinates in the slide's lowest (base) dimension. Individual ROIs are grouped by the "roi_name" column, with each ROI having a unique name. An optional fourth column, "label", can be used to assign a label to each ROI. For example:
 
@@ -27,22 +27,22 @@ ROI CSV files are formatted with three required columns: "roi_name", "x_base", a
     2,222,267,stroma
     2,202,201,stroma
 
-When ROIs are saved in Slideflow Studio, they are exported in this file format and saved in either the current working directory or, if a project is loaded, in the configured project directory .
+When ROIs are saved in HistoX Studio, they are exported in this file format and saved in either the current working directory or, if a project is loaded, in the configured project directory .
 
 Building tile labels
 ********************
 
-Once ROIs have been generated, labeled, and saved in CSV format, the next step is to build a dataframe of tile labels. If not already done, start by :ref:`configuring a project <project_setup>` and ensuring that ROIs are in the correct directory. You can verify that the ROIs are in the right place by confirming that :meth:`slideflow.Dataset.rois` returns the number of slides with ROIs:
+Once ROIs have been generated, labeled, and saved in CSV format, the next step is to build a dataframe of tile labels. If not already done, start by :ref:`configuring a project <project_setup>` and ensuring that ROIs are in the correct directory. You can verify that the ROIs are in the right place by confirming that :meth:`histox.Dataset.rois` returns the number of slides with ROIs:
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> P = sf.load_project('/path/to/project')
+    >>> import histox as hx
+    >>> P = hx.load_project('/path/to/project')
     >>> dataset = P.dataset(tile_px=256, tile_um=256)
     >>> len(dataset.rois())
     941
 
-Next, build a dataframe of tile labels with :meth:`slideflow.Dataset.get_tile_dataframe`. This will return a dataframe with tile coordinates (X/Y of tile center, in base dimension), slide grid index, and associated ROI name/label if the tile is in an ROI. For example:
+Next, build a dataframe of tile labels with :meth:`histox.Dataset.get_tile_dataframe`. This will return a dataframe with tile coordinates (X/Y of tile center, in base dimension), slide grid index, and associated ROI name/label if the tile is in an ROI. For example:
 
 .. code-block:: python
 
@@ -79,11 +79,11 @@ This dataframe can now be used to train a model with strong supervision.
 Training a model
 ****************
 
-Training a model with strong supervision requires using a :class:`slideflow.model.Trainer`, as described in :ref:`tutorial2`. The only difference when training with strong supervision is that the trainer should be initialized with the tile dataframe for the labels:
+Training a model with strong supervision requires using a :class:`histox.model.Trainer`, as described in :ref:`tutorial2`. The only difference when training with strong supervision is that the trainer should be initialized with the tile dataframe for the labels:
 
 .. code-block:: python
 
-    >>> trainer = sf.model.build_trainer(..., labels=df)
+    >>> trainer = hx.model.build_trainer(..., labels=df)
     >>> trainer.train(...)
 
 Once training has finished, the saved model can be used interchangeably with models trained with weak supervision for evaluation, inference, feature generation, etc.
@@ -95,10 +95,10 @@ Below is a complete example of training a model with strong supervision. This ex
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load project and dataset
-    P = sf.load_project('/path/to/project')
+    P = hx.load_project('/path/to/project')
     dataset = P.dataset(tile_px=256, tile_um=256)
 
     # Build tile label dataframe, and filter
@@ -113,7 +113,7 @@ Below is a complete example of training a model with strong supervision. This ex
     train, val = dataset.split(val_fraction=0.3)
 
     # Build model hyperparameters
-    hp = sf.ModelParams(
+    hp = hx.ModelParams(
         tile_px=256,
         tile_um=256,
         model='xception',
@@ -121,7 +121,7 @@ Below is a complete example of training a model with strong supervision. This ex
     )
 
     # Train model
-    trainer = sf.model.build_trainer(
+    trainer = hx.model.build_trainer(
         hp=hp,
         outdir='/path/to/outdir',
         labels=df

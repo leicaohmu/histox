@@ -155,7 +155,7 @@ def _prepare_slide(
         log.error('Slide {} has type {}, which is incompatible with the active '
                   'slide reading backend, {}. Consider using a different '
                   'backend, which can be set with the environmental variable '
-                  'SF_SLIDE_BACKEND. See https://histox.dev/installation/#cucim-vs-libvips '
+                  'HX_SLIDE_BACKEND. See https://histox.readthedocs.io/en/latest/installation/#cucim-vs-libvips '
                   'for more information.'.format(
                     path,
                     hx.util.path_to_ext(path).upper(),
@@ -1930,7 +1930,7 @@ class Dataset:
                 would filter the dataset by the column ``HPV_status`` and only
                 include slides with values of either ``'negative'`` or
                 ``'positive'`` in this column.
-                See `Filtering <https://histox.dev/datasets_and_val/#filtering>`_
+                See `Filtering <https://histox.readthedocs.io/en/latest/datasets_and_val/#filtering>`_
                 for further discussion. Defaults to None.
             filter_blank (list(str) or str, optional): Skip slides that have
                 blank values in these patient annotation columns.
@@ -4205,7 +4205,7 @@ class Dataset:
                 if from_wsi=True, for sharing a unified processing pool between
                 dataloaders. Defaults to None.
             prefetch_factor (int, optional): Number of batches to prefetch in each
-                SlideflowIterator. Defaults to 1.
+                InterleaveIterator. Defaults to 1.
             rank (int, optional): Worker ID to identify this worker.
                 Used to interleave results.
                 among workers without duplications. Defaults to 0 (first worker).

@@ -3,9 +3,9 @@
 TFRecords: Reading and Writing
 ==============================
 
-TFRecords are binary files designed for storing large amounts of data. In Slideflow, TFRecords are used to store compressed image tiles extracted from whole-slide images. TFRecords are used instead of loose image files (such as ``*.jpg`` or ``*.png``) because they are compact, more easily distributed, and significantly improve data reading efficiency during model training. TFRecords were originally designed for Tensorflow, but they can also be used with PyTorch.
+TFRecords are binary files designed for storing large amounts of data. In HistoX, TFRecords are used to store compressed image tiles extracted from whole-slide images. TFRecords are used instead of loose image files (such as ``*.jpg`` or ``*.png``) because they are compact, more easily distributed, and significantly improve data reading efficiency during model training. TFRecords were originally designed for Tensorflow, but they can also be used with PyTorch.
 
-The following sections describe the TFRecord data format and provide examples of how to create, read, and manipulate TFRecords using Slideflow.
+The following sections describe the TFRecord data format and provide examples of how to create, read, and manipulate TFRecords using HistoX.
 
 TFRecord Format
 ***************
@@ -17,22 +17,22 @@ TFRecords are binary files that contain a sequence of records, where each record
 - **"loc_x"**: Integer containing the x-coordinate of the tile (optional).
 - **"loc_y"**: Integer containing the y-coordinate of the tile (optional).
 
-Slideflow expects each TFRecord to contain images from only a single slide, with the TFRecord name matching the slide name. The ``loc_x`` and ``loc_y`` features are optional, but are required for some operations (such as generating TFRecord heatmaps).
+HistoX expects each TFRecord to contain images from only a single slide, with the TFRecord name matching the slide name. The ``loc_x`` and ``loc_y`` features are optional, but are required for some operations (such as generating TFRecord heatmaps).
 
 .. note::
 
-    When reading TFRecords with Tensorflow, records are internally decoded using ``tf.train.Example``. When Tensorflow is not being used (such as when using the PyTorch backend), tfrecords are decoded using ``sf.util.example_pb2.Example``, providing an alternative decoder that does not require Tensorflow. Tensorflow's ``tf.train.Example`` and Slideflow's ``sf.util.example_pb2.Example`` are identical, except that ``sf.util.example_pb2.Example`` does not require Tensorflow and supports ``protobuf`` version 4.
+    When reading TFRecords with Tensorflow, records are internally decoded using ``tf.train.Example``. When Tensorflow is not being used (such as when using the PyTorch backend), tfrecords are decoded using ``hx.util.example_pb2.Example``, providing an alternative decoder that does not require Tensorflow. Tensorflow's ``tf.train.Example`` and HistoX's ``hx.util.example_pb2.Example`` are identical, except that ``hx.util.example_pb2.Example`` does not require Tensorflow and supports ``protobuf`` version 4.
 
 
 TFRecord Indices
 ****************
 
-Slideflow uses TFRecord index files to keep track of the internal structure of each TFRecord, improving efficiency of data reading. These index files are automatically built and stored in the same directory as the TFRecords upon first use. A TFRecord index is an ``*.npz`` file with the same name as the TFRecord, but with the ``*.index.npz`` extension. A TFRecord index contains the following fields:
+HistoX uses TFRecord index files to keep track of the internal structure of each TFRecord, improving efficiency of data reading. These index files are automatically built and stored in the same directory as the TFRecords upon first use. A TFRecord index is an ``*.npz`` file with the same name as the TFRecord, but with the ``*.index.npz`` extension. A TFRecord index contains the following fields:
 
 - **"arr_0"**: An array of shape ``(n_tiles, 2)`` containing the starting bytes and length of each record.
 - **"locations"**: An array of shape ``(n_tiles, 2)`` containing the x- and y-coordinates of each tile.
 
-Index files for an entire dataset can be rebuilt using :meth:`histox.Dataset.rebuild_index()`. You can manually create an index file for a single TFRecord using :func:`sf.util.tfrecord2idx.create_index()`.
+Index files for an entire dataset can be rebuilt using :meth:`histox.Dataset.rebuild_index()`. You can manually create an index file for a single TFRecord using :func:`hx.util.tfrecord2idx.create_index()`.
 
 Creating TFRecords
 ******************
@@ -54,7 +54,7 @@ A directory of loose image files can be assembled into a TFRecord using :func:`h
 
 .. code-block:: python
 
-    sf.io.write_tfrecords_single(
+    hx.io.write_tfrecords_single(
         '/path/to/images',
         '/path/to/destination',
         filename='filename',
@@ -65,7 +65,7 @@ A nested directory of loose image tiles, organized into subdirectory by slide na
 
 .. code-block:: python
 
-    sf.io.write_tfrecords_multi(
+    hx.io.write_tfrecords_multi(
         '/path/to/nested_images',
         '/path/to/destination'
     )
@@ -80,8 +80,8 @@ The quickest way to inspect a TFRecord is to use :class:`histox.TFRecord`:
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> tfr = sf.TFRecord('/path/to/tfrecord')
+    >>> import histox as hx
+    >>> tfr = hx.TFRecord('/path/to/tfrecord')
 
 An index file will be automatically created if one is not found. To disable automatic index creation, set ``create_index=False``.
 
@@ -190,7 +190,7 @@ Finally, the :meth:`histox.Dataset.manifest()` method returns a dictionary mappi
 Reading TFRecords
 *****************
 
-Slideflow provides several tools for reading and parsing TFRecords. These tools are intended for debugging and development, and are not recommended for model training. Higher-level dataloaders, which supervise sampling, shuffling, sharding, batching, labeling, and augmenting, are discussed in :ref:`dataloaders`.
+HistoX provides several tools for reading and parsing TFRecords. These tools are intended for debugging and development, and are not recommended for model training. Higher-level dataloaders, which supervise sampling, shuffling, sharding, batching, labeling, and augmenting, are discussed in :ref:`dataloaders`.
 
 Reading a single image tile
 ---------------------------
@@ -199,8 +199,8 @@ To get a single parsed record according to its index, use :meth:`histox.TFRecord
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> tfr = sf.TFRecord('/path/to/tfrecord')
+    >>> import histox as hx
+    >>> tfr = hx.TFRecord('/path/to/tfrecord')
     >>> tfr[0]
     {'image_raw': b'...', 'slide': 'SLIDE_NAME', 'loc_x': 0, 'loc_y': 0}
 
@@ -217,11 +217,11 @@ Image bytes can be decoded into Tensors (according to the active backend) using 
 
 .. code-block:: python
 
-    >>> import slideflow as sf
+    >>> import histox as hx
     >>> slide, image = tfr.get_record_by_xy(768, 256)
     >>> print(type(image))
     <class 'bytes'>
-    >>> sf.io.decode_image(image)
+    >>> hx.io.decode_image(image)
     <torch.Tensor shape=(256, 256, 3) dtype=torch.uint8
 
 
@@ -232,16 +232,16 @@ The function :func:`histox.tfrecord_loader()` provides an interface for reading 
 
 .. code-block:: python
 
-    >>> import slideflow as sf
+    >>> import histox as hx
     >>> tfr = '/path/to/tfrecords'
-    >>> sf.io.tfrecord2idx.create_index(tfr)
-    >>> index = sf.io.tfrecord2idx.load_index(tfr)
+    >>> hx.io.tfrecord2idx.create_index(tfr)
+    >>> index = hx.io.tfrecord2idx.load_index(tfr)
 
 Then, use :func:`histox.tfrecord_loader()` to create a generator that yields parsed records from the TFRecord:
 
 .. code-block:: python
 
-    >>> loader = sf.tfrecord.tfrecord_loader(tfr, index)
+    >>> loader = hx.tfrecord.tfrecord_loader(tfr, index)
     >>> record = next(iter(loader))
     {'image_raw': <np.ndarray>, 'slide': <np.ndarray>, 'loc_x': [0], 'loc_y': [0]}
 
@@ -249,7 +249,7 @@ Both ``"image_raw"`` and ``"slide"`` fields are returned as bytes in numpy array
 
 .. code-block:: python
 
-    >>> image = sf.io.decode_image(bytes(record['image_raw']))
+    >>> image = hx.io.decode_image(bytes(record['image_raw']))
     >>> slide = bytes(record['slide']).decode('utf-8')
 
 This iterator can be used to read all images from a TFRecord in sequence:
@@ -257,14 +257,14 @@ This iterator can be used to read all images from a TFRecord in sequence:
 .. code-block:: python
 
     >>> for record in loader:
-    ...     image = sf.io.decode_image(bytes(record['image_raw']))
+    ...     image = hx.io.decode_image(bytes(record['image_raw']))
     ...     slide = bytes(record['slide']).decode('utf-8')
 
 The iterator can be split into separate shards (data partitions) with the ``shard`` argument, a tuple of ``(shard_id, n_shards)``. This is useful for parallelizing data reading across multiple processes, threads, or compute nodes:
 
 .. code-block:: python
 
-    >>> loader = sf.tfrecord.tfrecord_loader(tfr, index, shard=(0, 2))
+    >>> loader = hx.tfrecord.tfrecord_loader(tfr, index, shard=(0, 2))
 
 Data sharding ensures that each shard reads a unique subset of the data, and that each record is read exactly once.
 
@@ -277,10 +277,10 @@ You can also interleave multiple TFRecords using :func:`histox.multi_tfrecord_lo
 
 .. code-block:: python
 
-    >>> import slideflow as sf
+    >>> import histox as hx
     >>> tfrs = ['/path/to/tfrecord1', '/path/to/tfrecord2']
-    >>> indices = [sf.io.tfrecord2idx.load_index(tfr) for tfr in tfrs]
-    >>> loader = sf.tfrecord.multi_tfrecord_loader(tfrs, indices)
+    >>> indices = [hx.io.tfrecord2idx.load_index(tfr) for tfr in tfrs]
+    >>> loader = hx.tfrecord.multi_tfrecord_loader(tfrs, indices)
     >>> record = next(iter(loader))
     {'image_raw': <np.ndarray>, 'slide': <np.ndarray>, 'loc_x': [0], 'loc_y': [0]}
 
@@ -288,7 +288,7 @@ By default, records are sampled from TFRecords with equal probability (i.e. unif
 
 .. code-block:: python
 
-    >>> loader = sf.tfrecord.multi_tfrecord_loader(tfrs, indices, weights=[0.5, 0.5])
+    >>> loader = hx.tfrecord.multi_tfrecord_loader(tfrs, indices, weights=[0.5, 0.5])
 
 Records will be sampled infinitely by default. To disable infinite sampling, set ``infinite=False``.
 

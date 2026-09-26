@@ -1,9 +1,9 @@
-.. currentmodule:: slideflow.studio
+.. currentmodule:: histox.studio
 
-slideflow.studio
+histox.studio
 ================
 
-This module contains the Slideflow Studio visualization tool. See :ref:`studio` for more information.
+This module contains the HistoX Studio visualization tool. See :ref:`studio` for more information.
 
-.. automodule:: slideflow.studio
+.. automodule:: histox.studio
    :members:

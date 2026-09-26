@@ -43,7 +43,7 @@ def generate_rois(
     """Generate ROIs for a single slide using a U-Net model.
 
     Args:
-        wsi (hx.WSI): Slideflow WSI object.
+        wsi (hx.WSI): HistoX WSI object.
         model (str): Path to '.pth' model file, as generated via :func:``histox.segment.train``.
 
     Returns:
@@ -96,7 +96,7 @@ def export_thumbs_and_masks(
     """Export thumbnails and segmentation masks (from ROIs) for a dataset.
 
     Args:
-        dataset (hx.Dataset): Slideflow dataset.
+        dataset (hx.Dataset): HistoX dataset.
         mpp (float): MPP to use for thumbnail generation.
         dest (str): Path to directory where thumbnails and masks will be saved.
 
@@ -404,8 +404,8 @@ def train(
 
     Args:
         config (SegmentConfig): Model configuration.
-        dataset (hx.Dataset): Slideflow dataset.
-        val_dataset (hx.Dataset): Slideflow dataset for validation.
+        dataset (hx.Dataset): HistoX dataset.
+        val_dataset (hx.Dataset): HistoX dataset for validation.
         data_source (str): Path to directory containing thumbnails and masks.
             If not provided, thumbnails and masks will be generated from the
             dataset.

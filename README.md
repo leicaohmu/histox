@@ -1,9 +1,5 @@
 # HistoX
 
-<p align="center">
-  <img src="histox/assets/branding/histox-wordmark.svg" alt="HistoX — Deep Pathology Python Library" width="760">
-</p>
-
 [![Package checks](https://github.com/leicaohmu/histox/actions/workflows/python-app.yml/badge.svg)](https://github.com/leicaohmu/histox/actions/workflows/python-app.yml)
 [![PyPI](https://img.shields.io/pypi/v/histox)](https://pypi.org/project/histox/)
 ![Python](https://img.shields.io/badge/Python-%3E%3D3.7-blue)
@@ -15,10 +11,10 @@ being developed into a PyTorch-first toolkit for whole-slide image (WSI)
 processing, model training, evaluation, and multimodal pathology research.
 
 > [!IMPORTANT]
-> HistoX is under active development. Version `0.2.x` retains a substantial
-> Slideflow-derived API, and parts of the documentation are still being
-> audited. Treat the current public API as pre-stable and pin the package
-> version in reproducible projects.
+> HistoX is under active development. Version `0.2.x` retains substantial
+> upstream-compatible behavior, while its maintained imports, entry points,
+> examples, and documentation use the `histox` namespace. Treat the current
+> public API as pre-stable and pin the package version in reproducible projects.
 
 ## What works today
 
@@ -207,9 +203,9 @@ bypass provider access controls.
 - [GitHub issues](https://github.com/leicaohmu/histox/issues)
 - [PyPI package](https://pypi.org/project/histox/)
 
-The hosted documentation contains inherited material that is still being
-migrated and audited. For installation and current project direction, this
-README and [ROADMAP.md](ROADMAP.md) are the source of truth.
+The hosted documentation is generated from `docs/source`. For installation
+and current project direction, this README and [ROADMAP.md](ROADMAP.md) remain
+the source of truth.
 
 ## Contributing
 

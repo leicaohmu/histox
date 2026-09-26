@@ -106,8 +106,8 @@ def import_with_splash():
     Tk().withdraw()
 
     # Load image
-    sf_root = pkgutil.get_loader('histox').get_filename()
-    splash_path = join(dirname(sf_root), 'studio', 'gui', 'splash.png')
+    hx_root = pkgutil.get_loader('histox').get_filename()
+    splash_path = join(dirname(hx_root), 'studio', 'gui', 'splash.png')
     img = np.array(Image.open(splash_path))
 
     # Start GLFW window
@@ -331,8 +331,8 @@ class Texture:
 def _text_to_array(string, *, font=None, size=32, line_pad: int=None):
 
     if font is None:
-        sf_root = pkgutil.get_loader('histox').get_filename()
-        font = join(dirname(sf_root), 'studio', 'gui', 'fonts', 'DroidSans.ttf')
+        hx_root = pkgutil.get_loader('histox').get_filename()
+        font = join(dirname(hx_root), 'studio', 'gui', 'fonts', 'DroidSans.ttf')
     pil_font = ImageFont.truetype(font=font, size=size)
 
     lines = [pil_font.getmask(line, 'L') for line in string.split('\n')]

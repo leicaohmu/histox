@@ -1,0 +1,29 @@
+Training tutorials
+==================
+
+Build tile-based pathology models, take control of the training loop, and add
+custom architectures or augmentation policies.
+
+.. warning::
+
+   These compatibility tutorials still contain inherited HistoX examples.
+   Use them as migration references until each page is marked as verified for
+   the current HistoX release.
+
+.. raw:: html
+
+   <div class="histox-tutorial-grid histox-tutorial-grid--category">
+     <a class="histox-tutorial-card" href="tutorial1.html"><span>Training</span><h3>Train a first model</h3><p>Take a TCGA project from slides and labels to a trained classifier.</p><strong>Compatibility tutorial</strong></a>
+     <a class="histox-tutorial-card" href="tutorial2.html"><span>Training</span><h3>Control the training loop</h3><p>Work directly with datasets and trainers for a customized pipeline.</p><strong>Compatibility tutorial</strong></a>
+     <a class="histox-tutorial-card" href="tutorial3.html"><span>Models</span><h3>Use a custom architecture</h3><p>Integrate your own vision architecture with the HistoX model interface.</p><strong>Compatibility tutorial</strong></a>
+     <a class="histox-tutorial-card" href="tutorial7.html"><span>Augmentation</span><h3>Add custom augmentations</h3><p>Build class-aware PyTorch augmentations for imbalanced outcomes.</p><strong>Compatibility tutorial</strong></a>
+   </div>
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   tutorial1
+   tutorial2
+   tutorial3
+   tutorial7

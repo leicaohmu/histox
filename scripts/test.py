@@ -71,7 +71,7 @@ def main(slides, out, all_tests, slide_threads, **kwargs):
     '''
     if not out:
         out = 'histox_test'
-    if 'SF_LOGGING_LEVEL' in os.environ:
+    if 'HX_LOGGING_LEVEL' in os.environ:
         verbosity = hx.getLoggingLevel()
     else:
         verbosity = logging.WARNING

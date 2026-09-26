@@ -5,7 +5,7 @@ Uncertainty Quantification
 
 Several uncertainty quantification (UQ) methods have been developed for deep learning models and tested in digital histopathology, including MC Dropout, deep ensembles, hyper-deep ensembles, and test-time augmentation.
 
-Slideflow includes a dropout-based method of uncertainty estimation. MC dropout UQ methods exploit the observation that neural networks with dropout approximate sampling of the Bayesian posterior. Images undergo multiple forward passes in a dropout-enabled network during inference, which results in a distribution of predictions. The standard deviation of such a distribution represents the uncertainty estimate.
+HistoX includes a dropout-based method of uncertainty estimation. MC dropout UQ methods exploit the observation that neural networks with dropout approximate sampling of the Bayesian posterior. Images undergo multiple forward passes in a dropout-enabled network during inference, which results in a distribution of predictions. The standard deviation of such a distribution represents the uncertainty estimate.
 
 Training with UQ
 ****************
@@ -14,9 +14,9 @@ Training models with UQ is straightforward, requiring only two hyperparameter se
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    params = sf.ModelParams(
+    params = hx.ModelParams(
       tile_px=299,
       tile_um=302,
       ...,
@@ -34,27 +34,27 @@ Any pipeline function using a model trained with UQ will automatically estimate 
 Uncertainty heatmaps
 ********************
 
-If a model was trained with UQ enabled, the :meth:`slideflow.Project.generate_heatmaps()` function will automatically create uncertainty heatmaps alongside the prediction heatmaps.
+If a model was trained with UQ enabled, the :meth:`histox.Project.generate_heatmaps()` function will automatically create uncertainty heatmaps alongside the prediction heatmaps.
 
 Uncertainty thresholding
 ************************
 
-Uncertainty information can be exploited to separate slide- and patient-level predictions into low- and high-confidence. We developed an uncertainty thresholding algorithm (`BISCUIT <https://github.com/jamesdolezal/biscuit/>`_) to accomplish this task, which is available in :mod:`slideflow.biscuit`. Algorithmic details and validation studies can be found in our `manuscript <https://www.nature.com/articles/s41467-022-34025-x>`_ detailing the method.
+Uncertainty information can be exploited to separate slide- and patient-level predictions into low- and high-confidence. We developed an uncertainty thresholding algorithm (`BISCUIT <https://github.com/jamesdolezal/biscuit/>`_) to accomplish this task, which is available in :mod:`histox.biscuit`. Algorithmic details and validation studies can be found in our `manuscript <https://www.nature.com/articles/s41467-022-34025-x>`_ detailing the method.
 
 Here, we will run through an example of how to apply this UQ thresholding strategy for a weakly-supervised classification model. At present, ``biscuit`` only supports uncertainty estimation and confidence thresholding for binary classification.
 
 Prepare an Experiment
 ---------------------
 
-Start by creating a Slideflow project and then initializing a ``biscuit`` experiment, including the outcome target and the two classes.  We will be training models to predict ``"HPV_status"``, with the two classes ``"positive"`` and ``"negative"``.
+Start by creating a HistoX project and then initializing a ``biscuit`` experiment, including the outcome target and the two classes.  We will be training models to predict ``"HPV_status"``, with the two classes ``"positive"`` and ``"negative"``.
 
 .. code-block:: python
 
-    import slideflow as sf
-    from slideflow import biscuit
+    import histox as hx
+    from histox import biscuit
 
-    # Create a Slideflow project
-    P = sf.Project(...)
+    # Create a HistoX project
+    P = hx.Project(...)
 
     # Initialize a biscuit experiment
     experiment = biscuit.Experiment(
@@ -96,7 +96,7 @@ Models will again be saved in the project model directory. We can view a summary
 
 .. code-block:: python
 
-    from slideflow.biscuit import find_cv, get_model_results
+    from histox.biscuit import find_cv, get_model_results
 
     # Print results from outer cross-validation
     cv_models = find_cv(

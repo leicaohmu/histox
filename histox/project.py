@@ -399,7 +399,7 @@ class Project:
                 the ``params.json`` configuration file, build the model
                 architecture, and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
             custom_objects (dict, Optional): Dictionary mapping names
                 (strings) to custom classes or functions. Defaults to None.
@@ -1271,7 +1271,7 @@ class Project:
                 the ``params.json`` configuration file, build the model
                 architecture, and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
             reduce_method (str, optional): Reduction method for calculating
                 slide-level and patient-level predictions for categorical
@@ -1596,7 +1596,7 @@ class Project:
         """Train a GAN network.
 
         Examples
-            Train StyleGAN2 from a Slideflow dataset.
+            Train StyleGAN2 from a HistoX dataset.
 
                 >>> P = hx.Project('/project/path')
                 >>> dataset = P.dataset(tile_px=512, tile_um=400)
@@ -1694,11 +1694,11 @@ class Project:
             elif model == 'stylegan3':
                 from histox.gan.stylegan3 import stylegan3 as network  # type: ignore
         except ImportError:
-            raise ImportError("StyleGAN functions require 'histox-noncommercial'. "
-                                "Please install with 'pip install histox-noncommercial'")
+            raise ImportError("StyleGAN functions require 'slideflow-noncommercial'. "
+                                "Please install with 'pip install slideflow-noncommercial'")
         if metrics is not None:
             log.warn(
-                "StyleGAN2 metrics are not fully implemented for Slideflow."
+                "StyleGAN2 metrics are not fully implemented for HistoX."
             )
 
         # Setup directories
@@ -1872,7 +1872,7 @@ class Project:
             raise ValueError(
                 'Argument "dataset" is required when "model" is '
                 'an imagenet-pretrained model, or otherwise not a '
-                'saved Slideflow model.'
+                'saved HistoX model.'
             )
 
         # Prepare dataset and annotations
@@ -1961,7 +1961,7 @@ class Project:
             raise ValueError(
                 'Argument "dataset" is required when "model" is '
                 'an imagenet-pretrained model, or otherwise not a '
-                'saved Slideflow model.'
+                'saved HistoX model.'
             )
 
         # Ensure min_tiles and max_tiles is applied to the dataset.
@@ -2225,7 +2225,7 @@ class Project:
             raise ValueError(
                 "Unable to auto-create Mosaic from DatasetFeatures created "
                 "from a loaded Tensorflow/PyTorch model. Please use a "
-                "DatasetFeatures object created from a saved Slideflow model, "
+                "DatasetFeatures object created from a saved HistoX model, "
                 "or manually create a mosaic with `hx.Mosaic`.")
         if dataset is None:
             tile_px, tile_um = config['hp']['tile_px'], config['hp']['tile_um']
@@ -2658,7 +2658,7 @@ class Project:
                 the ``params.json`` configuration file, build the model
                 architecture, and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
             reduce_method (str, optional): Reduction method for calculating
                 slide-level and patient-level predictions for categorical
@@ -3246,7 +3246,7 @@ class Project:
                 the ``params.json`` configuration file, build the model
                 architecture, and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
             balance_headers (str or list(str)): Annotation header(s) specifying
                 labels on which to perform mini-batch balancing. If performing
