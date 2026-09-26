@@ -1,6 +1,64 @@
 (function () {
   "use strict";
 
+  function initGlobalMenus() {
+    var menus = Array.from(document.querySelectorAll(".histox-nav-menu"));
+
+    function closeMenu(menu, restoreFocus) {
+      var trigger = menu.querySelector(".histox-nav-menu__trigger");
+      menu.classList.remove("is-open");
+      if (menu.tagName === "DETAILS") menu.open = false;
+      if (trigger) {
+        trigger.setAttribute("aria-expanded", "false");
+        if (restoreFocus) trigger.focus();
+      }
+    }
+
+    function closeAll(exceptMenu) {
+      menus.forEach(function (menu) {
+        if (menu !== exceptMenu) closeMenu(menu, false);
+      });
+    }
+
+    menus.forEach(function (menu) {
+      var trigger = menu.querySelector(".histox-nav-menu__trigger");
+      if (!trigger) return;
+
+      if (menu.tagName === "DETAILS") {
+        menu.addEventListener("toggle", function () {
+          menu.classList.toggle("is-open", menu.open);
+          trigger.setAttribute("aria-expanded", String(menu.open));
+          if (menu.open) closeAll(menu);
+        });
+        return;
+      }
+
+      trigger.addEventListener("click", function () {
+        var willOpen = !menu.classList.contains("is-open");
+        closeAll(menu);
+        menu.classList.toggle("is-open", willOpen);
+        trigger.setAttribute("aria-expanded", String(willOpen));
+      });
+
+      menu.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          closeMenu(menu, false);
+        });
+      });
+    });
+
+    document.addEventListener("click", function (event) {
+      if (event.target.closest(".histox-nav-menu")) return;
+      closeAll(null);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      var openMenu = document.querySelector(".histox-nav-menu.is-open");
+      if (openMenu) closeMenu(openMenu, true);
+    });
+  }
+
   function initTutorialMenus() {
     var menus = Array.from(document.querySelectorAll(".histox-tutorial-category"));
 
@@ -109,6 +167,7 @@
   }
 
   function initTutorials() {
+    initGlobalMenus();
     initTutorialMenus();
     initTutorialFilters();
   }

@@ -19,6 +19,7 @@ Start here
 * :doc:`installation` — install HistoX and choose optional dependencies.
 * :doc:`quickstart` — run a minimal PyTorch-first pathology workflow.
 * :doc:`user_guide` — learn projects, datasets, slides, models, and analysis.
+* :doc:`methods` — browse method families, implementation status, and provenance.
 * :doc:`api` — look up modules, classes, functions, and arguments.
 * :doc:`developer` — extend HistoX and troubleshoot development workflows.
 * :doc:`tutorials` — follow complete examples grouped by topic.

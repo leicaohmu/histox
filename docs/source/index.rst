@@ -82,7 +82,7 @@ HistoX
        <div class="histox-home__resources-inner">
          <article><h2>Docs</h2><p>Install HistoX and learn the core project, dataset, and slide concepts.</p><a href="quickstart.html">Read the docs →</a></article>
          <article><h2>Tutorials</h2><p>Follow complete workflows for training, MIL, heatmaps, and custom pipelines.</p><a href="tutorials.html">Start a tutorial →</a></article>
-         <article><h2>API</h2><p>Look up modules, classes, arguments, and return values by functional area.</p><a href="api.html">Browse the API →</a></article>
+         <article><h2>Methods</h2><p>Browse implemented and planned methods by pathology task, maturity, and origin.</p><a href="methods.html">Explore methods →</a></article>
        </div>
      </section>
    </div>
