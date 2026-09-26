@@ -1,11 +1,14 @@
 import setuptools
+from runpy import run_path
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+VERSION = run_path("histox/_release.py")["__version__"]
+
 setuptools.setup(
     name="histox",
-    version="0.2.1",
+    version=VERSION,
     author="Lei Cao",
     author_email="caolei@hrbmu.edu.cn",
     description="Deep learning tools for digital histology",

@@ -1,0 +1,2383 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Training &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=3ca669d2"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=ccdb6887"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'training';</script>
+    <script src="_static/tutorials.js?v=3b8eb957"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Evaluation" href="evaluation.html" />
+    <link rel="prev" title="Cell Segmentation" href="cellseg.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="Training - Documentation for histox, part of the PyTorch ecosystem.">
+
+
+
+
+
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
+
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
+
+  }
+</style>
+
+
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
+
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+
+
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="docs.html">Documentation home</a></li>
+    <li><a class="nav-link" href="user_guide.html">User guide</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="installation.html">Installation</a></li>
+    <li><a class="nav-link" href="overview.html">Overview</a></li>
+    <li><a class="nav-link" href="quickstart.html">Quickstart</a></li>
+    <li><a class="nav-link" href="project_setup.html">Project setup</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="data.html">Public data</a></li>
+    <li><a class="nav-link" href="datasets_and_val.html">Datasets</a></li>
+    <li><a class="nav-link" href="slide_processing.html">Slide processing</a></li>
+    <li><a class="nav-link" href="features.html">Feature extraction</a></li>
+    <li><a class="nav-link" href="segmentation.html">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="cellseg.html">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link active" href="#">Training</a></li>
+    <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
+    <li><a class="nav-link" href="posthoc.html">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="uq.html">Uncertainty</a></li>
+    <li><a class="nav-link" href="mil.html">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="ssl.html">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="stylegan.html">Generative models</a></li>
+    <li><a class="nav-link" href="saliency.html">Interpretation</a></li>
+    <li><a class="nav-link" href="custom_loops.html">Custom loops</a></li>
+    <li><a class="nav-link" href="studio.html">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="developer.html">Developer notes home</a></li>
+    <li><a class="nav-link" href="extensions.html">Extensions</a></li>
+    <li><a class="nav-link" href="tfrecords.html">TFRecords</a></li>
+    <li><a class="nav-link" href="dataloaders.html">Dataloaders</a></li>
+    <li><a class="nav-link" href="custom_extractors.html">Custom extractors</a></li>
+    <li><a class="nav-link" href="tile_labels.html">Tile labels</a></li>
+    <li><a class="nav-link" href="plugins.html">Plugins</a></li>
+    <li><a class="nav-link" href="troubleshooting.html">Troubleshooting</a></li>
+    <li><a class="nav-link" href="io_tensorflow.html">TensorFlow data</a></li>
+    <li><a class="nav-link" href="model_tensorflow.html">TensorFlow models</a></li>
+  </ul>
+</nav>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+
+<div id="rtd-footer-container"></div>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="docs.html" class="nav-link">HistoX documentation</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="user_guide.html" class="nav-link">HistoX user guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Training</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="docs.html">
+      <meta itemprop="name" content="HistoX documentation">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="user_guide.html">
+      <meta itemprop="name" content="HistoX user guide">
+      <meta itemprop="position" content="2">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="Training">
+      <meta itemprop="position" content="3">
+    </div>
+  </div>
+
+  
+  
+
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="training">
+<span id="id1"></span><h1>Training<a class="headerlink" href="#training" title="Link to this heading">#</a></h1>
+<p>HistoX offers tools for training many types of neural networks, including:</p>
+<ul class="simple">
+<li><p><strong>Weakly supervised, tile-based models</strong>: Models trained on image tiles, with labels inherited from the parent slide.</p></li>
+<li><p><strong>Weakly supervised, multi-instance learning</strong>: Models trained on feature vectors, with labels inherited from the parent slide.</p></li>
+<li><p><strong>Strongly supervised models</strong>: Models trained on image tiles, with labels assigned by ROI.</p></li>
+<li><p><strong>Self-supervised pretraining</strong>: Contrastive pretraining with or without labels (e.g. <a class="reference external" href="https://arxiv.org/abs/2002.05709">SimCLR</a>).</p></li>
+<li><p><strong>Generative adversarial networks</strong>: Models trained to generate synthetic images (e.g. <a class="reference external" href="https://arxiv.org/abs/1912.04958">StyleGAN2/3</a>).</p></li>
+<li><p><strong>Segmentation models</strong>: Models trained to identify and classify tissue regions (e.g. <a class="reference external" href="https://arxiv.org/abs/1505.04597">U-Net</a>).</p></li>
+</ul>
+<p>In this section, we will walk through the process of training a weakly supervised tile-based model. <a class="reference internal" href="tile_labels.html#tile-labels"><span class="std std-ref">Strong supervision</span></a>, <a class="reference internal" href="mil.html#mil"><span class="std std-ref">Multi-instance learning (MIL)</span></a>, <a class="reference internal" href="ssl.html#simclr-ssl"><span class="std std-ref">self-supervised pretraining (SSL)</span></a>, <a class="reference internal" href="stylegan.html#stylegan"><span class="std std-ref">generative adversarial networks (GAN)</span></a>, and <a class="reference internal" href="segmentation.html#segmentation"><span class="std std-ref">Tissue Segmentation</span></a> are described in other sections.</p>
+<section id="prepare-hyperparameters">
+<h2>Prepare hyperparameters<a class="headerlink" href="#prepare-hyperparameters" title="Link to this heading">#</a></h2>
+<p>The first step of training a weakly-supervised model is configuring model parameters and hyperparameters with <a class="reference internal" href="model_params.html#histox.ModelParams" title="histox.ModelParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.ModelParams</span></code></a>. <code class="docutils literal notranslate"><span class="pre">ModelParams</span></code> determines the model architecture, loss, preprocessing augmentations, and training hyperparameters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+
+<span class="n">hp</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span>
+  <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+  <span class="n">model</span><span class="o">=</span><span class="s1">&#39;xception&#39;</span><span class="p">,</span>
+  <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+  <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+  <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="model_params.html#histox.ModelParams" title="histox.ModelParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.ModelParams</span></code></a> API documentation for a list of available hyperparameters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using a continuous variable as an outcome measure, be sure to use a regression loss function. Regression loss functions can be viewed in <code class="docutils literal notranslate"><span class="pre">histox.ModelParams.RegressionLossDict</span></code>, and all available loss functions are in <code class="docutils literal notranslate"><span class="pre">histox.ModelParams.AllLossDict</span></code>.</p>
+</div>
+</section>
+<section id="training-a-model">
+<h2>Training a model<a class="headerlink" href="#training-a-model" title="Link to this heading">#</a></h2>
+<p>HistoX provides two methods for training models: with the high-level <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code> function or with the lower-level <a class="reference internal" href="model.html#histox.model.Trainer" title="histox.model.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.model.Trainer</span></code></a>. The former provides an easier interface for executing complex training tasks with a single function call, while the latter provides lower-level access for greater customizability.</p>
+<section id="training-with-a-project">
+<span id="training-with-project"></span><h3>Training with a Project<a class="headerlink" href="#training-with-a-project" title="Link to this heading">#</a></h3>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code> provides an easy API for executing complex training plans and organizing results in the project directory. This is the recommended way to train models in HistoX. There are two required arguments for this function:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">outcomes</span></code>: Name (or list of names) of annotation header columns, from which to determine slide labels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params</span></code>: Model parameters.</p></li>
+</ul>
+<p>The default validation plan is three-fold cross-validation, but the validation strategy can be customized via keyword arguments (<code class="docutils literal notranslate"><span class="pre">val_strategy</span></code>, <code class="docutils literal notranslate"><span class="pre">val_k_fold</span></code>, etc) as described in the API documentation. If crossfold validation is used, each model in the crossfold will be trained sequentially. Read more about <a class="reference internal" href="datasets_and_val.html#validation-strategies"><span class="std std-ref">validation strategies</span></a>.</p>
+<p>By default, all slides in the project will be used for training. You can restrict your training/validation data to only a subset of slides in the project with one of two methods: either by providing <code class="docutils literal notranslate"><span class="pre">filters</span></code> or a filtered <a class="reference internal" href="dataset.html#histox.Dataset" title="histox.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.Dataset</span></code></a>.</p>
+<p>For example, you can use the <code class="docutils literal notranslate"><span class="pre">filters</span></code> argument to train/validate only using slides labeled as “train_and_val” in the “dataset” column with the following syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+  <span class="n">outcomes</span><span class="o">=</span><span class="s2">&quot;tumor_type&quot;</span><span class="p">,</span>
+  <span class="n">params</span><span class="o">=</span><span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span><span class="o">...</span><span class="p">),</span>
+  <span class="n">filters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;train_and_val&quot;</span><span class="p">]}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, you can restrict the training/validation dataset by providing a <a class="reference internal" href="dataset.html#histox.Dataset" title="histox.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.Dataset</span></code></a> to the <code class="docutils literal notranslate"><span class="pre">dataset</span></code> argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">({</span><span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;train_and_val&quot;</span><span class="p">]})</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+  <span class="n">outcomes</span><span class="o">=</span><span class="s2">&quot;tumor_type&quot;</span><span class="p">,</span>
+  <span class="n">params</span><span class="o">=</span><span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span><span class="o">...</span><span class="p">),</span>
+  <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In both cases, slides will be further split into training and validation sets using the specified validation settings (defaulting to three-fold cross-validation).</p>
+<p>For more granular control over the validation dataset used, you can supply a <a class="reference internal" href="dataset.html#histox.Dataset" title="histox.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.Dataset</span></code></a> to the <code class="docutils literal notranslate"><span class="pre">val_dataset</span></code> argument. Doing so will cause the rest of the validation keyword arguments to be ignored.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">({</span><span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]})</span>
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">({</span><span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;val&quot;</span><span class="p">]})</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+  <span class="n">outcomes</span><span class="o">=</span><span class="s2">&quot;tumor_type&quot;</span><span class="p">,</span>
+  <span class="n">params</span><span class="o">=</span><span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span><span class="o">...</span><span class="p">),</span>
+  <span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span>
+  <span class="n">val_dataset</span><span class="o">=</span><span class="n">val_dataset</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Performance metrics - including accuracy, loss, etc. - are returned as a dictionary and saved in <code class="docutils literal notranslate"><span class="pre">results_log.csv</span></code> in both the project directory and model directory. Additional data, including ROCs and scatter plots, are saved in the model directories. Pandas DataFrames containing tile-, slide-, and patient-level predictions are also saved in the model directory.</p>
+<p>At each designated epoch, models are saved in their own folders. Each model directory will include a copy of its hyperparameters in a <code class="docutils literal notranslate"><span class="pre">params.json</span></code> file, and a copy of its training/validation slide manifest in <code class="docutils literal notranslate"><span class="pre">slide.log</span></code>.</p>
+</section>
+<section id="using-a-trainer">
+<span id="training-with-trainer"></span><h3>Using a Trainer<a class="headerlink" href="#using-a-trainer" title="Link to this heading">#</a></h3>
+<p>You can also train models outside the context of a project by using <a class="reference internal" href="model.html#histox.model.Trainer" title="histox.model.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.model.Trainer</span></code></a>. This lower-level interface provides greater flexibility for customization and allows models to be trained without requiring a Project to be set up. It lacks several convenience features afforded by using <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code>, however, such as cross-validation, logging, and label preparation for easy multi-outcome support.</p>
+<p>For this training approach, start by building a trainer with <a class="reference internal" href="model.html#histox.model.build_trainer" title="histox.model.build_trainer"><code class="xref py py-func docutils literal notranslate"><span class="pre">histox.model.build_trainer()</span></code></a>, which requires:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hp</span></code>: <a class="reference internal" href="model_params.html#histox.ModelParams" title="histox.ModelParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.ModelParams</span></code></a> object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outdir</span></code>: Directory in which to save models and checkpoints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code>: Dictionary mapping slide names to outcome labels.</p></li>
+</ul>
+<p><a class="reference internal" href="dataset.html#histox.Dataset" title="histox.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.Dataset</span></code></a> provides a <code class="docutils literal notranslate"><span class="pre">.labels()</span></code> function that can generate this required labels dictionary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prepare dataset and labels</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
+<span class="n">labels</span><span class="p">,</span> <span class="n">unique_labels</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">labels</span><span class="p">(</span><span class="s1">&#39;tumor_type&#39;</span><span class="p">)</span>
+
+<span class="c1"># Split into training/validation</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">({</span><span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]})</span>
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">({</span><span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;val&quot;</span><span class="p">]})</span>
+
+<span class="c1"># Determine model parameters</span>
+<span class="n">hp</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span>
+    <span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span>
+    <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+
+<span class="c1"># Prepare a Trainer</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">build_trainer</span><span class="p">(</span>
+    <span class="n">hp</span><span class="o">=</span><span class="n">hp</span><span class="p">,</span>
+    <span class="n">outdir</span><span class="o">=</span><span class="s1">&#39;path&#39;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">labels</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.model.Trainer.train()</span></code> to train a model using your specified training and validation datasets.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train a model</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">val_dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{
+  &quot;epochs&quot;: {
+    &quot;epoch3&quot;: {
+      &quot;train_metrics&quot;: {
+        &quot;loss&quot;: 0.497
+        &quot;accuracy&quot;: 0.806
+        &quot;val_loss&quot;: 0.719
+        &quot;val_accuracy&quot;: 0.778
+      },
+      &quot;val_metrics&quot;: {
+        &quot;loss&quot;: 0.727
+        &quot;accuracy&quot;: 0.770
+      },
+      &quot;tile&quot;: {
+        &quot;Outcome 0&quot;: [
+          0.580
+          0.580
+        ]
+      },
+      &quot;slide&quot;: {
+        &quot;Outcome 0&quot;: [
+          0.658
+          0.658
+        ]
+      },
+      &quot;patient&quot;: {
+        &quot;Outcome 0&quot;: [
+          0.657
+          0.657
+        ]
+      }
+    }
+  }
+}
+</pre></div>
+</div>
+<p>Read more about the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> class and available keyword arguments in the <a class="reference internal" href="model.html#histox.model.Trainer" title="histox.model.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">API</span> <span class="pre">documentation</span></code></a>.</p>
+</section>
+</section>
+<section id="multiple-outcomes">
+<h2>Multiple outcomes<a class="headerlink" href="#multiple-outcomes" title="Link to this heading">#</a></h2>
+<p>HistoX supports both classification and regression, as well as training to single or multiple outcomes at once. To train with multiple outcomes simultaneously, simply pass multiple annotation headers to the <code class="docutils literal notranslate"><span class="pre">outcomes</span></code> argument of <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code>.</p>
+</section>
+<section id="time-to-event-survival-outcomes">
+<h2>Time-to-event / survival outcomes<a class="headerlink" href="#time-to-event-survival-outcomes" title="Link to this heading">#</a></h2>
+<p>Models can also be trained to a time series outcome using Cox Proportional Hazards (CPH) and negative log likelihood loss. For time-to-event / survival models, use <code class="docutils literal notranslate"><span class="pre">'negative_log_likelihood'</span></code> loss and set <code class="docutils literal notranslate"><span class="pre">outcomes</span></code> equal to the annotation column indicating event <em>time</em>. Specify the event <em>type</em> (0 or 1) by passing the event type annotation column to the argument <code class="docutils literal notranslate"><span class="pre">input_header</span></code>. If you are using multiple clinical inputs, the first header passed to <code class="docutils literal notranslate"><span class="pre">input_header</span></code> must be event type. Survival models are not compatible with multiple outcomes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Survival models are currently only available with the Tensorflow backend. PyTorch support for survival outcomes is in development.</p>
+</div>
+</section>
+<section id="multimodal-models">
+<h2>Multimodal models<a class="headerlink" href="#multimodal-models" title="Link to this heading">#</a></h2>
+<p>In addition to training using image data, clinical data can also be provided as model input by passing annotation column headers to the variable <code class="docutils literal notranslate"><span class="pre">input_header</span></code>. This input is concatenated at the post-convolutional layer, prior to any configured hidden layers.</p>
+<p>If desired, models can also be trained with clinical input data alone, without images, by using the hyperparameter argument <code class="docutils literal notranslate"><span class="pre">drop_images=True</span></code>.</p>
+</section>
+<section id="hyperparameter-optimization">
+<span id="id2"></span><h2>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Link to this heading">#</a></h2>
+<p>HistoX includes several tools for assisting with hyperparameter optimization, as described in the next sections.</p>
+<section id="testing-multiple-combinations">
+<h3>Testing multiple combinations<a class="headerlink" href="#testing-multiple-combinations" title="Link to this heading">#</a></h3>
+<p>You can easily test a series of hyperparameter combinations by passing a list of <code class="docutils literal notranslate"><span class="pre">ModelParams</span></code> object to the <code class="docutils literal notranslate"><span class="pre">params</span></code> argument of <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hp1</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">hp2</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+
+<span class="n">P</span><span class="o">.</span><span class="n">create_hp_sweep</span><span class="p">(</span>
+  <span class="o">...</span><span class="p">,</span>
+  <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">hp1</span><span class="p">,</span> <span class="n">hp2</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="grid-search-sweep">
+<h3>Grid-search sweep<a class="headerlink" href="#grid-search-sweep" title="Link to this heading">#</a></h3>
+<p>You can also prepare a grid-search sweep, testing every permutation across a series of hyperparameter ranges. Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.create_hp_sweep()</span></code>, which will calculate and save the sweep configuration to a JSON file. For example, the following would configure a sweep with only two combinations; the first with a learning rate of 0.01, and the second with a learning rate of 0.001:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P</span><span class="o">.</span><span class="n">create_hp_sweep</span><span class="p">(</span>
+  <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;sweep.json&#39;</span><span class="p">,</span>
+  <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;xception&#39;</span><span class="p">],</span>
+  <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">,</span>
+  <span class="n">learning_rate</span><span class="o">=</span><span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">],</span>
+  <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The sweep is then executed by passing the JSON path to the <code class="docutils literal notranslate"><span class="pre">params</span></code> argument of <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="s1">&#39;sweep.json&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="bayesian-optimization">
+<span id="id3"></span><h3>Bayesian optimization<a class="headerlink" href="#bayesian-optimization" title="Link to this heading">#</a></h3>
+<p>You can also perform Bayesian hyperparameter optimization using <a class="reference external" href="https://automl.github.io/SMAC3/master/">SMAC3</a>, which uses a <a class="reference external" href="https://automl.github.io/ConfigSpace/master/">configuration space</a> to determine the types and ranges of hyperparameters to search.</p>
+<p>HistoX provides several functions to assist with building these configuration spaces. <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.util.create_search_space()</span></code> allows you to define a range to search for each hyperparameter via keyword arguments:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+
+<span class="n">config_space</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">create_search_space</span><span class="p">(</span>
+    <span class="n">normalizer</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;macenko&#39;</span><span class="p">,</span> <span class="s1">&#39;reinhard&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">],</span>
+    <span class="n">dropout</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">histox.util.broad_search_space()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.util.shallow_search_space()</span></code> provide preconfigured search spaces that will search a broad and narrow range of hyperparameters, respectively. You can also customize a preconfigured search space using keyword arguments. For example, to do a broad search but disable L1 searching:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+
+<span class="n">config_space</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">broad_search_space</span><span class="p">(</span><span class="n">l1</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See the linked API documentation for each function for more details about the respective search spaces.</p>
+<p>Once the search space is determined, you can perform the hyperparameter optimization by simply replacing <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code> with <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.smac_search()</span></code>, providing the configuration space to the argument <code class="docutils literal notranslate"><span class="pre">smac_configspace</span></code>. By default, SMAC3 will optimize the tile-level AUROC, but the optimization metric can be customized with the keyword argument <code class="docutils literal notranslate"><span class="pre">smac_metric</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Base hyperparameters</span>
+<span class="n">hp</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># Configuration space to optimize</span>
+<span class="n">config_space</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">shallow_search_space</span><span class="p">()</span>
+
+<span class="c1"># Run the Bayesian optimization</span>
+<span class="n">best_config</span><span class="p">,</span> <span class="n">history</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">smac_search</span><span class="p">(</span>
+    <span class="n">outcomes</span><span class="o">=</span><span class="s1">&#39;tumor_type&#39;</span><span class="p">,</span>
+    <span class="n">params</span><span class="o">=</span><span class="n">hp</span><span class="p">,</span>
+    <span class="n">smac_configspace</span><span class="o">=</span><span class="n">cs</span><span class="p">,</span>
+    <span class="n">smac_metric</span><span class="o">=</span><span class="s1">&#39;tile_auc&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>    dropout        l1        l2    metric
+0  0.126269  0.306857  0.183902  0.271778
+1  0.315987  0.014661  0.413443  0.283289
+2  0.123149  0.311893  0.184439  0.250339
+3  0.250000  0.250000  0.250000  0.247641
+4  0.208070  0.018481  0.121243  0.257633
+</pre></div>
+</div>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.smac_search()</span></code> returns the best configuration and a history of models trained during the search. This history is a Pandas DataFrame with hyperparameters for columns, and a “metric” column with the optimization metric result for each trained model. The run history is also saved in CSV format in the associated model folder.</p>
+<p>See the API documentation for available customization via keyword arguments.</p>
+</section>
+</section>
+<section id="customizing-model-or-loss">
+<span id="custom-loss"></span><h2>Customizing model or loss<a class="headerlink" href="#customizing-model-or-loss" title="Link to this heading">#</a></h2>
+<p>HistoX supports dozens of model architectures, but you can also train with a custom architecture, as demonstrated in <a class="reference internal" href="tutorial3.html#tutorial3"><span class="std std-ref">Tutorial 3: Using a custom architecture</span></a>.</p>
+<p>Similarly, you can also train with a custom loss function by supplying a dictionary to the <code class="docutils literal notranslate"><span class="pre">loss</span></code> argument in <code class="docutils literal notranslate"><span class="pre">ModelParams</span></code>, with the keys <code class="docutils literal notranslate"><span class="pre">type</span></code> (which must be either <code class="docutils literal notranslate"><span class="pre">'classification'</span></code>, <code class="docutils literal notranslate"><span class="pre">'regression'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'survival'</span></code>) and <code class="docutils literal notranslate"><span class="pre">fn</span></code> (a callable loss function).</p>
+<p>For Tensorflow/Keras, the loss function must accept arguments <code class="docutils literal notranslate"><span class="pre">y_true,</span> <span class="pre">y_pred</span></code>. For regression losses, <code class="docutils literal notranslate"><span class="pre">y_true</span></code> may need to be cast to <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code>. An example custom regression loss is given below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Custom Tensorflow loss</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">custom_regression_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+  <span class="n">y_true</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+  <span class="n">squared_difference</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">squared_difference</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For PyTorch, the loss function must return a nested loss function with arguments <code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">target</span></code>. An example regression loss is given below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Custom PyTorch loss</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">custom_regression_loss</span><span class="p">():</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">loss_fn</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">target</span> <span class="o">-</span> <span class="n">output</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">loss_fn</span>
+</pre></div>
+</div>
+<p>In both cases, the loss function is applied as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hp</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;regression&#39;</span><span class="p">,</span> <span class="s1">&#39;fn&#39;</span><span class="p">:</span> <span class="n">custom_regression_loss</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="using-multiple-gpus">
+<h2>Using multiple GPUs<a class="headerlink" href="#using-multiple-gpus" title="Link to this heading">#</a></h2>
+<p>HistoX can perform distributed training if multiple GPUs are available. Enable distributed training by passing the argument <code class="docutils literal notranslate"><span class="pre">multi_gpu=True</span></code>, which will allow HistoX to use all available (and visible) GPUs.</p>
+</section>
+<section id="training-without-tfrecords">
+<span id="from-wsi"></span><h2>Training without TFRecords<a class="headerlink" href="#training-without-tfrecords" title="Link to this heading">#</a></h2>
+<p>It is also possible to train deep learning models directly from slides, without first generating TFRecords. This may be advantageous for rapidly prototyping models on a large dataset, or when tuning the tile size for a dataset.</p>
+<p>Use the argument <code class="docutils literal notranslate"><span class="pre">from_wsi=True</span></code> in either the <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.model.Trainer.train()</span></code> functions. Image tiles will be dynamically extracted from slides during training, and background will be automatically removed via Otsu’s thresholding.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using the <span class="xref std std-ref">cuCIM backend</span> will greatly improve performance when training without TFRecords.</p>
+</div>
+</section>
+<section id="monitoring-performance">
+<h2>Monitoring performance<a class="headerlink" href="#monitoring-performance" title="Link to this heading">#</a></h2>
+<section id="tensorboard">
+<h3>Tensorboard<a class="headerlink" href="#tensorboard" title="Link to this heading">#</a></h3>
+<p>During training, progress can be monitored using Tensorflow’s bundled <code class="docutils literal notranslate"><span class="pre">Tensorboard</span></code> package by passing the argument <code class="docutils literal notranslate"><span class="pre">use_tensorboard=True</span></code>. This functionality was disabled by default due to a recent bug in Tensorflow. To use tensorboard to monitor training, execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tensorboard<span class="w"> </span>--logdir<span class="o">=</span>/path/to/model/directory
+</pre></div>
+</div>
+<p>… and open <a class="reference external" href="http://localhost:6006">http://localhost:6006</a> in your web browser.</p>
+</section>
+<section id="neptune-ai">
+<h3>Neptune.ai<a class="headerlink" href="#neptune-ai" title="Link to this heading">#</a></h3>
+<p>Experiments can be automatically logged with <a class="reference external" href="https://app.neptune.ai">Neptune.ai</a>. To enable logging, first locate your Neptune API token and workspace ID, and configure the environmental variables <code class="docutils literal notranslate"><span class="pre">NEPTUNE_API_TOKEN</span></code> and <code class="docutils literal notranslate"><span class="pre">NEPTUNE_WORKSPACE</span></code>.</p>
+<p>With the environmental variables set, Neptune logs are enabled by passing <code class="docutils literal notranslate"><span class="pre">use_neptune=True</span></code> to <code class="docutils literal notranslate"><span class="pre">hx.load_project</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s1">&#39;/project/path&#39;</span><span class="p">,</span> <span class="n">use_neptune</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+</div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
+  </div>
+</div>
+
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="cellseg.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Cell Segmentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="evaluation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Evaluation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="cellseg.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Cell Segmentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="evaluation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Evaluation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+    
+       <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-hyperparameters">Prepare hyperparameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-model">Training a model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-with-a-project">Training with a Project</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-trainer">Using a Trainer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-outcomes">Multiple outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-to-event-survival-outcomes">Time-to-event / survival outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multimodal-models">Multimodal models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameter-optimization">Hyperparameter optimization</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-multiple-combinations">Testing multiple combinations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-search-sweep">Grid-search sweep</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-optimization">Bayesian optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#customizing-model-or-loss">Customizing model or loss</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-multiple-gpus">Using multiple GPUs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-without-tfrecords">Training without TFRecords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-performance">Monitoring performance</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensorboard">Tensorboard</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neptune-ai">Neptune.ai</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+    
+       <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/leicaohmu/histox/edit/develop/docs/source/training.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+    
+       <div class="sidebar-secondary-item">
+    <div class="tocsection sourcelink">
+      <a href="_sources/training.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+      </a>
+    </div>
+</div>
+    
+
+
+
+
+</div>
+</div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Docs</a>
+      <a href="tutorials.html">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
+</footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "Training",
+       "headline": "Training",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/training.html",
+       "articleBody": "Training# HistoX offers tools for training many types of neural networks, including: Weakly supervised, tile-based models: Models trained on image tiles, with labels inherited from the parent slide. Weakly supervised, multi-instance learning: Models trained on feature vectors, with labels inherited from the parent slide. Strongly supervised models: Models trained on image tiles, with labels assigned by ROI. Self-supervised pretraining: Contrastive pretraining with or without labels (e.g. SimCLR). Generative adversarial networks: Models trained to generate synthetic images (e.g. StyleGAN2/3). Segmentation models: Models trained to identify and classify tissue regions (e.g. U-Net). In this section, we will walk through the process of training a weakly supervised tile-based model. Strong supervision, Multi-instance learning (MIL), self-supervised pretraining (SSL), generative adversarial networks (GAN), and Tissue Segmentation are described in other sections. Prepare hyperparameters# The first step of training a weakly-supervised model is configuring model parameters and hyperparameters with histox.ModelParams. ModelParams determines the model architecture, loss, preprocessing augmentations, and training hyperparameters. import histox as hx hp = hx.ModelParams( epochs=[1, 5], model=\u0027xception\u0027, learning_rate=0.0001, batch_size=8, ... ) See the histox.ModelParams API documentation for a list of available hyperparameters. Note If you are using a continuous variable as an outcome measure, be sure to use a regression loss function. Regression loss functions can be viewed in histox.ModelParams.RegressionLossDict, and all available loss functions are in histox.ModelParams.AllLossDict. Training a model# HistoX provides two methods for training models: with the high-level histox.Project.train() function or with the lower-level histox.model.Trainer. The former provides an easier interface for executing complex training tasks with a single function call, while the latter provides lower-level access for greater customizability. Training with a Project# histox.Project.train() provides an easy API for executing complex training plans and organizing results in the project directory. This is the recommended way to train models in HistoX. There are two required arguments for this function: outcomes: Name (or list of names) of annotation header columns, from which to determine slide labels. params: Model parameters. The default validation plan is three-fold cross-validation, but the validation strategy can be customized via keyword arguments (val_strategy, val_k_fold, etc) as described in the API documentation. If crossfold validation is used, each model in the crossfold will be trained sequentially. Read more about validation strategies. By default, all slides in the project will be used for training. You can restrict your training/validation data to only a subset of slides in the project with one of two methods: either by providing filters or a filtered histox.Dataset. For example, you can use the filters argument to train/validate only using slides labeled as \u201ctrain_and_val\u201d in the \u201cdataset\u201d column with the following syntax: results = P.train( outcomes=\"tumor_type\", params=hx.ModelParams(...), filters={\"dataset\": [\"train_and_val\"]} ) Alternatively, you can restrict the training/validation dataset by providing a histox.Dataset to the dataset argument: dataset = P.dataset(tile_px=299, tile_um=302) dataset = dataset.filter({\"dataset\": [\"train_and_val\"]}) results = P.train( outcomes=\"tumor_type\", params=hx.ModelParams(...), dataset=dataset ) In both cases, slides will be further split into training and validation sets using the specified validation settings (defaulting to three-fold cross-validation). For more granular control over the validation dataset used, you can supply a histox.Dataset to the val_dataset argument. Doing so will cause the rest of the validation keyword arguments to be ignored. dataset = P.dataset(tile_px=299, tile_um=302) train_dataset = dataset.filter({\"dataset\": [\"train\"]}) val_dataset = dataset.filter({\"dataset\": [\"val\"]}) results = P.train( outcomes=\"tumor_type\", params=hx.ModelParams(...), dataset=train_dataset val_dataset=val_dataset ) Performance metrics - including accuracy, loss, etc. - are returned as a dictionary and saved in results_log.csv in both the project directory and model directory. Additional data, including ROCs and scatter plots, are saved in the model directories. Pandas DataFrames containing tile-, slide-, and patient-level predictions are also saved in the model directory. At each designated epoch, models are saved in their own folders. Each model directory will include a copy of its hyperparameters in a params.json file, and a copy of its training/validation slide manifest in slide.log. Using a Trainer# You can also train models outside the context of a project by using histox.model.Trainer. This lower-level interface provides greater flexibility for customization and allows models to be trained without requiring a Project to be set up. It lacks several convenience features afforded by using histox.Project.train(), however, such as cross-validation, logging, and label preparation for easy multi-outcome support. For this training approach, start by building a trainer with histox.model.build_trainer(), which requires: hp: histox.ModelParams object. outdir: Directory in which to save models and checkpoints. labels: Dictionary mapping slide names to outcome labels. histox.Dataset provides a .labels() function that can generate this required labels dictionary. # Prepare dataset and labels dataset = P.dataset(tile_px=299, tile_um=302) labels, unique_labels = dataset.labels(\u0027tumor_type\u0027) # Split into training/validation train_dataset = dataset.filter({\"dataset\": [\"train\"]}) val_dataset = dataset.filter({\"dataset\": [\"val\"]}) # Determine model parameters hp = hx.ModelParams( tile_px=299, tile_um=302, batch_size=32, ... ) # Prepare a Trainer trainer = hx.model.build_trainer( hp=hp, outdir=\u0027path\u0027, labels=labels ) Use histox.model.Trainer.train() to train a model using your specified training and validation datasets. # Train a model trainer.train(train_dataset, val_dataset) { \"epochs\": { \"epoch3\": { \"train_metrics\": { \"loss\": 0.497 \"accuracy\": 0.806 \"val_loss\": 0.719 \"val_accuracy\": 0.778 }, \"val_metrics\": { \"loss\": 0.727 \"accuracy\": 0.770 }, \"tile\": { \"Outcome 0\": [ 0.580 0.580 ] }, \"slide\": { \"Outcome 0\": [ 0.658 0.658 ] }, \"patient\": { \"Outcome 0\": [ 0.657 0.657 ] } } } } Read more about the Trainer class and available keyword arguments in the API documentation. Multiple outcomes# HistoX supports both classification and regression, as well as training to single or multiple outcomes at once. To train with multiple outcomes simultaneously, simply pass multiple annotation headers to the outcomes argument of histox.Project.train(). Time-to-event / survival outcomes# Models can also be trained to a time series outcome using Cox Proportional Hazards (CPH) and negative log likelihood loss. For time-to-event / survival models, use \u0027negative_log_likelihood\u0027 loss and set outcomes equal to the annotation column indicating event time. Specify the event type (0 or 1) by passing the event type annotation column to the argument input_header. If you are using multiple clinical inputs, the first header passed to input_header must be event type. Survival models are not compatible with multiple outcomes. Note Survival models are currently only available with the Tensorflow backend. PyTorch support for survival outcomes is in development. Multimodal models# In addition to training using image data, clinical data can also be provided as model input by passing annotation column headers to the variable input_header. This input is concatenated at the post-convolutional layer, prior to any configured hidden layers. If desired, models can also be trained with clinical input data alone, without images, by using the hyperparameter argument drop_images=True. Hyperparameter optimization# HistoX includes several tools for assisting with hyperparameter optimization, as described in the next sections. Testing multiple combinations# You can easily test a series of hyperparameter combinations by passing a list of ModelParams object to the params argument of histox.Project.train(). hp1 = hx.ModelParams(..., batch_size=32) hp2 = hx.ModelParams(..., batch_size=64) P.create_hp_sweep( ..., params=[hp1, hp2] ) Grid-search sweep# You can also prepare a grid-search sweep, testing every permutation across a series of hyperparameter ranges. Use histox.Project.create_hp_sweep(), which will calculate and save the sweep configuration to a JSON file. For example, the following would configure a sweep with only two combinations; the first with a learning rate of 0.01, and the second with a learning rate of 0.001: P.create_hp_sweep( filename=\u0027sweep.json\u0027, model=[\u0027xception\u0027], loss=\u0027sparse_categorical_crossentropy\u0027, learning_rate=[0.001, 0.0001], batch_size=64, ) The sweep is then executed by passing the JSON path to the params argument of histox.Project.train(): P.train(params=\u0027sweep.json\u0027, ...) Bayesian optimization# You can also perform Bayesian hyperparameter optimization using SMAC3, which uses a configuration space to determine the types and ranges of hyperparameters to search. HistoX provides several functions to assist with building these configuration spaces. histox.util.create_search_space() allows you to define a range to search for each hyperparameter via keyword arguments: import histox as hx config_space = hx.util.create_search_space( normalizer=[\u0027macenko\u0027, \u0027reinhard\u0027, \u0027none\u0027], dropout=(0.1, 0.5), learning_rate=(1e-4, 1e-5) ) histox.util.broad_search_space() and histox.util.shallow_search_space() provide preconfigured search spaces that will search a broad and narrow range of hyperparameters, respectively. You can also customize a preconfigured search space using keyword arguments. For example, to do a broad search but disable L1 searching: import histox as hx config_space = hx.util.broad_search_space(l1=None) See the linked API documentation for each function for more details about the respective search spaces. Once the search space is determined, you can perform the hyperparameter optimization by simply replacing histox.Project.train() with histox.Project.smac_search(), providing the configuration space to the argument smac_configspace. By default, SMAC3 will optimize the tile-level AUROC, but the optimization metric can be customized with the keyword argument smac_metric. # Base hyperparameters hp = hx.ModelParams(tile_px=299, ...) # Configuration space to optimize config_space = hx.util.shallow_search_space() # Run the Bayesian optimization best_config, history = P.smac_search( outcomes=\u0027tumor_type\u0027, params=hp, smac_configspace=cs, smac_metric=\u0027tile_auc\u0027, ... ) print(history) dropout l1 l2 metric 0 0.126269 0.306857 0.183902 0.271778 1 0.315987 0.014661 0.413443 0.283289 2 0.123149 0.311893 0.184439 0.250339 3 0.250000 0.250000 0.250000 0.247641 4 0.208070 0.018481 0.121243 0.257633 histox.Project.smac_search() returns the best configuration and a history of models trained during the search. This history is a Pandas DataFrame with hyperparameters for columns, and a \u201cmetric\u201d column with the optimization metric result for each trained model. The run history is also saved in CSV format in the associated model folder. See the API documentation for available customization via keyword arguments. Customizing model or loss# HistoX supports dozens of model architectures, but you can also train with a custom architecture, as demonstrated in Tutorial 3: Using a custom architecture. Similarly, you can also train with a custom loss function by supplying a dictionary to the loss argument in ModelParams, with the keys type (which must be either \u0027classification\u0027, \u0027regression\u0027, or \u0027survival\u0027) and fn (a callable loss function). For Tensorflow/Keras, the loss function must accept arguments y_true, y_pred. For regression losses, y_true may need to be cast to tf.float32. An example custom regression loss is given below: # Custom Tensorflow loss def custom_regression_loss(y_true, y_pred): y_true = tf.cast(y_true, tf.float32) squared_difference = tf.square(y_true - y_pred) return tf.reduce_mean(squared_difference, axis=-1) For PyTorch, the loss function must return a nested loss function with arguments output, target. An example regression loss is given below: # Custom PyTorch loss def custom_regression_loss(): def loss_fn(output, target): return torch.mean((target - output) ** 2) return loss_fn In both cases, the loss function is applied as follows: hp = hx.ModelParams(..., loss={\u0027type\u0027: \u0027regression\u0027, \u0027fn\u0027: custom_regression_loss}) Using multiple GPUs# HistoX can perform distributed training if multiple GPUs are available. Enable distributed training by passing the argument multi_gpu=True, which will allow HistoX to use all available (and visible) GPUs. Training without TFRecords# It is also possible to train deep learning models directly from slides, without first generating TFRecords. This may be advantageous for rapidly prototyping models on a large dataset, or when tuning the tile size for a dataset. Use the argument from_wsi=True in either the histox.Project.train() or histox.model.Trainer.train() functions. Image tiles will be dynamically extracted from slides during training, and background will be automatically removed via Otsu\u2019s thresholding. Note Using the cuCIM backend will greatly improve performance when training without TFRecords. Monitoring performance# Tensorboard# During training, progress can be monitored using Tensorflow\u2019s bundled Tensorboard package by passing the argument use_tensorboard=True. This functionality was disabled by default due to a recent bug in Tensorflow. To use tensorboard to monitor training, execute: $ tensorboard --logdir=/path/to/model/directory \u2026 and open http://localhost:6006 in your web browser. Neptune.ai# Experiments can be automatically logged with Neptune.ai. To enable logging, first locate your Neptune API token and workspace ID, and configure the environmental variables NEPTUNE_API_TOKEN and NEPTUNE_WORKSPACE. With the environmental variables set, Neptune logs are enabled by passing use_neptune=True to hx.load_project. P = hx.load_project(\u0027/project/path\u0027, use_neptune=True)",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/training.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
+      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
+  </script>
+  
+  </body>
+</html>

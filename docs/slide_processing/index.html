@@ -1,306 +1,1812 @@
 
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Slide Processing &mdash; slideflow 3.0.0 documentation</title>
 
 
+<html lang="en" data-content_root="../" >
 
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <title>Slide Processing &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <script src="../_static/documentation_options.js?v=73a1cd52"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'slide_processing';</script>
+    <script src="../_static/tutorials.js?v=3b8eb957"></script>
     <link rel="index" title="Index" href="../genindex/" />
     <link rel="search" title="Search" href="../search/" />
-    <link rel="next" title="Training" href="../training/" />
+    <link rel="next" title="Generating Features" href="../features/" />
     <link rel="prev" title="Datasets" href="../datasets_and_val/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="Slide Processing - Documentation for histox, part of the PyTorch ecosystem.">
 
 
 
-  <script src="../_static/js/modernizr.min.js"></script>
 
-  <!-- Preload the theme fonts -->
 
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Thin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-MediumItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
 
-<!-- Preload the katex fonts -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
-  <script defer data-domain="slideflow.dev" src="https://plausible.io/js/script.js"></script>
-</head>
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
 
-<div class="container-fluid header-holder tutorials-header" id="header-holder">
-  <div class="container">
-    <div class="header-container">
-      <a class="header-logo" href="https://slideflow.dev" aria-label="Slideflow"></a>
+  }
+</style>
 
-      <div class="main-menu">
-        <ul>
-          <li class="active">
-            <a href="https://slideflow.dev">Docs</a>
-          </li>
 
-          <li>
-            <a href="https://slideflow.dev/tutorial1/">Tutorials</a>
-          </li>
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
 
-          <li>
-            <a href="https://github.com/slideflow/slideflow">GitHub</a>
-          </li>
-        </ul>
-      </div>
+<link rel="stylesheet" type="text/css" href="../_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="../_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="../_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
 
-      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="../">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="../">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../installation/">Install HistoX</a>
+    <a href="../user_guide/">User Guide</a>
+    <a href="../api/">Reference API</a>
+    <a href="../developer/">Developer Notes</a>
+    <a href="../tutorials/">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
     </div>
   </div>
 </div>
 
-<body class="pytorch-body">
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
 
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
 
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
 
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
 
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
 
-    <div class="table-of-contents-link-wrapper">
-      <span>Table of Contents</span>
-      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
     </div>
+    
+  </div>
+  
+  
 
-    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
-      <div class="pytorch-side-scroll">
-        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          <div class="pytorch-left-menu-search">
-
-
-
-
-
-                <div class="version">
-                  3.0
-                </div>
-
-
-
-
-
-
-
-
-
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
-    <input type="text" name="q" placeholder="Search Docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
 </div>
 
+    </header>
+  
 
-          </div>
-
-
-
-
-
-
-
-              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../project_setup/">Setting up a Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../datasets_and_val/">Datasets</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Slide Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../training/">Training</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../evaluation/">Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../posthoc/">Layer Activations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../uq/">Uncertainty Quantification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features/">Generating Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mil/">Multiple-Instance Learning (MIL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ssl/">Self-Supervised Learning (SSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stylegan/">Generative Networks (GANs)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../saliency/">Saliency Maps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../segmentation/">Tissue Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cellseg/">Cell Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_loops/">Custom Training Loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../studio/">Slideflow Studio: Live Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/">Troubleshooting</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Developer Notes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../tfrecords/">TFRecords: Reading and Writing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dataloaders/">Dataloaders: Sampling and Augmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_extractors/">Custom Feature Extractors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tile_labels/">Strong Supervision with Tile Labels</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../plugins/">Creating a Slideflow Plugin</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../slideflow/">slideflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../project/">slideflow.Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dataset/">slideflow.Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dataset_features/">slideflow.DatasetFeatures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../heatmap/">slideflow.Heatmap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model_params/">slideflow.ModelParams</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mosaic/">slideflow.Mosaic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slidemap/">slideflow.SlideMap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../biscuit/">slideflow.biscuit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slideflow_cellseg/">slideflow.cellseg</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io/">slideflow.io</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io_tensorflow/">slideflow.io.tensorflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io_torch/">slideflow.io.torch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gan/">slideflow.gan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../grad/">slideflow.grad</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mil_module/">slideflow.mil</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model/">slideflow.model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model_tensorflow/">slideflow.model.tensorflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model_torch/">slideflow.model.torch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../norm/">slideflow.norm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../simclr/">slideflow.simclr</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slide/">slideflow.slide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slide_qc/">slideflow.slide.qc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stats/">slideflow.stats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../util/">slideflow.util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../studio_module/">slideflow.studio</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial1/">Tutorial 1: Model training (simple)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial2/">Tutorial 2: Model training (advanced)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial3/">Tutorial 3: Using a custom architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial4/">Tutorial 4: Model evaluation &amp; heatmaps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial5/">Tutorial 5: Creating a mosaic map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial6/">Tutorial 6: Custom slide filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial7/">Tutorial 7: Training with custom augmentations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial8/">Tutorial 8: Multiple-Instance Learning</a></li>
-</ul>
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
 
 
 
-        </div>
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../installation/">Install HistoX</a>
+    <a href="../user_guide/">User Guide</a>
+    <a href="../api/">Reference API</a>
+    <a href="../developer/">Developer Notes</a>
+    <a href="../tutorials/">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
       </div>
-    </nav>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
 
-    <div class="pytorch-container">
-      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
-        <div class="pytorch-breadcrumbs-wrapper">
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="pytorch-breadcrumbs">
-
-      <li>
-        <a href="../">
-
-            Docs
-
-        </a> &gt;
-      </li>
-
-
-      <li>Slide Processing</li>
-
-
-      <li class="pytorch-breadcrumbs-aside">
-
-
-            <a href="../_sources/slide_processing.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
-
-
-      </li>
-
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="../docs/">Documentation home</a></li>
+    <li><a class="nav-link" href="../user_guide/">User guide</a></li>
   </ul>
 
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="../installation/">Installation</a></li>
+    <li><a class="nav-link" href="../overview/">Overview</a></li>
+    <li><a class="nav-link" href="../quickstart/">Quickstart</a></li>
+    <li><a class="nav-link" href="../project_setup/">Project setup</a></li>
+  </ul>
 
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="../data/">Public data</a></li>
+    <li><a class="nav-link" href="../datasets_and_val/">Datasets</a></li>
+    <li><a class="nav-link active" href="#">Slide processing</a></li>
+    <li><a class="nav-link" href="../features/">Feature extraction</a></li>
+    <li><a class="nav-link" href="../segmentation/">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="../cellseg/">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link" href="../training/">Training</a></li>
+    <li><a class="nav-link" href="../evaluation/">Evaluation</a></li>
+    <li><a class="nav-link" href="../posthoc/">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="../uq/">Uncertainty</a></li>
+    <li><a class="nav-link" href="../mil/">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="../ssl/">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="../stylegan/">Generative models</a></li>
+    <li><a class="nav-link" href="../saliency/">Interpretation</a></li>
+    <li><a class="nav-link" href="../custom_loops/">Custom loops</a></li>
+    <li><a class="nav-link" href="../studio/">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="../developer/">Developer notes home</a></li>
+    <li><a class="nav-link" href="../extensions/">Extensions</a></li>
+    <li><a class="nav-link" href="../tfrecords/">TFRecords</a></li>
+    <li><a class="nav-link" href="../dataloaders/">Dataloaders</a></li>
+    <li><a class="nav-link" href="../custom_extractors/">Custom extractors</a></li>
+    <li><a class="nav-link" href="../tile_labels/">Tile labels</a></li>
+    <li><a class="nav-link" href="../plugins/">Plugins</a></li>
+    <li><a class="nav-link" href="../troubleshooting/">Troubleshooting</a></li>
+    <li><a class="nav-link" href="../io_tensorflow/">TensorFlow data</a></li>
+    <li><a class="nav-link" href="../model_tensorflow/">TensorFlow models</a></li>
+  </ul>
+</nav>
 </div>
-        </div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
 
-        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
-          Shortcuts
-        </div>
+
+
+<div id="rtd-footer-container"></div>
       </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
 
-      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
-        <div class="pytorch-content-left">
 
 
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../docs/" class="nav-link">HistoX documentation</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../user_guide/" class="nav-link">HistoX user guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Slide Processing</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
 
-          <div class="rst-content">
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="../docs/">
+      <meta itemprop="name" content="HistoX documentation">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="../user_guide/">
+      <meta itemprop="name" content="HistoX user guide">
+      <meta itemprop="position" content="2">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="Slide Processing">
+      <meta itemprop="position" content="3">
+    </div>
+  </div>
 
-            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
-             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+  
+  
 
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section id="slide-processing">
-<span id="filtering"></span><h1>Slide Processing<a class="headerlink" href="#slide-processing" title="Permalink to this heading">¶</a></h1>
-<img alt="../_images/tile_extraction_overview.png" src="../_images/tile_extraction_overview.png" />
+<span id="filtering"></span><h1>Slide Processing<a class="headerlink" href="#slide-processing" title="Link to this heading">#</a></h1>
+<img alt="tile_extraction_overview.png" src="tile_extraction_overview.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Whole-slide histopathological images present many challenges for machine learning researchers, as these large gigapixel images may contain out-of-focus regions, pen marks, uneven staining, or varying optical resolutions. Slideflow provides tools for both flexible and computationally efficient slide processing in order to build datasets ready for machine learning applications.</p>
-<p>Most tools in Slideflow work with image tiles - extracted sub-regions of a whole-slide image - as the primary data source. For efficiency, image tiles are first buffered into <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">TFRecords</span></a> , a binary file format that greatly improves IO throughput. Although training can be performed without using TFRecords (see <a class="reference internal" href="../training/#from-wsi"><span class="std std-ref">Training without TFRecords</span></a>), we recommend tile extraction as the first step for most projects.</p>
+<p>Whole-slide histopathological images present many challenges for machine learning researchers, as these large gigapixel images may contain out-of-focus regions, pen marks, uneven staining, or varying optical resolutions. HistoX provides tools for both flexible and computationally efficient slide processing in order to build datasets ready for machine learning applications.</p>
+<p>Most tools in HistoX work with image tiles - extracted sub-regions of a whole-slide image - as the primary data source. For efficiency, image tiles are first buffered into <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">TFRecords</span></a> , a binary file format that greatly improves IO throughput. Although training can be performed without using TFRecords (see <a class="reference internal" href="../training/#from-wsi"><span class="std std-ref">Training without TFRecords</span></a>), we recommend tile extraction as the first step for most projects.</p>
 <section id="tile-extraction">
-<h2>Tile extraction<a class="headerlink" href="#tile-extraction" title="Permalink to this heading">¶</a></h2>
-<p>Image tiles are extracted from whole-slide images using either <a class="reference internal" href="../project/#slideflow.Project.extract_tiles" title="slideflow.Project.extract_tiles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Project.extract_tiles()</span></code></a> or <a class="reference internal" href="../dataset/#slideflow.Dataset.extract_tiles" title="slideflow.Dataset.extract_tiles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.extract_tiles()</span></code></a>. When using the Project interface, the only arguments required are <code class="docutils literal notranslate"><span class="pre">tile_px</span></code> and <code class="docutils literal notranslate"><span class="pre">tile_um</span></code>, which determine the size of the extracted image tiles in pixels and microns:</p>
+<h2>Tile extraction<a class="headerlink" href="#tile-extraction" title="Link to this heading">#</a></h2>
+<p>Image tiles are extracted from whole-slide images using either <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.extract_tiles()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.extract_tiles()</span></code>. When using the Project interface, the only arguments required are <code class="docutils literal notranslate"><span class="pre">tile_px</span></code> and <code class="docutils literal notranslate"><span class="pre">tile_um</span></code>, which determine the size of the extracted image tiles in pixels and microns:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P</span><span class="o">.</span><span class="n">extract_tiles</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>and when using a <a class="reference internal" href="../dataset/#slideflow.Dataset" title="slideflow.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">slideflow.Dataset</span></code></a>, no arguments are required.</p>
+<p>and when using a <a class="reference internal" href="../dataset/#histox.Dataset" title="histox.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.Dataset</span></code></a>, no arguments are required.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="o">.</span><span class="n">extract_tiles</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Tiles will be extracted at the specified pixel and micron size and stored in TFRecord format. Loose image tiles (*.jpg or *.png format) can also be saved with the argument <code class="docutils literal notranslate"><span class="pre">save_tiles=True</span></code>.</p>
-<p>See the <a class="reference internal" href="../dataset/#slideflow.Dataset.extract_tiles" title="slideflow.Dataset.extract_tiles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.extract_tiles()</span></code></a> API documentation for customization options.</p>
+<p>See the <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.extract_tiles()</span></code> API documentation for customization options.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Slide scanners may have differing microns-per-pixel (MPP) resolutions, so “10X” magnification from one scanner may be slightly different than “10X” on another scanner. Specifying a fixed <code class="docutils literal notranslate"><span class="pre">tile_um</span></code> ensures all image tiles have both the same pixel size and micron size. This MPP-harmonization step uses the <a class="reference external" href="https://www.libvips.org/API/current/libvips-resample.html#vips-resize">Libvips resize</a> function on extracted images. To disable this step and instead extract tiles at a given <a class="reference external" href="https://dicom.nema.org/dicom/dicomwsi/">downsample layer</a>, set <code class="docutils literal notranslate"><span class="pre">tile_um</span></code> equal to a magnification level rather than micron size:</p>
@@ -310,14 +1816,14 @@
 </div>
 </section>
 <section id="cell-segmentation">
-<h2>Cell segmentation<a class="headerlink" href="#cell-segmentation" title="Permalink to this heading">¶</a></h2>
+<h2>Cell segmentation<a class="headerlink" href="#cell-segmentation" title="Link to this heading">#</a></h2>
 <p>An alternative to extracting tiles in a grid across whole-slide images is extracting tiles at detected cell centroids. This is discussed separately in <a class="reference internal" href="../cellseg/#cellseg"><span class="std std-ref">Cell Segmentation</span></a>.</p>
 </section>
 <section id="regions-of-interest">
-<span id="id1"></span><h2>Regions of Interest<a class="headerlink" href="#regions-of-interest" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2>Regions of Interest<a class="headerlink" href="#regions-of-interest" title="Link to this heading">#</a></h2>
 <p>Tile extraction can be optionally restricted based on pathologist-annotated Regions of Interest (ROI), allowing you to enrich your dataset by only using relevant sections of a slide.</p>
-<p>We offer two methods for annotating ROIs - <a class="reference internal" href="../studio/#studio-roi"><span class="std std-ref">Slideflow Studio</span></a> and <a class="reference external" href="https://qupath.github.io/">QuPath</a>. Please see the Slideflow Studio section for instructions on generating ROI annotations using the Slideflow interface.</p>
-<p>If you are using QuPath, annotate whole-slide images using the Polygon tool. Then, click <strong>Automate</strong> -&gt; <strong>Show script editor</strong>. In the box that comes up, click <strong>File</strong> -&gt; <strong>Open</strong> and load the <code class="docutils literal notranslate"><span class="pre">qupath_roi.groovy</span></code> script (QuPath 0.2 or greater) or <code class="docutils literal notranslate"><span class="pre">qupath_roi_legacy.groovy</span></code> (QuPath 0.1.x), scripts <a class="reference external" href="https://github.com/slideflow/slideflow">available on GitHub</a>. Click <strong>Run</strong> -&gt; <strong>Run</strong> if using QuPath 0.2 or greater, or <strong>Run</strong> -&gt; <strong>Run for Project</strong> if using QuPath 0.1.x. ROIs will be exported in CSV format in the QuPath project directory, in the subdirectory “ROI”.</p>
+<p>We offer two methods for annotating ROIs - <a class="reference internal" href="../studio/#studio-roi"><span class="std std-ref">HistoX Studio</span></a> and <a class="reference external" href="https://qupath.github.io/">QuPath</a>. Please see the HistoX Studio section for instructions on generating ROI annotations using the HistoX interface.</p>
+<p>If you are using QuPath, annotate whole-slide images using the Polygon tool. Then, click <strong>Automate</strong> -&gt; <strong>Show script editor</strong>. In the box that comes up, click <strong>File</strong> -&gt; <strong>Open</strong> and load the <code class="docutils literal notranslate"><span class="pre">qupath_roi.groovy</span></code> script (QuPath 0.2 or greater) or <code class="docutils literal notranslate"><span class="pre">qupath_roi_legacy.groovy</span></code> (QuPath 0.1.x), scripts <a class="reference external" href="https://github.com/leicaohmu/histox">available on GitHub</a>. Click <strong>Run</strong> -&gt; <strong>Run</strong> if using QuPath 0.2 or greater, or <strong>Run</strong> -&gt; <strong>Run for Project</strong> if using QuPath 0.1.x. ROIs will be exported in CSV format in the QuPath project directory, in the subdirectory “ROI”.</p>
 <p>Once ROI CSV files are generated, ensure they are placed in the folder expected by your <a class="reference internal" href="../project_setup/#project-setup"><span class="std std-ref">Project</span></a> or <a class="reference internal" href="../datasets_and_val/#datasets-and-validation"><span class="std std-ref">Dataset</span></a> based on their respective configurations.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">roi_method</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">extract_tiles()</span></code> functions allow you to control how ROIs are used. Options include:</p>
 <ul class="simple">
@@ -331,12 +1837,12 @@
 <p>Nested ROIs will be rendered as holes.</p>
 </div>
 <p>By default, ROIs filter tiles based on the center point of the tile. Alternatively, you can filter tiles based on the proportion of the tile inside an ROI by using the argument <code class="docutils literal notranslate"><span class="pre">roi_filter_method</span></code>. If <code class="docutils literal notranslate"><span class="pre">roi_filter_method</span></code> is set to a float (0-1), this value will be interpreted as a proportion threshold. If the proportion of a tile inside an ROI is greater than this number, the tile is included. For example, if <code class="docutils literal notranslate"><span class="pre">roi_filter_method=0.7</span></code>, a tile that is 80% inside of an ROI will be included, but a tile that is only 60% inside of an ROI will be excluded.</p>
-<img alt="../_images/roi_filter.jpg" src="../_images/roi_filter.jpg" />
+<img alt="roi_filter.jpg" src="roi_filter.jpg" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p id="roi-labels">ROIs can optionally be assigned a label. Labels can be added or changed using <a class="reference internal" href="../studio/#studio-roi"><span class="std std-ref">Slideflow Studio</span></a>, or by adding a “label” column in the ROI CSV file. Labels can be used to train strongly supervised models, where each tile is assigned a label based on the ROI it is extracted from, rather than inheriting the label of the whole-slide image. See the developer note <a class="reference internal" href="../tile_labels/#tile-labels"><span class="std std-ref">Strong Supervision with Tile Labels</span></a> for more information.</p>
-<p>To retrieve the ROI name (and label, if present) for all tiles in a slide, use <a class="reference internal" href="../slide/#slideflow.WSI.get_tile_dataframe" title="slideflow.WSI.get_tile_dataframe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.WSI.get_tile_dataframe()</span></code></a>. This will return a Pandas DataFrame with the following columns:</p>
+<p id="roi-labels">ROIs can optionally be assigned a label. Labels can be added or changed using <a class="reference internal" href="../studio/#studio-roi"><span class="std std-ref">HistoX Studio</span></a>, or by adding a “label” column in the ROI CSV file. Labels can be used to train strongly supervised models, where each tile is assigned a label based on the ROI it is extracted from, rather than inheriting the label of the whole-slide image. See the developer note <a class="reference internal" href="../tile_labels/#tile-labels"><span class="std std-ref">Strong Supervision with Tile Labels</span></a> for more information.</p>
+<p>To retrieve the ROI name (and label, if present) for all tiles in a slide, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.WSI.get_tile_dataframe()</span></code>. This will return a Pandas DataFrame with the following columns:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><strong>loc_x</strong>: X-coordinate of tile center</p></li>
@@ -349,41 +1855,41 @@
 </ul>
 </div></blockquote>
 <p>The <strong>loc_x</strong> and <strong>loc_y</strong> columns contain the same tile location information <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">stored in TFRecords</span></a>.</p>
-<p>You can also retrieve this information for all slides in a dataset by using <a class="reference internal" href="../dataset/#slideflow.Dataset.get_tile_dataframe" title="slideflow.Dataset.get_tile_dataframe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.get_tile_dataframe()</span></code></a>, which will return a DataFrame with the same columns as above, plus <code class="docutils literal notranslate"><span class="pre">slide</span></code> column.</p>
+<p>You can also retrieve this information for all slides in a dataset by using <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.get_tile_dataframe()</span></code>, which will return a DataFrame with the same columns as above, plus <code class="docutils literal notranslate"><span class="pre">slide</span></code> column.</p>
 </section>
 <section id="masking-filtering">
-<h2>Masking &amp; Filtering<a class="headerlink" href="#masking-filtering" title="Permalink to this heading">¶</a></h2>
-<p>Slideflow provides two approaches for refining where image tiles should be extracted from whole-slide images: <strong>slide-level masking</strong> and <strong>tile-level filtering</strong>. In these next sections, we’ll review options for both approaches.</p>
+<h2>Masking &amp; Filtering<a class="headerlink" href="#masking-filtering" title="Link to this heading">#</a></h2>
+<p>HistoX provides two approaches for refining where image tiles should be extracted from whole-slide images: <strong>slide-level masking</strong> and <strong>tile-level filtering</strong>. In these next sections, we’ll review options for both approaches.</p>
 <section id="otsu-s-thresholding">
-<h3>Otsu’s thresholding<a class="headerlink" href="#otsu-s-thresholding" title="Permalink to this heading">¶</a></h3>
-<img alt="../_images/otsu.png" src="../_images/otsu.png" />
+<h3>Otsu’s thresholding<a class="headerlink" href="#otsu-s-thresholding" title="Link to this heading">#</a></h3>
+<img alt="otsu.png" src="otsu.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Otsu’s thresholding is a <strong>slide-based method</strong> that distinguishes foreground (tissue) from background (empty slide). Otsu’s thresholding is performed in the HSV colorspace and yields similar results to grayspace filtering, a tile-level filtering method described below.</p>
 <p>To apply Otsu’s thresholding to slides before tile extraction, use the <code class="docutils literal notranslate"><span class="pre">qc</span></code> argument of the <code class="docutils literal notranslate"><span class="pre">.extract_tiles()</span></code> functions.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.slide</span> <span class="kn">import</span> <span class="n">qc</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.slide</span><span class="w"> </span><span class="kn">import</span> <span class="n">qc</span>
 
 <span class="c1"># Use this QC during tile extraction</span>
 <span class="n">P</span><span class="o">.</span><span class="n">extract_tiles</span><span class="p">(</span><span class="n">qc</span><span class="o">=</span><span class="n">qc</span><span class="o">.</span><span class="n">Otsu</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>You can also apply Otsu’s thresholding to a single slide with the <a class="reference internal" href="../slide/#slideflow.WSI.qc" title="slideflow.WSI.qc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.WSI.qc()</span></code></a> method. See <code class="xref py py-class docutils literal notranslate"><span class="pre">the</span> <span class="pre">WSI</span> <span class="pre">API</span> <span class="pre">documentation</span></code> for more information on working with individual slides.</p>
+<p>You can also apply Otsu’s thresholding to a single slide with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.WSI.qc()</span></code> method. See <code class="xref py py-class docutils literal notranslate"><span class="pre">the</span> <span class="pre">WSI</span> <span class="pre">API</span> <span class="pre">documentation</span></code> for more information on working with individual slides.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply Otsu&#39;s thresholding to a WSI object</span>
-<span class="n">wsi</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">WSI</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">wsi</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">WSI</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">wsi</span><span class="o">.</span><span class="n">qc</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="gaussian-blur-filtering">
-<h3>Gaussian blur filtering<a class="headerlink" href="#gaussian-blur-filtering" title="Permalink to this heading">¶</a></h3>
-<img alt="../_images/blur.png" src="../_images/blur.png" />
+<h3>Gaussian blur filtering<a class="headerlink" href="#gaussian-blur-filtering" title="Link to this heading">#</a></h3>
+<img alt="blur.png" src="blur.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Gaussian blur masking is another <strong>slide-based method</strong> that can detect pen marks and out-of-focus areas, and is particularly useful for datasets lacking annotated Regions of Interest (ROIs). Gaussian blur masking is applied similarly, using the <code class="docutils literal notranslate"><span class="pre">qc</span></code> argument.</p>
-<p>Two versions of Gaussian blur masking are available: <code class="docutils literal notranslate"><span class="pre">qc.Gaussian</span></code> and <code class="docutils literal notranslate"><span class="pre">qc.GaussianV2</span></code> (new in Slideflow 2.1.0). The latter is the default and recommended version, as it is more computationally efficient. The former is provided for backwards compatibility.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.slide</span> <span class="kn">import</span> <span class="n">qc</span>
+<p>Two versions of Gaussian blur masking are available: <code class="docutils literal notranslate"><span class="pre">qc.Gaussian</span></code> and <code class="docutils literal notranslate"><span class="pre">qc.GaussianV2</span></code> (new in HistoX 2.1.0). The latter is the default and recommended version, as it is more computationally efficient. The former is provided for backwards compatibility.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.slide</span><span class="w"> </span><span class="kn">import</span> <span class="n">qc</span>
 
 <span class="c1"># Use this QC during tile extraction</span>
 <span class="n">P</span><span class="o">.</span><span class="n">extract_tiles</span><span class="p">(</span><span class="n">qc</span><span class="o">=</span><span class="n">qc</span><span class="o">.</span><span class="n">GaussianV2</span><span class="p">())</span>
@@ -391,7 +1897,7 @@
 </div>
 <p>By default, Gaussian blur masking is calculated at 4 times lower magnification than the tile extraction MPP (e.g., when extracting tiles at 10X effective magnification, Gaussian filtering would be calculated at 2.5X). This is to reduce computation time. You can change this behavior by manually setting the <code class="docutils literal notranslate"><span class="pre">mpp</span></code> argument to a specific microns-per-pixel value.</p>
 <p>Gaussian blur masking is performed on gray images. The <code class="docutils literal notranslate"><span class="pre">sigma</span></code> argument controls the standard deviation of the Gaussian blur kernel. The default value of 3 is recommended, but you may need to adjust this value for your dataset. A higher value will result in more areas being masked, while a lower value will result in fewer areas being masked.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.slide</span> <span class="kn">import</span> <span class="n">qc</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.slide</span><span class="w"> </span><span class="kn">import</span> <span class="n">qc</span>
 
 <span class="c1"># Customize the Gaussian filter,</span>
 <span class="c1"># using a sigma of 2 and a mpp of 1 (10X magnification)</span>
@@ -399,7 +1905,7 @@
 </pre></div>
 </div>
 <p>You can also use multiple slide-level masking methods by providing a list to <code class="docutils literal notranslate"><span class="pre">qc</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.slide</span> <span class="kn">import</span> <span class="n">qc</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.slide</span><span class="w"> </span><span class="kn">import</span> <span class="n">qc</span>
 
 <span class="n">qc</span> <span class="o">=</span> <span class="p">[</span>
   <span class="n">qc</span><span class="o">.</span><span class="n">Otsu</span><span class="p">(),</span>
@@ -408,31 +1914,31 @@
 <span class="n">P</span><span class="o">.</span><span class="n">extract_tiles</span><span class="p">(</span><span class="n">qc</span><span class="o">=</span><span class="n">qc</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If both Otsu’s thresholding and blur detection are being used, Slideflow will calculate Blur Burden, a metric used to assess the degree to which non-background tiles are either out-of-focus or contain artifact. In the tile extraction PDF report that is generated (see next section), the distribution of blur burden for slides in the dataset will be plotted on the first page. The report will contain the number of slides meeting criteria for warning, when the blur burden exceeds 5% for a given slide. A text file containing names of slides with high blur burden will be saved in the exported TFRecords directory. These slides should be manually reviewed to ensure they are of high enough quality to include in the dataset.</p>
+<p>If both Otsu’s thresholding and blur detection are being used, HistoX will calculate Blur Burden, a metric used to assess the degree to which non-background tiles are either out-of-focus or contain artifact. In the tile extraction PDF report that is generated (see next section), the distribution of blur burden for slides in the dataset will be plotted on the first page. The report will contain the number of slides meeting criteria for warning, when the blur burden exceeds 5% for a given slide. A text file containing names of slides with high blur burden will be saved in the exported TFRecords directory. These slides should be manually reviewed to ensure they are of high enough quality to include in the dataset.</p>
 </section>
 <section id="deepfocus">
-<h3>DeepFocus<a class="headerlink" href="#deepfocus" title="Permalink to this heading">¶</a></h3>
-<p>Slideflow also provides an interface for using <a class="reference external" href="https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0205387&amp;type=printable">DeepFocus</a> to identify in-focus regions. DeepFocus is a lightweight neural network that predicts whether a section of a slide is in- or out-of-focus. When used as a slide-level masking method, DeepFocus will filter out-of-focus tiles from a slide. By default, DeepFocus is applied to slides at 40X magnification, although this can be customized with the <code class="docutils literal notranslate"><span class="pre">tile_um</span></code> argument.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.slide</span> <span class="kn">import</span> <span class="n">qc</span>
+<h3>DeepFocus<a class="headerlink" href="#deepfocus" title="Link to this heading">#</a></h3>
+<p>HistoX also provides an interface for using <a class="reference external" href="https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0205387&amp;type=printable">DeepFocus</a> to identify in-focus regions. DeepFocus is a lightweight neural network that predicts whether a section of a slide is in- or out-of-focus. When used as a slide-level masking method, DeepFocus will filter out-of-focus tiles from a slide. By default, DeepFocus is applied to slides at 40X magnification, although this can be customized with the <code class="docutils literal notranslate"><span class="pre">tile_um</span></code> argument.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.slide</span><span class="w"> </span><span class="kn">import</span> <span class="n">qc</span>
 
 <span class="n">deepfocus</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DeepFocus</span><span class="p">(</span><span class="n">tile_um</span><span class="o">=</span><span class="s1">&#39;20x&#39;</span><span class="p">)</span>
 <span class="n">slide</span><span class="o">.</span><span class="n">qc</span><span class="p">(</span><span class="n">deepfocus</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Alternatively, you can also retrieve raw predictions from the DeepFocus model for a slide by calling the deepfocus object on a <code class="xref py py-class docutils literal notranslate"><span class="pre">slideflow.WSI</span></code> object, passing the argument threshold=False:</p>
+<p>Alternatively, you can also retrieve raw predictions from the DeepFocus model for a slide by calling the deepfocus object on a <code class="xref py py-class docutils literal notranslate"><span class="pre">histox.WSI</span></code> object, passing the argument threshold=False:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">deepfocus</span><span class="p">(</span><span class="n">slide</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="custom-deep-learning-qc">
-<h3>Custom deep learning QC<a class="headerlink" href="#custom-deep-learning-qc" title="Permalink to this heading">¶</a></h3>
-<p>You can also create your own deep learning slide filters. To create a custom deep learning QC method like DeepFocus, create a custom slide filter that inherits <a class="reference internal" href="../slide_qc/#slideflow.slide.qc.StridedDL" title="slideflow.slide.qc.StridedDL"><code class="xref py py-class docutils literal notranslate"><span class="pre">slideflow.slide.qc.StridedDL</span></code></a>. For example, to manually recreate the above DeepFocus model, first clone the <a class="reference external" href="https://github.com/jamesdolezal/deepfocus">TF2 fork on GitHub</a>, which contains the DeepFocus architecture and model weights, and create a custom class as below:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.slide.qc</span> <span class="kn">import</span> <span class="n">strided_dl</span>
-<span class="kn">from</span> <span class="nn">deepfocus.keras_model</span> <span class="kn">import</span> <span class="n">load_checkpoint</span><span class="p">,</span> <span class="n">deepfocus_v3</span>
+<h3>Custom deep learning QC<a class="headerlink" href="#custom-deep-learning-qc" title="Link to this heading">#</a></h3>
+<p>You can also create your own deep learning slide filters. To create a custom deep learning QC method like DeepFocus, create a custom slide filter that inherits <a class="reference internal" href="../slide_qc/#histox.slide.qc.StridedDL" title="histox.slide.qc.StridedDL"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.slide.qc.StridedDL</span></code></a>. For example, to manually recreate the above DeepFocus model, first clone the <a class="reference external" href="https://github.com/jamesdolezal/deepfocus">TF2 fork on GitHub</a>, which contains the DeepFocus architecture and model weights, and create a custom class as below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.slide.qc</span><span class="w"> </span><span class="kn">import</span> <span class="n">strided_dl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">deepfocus.keras_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_checkpoint</span><span class="p">,</span> <span class="n">deepfocus_v3</span>
 
-<span class="k">class</span> <span class="nc">CustomDeepFocus</span><span class="p">(</span><span class="n">strided_dl</span><span class="o">.</span><span class="n">StridedDL</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomDeepFocus</span><span class="p">(</span><span class="n">strided_dl</span><span class="o">.</span><span class="n">StridedDL</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">deepfocus_v3</span><span class="p">()</span>
         <span class="n">checkpoint</span> <span class="o">=</span> <span class="s1">&#39;/path/to/deepfocus/checkpoints/ver5&#39;</span>
         <span class="n">load_checkpoint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">)</span>
@@ -448,14 +1954,14 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P</span><span class="o">.</span><span class="n">extract_tiles</span><span class="p">(</span><span class="n">qc</span><span class="o">=</span><span class="n">CustomDeepFocus</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="../slide_qc/#qc"><span class="std std-ref">slideflow.slide.qc</span></a> for more information on the API for further QC customization.</p>
+<p>See <a class="reference internal" href="../slide_qc/#qc"><span class="std std-ref">histox.slide.qc</span></a> for more information on the API for further QC customization.</p>
 </section>
 <section id="segmentation-models-u-net">
-<h3>Segmentation Models (U-Net)<a class="headerlink" href="#segmentation-models-u-net" title="Permalink to this heading">¶</a></h3>
-<p>Slideflow also provides an interface for both training and using segmentation models (e.g. U-Net, FPN, DeepLabV3) for slide-level masking. This is discussed separately in <a class="reference internal" href="../segmentation/#segmentation"><span class="std std-ref">Tissue Segmentation</span></a>.</p>
+<h3>Segmentation Models (U-Net)<a class="headerlink" href="#segmentation-models-u-net" title="Link to this heading">#</a></h3>
+<p>HistoX also provides an interface for both training and using segmentation models (e.g. U-Net, FPN, DeepLabV3) for slide-level masking. This is discussed separately in <a class="reference internal" href="../segmentation/#segmentation"><span class="std std-ref">Tissue Segmentation</span></a>.</p>
 </section>
 <section id="grayspace-filtering">
-<h3>Grayspace filtering<a class="headerlink" href="#grayspace-filtering" title="Permalink to this heading">¶</a></h3>
+<h3>Grayspace filtering<a class="headerlink" href="#grayspace-filtering" title="Link to this heading">#</a></h3>
 <p>Grayspace filtering is a <strong>tile-based method</strong> that detects the amount of grayspace in a given image tile and discards the tile if the content exceeds a set threshold. RGB image tiles are converted to the HSV spectrum, and the fraction of pixels with saturation below a certain threshold is calculated. This filtering is performed separately for each tile as it is being extracted. Relevant arguments for grayspace filtering include:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">grayspace_threshold</span></code>: Saturation value, below which a pixel is considered gray. Range 0-1. Defaults to 0.05.</p></li>
@@ -465,7 +1971,7 @@
 <p>Grayspace filtering is similar to Otsu’s thresholding, with both operating in the HSV colorspace. Otsu’s thresholding is ~30% faster than grayspace filtering for slides with accessible downsample layers, but if downsample layers are not stored in a given slide or are inaccessible (e.g. <code class="docutils literal notranslate"><span class="pre">enable_downsample=False</span></code>), grayspace filtering may be faster. Grayspace filtering is more reliable than Otsu’s thresholding for slides with abundant pen marks or other artifact, which can present issues for the Otsu’s thresholding algorithm.</p>
 </section>
 <section id="whitepsace-filtering">
-<h3>Whitepsace filtering<a class="headerlink" href="#whitepsace-filtering" title="Permalink to this heading">¶</a></h3>
+<h3>Whitepsace filtering<a class="headerlink" href="#whitepsace-filtering" title="Link to this heading">#</a></h3>
 <p>Whitespace filtering is performed similarly to grayspace filtering. Whitespace is calculated using overall brightness for each pixel, then counting the fraction of pixels with a brightness above some threshold. As with grayspace filtering, there are two relevant arguments:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">whitespace_threshold</span></code>: Brightness value, above which a pixel is considered white. Range 0-255. Defaults to 230.</p></li>
@@ -475,8 +1981,8 @@
 </section>
 </section>
 <section id="stain-normalization">
-<h2>Stain normalization<a class="headerlink" href="#stain-normalization" title="Permalink to this heading">¶</a></h2>
-<img alt="../_images/wsi_norm_compare.jpg" src="../_images/wsi_norm_compare.jpg" />
+<h2>Stain normalization<a class="headerlink" href="#stain-normalization" title="Link to this heading">#</a></h2>
+<img alt="norm_compare/wsi_norm_compare.jpg" src="norm_compare/wsi_norm_compare.jpg" />
 <p>Image tiles can undergo digital Hematoxylin and Eosin (H&amp;E) stain normalization either during tile extraction or in real-time during training. Real-time normalization adds CPU overhead during training and inference but offers greater flexibility, allowing you to test different normalization strategies without re-extracting tiles from your entire dataset.</p>
 <p>Available stain normalization algorithms include:</p>
 <ul class="simple">
@@ -492,7 +1998,7 @@
 </ul>
 <p>The Macenko and Reinhard stain normalizers are highly efficient, with native Tensorflow, PyTorch, and Numpy/OpenCV implementations, and support GPU acceleration (see <a class="reference internal" href="../norm/#normalizer-performance"><span class="std std-ref">performance benchmarks</span></a>).</p>
 <section id="during-tile-extraction">
-<h3>During tile extraction<a class="headerlink" href="#during-tile-extraction" title="Permalink to this heading">¶</a></h3>
+<h3>During tile extraction<a class="headerlink" href="#during-tile-extraction" title="Link to this heading">#</a></h3>
 <p>Image tiles can be normalized during tile extraction by using the <code class="docutils literal notranslate"><span class="pre">normalizer</span></code> and <code class="docutils literal notranslate"><span class="pre">normalizer_source</span></code> arguments. <code class="docutils literal notranslate"><span class="pre">normalizer</span></code> is the name of the algorithm. The normalizer source - either a path to a reference image, or a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating one of our presets (e.g. <code class="docutils literal notranslate"><span class="pre">'v1'</span></code>, <code class="docutils literal notranslate"><span class="pre">'v2'</span></code>, <code class="docutils literal notranslate"><span class="pre">'v3'</span></code>) - can also be set with <code class="docutils literal notranslate"><span class="pre">normalizer_source</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P</span><span class="o">.</span><span class="n">extract_tiles</span><span class="p">(</span>
   <span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span>
@@ -504,193 +2010,306 @@
 <p><a class="reference internal" href="../norm/#contextual-normalization"><span class="std std-ref">Contextual stain normalization</span></a> is supported when normalizing during tile extraction.</p>
 </section>
 <section id="on-the-fly">
-<h3>On-the-fly<a class="headerlink" href="#on-the-fly" title="Permalink to this heading">¶</a></h3>
-<p>The stain normalization implementations in Slideflow are fast and efficient, with separate Tensorflow-native, PyTorch-native, and Numpy/OpenCV implementations. In most instances, we recommend performing stain normalization on-the-fly as a part of image pre-processing, as this provides flexibility for changing normalization strategies without re-extracting all of your image tiles.</p>
+<h3>On-the-fly<a class="headerlink" href="#on-the-fly" title="Link to this heading">#</a></h3>
+<p>The stain normalization implementations in HistoX are fast and efficient, with separate Tensorflow-native, PyTorch-native, and Numpy/OpenCV implementations. In most instances, we recommend performing stain normalization on-the-fly as a part of image pre-processing, as this provides flexibility for changing normalization strategies without re-extracting all of your image tiles.</p>
 <p>Real-time normalization can be performed by setting the <code class="docutils literal notranslate"><span class="pre">normalizer</span></code> and/or <code class="docutils literal notranslate"><span class="pre">normalizer_source</span></code> hyperparameters.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.model</span> <span class="kn">import</span> <span class="n">ModelParams</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelParams</span>
 <span class="n">hp</span> <span class="o">=</span> <span class="n">ModelParams</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">normalizer</span><span class="o">=</span><span class="s1">&#39;reinhard&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, <code class="docutils literal notranslate"><span class="pre">params.json</span></code>, in the saved model folder. Any Slideflow function that uses this model will automatically process images using the same normalization strategy.</p>
+<p>If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, <code class="docutils literal notranslate"><span class="pre">params.json</span></code>, in the saved model folder. Any HistoX function that uses this model will automatically process images using the same normalization strategy.</p>
 <p>When stain normalizing on-the-fly, stain augmentation becomes available as a training augmentation technique. Read more about <a class="reference internal" href="../norm/#stain-augmentation"><span class="std std-ref">stain augmentation</span></a>.</p>
-<p>The normalizer interfaces can also be access directly through <a class="reference internal" href="../norm/#slideflow.norm.StainNormalizer" title="slideflow.norm.StainNormalizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">slideflow.norm.StainNormalizer</span></code></a>. See <code class="xref py py-mod docutils literal notranslate"><span class="pre">slideflow.norm</span></code> for examples and more information.</p>
+<p>The normalizer interfaces can also be access directly through <a class="reference internal" href="../norm/#histox.norm.StainNormalizer" title="histox.norm.StainNormalizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.norm.StainNormalizer</span></code></a>. See <code class="xref py py-mod docutils literal notranslate"><span class="pre">histox.norm</span></code> for examples and more information.</p>
 </section>
 </section>
 <section id="performance-optimization">
-<h2>Performance optimization<a class="headerlink" href="#performance-optimization" title="Permalink to this heading">¶</a></h2>
+<h2>Performance optimization<a class="headerlink" href="#performance-optimization" title="Link to this heading">#</a></h2>
 <p>As tile extraction is heavily reliant on random access reading, significant performance gains can be experienced by either 1) moving all slides to an SSD, or 2) utilizing an SSD or ramdisk buffer (to which slides will be copied prior to extraction). The use of a ramdisk buffer can improve tile extraction speed by 10-fold or greater! To maximize performance, pass the buffer path to the argument <code class="docutils literal notranslate"><span class="pre">buffer</span></code>.</p>
 </section>
 <section id="extraction-reports">
-<h2>Extraction reports<a class="headerlink" href="#extraction-reports" title="Permalink to this heading">¶</a></h2>
+<h2>Extraction reports<a class="headerlink" href="#extraction-reports" title="Link to this heading">#</a></h2>
 <p>Once tiles have been extracted, a PDF report will be generated with a summary and sample of tiles extracted from their corresponding slides. An example of such a report is given below. Reviewing this report may enable you to identify data corruption, artifacts with stain normalization, or suboptimal background filtering. The report is saved in the TFRecords directory.</p>
-<img alt="../_images/example_report_small.jpg" src="../_images/example_report_small.jpg" />
-<p>In addition to viewing reports after tile extraction, you may generate new reports on existing tfrecords with <a class="reference internal" href="../dataset/#slideflow.Dataset.tfrecord_report" title="slideflow.Dataset.tfrecord_report"><code class="xref py py-func docutils literal notranslate"><span class="pre">slideflow.Dataset.tfrecord_report()</span></code></a>, by calling this function on a given dataset. For example:</p>
+<img alt="example_report_small.jpg" src="example_report_small.jpg" />
+<p>In addition to viewing reports after tile extraction, you may generate new reports on existing tfrecords with <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.Dataset.tfrecord_report()</span></code>, by calling this function on a given dataset. For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
 <span class="n">dataset</span><span class="o">.</span><span class="n">tfrecord_report</span><span class="p">(</span><span class="s2">&quot;/path/to/dest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You can also generate reports for slides that have not yet been extracted by passing <code class="docutils literal notranslate"><span class="pre">dry_run=True</span></code> to <a class="reference internal" href="../dataset/#slideflow.Dataset.extract_tiles" title="slideflow.Dataset.extract_tiles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.extract_tiles()</span></code></a>.</p>
+<p>You can also generate reports for slides that have not yet been extracted by passing <code class="docutils literal notranslate"><span class="pre">dry_run=True</span></code> to <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.extract_tiles()</span></code>.</p>
 </section>
 </section>
 
 
-             </article>
+                </article>
+              
+</div>
 
-            </div>
-            <footer>
-
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-
-        <a href="../training/" class="btn btn-neutral float-right" title="Training" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
-
-
-        <a href="../datasets_and_val/" class="btn btn-neutral" title="Datasets" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
-
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
     </div>
+</div>
 
-
-
-
-    <hr>
-
-
-
-  <div role="contentinfo">
-    <p>
-        &copy; Copyright 2023, James M Dolezal.
-
-    </p>
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
   </div>
+</div>
 
-      <div>
-        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../datasets_and_val/"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Datasets</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../features/"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Generating Features</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../datasets_and_val/"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Datasets</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../features/"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Generating Features</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+    
+       <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tile-extraction">Tile extraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-segmentation">Cell segmentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regions-of-interest">Regions of Interest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#masking-filtering">Masking &amp; Filtering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-thresholding">Otsu’s thresholding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-blur-filtering">Gaussian blur filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deepfocus">DeepFocus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-deep-learning-qc">Custom deep learning QC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-models-u-net">Segmentation Models (U-Net)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grayspace-filtering">Grayspace filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#whitepsace-filtering">Whitepsace filtering</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stain-normalization">Stain normalization</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#during-tile-extraction">During tile extraction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#on-the-fly">On-the-fly</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-optimization">Performance optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extraction-reports">Extraction reports</a></li>
+</ul>
+  </nav></div>
+    
+       <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/leicaohmu/histox/edit/develop/docs/source/slide_processing.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+    
+       <div class="sidebar-secondary-item">
+    <div class="tocsection sourcelink">
+      <a href="../_sources/slide_processing.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+      </a>
+    </div>
+</div>
+    
 
 
+
+
+</div>
+</div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="../">Home</a>
+      <a href="../docs/">Docs</a>
+      <a href="../tutorials/">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
 </footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
 
-          </div>
-        </div>
-
-        <div class="pytorch-content-right" id="pytorch-content-right">
-          <div class="pytorch-right-menu" id="pytorch-right-menu">
-            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
-              <ul>
-<li><a class="reference internal" href="#">Slide Processing</a><ul>
-<li><a class="reference internal" href="#tile-extraction">Tile extraction</a></li>
-<li><a class="reference internal" href="#cell-segmentation">Cell segmentation</a></li>
-<li><a class="reference internal" href="#regions-of-interest">Regions of Interest</a></li>
-<li><a class="reference internal" href="#masking-filtering">Masking &amp; Filtering</a><ul>
-<li><a class="reference internal" href="#otsu-s-thresholding">Otsu’s thresholding</a></li>
-<li><a class="reference internal" href="#gaussian-blur-filtering">Gaussian blur filtering</a></li>
-<li><a class="reference internal" href="#deepfocus">DeepFocus</a></li>
-<li><a class="reference internal" href="#custom-deep-learning-qc">Custom deep learning QC</a></li>
-<li><a class="reference internal" href="#segmentation-models-u-net">Segmentation Models (U-Net)</a></li>
-<li><a class="reference internal" href="#grayspace-filtering">Grayspace filtering</a></li>
-<li><a class="reference internal" href="#whitepsace-filtering">Whitepsace filtering</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#stain-normalization">Stain normalization</a><ul>
-<li><a class="reference internal" href="#during-tile-extraction">During tile extraction</a></li>
-<li><a class="reference internal" href="#on-the-fly">On-the-fly</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#performance-optimization">Performance optimization</a></li>
-<li><a class="reference internal" href="#extraction-reports">Extraction reports</a></li>
-</ul>
-</li>
-</ul>
-
-            </div>
-          </div>
-        </div>
-      </section>
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
     </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
 
-
-
-
-
-
-
-       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-         <script src="../_static/doctools.js"></script>
-         <script src="../_static/sphinx_highlight.js"></script>
-
-
-
-  <script type="text/javascript" src="../_static/js/vendor/jquery-3.6.3.min.js"></script>
-  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
-  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "Slide Processing",
+       "headline": "Slide Processing",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/slide_processing.html",
+       "articleBody": "Slide Processing# Whole-slide histopathological images present many challenges for machine learning researchers, as these large gigapixel images may contain out-of-focus regions, pen marks, uneven staining, or varying optical resolutions. HistoX provides tools for both flexible and computationally efficient slide processing in order to build datasets ready for machine learning applications. Most tools in HistoX work with image tiles - extracted sub-regions of a whole-slide image - as the primary data source. For efficiency, image tiles are first buffered into TFRecords , a binary file format that greatly improves IO throughput. Although training can be performed without using TFRecords (see Training without TFRecords), we recommend tile extraction as the first step for most projects. Tile extraction# Image tiles are extracted from whole-slide images using either histox.Project.extract_tiles() or histox.Dataset.extract_tiles(). When using the Project interface, the only arguments required are tile_px and tile_um, which determine the size of the extracted image tiles in pixels and microns: P.extract_tiles(tile_px=299, tile_um=302) and when using a histox.Dataset, no arguments are required. dataset.extract_tiles() Tiles will be extracted at the specified pixel and micron size and stored in TFRecord format. Loose image tiles (*.jpg or *.png format) can also be saved with the argument save_tiles=True. See the histox.Dataset.extract_tiles() API documentation for customization options. Note Slide scanners may have differing microns-per-pixel (MPP) resolutions, so \u201c10X\u201d magnification from one scanner may be slightly different than \u201c10X\u201d on another scanner. Specifying a fixed tile_um ensures all image tiles have both the same pixel size and micron size. This MPP-harmonization step uses the Libvips resize function on extracted images. To disable this step and instead extract tiles at a given downsample layer, set tile_um equal to a magnification level rather than micron size: P.extract_tiles(tile_px=299, tile_um=\"10x\") Cell segmentation# An alternative to extracting tiles in a grid across whole-slide images is extracting tiles at detected cell centroids. This is discussed separately in Cell Segmentation. Regions of Interest# Tile extraction can be optionally restricted based on pathologist-annotated Regions of Interest (ROI), allowing you to enrich your dataset by only using relevant sections of a slide. We offer two methods for annotating ROIs - HistoX Studio and QuPath. Please see the HistoX Studio section for instructions on generating ROI annotations using the HistoX interface. If you are using QuPath, annotate whole-slide images using the Polygon tool. Then, click Automate -\u003e Show script editor. In the box that comes up, click File -\u003e Open and load the qupath_roi.groovy script (QuPath 0.2 or greater) or qupath_roi_legacy.groovy (QuPath 0.1.x), scripts available on GitHub. Click Run -\u003e Run if using QuPath 0.2 or greater, or Run -\u003e Run for Project if using QuPath 0.1.x. ROIs will be exported in CSV format in the QuPath project directory, in the subdirectory \u201cROI\u201d. Once ROI CSV files are generated, ensure they are placed in the folder expected by your Project or Dataset based on their respective configurations. The roi_method argument to the extract_tiles() functions allow you to control how ROIs are used. Options include: \u0027auto\u0027: Default behavior. For slides with a valid ROI, extract tiles from within ROIs only. For slides without ROIs, extract from the whole-slide image. \u0027inside\u0027: Extract from within ROIs, and skip any slides missing ROIs. \u0027outside\u0027: Extract from outside ROIs, and skip any slides missing ROIs. \u0027ignore\u0027: Ignore all ROIs, extracting from whole-slide images. Note Nested ROIs will be rendered as holes. By default, ROIs filter tiles based on the center point of the tile. Alternatively, you can filter tiles based on the proportion of the tile inside an ROI by using the argument roi_filter_method. If roi_filter_method is set to a float (0-1), this value will be interpreted as a proportion threshold. If the proportion of a tile inside an ROI is greater than this number, the tile is included. For example, if roi_filter_method=0.7, a tile that is 80% inside of an ROI will be included, but a tile that is only 60% inside of an ROI will be excluded. ROIs can optionally be assigned a label. Labels can be added or changed using HistoX Studio, or by adding a \u201clabel\u201d column in the ROI CSV file. Labels can be used to train strongly supervised models, where each tile is assigned a label based on the ROI it is extracted from, rather than inheriting the label of the whole-slide image. See the developer note Strong Supervision with Tile Labels for more information. To retrieve the ROI name (and label, if present) for all tiles in a slide, use histox.WSI.get_tile_dataframe(). This will return a Pandas DataFrame with the following columns: loc_x: X-coordinate of tile center loc_y: Y-coordinate of tile center grid_x: X grid index of the tile grid_y: Y grid index of the tile roi_name: Name of the ROI if tile is in an ROI, else None roi_desc: Description of the ROI if tile is in ROI, else None label: ROI label, if present. The loc_x and loc_y columns contain the same tile location information stored in TFRecords. You can also retrieve this information for all slides in a dataset by using histox.Dataset.get_tile_dataframe(), which will return a DataFrame with the same columns as above, plus slide column. Masking \u0026 Filtering# HistoX provides two approaches for refining where image tiles should be extracted from whole-slide images: slide-level masking and tile-level filtering. In these next sections, we\u2019ll review options for both approaches. Otsu\u2019s thresholding# Otsu\u2019s thresholding is a slide-based method that distinguishes foreground (tissue) from background (empty slide). Otsu\u2019s thresholding is performed in the HSV colorspace and yields similar results to grayspace filtering, a tile-level filtering method described below. To apply Otsu\u2019s thresholding to slides before tile extraction, use the qc argument of the .extract_tiles() functions. from histox.slide import qc # Use this QC during tile extraction P.extract_tiles(qc=qc.Otsu()) You can also apply Otsu\u2019s thresholding to a single slide with the histox.WSI.qc() method. See the WSI API documentation for more information on working with individual slides. # Apply Otsu\u0027s thresholding to a WSI object wsi = hx.WSI(...) wsi.qc(qc).show() Gaussian blur filtering# Gaussian blur masking is another slide-based method that can detect pen marks and out-of-focus areas, and is particularly useful for datasets lacking annotated Regions of Interest (ROIs). Gaussian blur masking is applied similarly, using the qc argument. Two versions of Gaussian blur masking are available: qc.Gaussian and qc.GaussianV2 (new in HistoX 2.1.0). The latter is the default and recommended version, as it is more computationally efficient. The former is provided for backwards compatibility. from histox.slide import qc # Use this QC during tile extraction P.extract_tiles(qc=qc.GaussianV2()) By default, Gaussian blur masking is calculated at 4 times lower magnification than the tile extraction MPP (e.g., when extracting tiles at 10X effective magnification, Gaussian filtering would be calculated at 2.5X). This is to reduce computation time. You can change this behavior by manually setting the mpp argument to a specific microns-per-pixel value. Gaussian blur masking is performed on gray images. The sigma argument controls the standard deviation of the Gaussian blur kernel. The default value of 3 is recommended, but you may need to adjust this value for your dataset. A higher value will result in more areas being masked, while a lower value will result in fewer areas being masked. from histox.slide import qc # Customize the Gaussian filter, # using a sigma of 2 and a mpp of 1 (10X magnification) gaussian = qc.GaussianV2(mpp=1, sigma=2) You can also use multiple slide-level masking methods by providing a list to qc. from histox.slide import qc qc = [ qc.Otsu(), qc.Gaussian() ] P.extract_tiles(qc=qc) If both Otsu\u2019s thresholding and blur detection are being used, HistoX will calculate Blur Burden, a metric used to assess the degree to which non-background tiles are either out-of-focus or contain artifact. In the tile extraction PDF report that is generated (see next section), the distribution of blur burden for slides in the dataset will be plotted on the first page. The report will contain the number of slides meeting criteria for warning, when the blur burden exceeds 5% for a given slide. A text file containing names of slides with high blur burden will be saved in the exported TFRecords directory. These slides should be manually reviewed to ensure they are of high enough quality to include in the dataset. DeepFocus# HistoX also provides an interface for using DeepFocus to identify in-focus regions. DeepFocus is a lightweight neural network that predicts whether a section of a slide is in- or out-of-focus. When used as a slide-level masking method, DeepFocus will filter out-of-focus tiles from a slide. By default, DeepFocus is applied to slides at 40X magnification, although this can be customized with the tile_um argument. from histox.slide import qc deepfocus = qc.DeepFocus(tile_um=\u002720x\u0027) slide.qc(deepfocus) Alternatively, you can also retrieve raw predictions from the DeepFocus model for a slide by calling the deepfocus object on a histox.WSI object, passing the argument threshold=False: preds = deepfocus(slide, threshold=False) Custom deep learning QC# You can also create your own deep learning slide filters. To create a custom deep learning QC method like DeepFocus, create a custom slide filter that inherits histox.slide.qc.StridedDL. For example, to manually recreate the above DeepFocus model, first clone the TF2 fork on GitHub, which contains the DeepFocus architecture and model weights, and create a custom class as below: from histox.slide.qc import strided_dl from deepfocus.keras_model import load_checkpoint, deepfocus_v3 class CustomDeepFocus(strided_dl.StridedDL): def __init__(self): model = deepfocus_v3() checkpoint = \u0027/path/to/deepfocus/checkpoints/ver5\u0027 load_checkpoint(model, checkpoint) super().__init__( model=model, pred_idx=1, tile_px=64, tile_um=\u002740x\u0027 ) Then, supply this class to the qc argument as above. P.extract_tiles(qc=CustomDeepFocus()) See histox.slide.qc for more information on the API for further QC customization. Segmentation Models (U-Net)# HistoX also provides an interface for both training and using segmentation models (e.g. U-Net, FPN, DeepLabV3) for slide-level masking. This is discussed separately in Tissue Segmentation. Grayspace filtering# Grayspace filtering is a tile-based method that detects the amount of grayspace in a given image tile and discards the tile if the content exceeds a set threshold. RGB image tiles are converted to the HSV spectrum, and the fraction of pixels with saturation below a certain threshold is calculated. This filtering is performed separately for each tile as it is being extracted. Relevant arguments for grayspace filtering include: grayspace_threshold: Saturation value, below which a pixel is considered gray. Range 0-1. Defaults to 0.05. grayspace_fraction: Image tiles with grayspace above this fraction will be discarded. Defaults to 0.6. Grayspace filtering is enabled by default, and can be disabled by passing grayspace_fraction=1 to the .extract_tiles() functions. Grayspace filtering is similar to Otsu\u2019s thresholding, with both operating in the HSV colorspace. Otsu\u2019s thresholding is ~30% faster than grayspace filtering for slides with accessible downsample layers, but if downsample layers are not stored in a given slide or are inaccessible (e.g. enable_downsample=False), grayspace filtering may be faster. Grayspace filtering is more reliable than Otsu\u2019s thresholding for slides with abundant pen marks or other artifact, which can present issues for the Otsu\u2019s thresholding algorithm. Whitepsace filtering# Whitespace filtering is performed similarly to grayspace filtering. Whitespace is calculated using overall brightness for each pixel, then counting the fraction of pixels with a brightness above some threshold. As with grayspace filtering, there are two relevant arguments: whitespace_threshold: Brightness value, above which a pixel is considered white. Range 0-255. Defaults to 230. whitespace_fraction: Image tiles with whitespace above this fraction will be discarded. Defaults to 1.0 (disabled). Whitespace filtering is disabled by default. Stain normalization# Image tiles can undergo digital Hematoxylin and Eosin (H\u0026E) stain normalization either during tile extraction or in real-time during training. Real-time normalization adds CPU overhead during training and inference but offers greater flexibility, allowing you to test different normalization strategies without re-extracting tiles from your entire dataset. Available stain normalization algorithms include: macenko: Original Macenko paper. macenko_fast: Modified Macenko algorithm with the brightness standardization step removed. reinhard: Original Reinhard paper. reinhard_fast: Modified Reinhard algorithm with the brightness standardization step removed. reinhard_mask: Modified Reinhard algorithm, with background/whitespace removed. reinhard_fast_mask: Modified Reinhard-Fast algorithm, with background/whitespace removed. vahadane: Original Vahadane paper. augment: HSV colorspace augmentation. cyclegan: CycleGAN-based stain normalization, as implemented by Zingman et al (PyTorch only) The Macenko and Reinhard stain normalizers are highly efficient, with native Tensorflow, PyTorch, and Numpy/OpenCV implementations, and support GPU acceleration (see performance benchmarks). During tile extraction# Image tiles can be normalized during tile extraction by using the normalizer and normalizer_source arguments. normalizer is the name of the algorithm. The normalizer source - either a path to a reference image, or a str indicating one of our presets (e.g. \u0027v1\u0027, \u0027v2\u0027, \u0027v3\u0027) - can also be set with normalizer_source. P.extract_tiles( tile_px=299, tile_um=302, normalizer=\u0027reinhard\u0027 ) Contextual stain normalization is supported when normalizing during tile extraction. On-the-fly# The stain normalization implementations in HistoX are fast and efficient, with separate Tensorflow-native, PyTorch-native, and Numpy/OpenCV implementations. In most instances, we recommend performing stain normalization on-the-fly as a part of image pre-processing, as this provides flexibility for changing normalization strategies without re-extracting all of your image tiles. Real-time normalization can be performed by setting the normalizer and/or normalizer_source hyperparameters. from histox.model import ModelParams hp = ModelParams(..., normalizer=\u0027reinhard\u0027) If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, params.json, in the saved model folder. Any HistoX function that uses this model will automatically process images using the same normalization strategy. When stain normalizing on-the-fly, stain augmentation becomes available as a training augmentation technique. Read more about stain augmentation. The normalizer interfaces can also be access directly through histox.norm.StainNormalizer. See histox.norm for examples and more information. Performance optimization# As tile extraction is heavily reliant on random access reading, significant performance gains can be experienced by either 1) moving all slides to an SSD, or 2) utilizing an SSD or ramdisk buffer (to which slides will be copied prior to extraction). The use of a ramdisk buffer can improve tile extraction speed by 10-fold or greater! To maximize performance, pass the buffer path to the argument buffer. Extraction reports# Once tiles have been extracted, a PDF report will be generated with a summary and sample of tiles extracted from their corresponding slides. An example of such a report is given below. Reviewing this report may enable you to identify data corruption, artifacts with stain normalization, or suboptimal background filtering. The report is saved in the TFRecords directory. In addition to viewing reports after tile extraction, you may generate new reports on existing tfrecords with histox.Dataset.tfrecord_report(), by calling this function on a given dataset. For example: dataset = P.dataset(tile_px=299, tile_um=302) dataset.tfrecord_report(\"/path/to/dest\") You can also generate reports for slides that have not yet been extracted by passing dry_run=True to histox.Dataset.extract_tiles().",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/slide_processing.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
       });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
   </script>
-
-  <!-- Begin Footer -->
-
-  <!-- End Footer -->
-
-  <!-- Begin Mobile Menu -->
-
-  <div class="mobile-main-menu">
-    <div class="container-fluid">
-      <div class="container">
-        <div class="mobile-main-menu-header-container">
-          <a class="header-logo" href="https://pytorch.org/" aria-label="PyTorch"></a>
-          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="mobile-main-menu-links-container">
-      <div class="main-menu">
-        <ul>
-          <li>
-            <a href="https://slideflow.dev">Docs</a>
-          </li>
-
-          <li>
-            <a href="https://slideflow.dev/tutorial1/">Tutorials</a>
-          </li>
-
-          <li>
-            <a href="https://github.com/slideflow/slideflow">Github</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- End Mobile Menu -->
-
-  <script script type="text/javascript">
-    var collapsedSections = [];
-  </script>
-
-  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      mobileMenu.bind();
-      mobileTOC.bind();
-      pytorchAnchors.bind();
-      sideMenus.bind();
-      scrollToAnchor.bind();
-      highlightNavigation.bind();
-      mainMenuDropdown.bind();
-      filterTags.bind();
-
-      // Add class to links that have code blocks, since we cannot create links in code blocks
-      $("article.pytorch-article a span.pre").each(function(e) {
-        $(this).closest("a").addClass("has-code");
-      });
-    })
-  </script>
-</body>
+  
+  </body>
 </html>

@@ -17,22 +17,22 @@ pytorch_version = get_version("torch")
 tensorflow_version = get_version("tensorflow")
 has_cucim = importlib.util.find_spec('cucim')
 has_vips = importlib.util.find_spec('pyvips')
-has_nc = importlib.util.find_spec('histox_noncommercial')
-has_gpl = importlib.util.find_spec('histox_gpl')
+has_nc = importlib.util.find_spec('slideflow_noncommercial')
+has_gpl = importlib.util.find_spec('slideflow_gpl')
 
 # -----------------------------------------------------------------------------
 
 def print_welcome():
     # Determine tensor backend
-    tensor_backend = os.getenv("SF_BACKEND", "torch")
+    tensor_backend = os.getenv("HX_BACKEND", "torch")
     if tensor_backend == "torch":
         tensor_backend = f"PyTorch {pytorch_version}"
     elif tensor_backend == "tensorflow":
         tensor_backend = f"TensorFlow {tensorflow_version}"
 
     # Determine slide backend
-    slide_backend = os.getenv("SF_SLIDE_BACKEND", "cucim")
-    vips_version = os.getenv("SF_VIPS_VERSION", "N/A")
+    slide_backend = os.getenv("HX_SLIDE_BACKEND", "cucim")
+    vips_version = os.getenv("HX_VIPS_VERSION", "N/A")
     slide_backends = []
     if has_cucim and slide_backend == "cucim":
         slide_backends.append(f"CuCIM (default)")
@@ -44,7 +44,7 @@ def print_welcome():
         slide_backends.append(f"Libvips {vips_version}")
     slide_backends = ", ".join(slide_backends)
 
-    # Determine Slideflow add-ons
+    # Determine HistoX add-ons
     if has_nc and has_gpl:
         additional_modules = "Non-commercial & GPL-3.0 add-ons"
     elif has_nc:
@@ -61,7 +61,7 @@ def print_welcome():
     BLUE = '\033[94m'
 
     # Print the welcome message with formatting
-    print(f"{BOLD}Slideflow {histox_version}{END}")
+    print(f"{BOLD}HistoX {histox_version}{END}")
     print(f"{GREEN}Tensor backend:{END} {tensor_backend}")
     print(f"{GREEN}Slide backends:{END} {slide_backends}")
     print(f"{BLUE}Additional modules:{END} {additional_modules}")

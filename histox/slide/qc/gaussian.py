@@ -90,7 +90,7 @@ class Gaussian:
         """Perform Gaussian filtering on the given slide or image.
 
         Args:
-            slide (hx.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
+            slide (hx.WSI, np.ndarray): Either a HistoX WSI or a numpy array,
                 with shape (h, w, c) and type np.uint8.
             mask (np.ndarray): Restrict Otsu's threshold to the area of the
                 image indicated by this boolean mask. Defaults to None.

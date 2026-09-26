@@ -62,8 +62,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'histox'
-copyright = '2023, James M Dolezal'
-author = 'James M Dolezal'
+copyright = '2026, HistoX team'
+author = 'HistoX team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -156,7 +156,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'histox.tex', 'Slideflow Documentation',
+    (master_doc, 'histox.tex', 'HistoX Documentation',
      'James M Dolezal', 'manual'),
 ]
 
@@ -166,7 +166,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'histox', 'Slideflow Documentation',
+    (master_doc, 'histox', 'HistoX Documentation',
      [author], 1)
 ]
 
@@ -177,7 +177,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'histox', 'Slideflow Documentation',
+    (master_doc, 'histox', 'HistoX Documentation',
      author, 'histox', 'Machine learning histology pipeline and toolset.',
      'Miscellaneous'),
 ]

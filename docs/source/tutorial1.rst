@@ -3,6 +3,10 @@
 Tutorial 1: Model training (simple)
 =====================================
 
+.. raw:: html
+
+   <div class="histox-tutorial-meta" aria-label="Tutorial status"><span><strong>Status</strong> Compatibility tutorial</span><span><strong>Runtime verification</strong> Pending</span><a href="https://github.com/leicaohmu/histox/blob/develop/docs/source/tutorial1.rst">View source</a></div>
+
 In this first tutorial, we will walk through the steps needed to take an example project from start to finish. As with all of these tutorials, we will use
 publicly available data from `The Cancer Genome Atlas (TCGA) <https://portal.gdc.cancer.gov>`_. In this first tutorial,
 we will train a model to predict ER status from breast cancer slides.
@@ -22,9 +26,9 @@ Create a new project, and pass the path to the downloaded slides to the argument
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    P = sf.create_project(
+    P = hx.create_project(
         root='/home/er_project',
         slides='/path/to/slides'
     )
@@ -33,7 +37,7 @@ After the project is created, we can load the project with:
 
 .. code-block:: python
 
-    P = sf.load_project('/home/er_project')
+    P = hx.load_project('/home/er_project')
 
 Setting up annotations
 **********************
@@ -49,7 +53,7 @@ somewhere around 10-30% of the dataset for evaluation.
 .. note::
 
     If patient names are identical to the slide filenames, the "slide" column does not need to be manually added, as
-    slideflow will auto-associate slides to patients.
+    histox will auto-associate slides to patients.
 
 Your annotations file should look something like:
 
@@ -97,7 +101,7 @@ hyperparameters, which we can configure with :class:`histox.ModelParams`. We wil
 
 .. code-block:: python
 
-    hp = sf.ModelParams(
+    hp = hx.ModelParams(
         tile_px=256,
         tile_um=128,
         model='xception',
@@ -140,10 +144,10 @@ Now, it's time to start our pipeline. To review, our complete script should look
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Create a new project
-    P = sf.create_project(
+    P = hx.create_project(
         root='/home/er_project',
         slides='/path/to/slides'
     )

@@ -3,17 +3,17 @@
 Generating Features
 ===================
 
-Converting images into feature vectors is a common step for many machine learning tasks, including :ref:`feature space analysis <activations>` and :ref:`multiple-instance learning (MIL) <mil>`. Slideflow provides a simple API for generating features from image tiles and includes several pretrained feature extractors. You can see a list of all available feature extractors with :func:`slideflow.list_extractors`.
+Converting images into feature vectors is a common step for many machine learning tasks, including :ref:`feature space analysis <activations>` and :ref:`multiple-instance learning (MIL) <mil>`. HistoX provides a simple API for generating features from image tiles and includes several pretrained feature extractors. You can see a list of all available feature extractors with :func:`histox.list_extractors`.
 
 Generating Features
 *******************
 
-The first step in generating features from a dataset of images is creating a feature extractor. Many types of feature extractors can be used, including imagenet-pretrained models, models finetuned in Slideflow, histology-specific pretrained feature extractors (ie. "foundation models"), or fine-tuned SSL models.  In all cases, feature extractors are built with :func:`slideflow.build_feature_extractor`, and features are generated for a :ref:`Dataset <datasets_and_val>` using :meth:`slideflow.Dataset.generate_feature_bags`, as described :ref:`below <bags>`.
+The first step in generating features from a dataset of images is creating a feature extractor. Many types of feature extractors can be used, including imagenet-pretrained models, models finetuned in HistoX, histology-specific pretrained feature extractors (ie. "foundation models"), or fine-tuned SSL models.  In all cases, feature extractors are built with :func:`histox.build_feature_extractor`, and features are generated for a :ref:`Dataset <datasets_and_val>` using :meth:`histox.Dataset.generate_feature_bags`, as described :ref:`below <bags>`.
 
 .. code-block:: python
 
     # Build a feature extractor
-    ctranspath = sf.build_feature_extractor('ctranspath')
+    ctranspath = hx.build_feature_extractor('ctranspath')
 
     # Generate features for a dataset
     dataset.generate_feature_bags(ctranspath, outdir='/path/to/features')
@@ -22,9 +22,9 @@ The first step in generating features from a dataset of images is creating a fea
 Pretrained Extractors
 *********************
 
-Slideflow includes several pathology-specific feature extractors, also referred to as foundation models, pretrained on large-scale histology datasets.
+HistoX includes several pathology-specific feature extractors, also referred to as foundation models, pretrained on large-scale histology datasets.
 
-.. list-table:: **Pretrained feature extractors.** Note: "histossl" was renamed to "phikon" in Slideflow 3.0.
+.. list-table:: **Pretrained feature extractors.** Note: "histossl" was renamed to "phikon" in HistoX 3.0.
     :header-rows: 1
     :widths: 14 10 8 8 8 14 28 10
 
@@ -42,7 +42,7 @@ Slideflow includes several pathology-specific feature extractors, also referred 
       - 224
       - 2560
       - Paige
-      - ``slideflow``
+      - ``histox``
       - `Paper <http://arxiv.org/pdf/2309.07778v5>`__
     * - **CTransPath**
       - SRCL
@@ -94,7 +94,7 @@ Slideflow includes several pathology-specific feature extractors, also referred 
       - `Paper <https://aka.ms/gigapath>`__
 
 
-In order to respect the original licensing agreements, pretrained models are distributed in separate packages. The core ``slideflow`` package provides access to models under the **Apache-2.0** license, while models under **GPL-3.0** are available in the ``slideflow-gpl`` package. Models restricted to non-commercial use are available under the **CC BY-NC 4.0** license through the ``slideflow-noncommercial`` package.
+In order to respect the original licensing agreements, pretrained models are distributed in separate packages. The core ``histox`` package provides access to models under the **Apache-2.0** license, while models under **GPL-3.0** are available in the ``slideflow-gpl`` package. Models restricted to non-commercial use are available under the **CC BY-NC 4.0** license through the ``slideflow-noncommercial`` package.
 
 Loading weights
 ---------------
@@ -106,7 +106,7 @@ All pretrained models can also be loaded using local weights. Use the ``weights`
 .. code-block:: python
 
     # Load UNI with local weights
-    uni = sf.build_feature_extractor('uni', weights='../pytorch_model.bin')
+    uni = hx.build_feature_extractor('uni', weights='../pytorch_model.bin')
 
 Image preprocessing
 -------------------
@@ -126,7 +126,7 @@ Example:
 .. code-block:: python
 
     # Load a feature extractor with custom preprocessing
-    extractor = sf.build_feature_extractor(
+    extractor = hx.build_feature_extractor(
         'ctranspath',
         resize=224,
         interpolation='bicubic',
@@ -139,8 +139,8 @@ For transparency, you can see the current preprocessing pipeline with ``extracto
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> ctranspath = sf.build_feature_extractor(
+    >>> import histox as hx
+    >>> ctranspath = hx.build_feature_extractor(
     ...   'ctranspath',
     ...   resize=256,
     ...   interpolation='bicubic',
@@ -165,12 +165,12 @@ GigaPath is a DINOv2-based model from Microsoft/Providence trained on 170k whole
     pip install slideflow-noncommercial[gigapath] git+ssh://git@github.com/prov-gigapath/prov-gigapath
 
 
-GigaPath has two stages: a tile encoder and slide-level encoder. The tile encoder (``"gigapath.tile"``) works the same as all other feature extractors in Slideflow. You can build this encoder directly:
+GigaPath has two stages: a tile encoder and slide-level encoder. The tile encoder (``"gigapath.tile"``) works the same as all other feature extractors in HistoX. You can build this encoder directly:
 
 .. code-block:: python
 
     # Build the tile encoder
-    gigapath_tile = sf.build_feature_extractor("gigapath.tile")
+    gigapath_tile = hx.build_feature_extractor("gigapath.tile")
 
     # Use the tile encoder
     project.generate_feature_bags(gigapath_tile, ...)
@@ -181,7 +181,7 @@ or you can build the combined tile+slide model, and then use ``gigapath.tile``:
 .. code-block:: python
 
     # Build the tile encoder
-    gigapath = sf.build_feature_extractor("gigapath")
+    gigapath = hx.build_feature_extractor("gigapath")
 
     # Use the tile encoder
     project.generate_feature_bags(gigapath.tile, ...)
@@ -192,14 +192,14 @@ As there are two stages to GigaPath, there are also separate model weights. As w
 
     # Example of how to supply tile + slide weights
     # For the full GigaPath model
-    gigapath = sf.build_feature_extractor(
+    gigapath = hx.build_feature_extractor(
         'gigapath',
         tile_encoder_weights='../pytorch_model.bin',
         slide_encoder_weights='../slide_encoder.pth'
     )
 
     # Or, just supply the tile weights
-    gigapath_tile = sf.build_feature_extractor(
+    gigapath_tile = hx.build_feature_extractor(
         'gigapath.tile',
         weights='pytorch_model.bin'
     )
@@ -210,7 +210,7 @@ Once feature bags have been generated and saved with the GigaPath tile encoder, 
 .. code-block:: python
 
     # Load GigaPath
-    gigapath = sf.build_feature_extractor('gigapath')
+    gigapath = hx.build_feature_extractor('gigapath')
 
     # Generate tile-level features
     project.generate_feature_bags(gigapath.tile, ..., outdir='/gigapath_bags')
@@ -223,10 +223,10 @@ In addition to running the tile and slide encoder steps separately, you can also
 .. code-block:: python
 
     # Load GigaPath
-    gigapath = sf.build_feature_extractor('gigapath')
+    gigapath = hx.build_feature_extractor('gigapath')
 
     # Load slide
-    wsi = sf.WSI('slide.svs', tile_px=256, tile_um=128)
+    wsi = hx.WSI('slide.svs', tile_px=256, tile_um=128)
 
     # Generate slide embedding
     embedding = gigapath(wsi)
@@ -235,11 +235,11 @@ In addition to running the tile and slide encoder steps separately, you can also
 ImageNet Features
 *****************
 
-To calculate features from an ImageNet-pretrained network, first build an imagenet feature extractor with :func:`slideflow.build_feature_extractor`. The first argument should be the name of an architecture followed by ``_imagenet``, and the expected tile size should be passed to the keyword argument ``tile_px``. You can optionally specify the layer from which to generate features with the ``layers`` argument; if not provided, it will default to calculating features from post-convolutional layer activations. For example, to build a ResNet50 feature extractor for images at 299 x 299 pixels:
+To calculate features from an ImageNet-pretrained network, first build an imagenet feature extractor with :func:`histox.build_feature_extractor`. The first argument should be the name of an architecture followed by ``_imagenet``, and the expected tile size should be passed to the keyword argument ``tile_px``. You can optionally specify the layer from which to generate features with the ``layers`` argument; if not provided, it will default to calculating features from post-convolutional layer activations. For example, to build a ResNet50 feature extractor for images at 299 x 299 pixels:
 
 .. code-block:: python
 
-    resnet50 = sf.build_feature_extractor(
+    resnet50 = hx.build_feature_extractor(
         'resnet50_imagenet',
         tile_px=299
     )
@@ -248,19 +248,19 @@ This will calculate features using activations from the post-convolutional layer
 
 .. code-block:: python
 
-    resnet50 = sf.build_feature_extractor(
+    resnet50 = hx.build_feature_extractor(
         'resnet50_imagenet',
         layers=['conv1_relu', 'conv3_block1_2_relu'],
         pooling='avg',
         tile_px=299
     )
 
-If a model architecture is available in both the Tensorflow and PyTorch backends, Slideflow will default to using the active backend. You can manually set the feature extractor backend using ``backend``.
+If a model architecture is available in both the Tensorflow and PyTorch backends, HistoX will default to using the active backend. You can manually set the feature extractor backend using ``backend``.
 
 .. code-block:: python
 
     # Create a PyTorch feature extractor
-    extractor = sf.build_feature_extractor(
+    extractor = hx.build_feature_extractor(
         'resnet50_imagenet',
         layers=['layer2.0.conv1', 'layer3.1.conv2'],
         pooling='avg',
@@ -268,12 +268,12 @@ If a model architecture is available in both the Tensorflow and PyTorch backends
         backend='torch'
     )
 
-You can view all available feature extractors with :func:`slideflow.model.list_extractors`.
+You can view all available feature extractors with :func:`histox.model.list_extractors`.
 
 Layer Activations
 *****************
 
-You can also calculate features from any model trained in Slideflow. The first argument to ``build_feature_extractor()`` should be the path of the trained model.  You can optionally specify the layer at which to calculate activations using the ``layers`` keyword argument. If not specified, activations are calculated at the post-convolutional layer.
+You can also calculate features from any model trained in HistoX. The first argument to ``build_feature_extractor()`` should be the path of the trained model.  You can optionally specify the layer at which to calculate activations using the ``layers`` keyword argument. If not specified, activations are calculated at the post-convolutional layer.
 
 .. code-block:: python
 
@@ -292,7 +292,7 @@ For SimCLR models, use ``'simclr'`` as the first argument to ``build_feature_ext
 
 .. code-block:: python
 
-    simclr = sf.build_feature_extractor(
+    simclr = hx.build_feature_extractor(
         'simclr',
         ckpt='/path/to/simclr.ckpt'
     )
@@ -301,7 +301,7 @@ For DinoV2 models, use ``'dinov2'`` as the first argument, and pass the model co
 
 .. code-block:: python
 
-    dinov2 = sf.build_feature_extractor(
+    dinov2 = hx.build_feature_extractor(
         'dinov2',
         weights='/path/to/teacher_checkpoint.pth',
         cfg='/path/to/config.yaml'
@@ -312,7 +312,7 @@ For DinoV2 models, use ``'dinov2'`` as the first argument, and pass the model co
 Custom Extractors
 *****************
 
-Slideflow also provides an API for integrating your own custom, pretrained feature extractor. See :ref:`custom_extractors` for additional information.
+HistoX also provides an API for integrating your own custom, pretrained feature extractor. See :ref:`custom_extractors` for additional information.
 
 .. _bags:
 
@@ -322,16 +322,16 @@ Exporting Features
 Feature bags
 ------------
 
-Once you have prepared a feature extractor, features can be generated for a dataset and exported to disk for later use. Pass a feature extractor to the first argument of :meth:`slideflow.Project.generate_feature_bags`, with a :class:`slideflow.Dataset` as the second argument.
+Once you have prepared a feature extractor, features can be generated for a dataset and exported to disk for later use. Pass a feature extractor to the first argument of :meth:`histox.Project.generate_feature_bags`, with a :class:`histox.Dataset` as the second argument.
 
 .. code-block:: python
 
     # Load a project and dataset.
-    P = sf.Project(...)
+    P = hx.Project(...)
     dataset = P.dataset(tile_px=299, tile_um=302)
 
     # Create a feature extractor.
-    ctranspath = sf.build_feature_extractor('ctranspath', resize=True)
+    ctranspath = hx.build_feature_extractor('ctranspath', resize=True)
 
     # Calculate & export feature bags.
     P.generate_feature_bags(ctranspath, dataset)
@@ -339,16 +339,16 @@ Once you have prepared a feature extractor, features can be generated for a data
 .. note::
 
     If you are generating features from a SimCLR model trained with stain normalization,
-    you should specify the stain normalizer using the ``normalizer`` argument to :meth:`slideflow.Project.generate_feature_bags` or :class:`slideflow.DatasetFeatures`.
+    you should specify the stain normalizer using the ``normalizer`` argument to :meth:`histox.Project.generate_feature_bags` or :class:`histox.DatasetFeatures`.
 
 Features are calculated for slides in batches, keeping memory usage low. By default, features are saved to disk in a directory named ``pt_files`` within the project directory, but you can override the destination directory using the ``outdir`` argument.
 
-Alternatively, you can calculate features for a dataset using :class:`slideflow.DatasetFeatures` and the ``.to_torch()`` method.  This will calculate features for your entire dataset at once, which may require a large amount of memory. The first argument should be the feature extractor, and the second argument should be a :class:`slideflow.Dataset`.
+Alternatively, you can calculate features for a dataset using :class:`histox.DatasetFeatures` and the ``.to_torch()`` method.  This will calculate features for your entire dataset at once, which may require a large amount of memory. The first argument should be the feature extractor, and the second argument should be a :class:`histox.Dataset`.
 
 .. code-block:: python
 
     # Calculate features for the entire dataset.
-    features = sf.DatasetFeatures(ctranspath, dataset)
+    features = hx.DatasetFeatures(ctranspath, dataset)
 
     # Export feature bags.
     features.to_torch('/path/to/bag_directory/')
@@ -356,7 +356,7 @@ Alternatively, you can calculate features for a dataset using :class:`slideflow.
 
 .. warning::
 
-    Using :class:`slideflow.DatasetFeatures` directly may result in a large amount of memory usage, particularly for sizable datasets. When generating feature bags for training MIL models, it is recommended to use :meth:`slideflow.Project.generate_feature_bags` instead.
+    Using :class:`histox.DatasetFeatures` directly may result in a large amount of memory usage, particularly for sizable datasets. When generating feature bags for training MIL models, it is recommended to use :meth:`histox.Project.generate_feature_bags` instead.
 
 Feature "bags" are PyTorch tensors of features for all images in a slide, saved to disk as ``.pt`` files. These bags are used to train MIL models. Bags can be manually loaded and inspected using :func:`torch.load`.
 
@@ -375,7 +375,7 @@ When image features are exported for a dataset, the feature extractor configurat
 
     {
      "extractor": {
-      "class": "slideflow.model.extractors.ctranspath.CTransPathFeatures",
+      "class": "histox.model.extractors.ctranspath.CTransPathFeatures",
       "kwargs": {
        "center_crop": true
       }
@@ -408,11 +408,11 @@ When image features are exported for a dataset, the feature extractor configurat
      "tile_um": 302
     }
 
-The feature extractor can be manually rebuilt using :func:`slideflow.model.rebuild_extractor()`:
+The feature extractor can be manually rebuilt using :func:`histox.model.rebuild_extractor()`:
 
 .. code-block:: python
 
-    from slideflow.model import rebuild_extractor
+    from histox.model import rebuild_extractor
 
     # Recreate the feature extractor
     # and stain normalizer, if applicable
@@ -426,10 +426,10 @@ In addition to generating and exporting feature bags for a dataset, features can
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Create a feature extractor
-    ctranspath = sf.build_feature_extractor('ctranspath')
+    ctranspath = hx.build_feature_extractor('ctranspath')
 
     # Bags is a tensor of shape (n_tiles, n_features)
     # Coords is a tensor of shape (n_tiles, 2), containing x/y tile coordinates.
@@ -444,10 +444,10 @@ Feature extractors can also create features from a whole-slide image. This is us
 .. code-block:: python
 
     # Load a feature extractor.
-    ctranspath = sf.build_feature_extractor('ctranspath')
+    ctranspath = hx.build_feature_extractor('ctranspath')
 
     # Load a whole-slide image.
-    wsi = sf.WSI('slide.svs', tile_px=256, tile_um=128)
+    wsi = hx.WSI('slide.svs', tile_px=256, tile_um=128)
 
     # Generate features for the whole slide.
     # Shape: (width, height, n_features)
@@ -462,7 +462,7 @@ All feature extractors will use mixed precision by default. This can be disabled
 .. code-block:: python
 
     # Load a feature extractor without mixed precision
-    extractor = sf.build_feature_extractor('ctranspath', mixed_precision=False)
+    extractor = hx.build_feature_extractor('ctranspath', mixed_precision=False)
 
 
 License & Citation

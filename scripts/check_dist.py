@@ -16,7 +16,6 @@ FORBIDDEN_SDIST_PREFIXES = (
 )
 FORBIDDEN_PACKAGE_PATHS = {
     "histox/norm/norm_tile.jpg",
-    "histox/slide/slideflow-logo-name-small.jpg",
 }
 REQUIRED_BRAND_ASSETS = {
     "histox/assets/branding/README.md",

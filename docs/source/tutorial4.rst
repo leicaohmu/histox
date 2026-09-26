@@ -1,6 +1,10 @@
 Tutorial 4: Model evaluation & heatmaps
 =======================================
 
+.. raw:: html
+
+   <div class="histox-tutorial-meta" aria-label="Tutorial status"><span><strong>Status</strong> Compatibility tutorial</span><span><strong>Runtime verification</strong> Pending</span><a href="https://github.com/leicaohmu/histox/blob/develop/docs/source/tutorial4.rst">View source</a></div>
+
 In this tutorial, we will evaluate a trained model on a separate, held-out evaluation dataset.
 
 Locate a saved model
@@ -111,8 +115,8 @@ Heatmaps can also be manually created with the :class:`histox.Heatmap` class. To
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> heatmap = sf.Heatmap(
+    >>> import histox as hx
+    >>> heatmap = hx.Heatmap(
     ...     '/home/user/example.svs',
     ...     model='/path/to/model',
     ...     stride_div=4,           # optional, defaults to 1
@@ -124,10 +128,10 @@ To calculate heatmaps only within areas of an annotated ROI, you can pass the di
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> P = sf.Project('/project/path')
+    >>> import histox as hx
+    >>> P = hx.Project('/project/path')
     >>> dataset = P.dataset(299, 302)
-    >>> heatmap = sf.Heatmap(
+    >>> heatmap = hx.Heatmap(
     ...     '/home/user/example.svs',
     ...     model='/path/to/model',
     ...     rois=dataset.rois(),

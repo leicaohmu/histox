@@ -1,11 +1,11 @@
-.. currentmodule:: slideflow.dataset
+.. currentmodule:: histox.dataset
 
 .. _datasets_and_validation:
 
 Datasets
 ========
 
-Working with large-scale imaging data can be both challenging and messy, so Slideflow provides the :class:`Dataset` class to assist with managing, splitting, filtering, and transforming your data for easy downstream use. :class:`Dataset` organizes a set of image tiles extracted at a specific size, along with their associated slides and clinical annotations. Datasets are used for many Slideflow functions, and can quickly generate ``torch.utils.data.DataLoader`` and ``tf.data.Datasets`` objects that provide preprocessed slide images for external applications.
+Working with large-scale imaging data can be both challenging and messy, so HistoX provides the :class:`Dataset` class to assist with managing, splitting, filtering, and transforming your data for easy downstream use. :class:`Dataset` organizes a set of image tiles extracted at a specific size, along with their associated slides and clinical annotations. Datasets are used for many HistoX functions, and can quickly generate ``torch.utils.data.DataLoader`` and ``tf.data.Datasets`` objects that provide preprocessed slide images for external applications.
 
 Dataset Sources
 ***************
@@ -28,9 +28,9 @@ If you are working in the context of a :ref:`Project <project_setup>`, a dataset
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    P = sf.load_project('/project/path')
+    P = hx.load_project('/project/path')
     dataset = P.dataset(tile_px=299, tile_um='10x', sources=['Source1'])
 
 If ``sources`` is not provided, all available sources will be used.
@@ -39,7 +39,7 @@ Alternatively, you can accomplish the same by creating a :class:`Dataset` object
 
 .. code-block:: python
 
-    dataset = sf.Dataset(
+    dataset = hx.Dataset(
         config='config.json',
         sources=['Source1'],
         annotations='annotations.csv',
@@ -70,7 +70,7 @@ For example, to create a dataset from a set of slides, with a configured TFRecor
     df = pd.DataFrame(...)
 
     # Create a dataset
-    dataset = sf.Dataset(
+    dataset = hx.Dataset(
         slides='/slides',
         tfrecords='/tfrecords',
         annotations=df,
@@ -213,14 +213,14 @@ An important step when planning an experiment is to determine your validation an
 
 |
 
-Slideflow includes tools for flexible training, validation, and evaluation data planning as discussed in the next sections.
+HistoX includes tools for flexible training, validation, and evaluation data planning as discussed in the next sections.
 
 Creating a split
 ----------------
 
 Datasets can be split into training and validation or test datasets with :meth:`Dataset.split`. The result of this function is two datasets - the first training, the second validation - each a separate instance of :class:`Dataset`.
 
-Slideflow provides several options for preparing a validation plan, including:
+HistoX provides several options for preparing a validation plan, including:
 
 - **strategy**:  ``'bootstrap'``, ``'k-fold'``, ``'k-fold-manual'``, ``'k-fold-preserved-site'``, ``'fixed'``, and ``'none'``
 - **fraction**:  (float between 0-1) [not used for k-fold validation]

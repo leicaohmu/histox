@@ -1,0 +1,24 @@
+Multiple-instance learning tutorials
+====================================
+
+Train slide-level models from bags of patch features when only slide-level or
+patient-level labels are available.
+
+.. warning::
+
+   This compatibility tutorial still contains inherited HistoX examples.
+   Use it as a migration reference until the page is marked as verified for
+   the current HistoX release.
+
+.. raw:: html
+
+   <div class="histox-tutorial-grid histox-tutorial-grid--category">
+     <a class="histox-tutorial-card" href="tutorial8.html"><span>MIL</span><h3>Train a MIL model</h3><p>Learn slide-level outcomes from bags of extracted patch features.</p><strong>Compatibility tutorial</strong></a>
+   </div>
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   tutorial8
+

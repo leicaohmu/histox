@@ -119,7 +119,7 @@ class Segment:
         """Generate and apply ROIs to a slide using the loaded segmentation model.
 
         Args:
-            wsi (hx.WSI): Slideflow WSI object.
+            wsi (hx.WSI): HistoX WSI object.
             apply (bool): Whether to apply the generated ROIs to the slide.
                 Defaults to True.
 
@@ -236,7 +236,7 @@ class Segment:
         """Perform tissue segmentation on the given slide or image.
 
         Args:
-            wsi (hx.WSI, np.ndarray): Either a Slideflow WSI or a numpy array,
+            wsi (hx.WSI, np.ndarray): Either a HistoX WSI or a numpy array,
                 with shape (h, w, c) and type np.uint8.
             threshold (float, optional): If None, return the raw
                 predictions (binary or multilabel models) or post-softmax predictions

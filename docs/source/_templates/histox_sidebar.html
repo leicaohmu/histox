@@ -1,0 +1,152 @@
+{% set tutorial_pages = [
+  'tutorials', 'tutorials_training', 'tutorials_evaluation',
+  'tutorials_slides', 'tutorials_mil', 'tutorial1', 'tutorial2',
+  'tutorial3', 'tutorial4', 'tutorial5', 'tutorial6', 'tutorial7',
+  'tutorial8'
+] %}
+{% set api_pages = [
+  'api', 'histox', 'project', 'dataset', 'data_api',
+  'dataset_features', 'heatmap', 'model_params', 'mosaic', 'slidemap',
+  'biscuit', 'histox_cellseg', 'io', 'io_torch', 'gan', 'grad',
+  'mil_module', 'model', 'model_torch', 'norm', 'simclr', 'slide',
+  'slide_qc', 'stats', 'util', 'studio_module'
+] %}
+
+{% macro nav_link(page, label) -%}
+<li><a class="nav-link{% if pagename == page %} active{% endif %}" href="{{ pathto(page) }}">{{ label }}</a></li>
+{%- endmacro %}
+
+{% if pagename in tutorial_pages %}
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="Tutorial navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Tutorials</p>
+  <ul>{{ nav_link('tutorials', 'Tutorials home') }}</ul>
+
+  <p class="caption" role="heading" aria-level="2">Training</p>
+  <ul>
+    {{ nav_link('tutorials_training', 'Training tutorials') }}
+    {{ nav_link('tutorial1', 'Train a first model') }}
+    {{ nav_link('tutorial2', 'Control the training loop') }}
+    {{ nav_link('tutorial3', 'Use a custom architecture') }}
+    {{ nav_link('tutorial7', 'Add custom augmentations') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Evaluation</p>
+  <ul>
+    {{ nav_link('tutorials_evaluation', 'Evaluation tutorials') }}
+    {{ nav_link('tutorial4', 'Evaluate and build heatmaps') }}
+    {{ nav_link('tutorial5', 'Create a mosaic map') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Slides</p>
+  <ul>
+    {{ nav_link('tutorials_slides', 'Slide tutorials') }}
+    {{ nav_link('tutorial6', 'Write a custom slide filter') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">MIL</p>
+  <ul>
+    {{ nav_link('tutorials_mil', 'MIL tutorials') }}
+    {{ nav_link('tutorial8', 'Train a MIL model') }}
+  </ul>
+</nav>
+{% elif pagename in api_pages %}
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="API reference navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Reference API</p>
+  <ul>{{ nav_link('api', 'API index') }}</ul>
+
+  <p class="caption" role="heading" aria-level="2">Core objects</p>
+  <ul>
+    {{ nav_link('histox', 'histox') }}
+    {{ nav_link('project', 'histox.Project') }}
+    {{ nav_link('dataset', 'histox.Dataset') }}
+    {{ nav_link('model_params', 'histox.ModelParams') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    {{ nav_link('data_api', 'histox.data') }}
+    {{ nav_link('dataset_features', 'DatasetFeatures') }}
+    {{ nav_link('slide', 'histox.WSI') }}
+    {{ nav_link('slide_qc', 'histox.slide.qc') }}
+    {{ nav_link('io', 'histox.io') }}
+    {{ nav_link('io_torch', 'histox.io.torch') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Models and analysis</p>
+  <ul>
+    {{ nav_link('model', 'histox.model') }}
+    {{ nav_link('model_torch', 'histox.model.torch') }}
+    {{ nav_link('mil_module', 'histox.mil') }}
+    {{ nav_link('simclr', 'histox.simclr') }}
+    {{ nav_link('gan', 'histox.gan') }}
+    {{ nav_link('grad', 'histox.grad') }}
+    {{ nav_link('norm', 'histox.norm') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Pathology and utilities</p>
+  <ul>
+    {{ nav_link('heatmap', 'histox.Heatmap') }}
+    {{ nav_link('mosaic', 'histox.Mosaic') }}
+    {{ nav_link('slidemap', 'histox.SlideMap') }}
+    {{ nav_link('histox_cellseg', 'histox.cellseg') }}
+    {{ nav_link('biscuit', 'histox.biscuit') }}
+    {{ nav_link('stats', 'histox.stats') }}
+    {{ nav_link('util', 'histox.util') }}
+    {{ nav_link('studio_module', 'histox.studio') }}
+  </ul>
+</nav>
+{% else %}
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    {{ nav_link('docs', 'Documentation home') }}
+    {{ nav_link('user_guide', 'User guide') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    {{ nav_link('installation', 'Installation') }}
+    {{ nav_link('overview', 'Overview') }}
+    {{ nav_link('quickstart', 'Quickstart') }}
+    {{ nav_link('project_setup', 'Project setup') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    {{ nav_link('data', 'Public data') }}
+    {{ nav_link('datasets_and_val', 'Datasets') }}
+    {{ nav_link('slide_processing', 'Slide processing') }}
+    {{ nav_link('features', 'Feature extraction') }}
+    {{ nav_link('segmentation', 'Tissue segmentation') }}
+    {{ nav_link('cellseg', 'Cell segmentation') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    {{ nav_link('training', 'Training') }}
+    {{ nav_link('evaluation', 'Evaluation') }}
+    {{ nav_link('posthoc', 'Post-hoc analysis') }}
+    {{ nav_link('uq', 'Uncertainty') }}
+    {{ nav_link('mil', 'Multiple-instance learning') }}
+    {{ nav_link('ssl', 'Self-supervised learning') }}
+    {{ nav_link('stylegan', 'Generative models') }}
+    {{ nav_link('saliency', 'Interpretation') }}
+    {{ nav_link('custom_loops', 'Custom loops') }}
+    {{ nav_link('studio', 'Studio') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    {{ nav_link('developer', 'Developer notes home') }}
+    {{ nav_link('extensions', 'Extensions') }}
+    {{ nav_link('tfrecords', 'TFRecords') }}
+    {{ nav_link('dataloaders', 'Dataloaders') }}
+    {{ nav_link('custom_extractors', 'Custom extractors') }}
+    {{ nav_link('tile_labels', 'Tile labels') }}
+    {{ nav_link('plugins', 'Plugins') }}
+    {{ nav_link('troubleshooting', 'Troubleshooting') }}
+    {{ nav_link('io_tensorflow', 'TensorFlow data') }}
+    {{ nav_link('model_tensorflow', 'TensorFlow models') }}
+  </ul>
+</nav>
+{% endif %}

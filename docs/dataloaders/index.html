@@ -1,299 +1,1805 @@
 
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Dataloaders: Sampling and Augmentation &mdash; slideflow 3.0.0 documentation</title>
 
 
+<html lang="en" data-content_root="../" >
 
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <title>Dataloaders: Sampling and Augmentation &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <script src="../_static/documentation_options.js?v=73a1cd52"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'dataloaders';</script>
+    <script src="../_static/tutorials.js?v=3b8eb957"></script>
     <link rel="index" title="Index" href="../genindex/" />
     <link rel="search" title="Search" href="../search/" />
     <link rel="next" title="Custom Feature Extractors" href="../custom_extractors/" />
     <link rel="prev" title="TFRecords: Reading and Writing" href="../tfrecords/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="Dataloaders: Sampling and Augmentation - Documentation for histox, part of the PyTorch ecosystem.">
 
 
 
-  <script src="../_static/js/modernizr.min.js"></script>
 
-  <!-- Preload the theme fonts -->
 
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Thin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexSans/IBMPlexSans-MediumItalic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
 
-<!-- Preload the katex fonts -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
 
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
-  <script defer data-domain="slideflow.dev" src="https://plausible.io/js/script.js"></script>
-</head>
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
 
-<div class="container-fluid header-holder tutorials-header" id="header-holder">
-  <div class="container">
-    <div class="header-container">
-      <a class="header-logo" href="https://slideflow.dev" aria-label="Slideflow"></a>
+  }
+</style>
 
-      <div class="main-menu">
-        <ul>
-          <li class="active">
-            <a href="https://slideflow.dev">Docs</a>
-          </li>
 
-          <li>
-            <a href="https://slideflow.dev/tutorial1/">Tutorials</a>
-          </li>
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
 
-          <li>
-            <a href="https://github.com/slideflow/slideflow">GitHub</a>
-          </li>
-        </ul>
-      </div>
+<link rel="stylesheet" type="text/css" href="../_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="../_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="../_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
 
-      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="../">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="../">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../installation/">Install HistoX</a>
+    <a href="../user_guide/">User Guide</a>
+    <a href="../api/">Reference API</a>
+    <a href="../developer/">Developer Notes</a>
+    <a href="../tutorials/">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
     </div>
   </div>
 </div>
 
-<body class="pytorch-body">
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
 
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
 
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
 
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
 
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
 
-    <div class="table-of-contents-link-wrapper">
-      <span>Table of Contents</span>
-      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
     </div>
+    
+  </div>
+  
+  
 
-    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
-      <div class="pytorch-side-scroll">
-        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          <div class="pytorch-left-menu-search">
-
-
-
-
-
-                <div class="version">
-                  3.0
-                </div>
-
-
-
-
-
-
-
-
-
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
-    <input type="text" name="q" placeholder="Search Docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
 </div>
 
+    </header>
+  
 
-          </div>
-
-
-
-
-
-
-
-              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../project_setup/">Setting up a Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../datasets_and_val/">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slide_processing/">Slide Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../training/">Training</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../evaluation/">Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../posthoc/">Layer Activations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../uq/">Uncertainty Quantification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features/">Generating Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mil/">Multiple-Instance Learning (MIL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ssl/">Self-Supervised Learning (SSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stylegan/">Generative Networks (GANs)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../saliency/">Saliency Maps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../segmentation/">Tissue Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cellseg/">Cell Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_loops/">Custom Training Loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../studio/">Slideflow Studio: Live Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/">Troubleshooting</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Developer Notes</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../tfrecords/">TFRecords: Reading and Writing</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Dataloaders: Sampling and Augmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_extractors/">Custom Feature Extractors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tile_labels/">Strong Supervision with Tile Labels</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../plugins/">Creating a Slideflow Plugin</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../slideflow/">slideflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../project/">slideflow.Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dataset/">slideflow.Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dataset_features/">slideflow.DatasetFeatures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../heatmap/">slideflow.Heatmap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model_params/">slideflow.ModelParams</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mosaic/">slideflow.Mosaic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slidemap/">slideflow.SlideMap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../biscuit/">slideflow.biscuit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slideflow_cellseg/">slideflow.cellseg</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io/">slideflow.io</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io_tensorflow/">slideflow.io.tensorflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io_torch/">slideflow.io.torch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gan/">slideflow.gan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../grad/">slideflow.grad</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mil_module/">slideflow.mil</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model/">slideflow.model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model_tensorflow/">slideflow.model.tensorflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model_torch/">slideflow.model.torch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../norm/">slideflow.norm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../simclr/">slideflow.simclr</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slide/">slideflow.slide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slide_qc/">slideflow.slide.qc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../stats/">slideflow.stats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../util/">slideflow.util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../studio_module/">slideflow.studio</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial1/">Tutorial 1: Model training (simple)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial2/">Tutorial 2: Model training (advanced)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial3/">Tutorial 3: Using a custom architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial4/">Tutorial 4: Model evaluation &amp; heatmaps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial5/">Tutorial 5: Creating a mosaic map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial6/">Tutorial 6: Custom slide filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial7/">Tutorial 7: Training with custom augmentations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial8/">Tutorial 8: Multiple-Instance Learning</a></li>
-</ul>
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
 
 
 
-        </div>
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="../installation/">Install HistoX</a>
+    <a href="../user_guide/">User Guide</a>
+    <a href="../api/">Reference API</a>
+    <a href="../developer/">Developer Notes</a>
+    <a href="../tutorials/">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
       </div>
-    </nav>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
 
-    <div class="pytorch-container">
-      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
-        <div class="pytorch-breadcrumbs-wrapper">
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="pytorch-breadcrumbs">
-
-      <li>
-        <a href="../">
-
-            Docs
-
-        </a> &gt;
-      </li>
-
-
-      <li>Dataloaders: Sampling and Augmentation</li>
-
-
-      <li class="pytorch-breadcrumbs-aside">
-
-
-            <a href="../_sources/dataloaders.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
-
-
-      </li>
-
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="../docs/">Documentation home</a></li>
+    <li><a class="nav-link" href="../user_guide/">User guide</a></li>
   </ul>
 
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="../installation/">Installation</a></li>
+    <li><a class="nav-link" href="../overview/">Overview</a></li>
+    <li><a class="nav-link" href="../quickstart/">Quickstart</a></li>
+    <li><a class="nav-link" href="../project_setup/">Project setup</a></li>
+  </ul>
 
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="../data/">Public data</a></li>
+    <li><a class="nav-link" href="../datasets_and_val/">Datasets</a></li>
+    <li><a class="nav-link" href="../slide_processing/">Slide processing</a></li>
+    <li><a class="nav-link" href="../features/">Feature extraction</a></li>
+    <li><a class="nav-link" href="../segmentation/">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="../cellseg/">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link" href="../training/">Training</a></li>
+    <li><a class="nav-link" href="../evaluation/">Evaluation</a></li>
+    <li><a class="nav-link" href="../posthoc/">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="../uq/">Uncertainty</a></li>
+    <li><a class="nav-link" href="../mil/">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="../ssl/">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="../stylegan/">Generative models</a></li>
+    <li><a class="nav-link" href="../saliency/">Interpretation</a></li>
+    <li><a class="nav-link" href="../custom_loops/">Custom loops</a></li>
+    <li><a class="nav-link" href="../studio/">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="../developer/">Developer notes home</a></li>
+    <li><a class="nav-link" href="../extensions/">Extensions</a></li>
+    <li><a class="nav-link" href="../tfrecords/">TFRecords</a></li>
+    <li><a class="nav-link active" href="#">Dataloaders</a></li>
+    <li><a class="nav-link" href="../custom_extractors/">Custom extractors</a></li>
+    <li><a class="nav-link" href="../tile_labels/">Tile labels</a></li>
+    <li><a class="nav-link" href="../plugins/">Plugins</a></li>
+    <li><a class="nav-link" href="../troubleshooting/">Troubleshooting</a></li>
+    <li><a class="nav-link" href="../io_tensorflow/">TensorFlow data</a></li>
+    <li><a class="nav-link" href="../model_tensorflow/">TensorFlow models</a></li>
+  </ul>
+</nav>
 </div>
-        </div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
 
-        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
-          Shortcuts
-        </div>
+
+
+<div id="rtd-footer-container"></div>
       </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
 
-      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
-        <div class="pytorch-content-left">
 
 
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../docs/" class="nav-link">HistoX documentation</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../developer/" class="nav-link">Developer notes</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Dataloaders:...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
 
-          <div class="rst-content">
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="../docs/">
+      <meta itemprop="name" content="HistoX documentation">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="../developer/">
+      <meta itemprop="name" content="Developer notes">
+      <meta itemprop="position" content="2">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="Dataloaders: Sampling and Augmentation">
+      <meta itemprop="position" content="3">
+    </div>
+  </div>
 
-            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
-             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+  
+  
 
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section id="dataloaders-sampling-and-augmentation">
-<span id="dataloaders"></span><h1>Dataloaders: Sampling and Augmentation<a class="headerlink" href="#dataloaders-sampling-and-augmentation" title="Permalink to this heading">¶</a></h1>
-<p>With support for both Tensorflow and PyTorch, Slideflow provides several options for dataset sampling, processing, and augmentation. Here, we’ll review the options for creating dataloaders - objects that read and process TFRecord data and return images and labels - in each framework. In all cases, data are read from TFRecords generated through <a class="reference internal" href="../slide_processing/#filtering"><span class="std std-ref">Slide Processing</span></a>. The TFRecord data format is discussed in more detail in the <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">TFRecords: Reading and Writing</span></a> note.</p>
+<span id="dataloaders"></span><h1>Dataloaders: Sampling and Augmentation<a class="headerlink" href="#dataloaders-sampling-and-augmentation" title="Link to this heading">#</a></h1>
+<p>With support for both Tensorflow and PyTorch, HistoX provides several options for dataset sampling, processing, and augmentation. Here, we’ll review the options for creating dataloaders - objects that read and process TFRecord data and return images and labels - in each framework. In all cases, data are read from TFRecords generated through <a class="reference internal" href="../slide_processing/#filtering"><span class="std std-ref">Slide Processing</span></a>. The TFRecord data format is discussed in more detail in the <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">TFRecords: Reading and Writing</span></a> note.</p>
 <section id="tensorflow">
-<h2>Tensorflow<a class="headerlink" href="#tensorflow" title="Permalink to this heading">¶</a></h2>
-<p>The <a class="reference internal" href="../dataset/#slideflow.Dataset.tensorflow" title="slideflow.Dataset.tensorflow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.tensorflow()</span></code></a> method provides an easy interface for creating a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> that reads and interleaves from tfrecords in a Slideflow dataset. Behind the scenes, this method uses the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/TFRecordDataset"><code class="docutils literal notranslate"><span class="pre">tf.data.TFRecordDataset</span></code></a> class for reading and parsing each TFRecord.</p>
+<h2>Tensorflow<a class="headerlink" href="#tensorflow" title="Link to this heading">#</a></h2>
+<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.tensorflow()</span></code> method provides an easy interface for creating a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> that reads and interleaves from tfrecords in a HistoX dataset. Behind the scenes, this method uses the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/TFRecordDataset"><code class="docutils literal notranslate"><span class="pre">tf.data.TFRecordDataset</span></code></a> class for reading and parsing each TFRecord.</p>
 <p>The returned <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> object is an iterable-only dataset whose returned values depend on the arguments provided to the <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> function.</p>
 <p>If no arguments are provided, the returned dataset will yield a tuple of <code class="docutils literal notranslate"><span class="pre">(image,</span> <span class="pre">None)</span></code>, where the image is a <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code> of shape <code class="docutils literal notranslate"><span class="pre">[tile_height,</span> <span class="pre">tile_width,</span> <span class="pre">num_channels]</span></code> and type <code class="docutils literal notranslate"><span class="pre">tf.uint8</span></code>.</p>
 <p>If the <code class="docutils literal notranslate"><span class="pre">labels</span></code> argument is provided (dictionary mapping slide names to a numeric label), the returned dataset will yield a tuple of <code class="docutils literal notranslate"><span class="pre">(image,</span> <span class="pre">label)</span></code>, where the label is a <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code> with a shape and type that matches the provided labels.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">slideflow</span> <span class="k">as</span> <span class="nn">sf</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
 
 <span class="c1"># Create a dataset object</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 
 <span class="c1"># Get the labels</span>
@@ -309,7 +1815,7 @@
 </pre></div>
 </div>
 <section id="slide-names-and-tile-locations">
-<h3>Slide names and tile locations<a class="headerlink" href="#slide-names-and-tile-locations" title="Permalink to this heading">¶</a></h3>
+<h3>Slide names and tile locations<a class="headerlink" href="#slide-names-and-tile-locations" title="Link to this heading">#</a></h3>
 <p>Dataloaders can be configured to return slide names and tile locations in addition to the image and label. This is done by providing the <code class="docutils literal notranslate"><span class="pre">incl_slidenames</span></code> and <code class="docutils literal notranslate"><span class="pre">incl_loc</span></code> arguments to the <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> method. Both arguments are boolean values and default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 <p>Setting <code class="docutils literal notranslate"><span class="pre">incl_slidenames=True</span></code> will return the slidename as a Tensor (dtype=string) after the label. Setting <code class="docutils literal notranslate"><span class="pre">incl_loc=True</span></code> will return the x and y locations, both as Tensors (dtype=int64), as the last two values of the tuple.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">tensorflow</span><span class="p">(</span><span class="n">incl_slidenames</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">incl_loc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -320,7 +1826,7 @@
 </div>
 </section>
 <section id="image-preprocessing">
-<h3>Image preprocessing<a class="headerlink" href="#image-preprocessing" title="Permalink to this heading">¶</a></h3>
+<h3>Image preprocessing<a class="headerlink" href="#image-preprocessing" title="Link to this heading">#</a></h3>
 <p>Dataloaders created with <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> include several image preprocessing options. These options are provided as keyword arguments to the <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> method and are executed in the order listed below:</p>
 <ul class="simple">
 <li><p><strong>crop_left</strong> (int): Crop images to this top-left x/y coordinate. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
@@ -346,7 +1852,7 @@
 </ul>
 </section>
 <section id="dataset-sharding">
-<h3>Dataset sharding<a class="headerlink" href="#dataset-sharding" title="Permalink to this heading">¶</a></h3>
+<h3>Dataset sharding<a class="headerlink" href="#dataset-sharding" title="Link to this heading">#</a></h3>
 <p>Tensorflow dataloaders can be sharded into multiple partitions, ensuring that data is not duplicated when performing distributed training across multiple processes or nodes. This is done by providing the <code class="docutils literal notranslate"><span class="pre">shard_idx</span></code> and <code class="docutils literal notranslate"><span class="pre">num_shards</span></code> arguments to the <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> method. The <code class="docutils literal notranslate"><span class="pre">shard_idx</span></code> argument is an integer specifying the shard number, and <code class="docutils literal notranslate"><span class="pre">num_shards</span></code> is an integer specifying the total number of shards.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shard the dataset for GPU 1 of 4</span>
 <span class="n">tf_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">tensorflow</span><span class="p">(</span>
@@ -359,14 +1865,14 @@
 </section>
 </section>
 <section id="pytorch">
-<h2>PyTorch<a class="headerlink" href="#pytorch" title="Permalink to this heading">¶</a></h2>
-<p>As with Tensorflow, the <a class="reference internal" href="../dataset/#slideflow.Dataset.torch" title="slideflow.Dataset.torch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.torch()</span></code></a> method creates a <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader"><code class="docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> that reads images from TFRecords. In the backend, TFRecords are read using <code class="xref py py-func docutils literal notranslate"><span class="pre">slideflow.tfrecord.torch.MultiTFRecordDataset()</span></code> and processed as described in <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">TFRecords: Reading and Writing</span></a>.</p>
+<h2>PyTorch<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h2>
+<p>As with Tensorflow, the <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.torch()</span></code> method creates a <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader"><code class="docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> that reads images from TFRecords. In the backend, TFRecords are read using <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.tfrecord.torch.MultiTFRecordDataset()</span></code> and processed as described in <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">TFRecords: Reading and Writing</span></a>.</p>
 <p>The returned <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader"><code class="docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> is an iterable-only dataloader whose returned values depend on the arguments provided to the <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> function. An indexable, map-style dataset is also available when using PyTorch, as described in <a class="reference internal" href="#indexable-dataloader"><span class="std std-ref">Direct indexing</span></a>.</p>
-<p>If no arguments are provided, the returned dataloader will yield a tuple of <code class="docutils literal notranslate"><span class="pre">(image,</span> <span class="pre">None)</span></code>, where the image is a <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> of shape <code class="docutils literal notranslate"><span class="pre">[num_channels,</span> <span class="pre">tile_height,</span> <span class="pre">tile_width]</span></code> and type <code class="docutils literal notranslate"><span class="pre">torch.uint8</span></code>. Labels are assigned as described above. Slide names and tile location can also be returned, using the same arguments as <a class="reference external" href="https://slideflow.dev/dataloaders/#slide-names-and-tile-locations">described above</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">slideflow</span> <span class="k">as</span> <span class="nn">sf</span>
+<p>If no arguments are provided, the returned dataloader will yield a tuple of <code class="docutils literal notranslate"><span class="pre">(image,</span> <span class="pre">None)</span></code>, where the image is a <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> of shape <code class="docutils literal notranslate"><span class="pre">[num_channels,</span> <span class="pre">tile_height,</span> <span class="pre">tile_width]</span></code> and type <code class="docutils literal notranslate"><span class="pre">torch.uint8</span></code>. Labels are assigned as described above. Slide names and tile location can also be returned, using the same arguments as <a class="reference external" href="https://histox.readthedocs.io/en/latest/dataloaders/#slide-names-and-tile-locations">described above</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
 
 <span class="c1"># Create a dataset object</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 
 <span class="c1"># Create a tensorflow dataset</span>
@@ -378,7 +1884,7 @@
 </pre></div>
 </div>
 <section id="id1">
-<h3>Image preprocessing<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<h3>Image preprocessing<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>Dataloaders created with <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> include several image preprocessing options, provided as keyword arguments to the <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> method. These preprocessing steps are executed in the order listed below:</p>
 <ul class="simple">
 <li><p><strong>normalizer</strong> (<code class="docutils literal notranslate"><span class="pre">StainNormalizer</span></code>): Perform stain normalization.</p></li>
@@ -398,7 +1904,7 @@
 <li><p><strong>standardize</strong> (bool): Standardize images with <code class="docutils literal notranslate"><span class="pre">image</span> <span class="pre">/</span> <span class="pre">127.5</span> <span class="pre">-</span> <span class="pre">1</span></code>, returning a <code class="docutils literal notranslate"><span class="pre">torch.float32</span></code> image. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>, returning a <code class="docutils literal notranslate"><span class="pre">torch.uint8</span></code> image.</p></li>
 </ul>
 <p>Below is an example of using the <code class="docutils literal notranslate"><span class="pre">transform</span></code> argument to apply a torchvision transform to each image:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">T</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">T</span>
 
 <span class="c1"># Create a torch dataloader</span>
 <span class="n">torch_dataloader</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">torch</span><span class="p">(</span>
@@ -416,7 +1922,7 @@
 </div>
 </section>
 <section id="id2">
-<h3>Dataset sharding<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<h3>Dataset sharding<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>PyTorch Dataloaders can similarly be sharded into multiple partitions, ensuring that data is not duplicated when performing distributed training across multiple process or nodes.</p>
 <p>Sharding is done in two stages. First, dataloaders can be split into partitions using the <code class="docutils literal notranslate"><span class="pre">rank</span></code> and <code class="docutils literal notranslate"><span class="pre">num_replicas</span></code> arguments to the <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> method. The <code class="docutils literal notranslate"><span class="pre">rank</span></code> argument is an integer specifying the rank of the current process, and <code class="docutils literal notranslate"><span class="pre">num_replicas</span></code> is an integer specifying the total number of processes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shard the dataset for GPU 1 of 4</span>
@@ -431,13 +1937,13 @@
 </section>
 </section>
 <section id="labeling">
-<h2>Labeling<a class="headerlink" href="#labeling" title="Permalink to this heading">¶</a></h2>
+<h2>Labeling<a class="headerlink" href="#labeling" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">label</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> and <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> methods accept a dictionary mapping slide names to a numeric label. During TFRecord reading, the slide name is used to lookup the label from the provided dictionary.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Labels are assigned to image tiles based on the slide names inside a <a class="reference internal" href="../tfrecords/#tfrecords"><span class="std std-ref">tfrecord</span></a> file, not by the filename of the tfrecord. This means that renaming a TFRecord file will not change the label of the tiles inside the file. If you need to change the slide names associated with tiles inside a TFRecord, the TFRecord file must be regenerated.</p>
 </div>
-<p>The most common way to generate labels is to use the <a class="reference internal" href="../dataset/#slideflow.Dataset.labels" title="slideflow.Dataset.labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.labels()</span></code></a> method, which returns a dictionary mapping slide names to numeric labels. For categorical labels, the numeric labels correspond to the index of the label in the <code class="docutils literal notranslate"><span class="pre">unique_labels</span></code> list. For example, if the <code class="docutils literal notranslate"><span class="pre">unique_labels</span></code> list is <code class="docutils literal notranslate"><span class="pre">['HPV-',</span> <span class="pre">'HPV+']</span></code>, then the mapping of numeric labels would be <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">'HPV-':</span> <span class="pre">0,</span> <span class="pre">'HPV+':</span> <span class="pre">1</span> <span class="pre">}</span></code>.</p>
+<p>The most common way to generate labels is to use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.labels()</span></code> method, which returns a dictionary mapping slide names to numeric labels. For categorical labels, the numeric labels correspond to the index of the label in the <code class="docutils literal notranslate"><span class="pre">unique_labels</span></code> list. For example, if the <code class="docutils literal notranslate"><span class="pre">unique_labels</span></code> list is <code class="docutils literal notranslate"><span class="pre">['HPV-',</span> <span class="pre">'HPV+']</span></code>, then the mapping of numeric labels would be <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">'HPV-':</span> <span class="pre">0,</span> <span class="pre">'HPV+':</span> <span class="pre">1</span> <span class="pre">}</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span><span class="p">,</span> <span class="n">unique_labels</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">labels</span><span class="p">(</span><span class="s1">&#39;HPV_status&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">unique_labels</span>
 <span class="go">[&#39;HPV-&#39;, &#39;HPV+&#39;]</span>
@@ -451,11 +1957,11 @@
 </div>
 </section>
 <section id="sampling">
-<span id="id3"></span><h2>Sampling<a class="headerlink" href="#sampling" title="Permalink to this heading">¶</a></h2>
+<span id="id3"></span><h2>Sampling<a class="headerlink" href="#sampling" title="Link to this heading">#</a></h2>
 <p>Dataloaders created with <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> and <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> are iterable-only dataloaders, meaning that they cannot be indexed directly. This is because the underlying TFRecords are sampled in a streaming fashion, and the dataloader does not know what the next record will be until it has been read. This is in contrast to the <a class="reference internal" href="#indexable-dataloader"><span class="std std-ref">Direct indexing</span></a> method described below, which creates an indexable, map-style dataset.</p>
 <p>Dataloaders created with <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> and <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> can be configured to sample from TFRecords in several ways, with options for infinite vs. finite sampling, oversampling, and undersampling. These sampling methods are described below.</p>
 <section id="infinite-dataloaders">
-<h3>Infinite dataloaders<a class="headerlink" href="#infinite-dataloaders" title="Permalink to this heading">¶</a></h3>
+<h3>Infinite dataloaders<a class="headerlink" href="#infinite-dataloaders" title="Link to this heading">#</a></h3>
 <p>By default, dataloaders created with <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> and <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> will sample from TFRecords in an infinite loop. This is useful for training, where the dataloader should continue to yield images until the training process is complete. By default, images are sampled from TFRecords with uniform sampling, meaning that each TFRecord has an equal chance of yielding an image. This sampling strategy can be configured, as described below.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -463,12 +1969,12 @@
 </div>
 </section>
 <section id="finite-dataloaders">
-<h3>Finite dataloaders<a class="headerlink" href="#finite-dataloaders" title="Permalink to this heading">¶</a></h3>
+<h3>Finite dataloaders<a class="headerlink" href="#finite-dataloaders" title="Link to this heading">#</a></h3>
 <p>Dataloaders can also be configured with finite sampling, yielding tiles from TFRecords exactly once. This is accomplished by passing the argument <code class="docutils literal notranslate"><span class="pre">infinite=False</span></code> to the <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> or <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> methods.</p>
 </section>
 <section id="oversampling-with-balancing">
-<span id="balancing"></span><h3>Oversampling with balancing<a class="headerlink" href="#oversampling-with-balancing" title="Permalink to this heading">¶</a></h3>
-<p>Oversampling methods control the probability that tiles are read from each TFRecord, affecting the balance of data across slides, patients, and outcome categories. Oversampling is configured at the Dataset level, using the <a class="reference internal" href="../dataset/#slideflow.Dataset.balance" title="slideflow.Dataset.balance"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.balance()</span></code></a> method. This method returns a copy of the dataset with the specified oversampling strategy.</p>
+<span id="balancing"></span><h3>Oversampling with balancing<a class="headerlink" href="#oversampling-with-balancing" title="Link to this heading">#</a></h3>
+<p>Oversampling methods control the probability that tiles are read from each TFRecord, affecting the balance of data across slides, patients, and outcome categories. Oversampling is configured at the Dataset level, using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.balance()</span></code> method. This method returns a copy of the dataset with the specified oversampling strategy.</p>
 <p><strong>Slide-level balancing</strong>: By default, images are sampled from TFRecords with uniform probability, meaning that each TFRecord has an equal chance of yielding an image. This is equivalent to both <code class="docutils literal notranslate"><span class="pre">.balance(strategy='slide')</span></code> and <code class="docutils literal notranslate"><span class="pre">.balance(strategy=None)</span></code>. This strategy will oversample images from slides with fewer tiles, and undersample images from slides with more tiles.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample from TFRecords with equal probability</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">balance</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;slide&#39;</span><span class="p">)</span>
@@ -506,8 +2012,8 @@
 <p>Balancing is automatically applied to dataloaders created with the <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> and <code class="docutils literal notranslate"><span class="pre">.torch()</span></code> methods.</p>
 </section>
 <section id="undersampling-with-clipping">
-<h3>Undersampling with clipping<a class="headerlink" href="#undersampling-with-clipping" title="Permalink to this heading">¶</a></h3>
-<p>Datasets can also be configured to undersample TFRecords using <a class="reference internal" href="../dataset/#slideflow.Dataset.clip" title="slideflow.Dataset.clip"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Dataset.clip()</span></code></a>. Several undersampling strategies are available.</p>
+<h3>Undersampling with clipping<a class="headerlink" href="#undersampling-with-clipping" title="Link to this heading">#</a></h3>
+<p>Datasets can also be configured to undersample TFRecords using <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Dataset.clip()</span></code>. Several undersampling strategies are available.</p>
 <p><strong>Slide-level clipping</strong>: TFRecords can be clipped to a maximum number of tiles per slide using <code class="docutils literal notranslate"><span class="pre">.clip(max_tiles)</span></code>. This strategy will clip TFRecords with more tiles than the specified <code class="docutils literal notranslate"><span class="pre">max_tiles</span></code> value, resulting in a maximum of <code class="docutils literal notranslate"><span class="pre">max_tiles</span></code> tiles per slide.</p>
 <p><strong>Patient-level clipping</strong>: TFRecords can be clipped to a maximum number of tiles per patient using <code class="docutils literal notranslate"><span class="pre">.clip(max_tiles,</span> <span class="pre">strategy='patient')</span></code>. For patients with more than one slide/TFRecord, TFRecords will be clipped proportionally.</p>
 <p><strong>Outcome-level clipping</strong>: TFRecords can also be clipped to a maximum number of tiles per outcome category using <code class="docutils literal notranslate"><span class="pre">.clip(max_tiles,</span> <span class="pre">strategy='category',</span> <span class="pre">headers=...)</span></code>. The outcome category is specified by the <code class="docutils literal notranslate"><span class="pre">headers</span></code> argument, which can be a single header name or a list of header names. Within each category, TFRecords will be clipped proportionally.</p>
@@ -524,12 +2030,12 @@
 <p>Undersampling via dataset clipping is automatically applied to dataloaders created with <code class="docutils literal notranslate"><span class="pre">.tensorflow()</span></code> and <code class="docutils literal notranslate"><span class="pre">.torch()</span></code>.</p>
 </section>
 <section id="during-training">
-<h3>During training<a class="headerlink" href="#during-training" title="Permalink to this heading">¶</a></h3>
-<p>If you are training a Slideflow model by directly providing a training and validation dataset to the <a class="reference internal" href="../project/#slideflow.Project.train" title="slideflow.Project.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">slideflow.Project.train()</span></code></a> method, you can configure the datasets to perform oversampling and undersampling as described above. For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">slideflow</span> <span class="k">as</span> <span class="nn">sf</span>
+<h3>During training<a class="headerlink" href="#during-training" title="Link to this heading">#</a></h3>
+<p>If you are training a HistoX model by directly providing a training and validation dataset to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">histox.Project.train()</span></code> method, you can configure the datasets to perform oversampling and undersampling as described above. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
 
 <span class="c1"># Load a project</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 
 <span class="c1"># Configure a training dataset with tile-level balancing</span>
 <span class="c1"># and clipping to max 100 tiles per TFRecord</span>
@@ -547,14 +2053,14 @@
 </pre></div>
 </div>
 <p>Alternatively, you can configure oversampling during training through the <code class="docutils literal notranslate"><span class="pre">training_balance</span></code> and <code class="docutils literal notranslate"><span class="pre">validation_balance</span></code> hyperparameters, as described in the <a class="reference internal" href="../model_params/#model-params"><span class="std std-ref">ModelParams</span></a> documentation. Undersampling with dataset clipping can be performed with the <code class="docutils literal notranslate"><span class="pre">max_tiles</span></code> argument. Configuring oversampling/undersampling with this method propagates the configuration to all datasets generated during cross-validation.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">slideflow</span> <span class="k">as</span> <span class="nn">sf</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
 
 <span class="c1"># Load a project</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 
 <span class="c1"># Configure hyperparameters with tile-level</span>
 <span class="c1"># balancing/oversampling for the training data</span>
-<span class="n">hp</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span>
+<span class="n">hp</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">ModelParams</span><span class="p">(</span>
     <span class="o">...</span><span class="p">,</span>
     <span class="n">training_balance</span><span class="o">=</span><span class="s1">&#39;tile&#39;</span><span class="p">,</span>
     <span class="n">validation_balance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -572,13 +2078,13 @@
 </section>
 </section>
 <section id="direct-indexing">
-<span id="indexable-dataloader"></span><h2>Direct indexing<a class="headerlink" href="#direct-indexing" title="Permalink to this heading">¶</a></h2>
-<p>An indexable, map-style dataloader can be created for PyTorch using <a class="reference internal" href="../io_torch/#slideflow.io.torch.IndexedInterleaver" title="slideflow.io.torch.IndexedInterleaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">slideflow.io.torch.IndexedInterleaver</span></code></a>, which returns a <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code>. Indexable datasets are only available for the PyTorch backend.</p>
+<span id="indexable-dataloader"></span><h2>Direct indexing<a class="headerlink" href="#direct-indexing" title="Link to this heading">#</a></h2>
+<p>An indexable, map-style dataloader can be created for PyTorch using <a class="reference internal" href="../io_torch/#histox.io.torch.IndexedInterleaver" title="histox.io.torch.IndexedInterleaver"><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.io.torch.IndexedInterleaver</span></code></a>, which returns a <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code>. Indexable datasets are only available for the PyTorch backend.</p>
 <p>This indexable dataset is created from a list of TFRecords and accepts many arguments for controlling labels, augmentation and image transformations.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slideflow.io.torch</span> <span class="kn">import</span> <span class="n">IndexedInterleaver</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.io.torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">IndexedInterleaver</span>
 
 <span class="c1"># Create a dataset object</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 
 <span class="c1"># Get the TFRecords</span>
@@ -623,7 +2129,7 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">slideflow.io.IndexedInterleaver</span></code> supports undersampling via the <cite>clip</cite> argument (array of clipping values for each TFRecord), but does not support oversampling or balancing.</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">histox.io.IndexedInterleaver</span></code> supports undersampling via the <cite>clip</cite> argument (array of clipping values for each TFRecord), but does not support oversampling or balancing.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specify TFRecord clipping values</span>
 <span class="n">dts</span> <span class="o">=</span> <span class="n">IndexedInterleaver</span><span class="p">(</span>
     <span class="n">tfrecords</span><span class="o">=...</span><span class="p">,</span>
@@ -633,7 +2139,7 @@
 </pre></div>
 </div>
 <p>A <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader"><code class="docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> can then be created from the indexable dataset using the <code class="docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code> class, as described in the PyTorch documentation.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
 
 <span class="c1"># Create a dataloader</span>
 <span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
@@ -653,164 +2159,277 @@
 </section>
 
 
-             </article>
+                </article>
+              
+</div>
 
-            </div>
-            <footer>
-
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-
-        <a href="../custom_extractors/" class="btn btn-neutral float-right" title="Custom Feature Extractors" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
-
-
-        <a href="../tfrecords/" class="btn btn-neutral" title="TFRecords: Reading and Writing" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
-
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
     </div>
+</div>
 
-
-
-
-    <hr>
-
-
-
-  <div role="contentinfo">
-    <p>
-        &copy; Copyright 2023, James M Dolezal.
-
-    </p>
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
   </div>
+</div>
 
-      <div>
-        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../tfrecords/"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">TFRecords: Reading and Writing</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../custom_extractors/"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Custom Feature Extractors</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../tfrecords/"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">TFRecords: Reading and Writing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../custom_extractors/"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Custom Feature Extractors</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+    
+       <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensorflow">Tensorflow</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-names-and-tile-locations">Slide names and tile locations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing">Image preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-sharding">Dataset sharding</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">PyTorch</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Image preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Dataset sharding</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labeling">Labeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infinite-dataloaders">Infinite dataloaders</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-dataloaders">Finite dataloaders</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oversampling-with-balancing">Oversampling with balancing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#undersampling-with-clipping">Undersampling with clipping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#during-training">During training</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-indexing">Direct indexing</a></li>
+</ul>
+  </nav></div>
+    
+       <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/leicaohmu/histox/edit/develop/docs/source/dataloaders.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+    
+       <div class="sidebar-secondary-item">
+    <div class="tocsection sourcelink">
+      <a href="../_sources/dataloaders.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+      </a>
+    </div>
+</div>
+    
 
 
+
+
+</div>
+</div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="../">Home</a>
+      <a href="../docs/">Docs</a>
+      <a href="../tutorials/">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
 </footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
 
-          </div>
-        </div>
-
-        <div class="pytorch-content-right" id="pytorch-content-right">
-          <div class="pytorch-right-menu" id="pytorch-right-menu">
-            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
-              <ul>
-<li><a class="reference internal" href="#">Dataloaders: Sampling and Augmentation</a><ul>
-<li><a class="reference internal" href="#tensorflow">Tensorflow</a><ul>
-<li><a class="reference internal" href="#slide-names-and-tile-locations">Slide names and tile locations</a></li>
-<li><a class="reference internal" href="#image-preprocessing">Image preprocessing</a></li>
-<li><a class="reference internal" href="#dataset-sharding">Dataset sharding</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pytorch">PyTorch</a><ul>
-<li><a class="reference internal" href="#id1">Image preprocessing</a></li>
-<li><a class="reference internal" href="#id2">Dataset sharding</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#labeling">Labeling</a></li>
-<li><a class="reference internal" href="#sampling">Sampling</a><ul>
-<li><a class="reference internal" href="#infinite-dataloaders">Infinite dataloaders</a></li>
-<li><a class="reference internal" href="#finite-dataloaders">Finite dataloaders</a></li>
-<li><a class="reference internal" href="#oversampling-with-balancing">Oversampling with balancing</a></li>
-<li><a class="reference internal" href="#undersampling-with-clipping">Undersampling with clipping</a></li>
-<li><a class="reference internal" href="#during-training">During training</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#direct-indexing">Direct indexing</a></li>
-</ul>
-</li>
-</ul>
-
-            </div>
-          </div>
-        </div>
-      </section>
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
     </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
 
-
-
-
-
-
-
-       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-         <script src="../_static/doctools.js"></script>
-         <script src="../_static/sphinx_highlight.js"></script>
-
-
-
-  <script type="text/javascript" src="../_static/js/vendor/jquery-3.6.3.min.js"></script>
-  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
-  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "Dataloaders: Sampling and Augmentation",
+       "headline": "Dataloaders: Sampling and Augmentation",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/dataloaders.html",
+       "articleBody": "Dataloaders: Sampling and Augmentation# With support for both Tensorflow and PyTorch, HistoX provides several options for dataset sampling, processing, and augmentation. Here, we\u2019ll review the options for creating dataloaders - objects that read and process TFRecord data and return images and labels - in each framework. In all cases, data are read from TFRecords generated through Slide Processing. The TFRecord data format is discussed in more detail in the TFRecords: Reading and Writing note. Tensorflow# The histox.Dataset.tensorflow() method provides an easy interface for creating a tf.data.Dataset that reads and interleaves from tfrecords in a HistoX dataset. Behind the scenes, this method uses the tf.data.TFRecordDataset class for reading and parsing each TFRecord. The returned tf.data.Dataset object is an iterable-only dataset whose returned values depend on the arguments provided to the .tensorflow() function. If no arguments are provided, the returned dataset will yield a tuple of (image, None), where the image is a tf.Tensor of shape [tile_height, tile_width, num_channels] and type tf.uint8. If the labels argument is provided (dictionary mapping slide names to a numeric label), the returned dataset will yield a tuple of (image, label), where the label is a tf.Tensor with a shape and type that matches the provided labels. import histox as hx # Create a dataset object project = hx.load_project(...) dataset = project.dataset(...) # Get the labels labels, unique_labels = dataset.labels(\u0027HPV_status\u0027) # Create a tensorflow dataset # that yields (image, label) tuples tf_dataset = dataset.tensorflow(labels=labels) for image, label in tf_dataset: # Do something with the image and label... ... Slide names and tile locations# Dataloaders can be configured to return slide names and tile locations in addition to the image and label. This is done by providing the incl_slidenames and incl_loc arguments to the .tensorflow() method. Both arguments are boolean values and default to False. Setting incl_slidenames=True will return the slidename as a Tensor (dtype=string) after the label. Setting incl_loc=True will return the x and y locations, both as Tensors (dtype=int64), as the last two values of the tuple. tf_dataset = dataset.tensorflow(incl_slidenames=True, incl_loc=True) for image, label, slide, loc_x, loc_y in tf_dataset: ... Image preprocessing# Dataloaders created with .tensorflow() include several image preprocessing options. These options are provided as keyword arguments to the .tensorflow() method and are executed in the order listed below: crop_left (int): Crop images to this top-left x/y coordinate. Default is None. crop_width (int): Crop images to this width. Default is None. resize_target (int): Resize images to this width/height. Default is None. resize_method (str): Resize method. Default is \"lanczos3\". resize_aa (bool): Enable antialiasing if resizing. Defaults to True. normalizer (StainNormalizer): Perform stain normalization. augment (str): Perform augmentations based on the provided string. Combine characters to perform multiple augmentations (e.g. \u0027xyrj\u0027). Options include: \u0027n\u0027: Perform Stain Augmentation (done concurrently with stain normalization) \u0027j\u0027: Random JPEG compression (50% chance to compress with quality between 50-100) \u0027r\u0027: Random 90-degree rotation \u0027x\u0027: Random horizontal flip \u0027y\u0027: Random vertical flip \u0027b\u0027: Random Gaussian blur (10% chance to blur with sigma between 0.5-2.0) transform (Any): Arbitrary function to apply to each image. The function must accept a single argument (the image) and return a single value (the transformed image). standardize (bool): Standardize images with tf.image.per_image_standardization(), returning a tf.float32 image. Default is False, returning a tf.uint8 image. Dataset sharding# Tensorflow dataloaders can be sharded into multiple partitions, ensuring that data is not duplicated when performing distributed training across multiple processes or nodes. This is done by providing the shard_idx and num_shards arguments to the .tensorflow() method. The shard_idx argument is an integer specifying the shard number, and num_shards is an integer specifying the total number of shards. # Shard the dataset for GPU 1 of 4 tf_dataset = dataset.tensorflow( ..., shard_idx=0, num_shards=4 ) PyTorch# As with Tensorflow, the histox.Dataset.torch() method creates a torch.utils.data.DataLoader that reads images from TFRecords. In the backend, TFRecords are read using histox.tfrecord.torch.MultiTFRecordDataset() and processed as described in TFRecords: Reading and Writing. The returned torch.utils.data.DataLoader is an iterable-only dataloader whose returned values depend on the arguments provided to the .torch() function. An indexable, map-style dataset is also available when using PyTorch, as described in Direct indexing. If no arguments are provided, the returned dataloader will yield a tuple of (image, None), where the image is a torch.Tensor of shape [num_channels, tile_height, tile_width] and type torch.uint8. Labels are assigned as described above. Slide names and tile location can also be returned, using the same arguments as described above. import histox as hx # Create a dataset object project = hx.load_project(...) dataset = project.dataset(...) # Create a tensorflow dataset torch_dl = dataset.torch() for image, label in torch_dl: # Do something with the image... ... Image preprocessing# Dataloaders created with .torch() include several image preprocessing options, provided as keyword arguments to the .torch() method. These preprocessing steps are executed in the order listed below: normalizer (StainNormalizer): Perform stain normalization. augment (str): Perform augmentations based on the provided string. Combine characters to perform multiple augmentations (e.g. \u0027xyrj\u0027). Augmentations are executed in the order characters appear in the string. Options include: \u0027n\u0027: Perform Stain Augmentation (done concurrently with stain normalization) \u0027j\u0027: Random JPEG compression (50% chance to compress with quality between 50-100) \u0027r\u0027: Random 90-degree rotation \u0027x\u0027: Random horizontal flip \u0027y\u0027: Random vertical flip \u0027b\u0027: Random Gaussian blur (10% chance to blur with sigma between 0.5-2.0) transform (Any): Arbitrary function to apply to each image, including torchvision transforms. The function must accept a single argument (the image, in (num_channels, height, width) format) and return a single value (the transformed image). standardize (bool): Standardize images with image / 127.5 - 1, returning a torch.float32 image. Default is False, returning a torch.uint8 image. Below is an example of using the transform argument to apply a torchvision transform to each image: import torchvision.transforms as T # Create a torch dataloader torch_dataloader = dataset.torch( transform=T.Compose([ RandomResizedCrop(size=(224, 224), antialias=True), Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]), ]) ) for image, label in torch_dataloader: # Do something with the image and label... ... Dataset sharding# PyTorch Dataloaders can similarly be sharded into multiple partitions, ensuring that data is not duplicated when performing distributed training across multiple process or nodes. Sharding is done in two stages. First, dataloaders can be split into partitions using the rank and num_replicas arguments to the .torch() method. The rank argument is an integer specifying the rank of the current process, and num_replicas is an integer specifying the total number of processes. # Shard the dataset for GPU 1 of 4 torch_dataloader = dataset.torch( ..., rank=0, num_replicas=4 ) The second stage of sharding happens in the background: if a dataloader is built with multiple worker processes (Dataset.torch(num_workers=...)), partitions will be automatically further subdivided into smaller chunks, ensuring that each worker process reads a unique subset of the data. Labeling# The label argument to the .tensorflow() and .torch() methods accept a dictionary mapping slide names to a numeric label. During TFRecord reading, the slide name is used to lookup the label from the provided dictionary. Warning Labels are assigned to image tiles based on the slide names inside a tfrecord file, not by the filename of the tfrecord. This means that renaming a TFRecord file will not change the label of the tiles inside the file. If you need to change the slide names associated with tiles inside a TFRecord, the TFRecord file must be regenerated. The most common way to generate labels is to use the histox.Dataset.labels() method, which returns a dictionary mapping slide names to numeric labels. For categorical labels, the numeric labels correspond to the index of the label in the unique_labels list. For example, if the unique_labels list is [\u0027HPV-\u0027, \u0027HPV+\u0027], then the mapping of numeric labels would be { \u0027HPV-\u0027: 0, \u0027HPV+\u0027: 1 }. \u003e\u003e\u003e labels, unique_labels = dataset.labels(\u0027HPV_status\u0027) \u003e\u003e\u003e unique_labels [\u0027HPV-\u0027, \u0027HPV+\u0027] \u003e\u003e\u003e labels {\u0027slide1\u0027: 0, \u0027slide2\u0027: 1, ... } \u003e\u003e\u003e tf_dataset = dataset.tensorflow(labels=labels) Sampling# Dataloaders created with .tensorflow() and .torch() are iterable-only dataloaders, meaning that they cannot be indexed directly. This is because the underlying TFRecords are sampled in a streaming fashion, and the dataloader does not know what the next record will be until it has been read. This is in contrast to the Direct indexing method described below, which creates an indexable, map-style dataset. Dataloaders created with .tensorflow() and .torch() can be configured to sample from TFRecords in several ways, with options for infinite vs. finite sampling, oversampling, and undersampling. These sampling methods are described below. Infinite dataloaders# By default, dataloaders created with .tensorflow() and .torch() will sample from TFRecords in an infinite loop. This is useful for training, where the dataloader should continue to yield images until the training process is complete. By default, images are sampled from TFRecords with uniform sampling, meaning that each TFRecord has an equal chance of yielding an image. This sampling strategy can be configured, as described below. Note When training tile-based models, a dataloader is considered to have yielded one \u201cepoch\u201d of data when it has yielded the number of images equal to the number of tiles in the dataset. Due to the random sampling from TFRecords, this means that some images will be overrepresented (images from TFRecords with fewer tiles) and some will be underrepresented (images from TFRecords with many tiles). Finite dataloaders# Dataloaders can also be configured with finite sampling, yielding tiles from TFRecords exactly once. This is accomplished by passing the argument infinite=False to the .tensorflow() or .torch() methods. Oversampling with balancing# Oversampling methods control the probability that tiles are read from each TFRecord, affecting the balance of data across slides, patients, and outcome categories. Oversampling is configured at the Dataset level, using the histox.Dataset.balance() method. This method returns a copy of the dataset with the specified oversampling strategy. Slide-level balancing: By default, images are sampled from TFRecords with uniform probability, meaning that each TFRecord has an equal chance of yielding an image. This is equivalent to both .balance(strategy=\u0027slide\u0027) and .balance(strategy=None). This strategy will oversample images from slides with fewer tiles, and undersample images from slides with more tiles. # Sample from TFRecords with equal probability dataset = dataset.balance(strategy=\u0027slide\u0027) Patient-level balancing: To sample from TFRecords with probability proportional to the number of tiles in each patient, use .balance(strategy=\u0027patient\u0027). This strategy will oversample images from patients with fewer tiles, and undersample images from patients with more tiles. # Sample from TFRecords with probability proportional # to the number of tiles in each patient. dataset = dataset.balance(strategy=\u0027patient\u0027) Tile-level balancing: To sample from TFRecords with uniform probability across image tiles, use .balance(strategy=\u0027tile\u0027). This strategy will sample from TFRecords with probability proportional to the number of tiles in the TFRecord, resulting in higher representation of slides with more tiles. # Sample from TFRecords with probability proportional # to the number of tiles in each TFRecord. dataset = dataset.balance(strategy=\u0027tile\u0027) Category-level balancing: To sample from TFRecords with probability proportional to the number of tiles in each outcome category, use .balance(strategy=\u0027category\u0027). This strategy will oversample images from outcome categories with fewer tiles, and undersample images from outcome categories with more tiles. This strategy will also perform slide-level balancing within each category. Category-level balancing is only available when using categorical labels. # Sample from TFRecords with probability proportional # to the number of tiles in each category # \"HPV-\" and \"HPV+\". dataset = dataset.balance(\"HPV_status\", strategy=\u0027category\u0027) Custom balancing: The .balance() method saves sampling probability weights to Dataset.prob_weights, a dictionary mapping TFRecord paths to sampling weights. Custom balancing can be performed by overriding this dictionary with custom weights. \u003e\u003e\u003e dataset = dataset.balance(strategy=\u0027slide\u0027) \u003e\u003e\u003e dataset.prob_weights {\u0027/path/to/tfrecord1\u0027: 0.002, \u0027/path/to/tfrecord2\u0027: 0.003, ... } \u003e\u003e\u003e dataset.prob_weights = {...} Balancing is automatically applied to dataloaders created with the .tensorflow() and .torch() methods. Undersampling with clipping# Datasets can also be configured to undersample TFRecords using histox.Dataset.clip(). Several undersampling strategies are available. Slide-level clipping: TFRecords can be clipped to a maximum number of tiles per slide using .clip(max_tiles). This strategy will clip TFRecords with more tiles than the specified max_tiles value, resulting in a maximum of max_tiles tiles per slide. Patient-level clipping: TFRecords can be clipped to a maximum number of tiles per patient using .clip(max_tiles, strategy=\u0027patient\u0027). For patients with more than one slide/TFRecord, TFRecords will be clipped proportionally. Outcome-level clipping: TFRecords can also be clipped to a maximum number of tiles per outcome category using .clip(max_tiles, strategy=\u0027category\u0027, headers=...). The outcome category is specified by the headers argument, which can be a single header name or a list of header names. Within each category, TFRecords will be clipped proportionally. Custom clipping: The .clip() method saves clipping values to Dataset._clip, a dictionary mapping TFRecord paths to counts of how many tiles should be sampled from the TFRecord. Custom clipping can be performed by overriding this dictionary with custom weights. \u003e\u003e\u003e dataset = dataset.clip(100) \u003e\u003e\u003e dataset._clip {\u0027/path/to/tfrecord1\u0027: 76, \u0027/path/to/tfrecord2\u0027: 100, ... } \u003e\u003e\u003e dataset._clip = {...} Undersampling via dataset clipping is automatically applied to dataloaders created with .tensorflow() and .torch(). During training# If you are training a HistoX model by directly providing a training and validation dataset to the histox.Project.train() method, you can configure the datasets to perform oversampling and undersampling as described above. For example: import histox as hx # Load a project project = hx.load_project(...) # Configure a training dataset with tile-level balancing # and clipping to max 100 tiles per TFRecord train = project.dataset(...).balance(strategy=\u0027tile\u0027).clip(100) # Get a validation dataset val = project.dataset(...) # Train a model project.train( ..., dataset=train, val_dataset=val, ) Alternatively, you can configure oversampling during training through the training_balance and validation_balance hyperparameters, as described in the ModelParams documentation. Undersampling with dataset clipping can be performed with the max_tiles argument. Configuring oversampling/undersampling with this method propagates the configuration to all datasets generated during cross-validation. import histox as hx # Load a project project = hx.load_project(...) # Configure hyperparameters with tile-level # balancing/oversampling for the training data hp = hx.ModelParams( ..., training_balance=\u0027tile\u0027, validation_balance=None, ) # Train a model. # Undersample/clip data to max 100 tiles per TFRecord. project.train( ..., params=hp, max_tiles=100 ) Direct indexing# An indexable, map-style dataloader can be created for PyTorch using histox.io.torch.IndexedInterleaver, which returns a torch.utils.data.Dataset. Indexable datasets are only available for the PyTorch backend. This indexable dataset is created from a list of TFRecords and accepts many arguments for controlling labels, augmentation and image transformations. from histox.io.torch import IndexedInterleaver # Create a dataset object project = hx.load_project(...) dataset = project.dataset(...) # Get the TFRecords tfrecords = dataset.tfrecords() # Assemble labels labels, _ = dataset.labels(\"HPV_status\") # Create an indexable dataset dts = IndexedInterleaver( tfrecords, labels=labels, augment=\"xyrj\", transform=T.Compose([ T.RandomResizedCrop(size=(224, 224), antialias=True), ]), normalizer=None, standardize=True, shuffle=True, seed=42, ) The returned dataset is indexable, meaning that it can be indexed directly to retrieve a single image and label. \u003e\u003e\u003e len(dts) 284114 \u003e\u003e\u003e image, label = dts[0] \u003e\u003e\u003e image.shape torch.Size([3, 224, 224]) \u003e\u003e\u003e image.dtype torch.float32 The dataset can be configured to return slide names and tile locations by setting the incl_slidenames and incl_loc arguments to True, as described above. Dataset sharding is supported with the same rank and num_replicas arguments as described above. # Shard for GPU 1 of 4 dts = IndexedInterleaver( ..., rank=0, num_replicas=4 ) histox.io.IndexedInterleaver supports undersampling via the clip argument (array of clipping values for each TFRecord), but does not support oversampling or balancing. # Specify TFRecord clipping values dts = IndexedInterleaver( tfrecords=..., clip=[100, 75, ...], # Same length as tfrecords ... ) A torch.utils.data.DataLoader can then be created from the indexable dataset using the torch.utils.data.DataLoader class, as described in the PyTorch documentation. from torch.utils.data import DataLoader # Create a dataloader dl = DataLoader( dts, batch_size=32, num_workers=4, pin_memory=True, drop_last=True, ) for image, label in dl: # Do something with the image and label... ...",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/dataloaders.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
       });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
   </script>
-
-  <!-- Begin Footer -->
-
-  <!-- End Footer -->
-
-  <!-- Begin Mobile Menu -->
-
-  <div class="mobile-main-menu">
-    <div class="container-fluid">
-      <div class="container">
-        <div class="mobile-main-menu-header-container">
-          <a class="header-logo" href="https://pytorch.org/" aria-label="PyTorch"></a>
-          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="mobile-main-menu-links-container">
-      <div class="main-menu">
-        <ul>
-          <li>
-            <a href="https://slideflow.dev">Docs</a>
-          </li>
-
-          <li>
-            <a href="https://slideflow.dev/tutorial1/">Tutorials</a>
-          </li>
-
-          <li>
-            <a href="https://github.com/slideflow/slideflow">Github</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- End Mobile Menu -->
-
-  <script script type="text/javascript">
-    var collapsedSections = [];
-  </script>
-
-  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      mobileMenu.bind();
-      mobileTOC.bind();
-      pytorchAnchors.bind();
-      sideMenus.bind();
-      scrollToAnchor.bind();
-      highlightNavigation.bind();
-      mainMenuDropdown.bind();
-      filterTags.bind();
-
-      // Add class to links that have code blocks, since we cannot create links in code blocks
-      $("article.pytorch-article a span.pre").each(function(e) {
-        $(this).closest("a").addClass("has-code");
-      });
-    })
-  </script>
-</body>
+  
+  </body>
 </html>

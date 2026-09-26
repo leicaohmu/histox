@@ -1,7 +1,7 @@
 '''Submodule that includes tools for intermediate layer activations.
 
 Supports both PyTorch and Tensorflow backends, importing either model.tensorflow
-or model.pytorch based on the environmental variable SF_BACKEND.
+or model.pytorch based on the environmental variable HX_BACKEND.
 '''
 
 import warnings
@@ -128,7 +128,7 @@ def build_trainer(
                 ``params.json`` configuration file, build the model architecture,
                 and then load weights from the given model with
                 ``Model.load_weights()``. Loading with 'full' may improve
-                compatibility across Slideflow versions. Loading with 'weights'
+                compatibility across HistoX versions. Loading with 'weights'
                 may improve compatibility across hardware & environments.
         custom_objects (dict, Optional): Dictionary mapping names
                 (strings) to custom classes or functions. Defaults to None.

@@ -577,9 +577,9 @@ class Studio(ImguiWindow):
             # --- Help --------------------------------------------------------
             if imgui.begin_menu('Help', True):
                 if imgui.menu_item('Get Started')[1]:
-                    webbrowser.open('https://histox.dev/studio')
+                    webbrowser.open('https://histox.readthedocs.io/en/latest/studio.html')
                 if imgui.menu_item('Documentation')[1]:
-                    webbrowser.open('https://histox.dev')
+                    webbrowser.open('https://histox.readthedocs.io/en/latest/')
 
                 # Widgets with "Help" menu.
                 for w in self.widgets:
@@ -1732,7 +1732,7 @@ class Studio(ImguiWindow):
         """Load the given model.
 
         Args:
-            model (str): Path to Slideflow model (in either backend).
+            model (str): Path to HistoX model (in either backend).
             ignore_errors (bool): Do not fail if an error is encountered.
                 Defaults to False.
 

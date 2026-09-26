@@ -1,0 +1,2968 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>histox.studio &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=3ca669d2"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=ccdb6887"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'studio_module';</script>
+    <script src="_static/tutorials.js?v=3b8eb957"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developer notes" href="developer.html" />
+    <link rel="prev" title="histox.util" href="util.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="histox.studio - Documentation for histox, part of the PyTorch ecosystem.">
+
+
+
+
+
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
+
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
+
+  }
+</style>
+
+
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
+
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+
+
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="API reference navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Reference API</p>
+  <ul><li><a class="nav-link" href="api.html">API index</a></li></ul>
+
+  <p class="caption" role="heading" aria-level="2">Core objects</p>
+  <ul>
+    <li><a class="nav-link" href="histox.html">histox</a></li>
+    <li><a class="nav-link" href="project.html">histox.Project</a></li>
+    <li><a class="nav-link" href="dataset.html">histox.Dataset</a></li>
+    <li><a class="nav-link" href="model_params.html">histox.ModelParams</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="data_api.html">histox.data</a></li>
+    <li><a class="nav-link" href="dataset_features.html">DatasetFeatures</a></li>
+    <li><a class="nav-link" href="slide.html">histox.WSI</a></li>
+    <li><a class="nav-link" href="slide_qc.html">histox.slide.qc</a></li>
+    <li><a class="nav-link" href="io.html">histox.io</a></li>
+    <li><a class="nav-link" href="io_torch.html">histox.io.torch</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Models and analysis</p>
+  <ul>
+    <li><a class="nav-link" href="model.html">histox.model</a></li>
+    <li><a class="nav-link" href="model_torch.html">histox.model.torch</a></li>
+    <li><a class="nav-link" href="mil_module.html">histox.mil</a></li>
+    <li><a class="nav-link" href="simclr.html">histox.simclr</a></li>
+    <li><a class="nav-link" href="gan.html">histox.gan</a></li>
+    <li><a class="nav-link" href="grad.html">histox.grad</a></li>
+    <li><a class="nav-link" href="norm.html">histox.norm</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Pathology and utilities</p>
+  <ul>
+    <li><a class="nav-link" href="heatmap.html">histox.Heatmap</a></li>
+    <li><a class="nav-link" href="mosaic.html">histox.Mosaic</a></li>
+    <li><a class="nav-link" href="slidemap.html">histox.SlideMap</a></li>
+    <li><a class="nav-link" href="histox_cellseg.html">histox.cellseg</a></li>
+    <li><a class="nav-link" href="biscuit.html">histox.biscuit</a></li>
+    <li><a class="nav-link" href="stats.html">histox.stats</a></li>
+    <li><a class="nav-link" href="util.html">histox.util</a></li>
+    <li><a class="nav-link active" href="#">histox.studio</a></li>
+  </ul>
+</nav>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+
+<div id="rtd-footer-container"></div>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="docs.html" class="nav-link">HistoX documentation</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="api.html" class="nav-link">HistoX API reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">histox.studio</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="docs.html">
+      <meta itemprop="name" content="HistoX documentation">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="api.html">
+      <meta itemprop="name" content="HistoX API reference">
+      <meta itemprop="position" content="2">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="histox.studio">
+      <meta itemprop="position" content="3">
+    </div>
+  </div>
+
+  
+  
+
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="histox-studio">
+<h1>histox.studio<a class="headerlink" href="#histox-studio" title="Link to this heading">#</a></h1>
+<p>This module contains the HistoX Studio visualization tool. See <a class="reference internal" href="studio.html#studio"><span class="std std-ref">HistoX Studio: Live Visualization</span></a> for more information.</p>
+<dl class="py class" id="module-histox.studio">
+<dt class="sig sig-object py" id="histox.studio.Sidebar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">histox.studio.</span></span><span class="sig-name descname"><span class="pre">Sidebar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">viz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#histox.studio.Studio" title="histox.studio.Studio"><span class="pre">Studio</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar" title="Link to this definition">#</a></dt>
+<dd><p>Sidebar for Studio, rendering a navigation bar and widgets.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.add_widgets">
+<span class="sig-name descname"><span class="pre">add_widgets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widgets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar.add_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar.add_widgets" title="Link to this definition">#</a></dt>
+<dd><p>Add widget extension(s).</p>
+<p>Add widgets to the navigation sidebar. The <code class="docutils literal notranslate"><span class="pre">.tag</span></code> property is used
+as a unique identifier for the widget. The <code class="docutils literal notranslate"><span class="pre">.icon</span></code> property should
+be a path to an image file used for rendering the sidebar navigation
+icon. <code class="docutils literal notranslate"><span class="pre">.icon_highlighted</span></code> property should be a path to an image file
+used for rendering a hovered navigation icon.</p>
+<p>The widget should implement <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> and <code class="docutils literal notranslate"><span class="pre">.close()</span></code> methods
+for rendering the imgui GUI and cleanup, respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>widgets</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">histox.studio.widgets.Widget</span></code>)) – List of
+widgets to add as extensions. These should be classes, not
+instantiated objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.content_width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content_width</span></span><a class="headerlink" href="#histox.studio.Sidebar.content_width" title="Link to this definition">#</a></dt>
+<dd><p>Widget width.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar.draw" title="Link to this definition">#</a></dt>
+<dd><p>Draw the sidebar and render all widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.full_button">
+<span class="sig-name descname"><span class="pre">full_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar.full_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar.full_button" title="Link to this definition">#</a></dt>
+<dd><p>Render a button that spans the full width of the sidebar.</p>
+<p>The color of the button is determined through the loaded theme,
+<code class="docutils literal notranslate"><span class="pre">bright_button</span></code> properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Text of the button.</p></li>
+<li><p><strong>width</strong> (<em>int</em><em>, </em><em>optional</em>) – Width of the button. If not specified,
+uses a width that spans the width of the sidebar.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>enabled</strong> (<em>bool</em>) – Whether the button is enabled.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether the button was clicked.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.full_button2">
+<span class="sig-name descname"><span class="pre">full_button2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar.full_button2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar.full_button2" title="Link to this definition">#</a></dt>
+<dd><p>Render a button that spans the full width of the sidebar.</p>
+<p>The color of the button is determined through the loaded theme,
+<code class="docutils literal notranslate"><span class="pre">bright_button2</span></code> properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Text of the button.</p></li>
+<li><p><strong>width</strong> (<em>int</em><em>, </em><em>optional</em>) – Width of the button. If not specified,
+uses a width that spans the width of the sidebar.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>enabled</strong> (<em>bool</em>) – Whether the button is enabled.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether the button was clicked.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.full_width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">full_width</span></span><a class="headerlink" href="#histox.studio.Sidebar.full_width" title="Link to this definition">#</a></dt>
+<dd><p>Width of the expanded sidebar, including navigation and widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.large_image_button">
+<span class="sig-name descname"><span class="pre">large_image_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar.large_image_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar.large_image_button" title="Link to this definition">#</a></dt>
+<dd><p>Render a small button for the sidebar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_name</strong> (<em>str</em>) – Name of the image to render on the button.
+Valid names include ‘gear’, ‘circle_lightning’, ‘circle_plus’,
+‘pencil’, ‘folder’, ‘floppy’, ‘model_loaded’, ‘extensions’,
+‘project’, ‘slide’, ‘model’, and ‘heatmap’.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Simage button. Defaults to 64.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If the button was clicked.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.remove_widget">
+<span class="sig-name descname"><span class="pre">remove_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar.remove_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar.remove_widget" title="Link to this definition">#</a></dt>
+<dd><p>Remove a widget from Studio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>widget</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">histox.studio.widgets.Widget</span></code>) – Widget to remove.
+This should be a class, not an instantiated object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.small_button">
+<span class="sig-name descname"><span class="pre">small_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Sidebar.small_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Sidebar.small_button" title="Link to this definition">#</a></dt>
+<dd><p>Render a small button for the sidebar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_name</strong> (<em>str</em>) – Name of the image to render on the button.
+Valid names include ‘vips’, ‘cucim’, ‘lowmem’, ‘ellipsis’,
+‘gear’, and ‘refresh’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If the button was clicked.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Sidebar.theme">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">theme</span></span><a class="headerlink" href="#histox.studio.Sidebar.theme" title="Link to this definition">#</a></dt>
+<dd><p>Active Studio theme.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="histox.studio.Studio">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">histox.studio.</span></span><span class="sig-name descname"><span class="pre">Studio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low_memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widgets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_tk_init</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StudioTheme</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio" title="Link to this definition">#</a></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.P">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">P</span></span><a class="headerlink" href="#histox.studio.Studio.P" title="Link to this definition">#</a></dt>
+<dd><p>HistoX project currently in use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.add_to_render_pipeline">
+<span class="sig-name descname"><span class="pre">add_to_render_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">renderer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.add_to_render_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.add_to_render_pipeline" title="Link to this definition">#</a></dt>
+<dd><p>Add a renderer to the rendering pipeline.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.add_widgets">
+<span class="sig-name descname"><span class="pre">add_widgets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widgets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.add_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.add_widgets" title="Link to this definition">#</a></dt>
+<dd><p>Add widget extension(s).</p>
+<p>Add widgets to Studio and the sidebar. The <code class="docutils literal notranslate"><span class="pre">.tag</span></code> property is used
+as a unique identifier for the widget. The <code class="docutils literal notranslate"><span class="pre">.icon</span></code> property should
+be a path to an image file used for rendering the sidebar navigation
+icon. <code class="docutils literal notranslate"><span class="pre">.icon_highlighted</span></code> property should be a path to an image file
+used for rendering a hovered navigation icon.</p>
+<p>The widget should implement <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> and <code class="docutils literal notranslate"><span class="pre">.close()</span></code> methods
+for rendering the imgui GUI and cleanup, respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>widgets</strong> (list(<code class="xref py py-class docutils literal notranslate"><span class="pre">histox.studio.widgets.Widget</span></code>)) – List of
+widgets to add as extensions. These should be classes, not
+instantiated objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.ask_load_heatmap">
+<span class="sig-name descname"><span class="pre">ask_load_heatmap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.ask_load_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.ask_load_heatmap" title="Link to this definition">#</a></dt>
+<dd><p>Prompt user for location of exported heatmap (*.npz) and load.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.ask_load_model">
+<span class="sig-name descname"><span class="pre">ask_load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.ask_load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.ask_load_model" title="Link to this definition">#</a></dt>
+<dd><p>Prompt user for location of a model and load.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.ask_load_project">
+<span class="sig-name descname"><span class="pre">ask_load_project</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.ask_load_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.ask_load_project" title="Link to this definition">#</a></dt>
+<dd><p>Prompt user for location of a project and load.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.ask_load_slide">
+<span class="sig-name descname"><span class="pre">ask_load_slide</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.ask_load_slide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.ask_load_slide" title="Link to this definition">#</a></dt>
+<dd><p>Prompt user for location of a slide and load.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.ask_zoom_to_mpp">
+<span class="sig-name descname"><span class="pre">ask_zoom_to_mpp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.ask_zoom_to_mpp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.ask_zoom_to_mpp" title="Link to this definition">#</a></dt>
+<dd><p>Prompt the user to zoom to a specific microns-per-pixel (MPP).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.autoload">
+<span class="sig-name descname"><span class="pre">autoload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.autoload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.autoload" title="Link to this definition">#</a></dt>
+<dd><p>Automatically load a path, detecting the type of object to load.</p>
+<p>Supports slides, models, projects, and other items supported by
+widgets if the widget has implemented a <cite>.drag_and_drop_hook</cite> function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to file to load.</p></li>
+<li><p><strong>ignore_errors</strong> (<em>bool</em>) – Gracefully handle errors.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.center_next_window">
+<span class="sig-name descname"><span class="pre">center_next_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.center_next_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.center_next_window" title="Link to this definition">#</a></dt>
+<dd><p>Center the next imgui window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Width of the next window.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Height of the next window.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.clear_message">
+<span class="sig-name descname"><span class="pre">clear_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.clear_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.clear_message" title="Link to this definition">#</a></dt>
+<dd><p>Clear a specific message from display, if the message is being shown.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>str</em>) – Message to clear.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether message was cleared from display.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.clear_model_results">
+<span class="sig-name descname"><span class="pre">clear_model_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.clear_model_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.clear_model_results" title="Link to this definition">#</a></dt>
+<dd><p>Clear all model results and associated images.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.clear_overlay">
+<span class="sig-name descname"><span class="pre">clear_overlay</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.clear_overlay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.clear_overlay" title="Link to this definition">#</a></dt>
+<dd><p>Remove the current overlay image, include heatmaps and masks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.clear_result">
+<span class="sig-name descname"><span class="pre">clear_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.clear_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.clear_result" title="Link to this definition">#</a></dt>
+<dd><p>Clear all shown results and images.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.clear_status_message">
+<span class="sig-name descname"><span class="pre">clear_status_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.clear_status_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.clear_status_message" title="Link to this definition">#</a></dt>
+<dd><p>Clear the status message from the status bar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.close" title="Link to this definition">#</a></dt>
+<dd><p>Close the application and renderer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.close_model">
+<span class="sig-name descname"><span class="pre">close_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">now</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.close_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.close_model" title="Link to this definition">#</a></dt>
+<dd><p>Close the currently loaded model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>now</strong> (<em>bool</em>) – Close the model now, instead of at the end of the frame.
+Defaults to False (closes model at frame end).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.close_slide">
+<span class="sig-name descname"><span class="pre">close_slide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">now</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.close_slide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.close_slide" title="Link to this definition">#</a></dt>
+<dd><p>Close the currently loaded slide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>now</strong> (<em>bool</em>) – Close the slide now, instead of at the end of the frame.
+Defaults to False (closes slide at frame end).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.collapsing_header">
+<span class="sig-name descname"><span class="pre">collapsing_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.collapsing_header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.collapsing_header" title="Link to this definition">#</a></dt>
+<dd><p>Render a collapsing header using the active theme.</p>
+<dl>
+<dt>Examples</dt><dd><p>Render a collapsing header that is open by default.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">viz</span><span class="o">.</span><span class="n">collapsing_header</span><span class="p">(</span><span class="s2">&quot;Header&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Text underneath&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Header text.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.collapsing_header2">
+<span class="sig-name descname"><span class="pre">collapsing_header2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.collapsing_header2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.collapsing_header2" title="Link to this definition">#</a></dt>
+<dd><p>Render a second-level collapsing header using the active theme.</p>
+<dl>
+<dt>Examples</dt><dd><p>Render a collapsing header that is open by default.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">viz</span><span class="o">.</span><span class="n">collapsing_header</span><span class="p">(</span><span class="s2">&quot;Header&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Text underneath&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Header text.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.decrease_tile_zoom">
+<span class="sig-name descname"><span class="pre">decrease_tile_zoom</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.decrease_tile_zoom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.decrease_tile_zoom" title="Link to this definition">#</a></dt>
+<dd><p>Decrease zoom of tile view by half.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.defer_rendering">
+<span class="sig-name descname"><span class="pre">defer_rendering</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.defer_rendering"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.defer_rendering" title="Link to this definition">#</a></dt>
+<dd><p>Defer rendering for a number of frames.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.dim_text">
+<span class="sig-name descname"><span class="pre">dim_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.dim_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.dim_text" title="Link to this definition">#</a></dt>
+<dd><p>Render dim text.</p>
+<dl>
+<dt>Examples</dt><dd><p>Render dim text.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">studio</span><span class="o">.</span><span class="n">dim_text</span><span class="p">():</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;This is dim&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.draw_frame">
+<span class="sig-name descname"><span class="pre">draw_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.draw_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.draw_frame" title="Link to this definition">#</a></dt>
+<dd><p>Main draw loop.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.get_default_widgets">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default_widgets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.get_default_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.get_default_widgets" title="Link to this definition">#</a></dt>
+<dd><p>Returns a list of the default non-mandatory extension widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.get_extension">
+<span class="sig-name descname"><span class="pre">get_extension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Widget</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.get_extension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.get_extension" title="Link to this definition">#</a></dt>
+<dd><p>Returns a given widget (extension) by tag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tag</strong> (<em>str</em>) – Tag of the widget to search for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>histox.studio.widgets.Widget if found, else None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.get_renderer">
+<span class="sig-name descname"><span class="pre">get_renderer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Renderer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.get_renderer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.get_renderer" title="Link to this definition">#</a></dt>
+<dd><p>Check for the given additional renderer in the rendering pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the renderer to check for. If None,
+returns the main renderer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Renderer if name is a recognized renderer, otherwise None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.get_widget">
+<span class="sig-name descname"><span class="pre">get_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Widget</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.get_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.get_widget" title="Link to this definition">#</a></dt>
+<dd><p>Returns a given widget by class name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the widget to search for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>histox.studio.widgets.Widget</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the widget could not be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.has_live_viewer">
+<span class="sig-name descname"><span class="pre">has_live_viewer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.has_live_viewer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.has_live_viewer" title="Link to this definition">#</a></dt>
+<dd><p>Check if the current viewer is a live viewer (e.g. camera feed).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.has_uq">
+<span class="sig-name descname"><span class="pre">has_uq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.has_uq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.has_uq" title="Link to this definition">#</a></dt>
+<dd><p>Check if the current model supports uncertainty quantification.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.header">
+<span class="sig-name descname"><span class="pre">header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.header" title="Link to this definition">#</a></dt>
+<dd><p>Render a header using the active theme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Text for the header. Text will be rendered in
+uppercase.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.header_with_buttons">
+<span class="sig-name descname"><span class="pre">header_with_buttons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.header_with_buttons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.header_with_buttons" title="Link to this definition">#</a></dt>
+<dd><p>Render a widget header with ability to add buttons.</p>
+<dl>
+<dt>Examples</dt><dd><p>Render a header with a gear icon.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">studio</span><span class="o">.</span><span class="n">header_with_buttons</span><span class="p">(</span><span class="s1">&#39;Button&#39;</span><span class="p">):</span>
+    <span class="c1"># Right align the button</span>
+    <span class="n">x_width</span> <span class="o">=</span> <span class="n">imgui</span><span class="o">.</span><span class="n">get_content_region_max</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">same_line</span><span class="p">(</span><span class="n">x_width</span> <span class="o">-</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">imgui</span><span class="o">.</span><span class="n">get_cursor_pos</span><span class="p">()</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">set_cursor_position</span><span class="p">((</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="o">-</span><span class="mi">5</span><span class="p">))</span>
+
+    <span class="c1"># Render the button</span>
+    <span class="k">if</span> <span class="n">sidebar</span><span class="o">.</span><span class="n">small_button</span><span class="p">(</span><span class="s1">&#39;gear&#39;</span><span class="p">):</span>
+        <span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Text for the header. Text will be rendered in
+uppercase.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.highlighted">
+<span class="sig-name descname"><span class="pre">highlighted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.highlighted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.highlighted" title="Link to this definition">#</a></dt>
+<dd><p>Render highlighted text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>enable</strong> (<em>bool</em>) – Whether to enable highlighting.</p>
+</dd>
+</dl>
+<dl>
+<dt>Examples</dt><dd><p>Render highlighted text.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">studio</span><span class="o">.</span><span class="n">highlighted</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;This is highlighted&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.increase_tile_zoom">
+<span class="sig-name descname"><span class="pre">increase_tile_zoom</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.increase_tile_zoom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.increase_tile_zoom" title="Link to this definition">#</a></dt>
+<dd><p>Increase zoom of tile view two-fold.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.is_mouse_down">
+<span class="sig-name descname"><span class="pre">is_mouse_down</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mouse_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.is_mouse_down"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.is_mouse_down" title="Link to this definition">#</a></dt>
+<dd><p>Check if the mouse is currently down.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.is_mouse_released">
+<span class="sig-name descname"><span class="pre">is_mouse_released</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mouse_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.is_mouse_released"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.is_mouse_released" title="Link to this definition">#</a></dt>
+<dd><p>Check if the mouse was released.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.load_heatmap">
+<span class="sig-name descname"><span class="pre">load_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="heatmap.html#histox.Heatmap" title="histox.heatmap.Heatmap"><span class="pre">Heatmap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.load_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.load_heatmap" title="Link to this definition">#</a></dt>
+<dd><p>Load a saved heatmap (*.npz).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to exported heatmap in *.npz format, as generated
+by Heatmap.save() or Heatmap.save_npz().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_errors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.load_model" title="Link to this definition">#</a></dt>
+<dd><p>Load the given model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>str</em>) – Path to HistoX model (in either backend).</p></li>
+<li><p><strong>ignore_errors</strong> (<em>bool</em>) – Do not fail if an error is encountered.
+Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.load_project">
+<span class="sig-name descname"><span class="pre">load_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_errors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.load_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.load_project" title="Link to this definition">#</a></dt>
+<dd><p>Load the given project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> (<em>str</em>) – Path to HistoX project.</p></li>
+<li><p><strong>ignore_errors</strong> (<em>bool</em>) – Do not fail if an error is encountered.
+Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.load_slide">
+<span class="sig-name descname"><span class="pre">load_slide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.load_slide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.load_slide" title="Link to this definition">#</a></dt>
+<dd><p>Load the given slide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slide</strong> (<em>str</em>) – Path to whole-slide image.</p></li>
+<li><p><strong>stride</strong> (<em>int</em><em>, </em><em>optional</em>) – Stride for tiles. 1 is non-overlapping
+tiles, 2 is tiles with 50% overlap, etc. Defaults to 1.</p></li>
+<li><p><strong>ignore_errors</strong> (<em>bool</em>) – Do not fail if an error is encountered.
+Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#histox.studio.Studio.model" title="Link to this definition">#</a></dt>
+<dd><p>Tensorflow/PyTorch model currently in use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.mouse_input_is_suspended">
+<span class="sig-name descname"><span class="pre">mouse_input_is_suspended</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.mouse_input_is_suspended"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.mouse_input_is_suspended" title="Link to this definition">#</a></dt>
+<dd><p>Check if mouse input handling is suspended.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.mouse_is_over_viewer">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mouse_is_over_viewer</span></span><a class="headerlink" href="#histox.studio.Studio.mouse_is_over_viewer" title="Link to this definition">#</a></dt>
+<dd><p>Mouse is currently over the main viewer.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.offset_x">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset_x</span></span><a class="headerlink" href="#histox.studio.Studio.offset_x" title="Link to this definition">#</a></dt>
+<dd><p>Main window offset (x), in points.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.offset_x_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset_x_pixels</span></span><a class="headerlink" href="#histox.studio.Studio.offset_x_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Main window offset (x), in pixels.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.offset_y">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset_y</span></span><a class="headerlink" href="#histox.studio.Studio.offset_y" title="Link to this definition">#</a></dt>
+<dd><p>Main window offset (y), in points.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.offset_y_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset_y_pixels</span></span><a class="headerlink" href="#histox.studio.Studio.offset_y_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Main window offset (y), in pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.print_error">
+<span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.print_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.print_error" title="Link to this definition">#</a></dt>
+<dd><p>Print the given error message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.reload_model">
+<span class="sig-name descname"><span class="pre">reload_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.reload_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.reload_model" title="Link to this definition">#</a></dt>
+<dd><p>Reload the current model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.reload_viewer">
+<span class="sig-name descname"><span class="pre">reload_viewer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.reload_viewer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.reload_viewer" title="Link to this definition">#</a></dt>
+<dd><p>Reload the current main viewer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.reload_wsi">
+<span class="sig-name descname"><span class="pre">reload_wsi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="slide.html#histox.slide.WSI" title="histox.slide.wsi.WSI"><span class="pre">WSI</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_rois</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_px</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_um</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.reload_wsi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.reload_wsi" title="Link to this definition">#</a></dt>
+<dd><p>Reload the currently loaded Whole-Slide Image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em><em> or </em><em>hx.WSI</em><em>, </em><em>optional</em>) – Slide to reload. May be a path
+or a hx.WSI object. If not provided, will reload the
+currently loaded slide.</p></li>
+<li><p><strong>stride</strong> (<em>int</em><em>, </em><em>optional</em>) – Stride to use for the loaded slide. If not
+provided, will use the stride value from the currently loaded
+slide.</p></li>
+<li><p><strong>use_rois</strong> (<em>bool</em>) – Use ROIs from the loaded project, if available.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if slide loaded successfully, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.remove_from_render_pipeline">
+<span class="sig-name descname"><span class="pre">remove_from_render_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.remove_from_render_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.remove_from_render_pipeline" title="Link to this definition">#</a></dt>
+<dd><p>Remove a renderer from the render pipeline.</p>
+<p>Remove a renderer added with <code class="docutils literal notranslate"><span class="pre">.add_to_render_pipeline()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the renderer to remove.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.remove_widget">
+<span class="sig-name descname"><span class="pre">remove_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.remove_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.remove_widget" title="Link to this definition">#</a></dt>
+<dd><p>Remove a widget from Studio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>widget</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">histox.studio.widgets.Widget</span></code>) – Widget to remove.
+This should be a class, not an instantiated object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.reset_background">
+<span class="sig-name descname"><span class="pre">reset_background</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.reset_background"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.reset_background" title="Link to this definition">#</a></dt>
+<dd><p>Reset the Studio background to the default theme color.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.reset_tile_zoom">
+<span class="sig-name descname"><span class="pre">reset_tile_zoom</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.reset_tile_zoom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.reset_tile_zoom" title="Link to this definition">#</a></dt>
+<dd><p>Reset tile zoom level.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.resume_keyboard_input">
+<span class="sig-name descname"><span class="pre">resume_keyboard_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.resume_keyboard_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.resume_keyboard_input" title="Link to this definition">#</a></dt>
+<dd><p>Resume keyboard input handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.resume_mouse_input_handling">
+<span class="sig-name descname"><span class="pre">resume_mouse_input_handling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.resume_mouse_input_handling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.resume_mouse_input_handling" title="Link to this definition">#</a></dt>
+<dd><p>Resume mouse input handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.set_grid_overlay">
+<span class="sig-name descname"><span class="pre">set_grid_overlay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_um</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride_div</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.set_grid_overlay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.set_grid_overlay" title="Link to this definition">#</a></dt>
+<dd><p>Set the grid overlay to the given grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>grid</strong> (<em>np.ndarray</em>) – Grid to render as an overlay.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>tile_um</strong> (<em>int</em><em>, </em><em>optional</em>) – Tile size, in microns. If None, uses
+the tile size of the currently loaded slide.</p></li>
+<li><p><strong>stride_div</strong> (<em>int</em><em>, </em><em>optional</em>) – Stride divisor. If None, uses
+the stride divisor of the currently loaded slide.</p></li>
+<li><p><strong>mpp</strong> (<em>float</em><em>, </em><em>optional</em>) – Microns per pixel. If None, uses
+the MPP of the currently loaded slide.</p></li>
+<li><p><strong>original</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Original grid values before any
+colorization or other modifications. Used for displaying the
+tooltip when alt-hovering. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.set_message">
+<span class="sig-name descname"><span class="pre">set_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.set_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.set_message" title="Link to this definition">#</a></dt>
+<dd><p>Set a message for display.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.set_overlay">
+<span class="sig-name descname"><span class="pre">set_overlay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">overlay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.set_overlay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.set_overlay" title="Link to this definition">#</a></dt>
+<dd><p>Configure the overlay to be applied to the current view screen.</p>
+<p>Overlay is a numpy array, and method is a flag indicating the
+method to use when showing the overlay.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">method</span></code> is <code class="docutils literal notranslate"><span class="pre">hx.studio.OVERLAY_WSI</span></code>, the array will be mapped
+to the entire whole-slide image, without offsets.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">method</span></code> is <code class="docutils literal notranslate"><span class="pre">hx.studio.OVERLAY_GRID</span></code>, the array is interpreted
+as having been generated from the slide’s grid, meaning that an offset
+will be applied to ensure that the overlay is aligned properly.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">method</span></code> is <code class="docutils literal notranslate"><span class="pre">hx.studio.OVERLAY_VIEW</span></code>, the array is interpreted
+as an overlay that is applied only to the area of the slide
+currently in view.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>overlay</strong> (<em>np.ndarray</em>) – Overlay to render.</p></li>
+<li><p><strong>method</strong> (<em>int</em>) – Mapping method for linking the overlay to the
+whole-slide image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>original</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Original grid values before any
+colorization or other modifications. Used for displaying the
+tooltip when alt-hovering. Defaults to None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.set_prediction_message">
+<span class="sig-name descname"><span class="pre">set_prediction_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.set_prediction_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.set_prediction_message" title="Link to this definition">#</a></dt>
+<dd><p>Set the prediction message to display under the tile outline.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.set_status_message">
+<span class="sig-name descname"><span class="pre">set_status_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0.7,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rounding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.set_status_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.set_status_message" title="Link to this definition">#</a></dt>
+<dd><p>Set the status message to display in the status bar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.set_viewer">
+<span class="sig-name descname"><span class="pre">set_viewer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">viewer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.set_viewer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.set_viewer" title="Link to this definition">#</a></dt>
+<dd><p>Set the main viewer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>viewer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">histox.studio.gui.viewer.Viewer</span></code>) – Viewer to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.show_overlay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_overlay</span></span><a class="headerlink" href="#histox.studio.Studio.show_overlay" title="Link to this definition">#</a></dt>
+<dd><p>An overlay (e.g. tile filter or heatmap) is currently being shown
+over the main view.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.suspend_keyboard_input">
+<span class="sig-name descname"><span class="pre">suspend_keyboard_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/histox/studio.html#Studio.suspend_keyboard_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.suspend_keyboard_input" title="Link to this definition">#</a></dt>
+<dd><p>Suspend keyboard input handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="histox.studio.Studio.suspend_mouse_input_handling">
+<span class="sig-name descname"><span class="pre">suspend_mouse_input_handling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/histox/studio.html#Studio.suspend_mouse_input_handling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#histox.studio.Studio.suspend_mouse_input_handling" title="Link to this definition">#</a></dt>
+<dd><p>Suspend mouse input handling.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="histox.studio.Studio.tile_preview_enabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tile_preview_enabled</span></span><a class="headerlink" href="#histox.studio.Studio.tile_preview_enabled" title="Link to this definition">#</a></dt>
+<dd><p>Show a tile preview when right clicking.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+</div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
+  </div>
+</div>
+
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="util.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">histox.util</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="developer.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Developer notes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="util.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">histox.util</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="developer.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Developer notes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+    
+       <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar"><code class="docutils literal notranslate"><span class="pre">Sidebar</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.add_widgets"><code class="docutils literal notranslate"><span class="pre">Sidebar.add_widgets()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.content_width"><code class="docutils literal notranslate"><span class="pre">Sidebar.content_width</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.draw"><code class="docutils literal notranslate"><span class="pre">Sidebar.draw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.full_button"><code class="docutils literal notranslate"><span class="pre">Sidebar.full_button()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.full_button2"><code class="docutils literal notranslate"><span class="pre">Sidebar.full_button2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.full_width"><code class="docutils literal notranslate"><span class="pre">Sidebar.full_width</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.large_image_button"><code class="docutils literal notranslate"><span class="pre">Sidebar.large_image_button()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.remove_widget"><code class="docutils literal notranslate"><span class="pre">Sidebar.remove_widget()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.small_button"><code class="docutils literal notranslate"><span class="pre">Sidebar.small_button()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Sidebar.theme"><code class="docutils literal notranslate"><span class="pre">Sidebar.theme</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio"><code class="docutils literal notranslate"><span class="pre">Studio</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.P"><code class="docutils literal notranslate"><span class="pre">Studio.P</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.add_to_render_pipeline"><code class="docutils literal notranslate"><span class="pre">Studio.add_to_render_pipeline()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.add_widgets"><code class="docutils literal notranslate"><span class="pre">Studio.add_widgets()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.ask_load_heatmap"><code class="docutils literal notranslate"><span class="pre">Studio.ask_load_heatmap()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.ask_load_model"><code class="docutils literal notranslate"><span class="pre">Studio.ask_load_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.ask_load_project"><code class="docutils literal notranslate"><span class="pre">Studio.ask_load_project()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.ask_load_slide"><code class="docutils literal notranslate"><span class="pre">Studio.ask_load_slide()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.ask_zoom_to_mpp"><code class="docutils literal notranslate"><span class="pre">Studio.ask_zoom_to_mpp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.autoload"><code class="docutils literal notranslate"><span class="pre">Studio.autoload()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.center_next_window"><code class="docutils literal notranslate"><span class="pre">Studio.center_next_window()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.clear_message"><code class="docutils literal notranslate"><span class="pre">Studio.clear_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.clear_model_results"><code class="docutils literal notranslate"><span class="pre">Studio.clear_model_results()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.clear_overlay"><code class="docutils literal notranslate"><span class="pre">Studio.clear_overlay()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.clear_result"><code class="docutils literal notranslate"><span class="pre">Studio.clear_result()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.clear_status_message"><code class="docutils literal notranslate"><span class="pre">Studio.clear_status_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.close"><code class="docutils literal notranslate"><span class="pre">Studio.close()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.close_model"><code class="docutils literal notranslate"><span class="pre">Studio.close_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.close_slide"><code class="docutils literal notranslate"><span class="pre">Studio.close_slide()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.collapsing_header"><code class="docutils literal notranslate"><span class="pre">Studio.collapsing_header()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.collapsing_header2"><code class="docutils literal notranslate"><span class="pre">Studio.collapsing_header2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.decrease_tile_zoom"><code class="docutils literal notranslate"><span class="pre">Studio.decrease_tile_zoom()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.defer_rendering"><code class="docutils literal notranslate"><span class="pre">Studio.defer_rendering()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.dim_text"><code class="docutils literal notranslate"><span class="pre">Studio.dim_text()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.draw_frame"><code class="docutils literal notranslate"><span class="pre">Studio.draw_frame()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.get_default_widgets"><code class="docutils literal notranslate"><span class="pre">Studio.get_default_widgets()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.get_extension"><code class="docutils literal notranslate"><span class="pre">Studio.get_extension()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.get_renderer"><code class="docutils literal notranslate"><span class="pre">Studio.get_renderer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.get_widget"><code class="docutils literal notranslate"><span class="pre">Studio.get_widget()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.has_live_viewer"><code class="docutils literal notranslate"><span class="pre">Studio.has_live_viewer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.has_uq"><code class="docutils literal notranslate"><span class="pre">Studio.has_uq()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.header"><code class="docutils literal notranslate"><span class="pre">Studio.header()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.header_with_buttons"><code class="docutils literal notranslate"><span class="pre">Studio.header_with_buttons()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.highlighted"><code class="docutils literal notranslate"><span class="pre">Studio.highlighted()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.increase_tile_zoom"><code class="docutils literal notranslate"><span class="pre">Studio.increase_tile_zoom()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.is_mouse_down"><code class="docutils literal notranslate"><span class="pre">Studio.is_mouse_down()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.is_mouse_released"><code class="docutils literal notranslate"><span class="pre">Studio.is_mouse_released()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.load_heatmap"><code class="docutils literal notranslate"><span class="pre">Studio.load_heatmap()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.load_model"><code class="docutils literal notranslate"><span class="pre">Studio.load_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.load_project"><code class="docutils literal notranslate"><span class="pre">Studio.load_project()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.load_slide"><code class="docutils literal notranslate"><span class="pre">Studio.load_slide()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.model"><code class="docutils literal notranslate"><span class="pre">Studio.model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.mouse_input_is_suspended"><code class="docutils literal notranslate"><span class="pre">Studio.mouse_input_is_suspended()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.mouse_is_over_viewer"><code class="docutils literal notranslate"><span class="pre">Studio.mouse_is_over_viewer</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.offset_x"><code class="docutils literal notranslate"><span class="pre">Studio.offset_x</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.offset_x_pixels"><code class="docutils literal notranslate"><span class="pre">Studio.offset_x_pixels</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.offset_y"><code class="docutils literal notranslate"><span class="pre">Studio.offset_y</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.offset_y_pixels"><code class="docutils literal notranslate"><span class="pre">Studio.offset_y_pixels</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.print_error"><code class="docutils literal notranslate"><span class="pre">Studio.print_error()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.reload_model"><code class="docutils literal notranslate"><span class="pre">Studio.reload_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.reload_viewer"><code class="docutils literal notranslate"><span class="pre">Studio.reload_viewer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.reload_wsi"><code class="docutils literal notranslate"><span class="pre">Studio.reload_wsi()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.remove_from_render_pipeline"><code class="docutils literal notranslate"><span class="pre">Studio.remove_from_render_pipeline()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.remove_widget"><code class="docutils literal notranslate"><span class="pre">Studio.remove_widget()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.reset_background"><code class="docutils literal notranslate"><span class="pre">Studio.reset_background()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.reset_tile_zoom"><code class="docutils literal notranslate"><span class="pre">Studio.reset_tile_zoom()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.resume_keyboard_input"><code class="docutils literal notranslate"><span class="pre">Studio.resume_keyboard_input()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.resume_mouse_input_handling"><code class="docutils literal notranslate"><span class="pre">Studio.resume_mouse_input_handling()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.set_grid_overlay"><code class="docutils literal notranslate"><span class="pre">Studio.set_grid_overlay()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.set_message"><code class="docutils literal notranslate"><span class="pre">Studio.set_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.set_overlay"><code class="docutils literal notranslate"><span class="pre">Studio.set_overlay()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.set_prediction_message"><code class="docutils literal notranslate"><span class="pre">Studio.set_prediction_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.set_status_message"><code class="docutils literal notranslate"><span class="pre">Studio.set_status_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.set_viewer"><code class="docutils literal notranslate"><span class="pre">Studio.set_viewer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.show_overlay"><code class="docutils literal notranslate"><span class="pre">Studio.show_overlay</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.suspend_keyboard_input"><code class="docutils literal notranslate"><span class="pre">Studio.suspend_keyboard_input()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.suspend_mouse_input_handling"><code class="docutils literal notranslate"><span class="pre">Studio.suspend_mouse_input_handling()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histox.studio.Studio.tile_preview_enabled"><code class="docutils literal notranslate"><span class="pre">Studio.tile_preview_enabled</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+    
+       <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/leicaohmu/histox/edit/develop/docs/source/studio_module.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+    
+       <div class="sidebar-secondary-item">
+    <div class="tocsection sourcelink">
+      <a href="_sources/studio_module.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+      </a>
+    </div>
+</div>
+    
+
+
+
+
+</div>
+</div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Docs</a>
+      <a href="tutorials.html">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
+</footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "histox.studio",
+       "headline": "histox.studio",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/studio_module.html",
+       "articleBody": "histox.studio# This module contains the HistoX Studio visualization tool. See HistoX Studio: Live Visualization for more information. class histox.studio.Sidebar(viz: Studio)[source]# Sidebar for Studio, rendering a navigation bar and widgets. add_widgets(widgets)[source]# Add widget extension(s). Add widgets to the navigation sidebar. The .tag property is used as a unique identifier for the widget. The .icon property should be a path to an image file used for rendering the sidebar navigation icon. .icon_highlighted property should be a path to an image file used for rendering a hovered navigation icon. The widget should implement __call__() and .close() methods for rendering the imgui GUI and cleanup, respectively. Parameters: widgets (list(histox.studio.widgets.Widget)) \u2013 List of widgets to add as extensions. These should be classes, not instantiated objects. property content_width# Widget width. draw()[source]# Draw the sidebar and render all widgets. full_button(text, width=None, **kwargs)[source]# Render a button that spans the full width of the sidebar. The color of the button is determined through the loaded theme, bright_button properties. Parameters: text (str) \u2013 Text of the button. width (int, optional) \u2013 Width of the button. If not specified, uses a width that spans the width of the sidebar. Keyword Arguments: enabled (bool) \u2013 Whether the button is enabled. Returns: Whether the button was clicked. Return type: bool full_button2(text, width=None, **kwargs)[source]# Render a button that spans the full width of the sidebar. The color of the button is determined through the loaded theme, bright_button2 properties. Parameters: text (str) \u2013 Text of the button. width (int, optional) \u2013 Width of the button. If not specified, uses a width that spans the width of the sidebar. Keyword Arguments: enabled (bool) \u2013 Whether the button is enabled. Returns: Whether the button was clicked. Return type: bool property full_width# Width of the expanded sidebar, including navigation and widgets. large_image_button(image_name, size=None)[source]# Render a small button for the sidebar. Parameters: image_name (str) \u2013 Name of the image to render on the button. Valid names include \u2018gear\u2019, \u2018circle_lightning\u2019, \u2018circle_plus\u2019, \u2018pencil\u2019, \u2018folder\u2019, \u2018floppy\u2019, \u2018model_loaded\u2019, \u2018extensions\u2019, \u2018project\u2019, \u2018slide\u2019, \u2018model\u2019, and \u2018heatmap\u2019. size (int) \u2013 Simage button. Defaults to 64. Returns: If the button was clicked. Return type: bool remove_widget(tag)[source]# Remove a widget from Studio. Parameters: widget (histox.studio.widgets.Widget) \u2013 Widget to remove. This should be a class, not an instantiated object. small_button(image_name)[source]# Render a small button for the sidebar. Parameters: image_name (str) \u2013 Name of the image to render on the button. Valid names include \u2018vips\u2019, \u2018cucim\u2019, \u2018lowmem\u2019, \u2018ellipsis\u2019, \u2018gear\u2019, and \u2018refresh\u2019. Returns: If the button was clicked. Return type: bool property theme# Active Studio theme. class histox.studio.Studio(low_memory: bool = False, widgets: List[Any] | None = None, skip_tk_init: bool = False, theme: StudioTheme | None = None)[source]# property P# HistoX project currently in use. add_to_render_pipeline(renderer: Any, name: str | None = None) \u2192 None[source]# Add a renderer to the rendering pipeline. add_widgets(widgets: Widget) \u2192 None[source]# Add widget extension(s). Add widgets to Studio and the sidebar. The .tag property is used as a unique identifier for the widget. The .icon property should be a path to an image file used for rendering the sidebar navigation icon. .icon_highlighted property should be a path to an image file used for rendering a hovered navigation icon. The widget should implement __call__() and .close() methods for rendering the imgui GUI and cleanup, respectively. Parameters: widgets (list(histox.studio.widgets.Widget)) \u2013 List of widgets to add as extensions. These should be classes, not instantiated objects. ask_load_heatmap()[source]# Prompt user for location of exported heatmap (*.npz) and load. ask_load_model()[source]# Prompt user for location of a model and load. ask_load_project()[source]# Prompt user for location of a project and load. ask_load_slide()[source]# Prompt user for location of a slide and load. ask_zoom_to_mpp() \u2192 None[source]# Prompt the user to zoom to a specific microns-per-pixel (MPP). autoload(path, ignore_errors=False)[source]# Automatically load a path, detecting the type of object to load. Supports slides, models, projects, and other items supported by widgets if the widget has implemented a .drag_and_drop_hook function. Parameters: path (str) \u2013 Path to file to load. ignore_errors (bool) \u2013 Gracefully handle errors. center_next_window(width, height)[source]# Center the next imgui window. Parameters: width (int) \u2013 Width of the next window. height (int) \u2013 Height of the next window. clear_message(msg: str | None = None) \u2192 bool[source]# Clear a specific message from display, if the message is being shown. Parameters: msg (str) \u2013 Message to clear. Returns: Whether message was cleared from display. Return type: bool clear_model_results() \u2192 None[source]# Clear all model results and associated images. clear_overlay() \u2192 None[source]# Remove the current overlay image, include heatmaps and masks. clear_result() \u2192 None[source]# Clear all shown results and images. clear_status_message() \u2192 None[source]# Clear the status message from the status bar. close() \u2192 None[source]# Close the application and renderer. close_model(now: bool = False) \u2192 None[source]# Close the currently loaded model. Parameters: now (bool) \u2013 Close the model now, instead of at the end of the frame. Defaults to False (closes model at frame end). close_slide(now: bool = False) \u2192 None[source]# Close the currently loaded slide. Parameters: now (bool) \u2013 Close the slide now, instead of at the end of the frame. Defaults to False (closes slide at frame end). collapsing_header(text, **kwargs)[source]# Render a collapsing header using the active theme. ExamplesRender a collapsing header that is open by default. if viz.collapsing_header(\"Header\", default=True): imgui.text(\"Text underneath\") Parameters: text (str) \u2013 Header text. collapsing_header2(text, **kwargs)[source]# Render a second-level collapsing header using the active theme. ExamplesRender a collapsing header that is open by default. if viz.collapsing_header(\"Header\", default=True): imgui.text(\"Text underneath\") Parameters: text (str) \u2013 Header text. decrease_tile_zoom() \u2192 None[source]# Decrease zoom of tile view by half. defer_rendering(num_frames: int = 1) \u2192 None[source]# Defer rendering for a number of frames. dim_text(dim=True)[source]# Render dim text. ExamplesRender dim text. with studio.dim_text(): imgui.text(\u0027This is dim\u0027) draw_frame() \u2192 None[source]# Main draw loop. static get_default_widgets() \u2192 List[Any][source]# Returns a list of the default non-mandatory extension widgets. get_extension(tag: str) \u2192 Widget | None[source]# Returns a given widget (extension) by tag. Parameters: tag (str) \u2013 Tag of the widget to search for. Returns: histox.studio.widgets.Widget if found, else None get_renderer(name: str | None = None) \u2192 Renderer | None[source]# Check for the given additional renderer in the rendering pipeline. Parameters: name (str) \u2013 Name of the renderer to check for. If None, returns the main renderer. Returns: Renderer if name is a recognized renderer, otherwise None get_widget(name: str) \u2192 Widget[source]# Returns a given widget by class name. Parameters: name (str) \u2013 Name of the widget to search for. Returns: histox.studio.widgets.Widget Raises: ValueError \u2013 If the widget could not be found. has_live_viewer() \u2192 bool[source]# Check if the current viewer is a live viewer (e.g. camera feed). has_uq() \u2192 bool[source]# Check if the current model supports uncertainty quantification. header(text)[source]# Render a header using the active theme. Parameters: text (str) \u2013 Text for the header. Text will be rendered in uppercase. header_with_buttons(text)[source]# Render a widget header with ability to add buttons. ExamplesRender a header with a gear icon. with studio.header_with_buttons(\u0027Button\u0027): # Right align the button x_width = imgui.get_content_region_max()[0] imgui.same_line(x_width - 30) cx, cy = imgui.get_cursor_pos() imgui.set_cursor_position((cx, cy-5)) # Render the button if sidebar.small_button(\u0027gear\u0027): do_something() Parameters: text (str) \u2013 Text for the header. Text will be rendered in uppercase. highlighted(enable: bool = True)[source]# Render highlighted text. Parameters: enable (bool) \u2013 Whether to enable highlighting. ExamplesRender highlighted text. with studio.highlighted(True): imgui.text(\u0027This is highlighted\u0027) increase_tile_zoom() \u2192 None[source]# Increase zoom of tile view two-fold. is_mouse_down(mouse_idx: int = 0) \u2192 bool[source]# Check if the mouse is currently down. is_mouse_released(mouse_idx: int = 0) \u2192 bool[source]# Check if the mouse was released. load_heatmap(path: str | Heatmap) \u2192 None[source]# Load a saved heatmap (*.npz). Parameters: path (str) \u2013 Path to exported heatmap in *.npz format, as generated by Heatmap.save() or Heatmap.save_npz(). load_model(model: str, ignore_errors: bool = False) \u2192 None[source]# Load the given model. Parameters: model (str) \u2013 Path to HistoX model (in either backend). ignore_errors (bool) \u2013 Do not fail if an error is encountered. Defaults to False. load_project(project: str, ignore_errors: bool = False) \u2192 None[source]# Load the given project. Parameters: project (str) \u2013 Path to HistoX project. ignore_errors (bool) \u2013 Do not fail if an error is encountered. Defaults to False. load_slide(slide: str, **kwargs) \u2192 None[source]# Load the given slide. Parameters: slide (str) \u2013 Path to whole-slide image. stride (int, optional) \u2013 Stride for tiles. 1 is non-overlapping tiles, 2 is tiles with 50% overlap, etc. Defaults to 1. ignore_errors (bool) \u2013 Do not fail if an error is encountered. Defaults to False. property model# Tensorflow/PyTorch model currently in use. mouse_input_is_suspended() \u2192 bool[source]# Check if mouse input handling is suspended. property mouse_is_over_viewer# Mouse is currently over the main viewer. property offset_x# Main window offset (x), in points. property offset_x_pixels# Main window offset (x), in pixels. property offset_y# Main window offset (y), in points. property offset_y_pixels# Main window offset (y), in pixels. print_error(error: str) \u2192 None[source]# Print the given error message. reload_model() \u2192 None[source]# Reload the current model. reload_viewer() \u2192 None[source]# Reload the current main viewer. reload_wsi(slide: str | WSI | None = None, stride: int | None = None, use_rois: bool = True, tile_px: int | None = None, tile_um: str | int | None = None, **kwargs) \u2192 bool[source]# Reload the currently loaded Whole-Slide Image. Parameters: path (str or hx.WSI, optional) \u2013 Slide to reload. May be a path or a hx.WSI object. If not provided, will reload the currently loaded slide. stride (int, optional) \u2013 Stride to use for the loaded slide. If not provided, will use the stride value from the currently loaded slide. use_rois (bool) \u2013 Use ROIs from the loaded project, if available. Returns: True if slide loaded successfully, False otherwise. Return type: bool remove_from_render_pipeline(name: str)[source]# Remove a renderer from the render pipeline. Remove a renderer added with .add_to_render_pipeline(). Parameters: name (str) \u2013 Name of the renderer to remove. remove_widget(widget: Widget) \u2192 None[source]# Remove a widget from Studio. Parameters: widget (histox.studio.widgets.Widget) \u2013 Widget to remove. This should be a class, not an instantiated object. reset_background()[source]# Reset the Studio background to the default theme color. reset_tile_zoom() \u2192 None[source]# Reset tile zoom level. resume_keyboard_input() \u2192 bool[source]# Resume keyboard input handling. resume_mouse_input_handling()[source]# Resume mouse input handling. set_grid_overlay(grid: ndarray, *, tile_um: int | None = None, stride_div: int | None = None, mpp: float | None = None, original: ndarray | None = None) \u2192 None[source]# Set the grid overlay to the given grid. Parameters: grid (np.ndarray) \u2013 Grid to render as an overlay. Keyword Arguments: tile_um (int, optional) \u2013 Tile size, in microns. If None, uses the tile size of the currently loaded slide. stride_div (int, optional) \u2013 Stride divisor. If None, uses the stride divisor of the currently loaded slide. mpp (float, optional) \u2013 Microns per pixel. If None, uses the MPP of the currently loaded slide. original (np.ndarray, optional) \u2013 Original grid values before any colorization or other modifications. Used for displaying the tooltip when alt-hovering. Defaults to None. set_message(msg: str) \u2192 None[source]# Set a message for display. set_overlay(overlay: ndarray, method: int, *, original: ndarray | None = None) \u2192 None[source]# Configure the overlay to be applied to the current view screen. Overlay is a numpy array, and method is a flag indicating the method to use when showing the overlay. If method is hx.studio.OVERLAY_WSI, the array will be mapped to the entire whole-slide image, without offsets. If method is hx.studio.OVERLAY_GRID, the array is interpreted as having been generated from the slide\u2019s grid, meaning that an offset will be applied to ensure that the overlay is aligned properly. If method is hx.studio.OVERLAY_VIEW, the array is interpreted as an overlay that is applied only to the area of the slide currently in view. Parameters: overlay (np.ndarray) \u2013 Overlay to render. method (int) \u2013 Mapping method for linking the overlay to the whole-slide image. Keyword Arguments: original (np.ndarray, optional) \u2013 Original grid values before any colorization or other modifications. Used for displaying the tooltip when alt-hovering. Defaults to None. set_prediction_message(msg: str) \u2192 None[source]# Set the prediction message to display under the tile outline. set_status_message(message: str, description: str | None = None, *, color: Tuple[float, float, float] | None = (0.7, 0, 0, 1), text_color: Tuple[float, float, float, float] = (1, 1, 1, 1), rounding: int = 0) \u2192 None[source]# Set the status message to display in the status bar. set_viewer(viewer: Any) \u2192 None[source]# Set the main viewer. Parameters: viewer (histox.studio.gui.viewer.Viewer) \u2013 Viewer to use. property show_overlay# An overlay (e.g. tile filter or heatmap) is currently being shown over the main view. suspend_keyboard_input() \u2192 bool[source]# Suspend keyboard input handling. suspend_mouse_input_handling()[source]# Suspend mouse input handling. property tile_preview_enabled# Show a tile preview when right clicking.",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/studio_module.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
+      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
+  </script>
+  
+  </body>
+</html>

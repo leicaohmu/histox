@@ -19,7 +19,7 @@ of release dates or backward compatibility during the pre-stable phase.
    should be recordable and recoverable.
 5. **Provider terms remain authoritative.** HistoX must not bypass access
    controls or imply redistribution rights for datasets or model weights.
-6. **Incremental migration.** Useful inherited Slideflow behavior remains
+6. **Incremental migration.** Useful upstream-compatible behavior remains
    available while HistoX-owned interfaces are introduced and tested.
 
 ## Current baseline: `0.2.x`
@@ -35,10 +35,10 @@ Available today:
 
 Known limits:
 
-- the public API remains largely inherited from Slideflow;
+- much of the public API remains upstream-compatible rather than HistoX-native;
 - the CI matrix currently validates packaging on Python 3.9, not every Python
   version accepted by package metadata;
-- documentation and examples are still being migrated;
+- compatibility tutorials still require runtime verification;
 - A4b2 covers verified direct HTTP(S) downloads for open assets, but
   authenticated provider clients and inherited project presets are not yet
   unified;
@@ -116,7 +116,7 @@ After the data and task contracts stabilize:
 - bundling datasets or large model weights in the Python distribution;
 - claiming support for a model before its loading, inference, and evaluation
   path is tested;
-- removing all inherited Slideflow APIs in one breaking rewrite;
+- removing all upstream-compatible APIs in one breaking rewrite;
 - promising production or clinical use during the pre-stable phase.
 
 ## Definition of done for a new integration

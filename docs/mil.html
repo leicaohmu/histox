@@ -1,0 +1,2331 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Multiple-Instance Learning (MIL) &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=3ca669d2"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=ccdb6887"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mil';</script>
+    <script src="_static/tutorials.js?v=3b8eb957"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Self-Supervised Learning (SSL)" href="ssl.html" />
+    <link rel="prev" title="Uncertainty Quantification" href="uq.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="Multiple-Instance Learning (MIL) - Documentation for histox, part of the PyTorch ecosystem.">
+
+
+
+
+
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
+
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
+
+  }
+</style>
+
+
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
+
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+
+
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="docs.html">Documentation home</a></li>
+    <li><a class="nav-link" href="user_guide.html">User guide</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="installation.html">Installation</a></li>
+    <li><a class="nav-link" href="overview.html">Overview</a></li>
+    <li><a class="nav-link" href="quickstart.html">Quickstart</a></li>
+    <li><a class="nav-link" href="project_setup.html">Project setup</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="data.html">Public data</a></li>
+    <li><a class="nav-link" href="datasets_and_val.html">Datasets</a></li>
+    <li><a class="nav-link" href="slide_processing.html">Slide processing</a></li>
+    <li><a class="nav-link" href="features.html">Feature extraction</a></li>
+    <li><a class="nav-link" href="segmentation.html">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="cellseg.html">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link" href="training.html">Training</a></li>
+    <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
+    <li><a class="nav-link" href="posthoc.html">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="uq.html">Uncertainty</a></li>
+    <li><a class="nav-link active" href="#">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="ssl.html">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="stylegan.html">Generative models</a></li>
+    <li><a class="nav-link" href="saliency.html">Interpretation</a></li>
+    <li><a class="nav-link" href="custom_loops.html">Custom loops</a></li>
+    <li><a class="nav-link" href="studio.html">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="developer.html">Developer notes home</a></li>
+    <li><a class="nav-link" href="extensions.html">Extensions</a></li>
+    <li><a class="nav-link" href="tfrecords.html">TFRecords</a></li>
+    <li><a class="nav-link" href="dataloaders.html">Dataloaders</a></li>
+    <li><a class="nav-link" href="custom_extractors.html">Custom extractors</a></li>
+    <li><a class="nav-link" href="tile_labels.html">Tile labels</a></li>
+    <li><a class="nav-link" href="plugins.html">Plugins</a></li>
+    <li><a class="nav-link" href="troubleshooting.html">Troubleshooting</a></li>
+    <li><a class="nav-link" href="io_tensorflow.html">TensorFlow data</a></li>
+    <li><a class="nav-link" href="model_tensorflow.html">TensorFlow models</a></li>
+  </ul>
+</nav>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+
+<div id="rtd-footer-container"></div>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="docs.html" class="nav-link">HistoX documentation</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="user_guide.html" class="nav-link">HistoX user guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Multiple-Ins...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+</div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="docs.html">
+      <meta itemprop="name" content="HistoX documentation">
+      <meta itemprop="position" content="1">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <link itemprop="item" href="user_guide.html">
+      <meta itemprop="name" content="HistoX user guide">
+      <meta itemprop="position" content="2">
+    </div>
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="Multiple-Instance Learning (MIL)">
+      <meta itemprop="position" content="3">
+    </div>
+  </div>
+
+  
+  
+
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="multiple-instance-learning-mil">
+<span id="mil"></span><h1>Multiple-Instance Learning (MIL)<a class="headerlink" href="#multiple-instance-learning-mil" title="Link to this heading">#</a></h1>
+<p>In addition to standard tile-based neural networks, HistoX also supports training multiple-instance learning (MIL) models. Several architectures are available, including <a class="reference external" href="https://github.com/AMLab-Amsterdam/AttentionDeepMIL">attention-based MIL</a> (<code class="docutils literal notranslate"><span class="pre">&quot;Attention_MIL&quot;</span></code>), <a class="reference external" href="https://github.com/mahmoodlab/CLAM">CLAM</a> (<code class="docutils literal notranslate"><span class="pre">&quot;CLAM_SB&quot;,</span></code> <code class="docutils literal notranslate"><span class="pre">&quot;CLAM_MB&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MIL_fc&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MIL_fc_mc&quot;</span></code>), <a class="reference external" href="https://github.com/szc19990412/TransMIL">TransMIL</a> (<code class="docutils literal notranslate"><span class="pre">&quot;TransMIL&quot;</span></code>), and <a class="reference external" href="https://github.com/peng-lab/HistoBistro">HistoBistro Transformer</a> (<code class="docutils literal notranslate"><span class="pre">&quot;bistro.transformer&quot;</span></code>). Custom architectures can also be trained. MIL training requires PyTorch.</p>
+<p>Skip to <a class="reference internal" href="tutorial8.html#tutorial8"><span class="std std-ref">Tutorial 8: Multiple-Instance Learning</span></a> for a complete example of MIL training.</p>
+<p>See <a class="reference internal" href="mil_module.html#mil-api"><span class="std std-ref">histox.mil</span></a> for more information on the MIL API.</p>
+<section id="generating-features">
+<h2>Generating Features<a class="headerlink" href="#generating-features" title="Link to this heading">#</a></h2>
+<p>The first step in MIL model development is generating features from image tiles, as discussed in the <a class="reference internal" href="features.html#features"><span class="std std-ref">Generating Features</span></a> section. Features from whole-slide images are exported as “bags” of features, where each bag contains a set of features from a single slide. Each bag is a PyTorch tensor saved in <code class="docutils literal notranslate"><span class="pre">*.pt</span></code> format. Bags are saved in a directory, and the directory path is passed to the MIL model during training and evaluation.</p>
+</section>
+<section id="training">
+<h2>Training<a class="headerlink" href="#training" title="Link to this heading">#</a></h2>
+<section id="model-configuration">
+<h3>Model Configuration<a class="headerlink" href="#model-configuration" title="Link to this heading">#</a></h3>
+<p>To train an MIL model using exported features, first prepare an MIL configuration using <a class="reference internal" href="mil_module.html#histox.mil.mil_config" title="histox.mil.mil_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">histox.mil.mil_config()</span></code></a>.</p>
+<p>The first argument to this function is the model architecture (which can be a name or a custom <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> model), and the remaining arguments are used to configure the training process, such as learning rate and number of epochs. Training is executed using <a class="reference external" href="https://docs.fast.ai/">FastAI</a> with <a class="reference external" href="https://arxiv.org/pdf/1803.09820.pdf%E5%92%8CSylvain">1cycle learning rate scheduling</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">mil_config</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">mil_config</span><span class="p">(</span><span class="s1">&#39;attention_mil&#39;</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Available models out-of-the-box include <a class="reference external" href="https://github.com/AMLab-Amsterdam/AttentionDeepMIL">attention-based MIL</a> (<code class="docutils literal notranslate"><span class="pre">&quot;Attention_MIL&quot;</span></code>), <a class="reference external" href="https://github.com/szc19990412/TransMIL">transformer MIL</a> (<code class="docutils literal notranslate"><span class="pre">&quot;TransMIL&quot;</span></code>), and <a class="reference external" href="https://github.com/peng-lab/HistoBistro">HistoBistro Transformer</a> (<code class="docutils literal notranslate"><span class="pre">&quot;bistro.transformer&quot;</span></code>). <a class="reference external" href="https://github.com/mahmoodlab/CLAM">CLAM</a> (<code class="docutils literal notranslate"><span class="pre">&quot;CLAM_SB&quot;,</span></code> <code class="docutils literal notranslate"><span class="pre">&quot;CLAM_MB&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MIL_fc&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MIL_fc_mc&quot;</span></code>) models are available through <code class="docutils literal notranslate"><span class="pre">slideflow-gpl</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>slideflow-gpl
+</pre></div>
+</div>
+<p>Custom MIL models can also be trained with this API, as discussed <a class="reference external" href="custom_mil">below</a>.</p>
+</section>
+<section id="classification-regression">
+<h3>Classification &amp; Regression<a class="headerlink" href="#classification-regression" title="Link to this heading">#</a></h3>
+<p>MIL models can be trained for both classification and regression tasks. The type of outcome is determined through the loss function, which defaults to <code class="docutils literal notranslate"><span class="pre">&quot;cross_entropy&quot;</span></code>. To train a model for regression, set the loss function to one of the following regression losses, and ensure that your outcome labels are continuous. You can also train to multiple outcomes by passing a list of outcome names.</p>
+<ul class="simple">
+<li><p><strong>“mse”</strong> (<code class="docutils literal notranslate"><span class="pre">nn.CrossEntropyLoss</span></code>): Mean squared error.</p></li>
+<li><p><strong>“mae”</strong> (<code class="docutils literal notranslate"><span class="pre">nn.L1Loss</span></code>): Mean absolute error.</p></li>
+<li><p><strong>“huber”</strong> (<code class="docutils literal notranslate"><span class="pre">nn.SmoothL1Loss</span></code>): Huber loss.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prepare a regression-compatible MIL configuration</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">mil_config</span><span class="p">(</span><span class="s1">&#39;attention_mil&#39;</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">)</span>
+
+<span class="c1"># Train the model</span>
+<span class="n">project</span><span class="o">.</span><span class="n">train_mil</span><span class="p">(</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="n">outcomes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;grade&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="training-an-mil-model">
+<h3>Training an MIL Model<a class="headerlink" href="#training-an-mil-model" title="Link to this heading">#</a></h3>
+<p>Next, prepare a <a class="reference internal" href="datasets_and_val.html#datasets-and-validation"><span class="std std-ref">training and validation dataset</span></a> and use <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.Project.train_mil()</span></code> to start training. For example, to train a model using three-fold cross-validation to the outcome “HPV_status”:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+
+<span class="c1"># Prepare a project and dataset</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">full_dataset</span> <span class="o">=</span> <span class="n">dataset</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
+
+<span class="c1"># Split the dataset using three-fold, site-preserved cross-validation</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">full_dataset</span><span class="o">.</span><span class="n">kfold_split</span><span class="p">(</span>
+    <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="s1">&#39;HPV_status&#39;</span><span class="p">,</span>
+    <span class="n">preserved_site</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Train on each cross-fold</span>
+<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">:</span>
+    <span class="n">P</span><span class="o">.</span><span class="n">train_mil</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+        <span class="n">outcomes</span><span class="o">=</span><span class="s1">&#39;HPV_status&#39;</span><span class="p">,</span>
+        <span class="n">train_dataset</span><span class="o">=</span><span class="n">train</span><span class="p">,</span>
+        <span class="n">val_dataset</span><span class="o">=</span><span class="n">val</span><span class="p">,</span>
+        <span class="n">bags</span><span class="o">=</span><span class="s1">&#39;/path/to/bag_directory&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Model training statistics, including validation performance (AUROC, AP) and predictions on the validation dataset, will be saved in an <code class="docutils literal notranslate"><span class="pre">mil</span></code> subfolder within the main project directory.</p>
+<p>If you are training an attention-based MIL model (<code class="docutils literal notranslate"><span class="pre">attention_mil</span></code>, <code class="docutils literal notranslate"><span class="pre">clam_sb</span></code>, <code class="docutils literal notranslate"><span class="pre">clam_mb</span></code>), heatmaps of attention can be generated for each slide in the validation dataset by using the argument <code class="docutils literal notranslate"><span class="pre">attention_heatmaps=True</span></code>. You can customize these heatmaps with <code class="docutils literal notranslate"><span class="pre">interpolation</span></code> and <code class="docutils literal notranslate"><span class="pre">cmap</span></code> arguments to control the heatmap interpolation and colormap, respectively.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate attention heatmaps,</span>
+<span class="c1"># using the &#39;magma&#39; colormap and no interpolation.</span>
+<span class="n">P</span><span class="o">.</span><span class="n">train_mil</span><span class="p">(</span>
+    <span class="n">attention_heatmaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span>
+    <span class="n">interpolation</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Hyperparameters, model configuration, and feature extractor information is logged to <code class="docutils literal notranslate"><span class="pre">mil_params.json</span></code> in the model directory. This file also contains information about the input and output shapes of the MIL network and outcome labels. An example file is shown below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w"> </span><span class="nt">&quot;trainer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fastai&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w"> </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;outcomes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;histology&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;outcome_labels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Adenocarcinoma&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Squamous&quot;</span>
+<span class="w"> </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;bags&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/mnt/data/projects/example_project/bags/simclr-263510/&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;input_shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;output_shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;bags_encoder&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;extractor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;histox.model.extractors.simclr.SimCLR_Features&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;kwargs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;center_crop&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ckpt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/mnt/data/projects/example_project/simclr/00001-EXAMPLE/ckpt-263510.ckpt&quot;</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;normalizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;num_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tile_px&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">299</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tile_um&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">302</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="multi-magnification-mil">
+<span id="multimag"></span><h3>Multi-Magnification MIL<a class="headerlink" href="#multi-magnification-mil" title="Link to this heading">#</a></h3>
+<p>HistoX 2.2 introduced a multi-magnification, multi-modal MIL model, <code class="docutils literal notranslate"><span class="pre">MultiModal_Attention_MIL</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;mm_attention_mil&quot;</span></code>). This late-fusion multimodal model is based on standard attention-based MIL, but accepts multiple input modalities (e.g., multiple magnifications) simultaneously. Each input modality is processed by a separate encoder network and a separate attention module. The attention-weighted features from each modality are then concatenated and passed to a fully-connected layer.</p>
+<p>Multimodal models are trained using the same API as standard MIL models. Modalities are specified using the <code class="docutils literal notranslate"><span class="pre">bags</span></code> argument to <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.Project.train_mil()</span></code>, where the number of modes is determined by the number of bag directories provided. Within each bag directory, bags should be generated using the same feature extractor and at the same magnification, but feature extractors and magnifications can vary between bag directories.</p>
+<p>For example, to train a multimodal model using two magnifications, you would pass two bag paths to the model. In this case, the <code class="docutils literal notranslate"><span class="pre">/path/to/bags_10x</span></code> directory contains bags generated from a 10x feature extractor, and the <code class="docutils literal notranslate"><span class="pre">/path/to/bags_40x</span></code> directory contains bags generated from a 40x feature extractor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configure a multimodal MIL model.</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">mil_config</span><span class="p">(</span><span class="s1">&#39;mm_attention_mil&#39;</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+
+<span class="c1"># Set the bags paths for each modality.</span>
+<span class="n">bags_10x</span> <span class="o">=</span> <span class="s1">&#39;/path/to/bags_10x&#39;</span>
+<span class="n">bags_40x</span> <span class="o">=</span> <span class="s1">&#39;/path/to/bags_40x&#39;</span>
+
+<span class="n">P</span><span class="o">.</span><span class="n">train_mil</span><span class="p">(</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+    <span class="n">outcomes</span><span class="o">=</span><span class="s1">&#39;HPV_status&#39;</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train</span><span class="p">,</span>
+    <span class="n">val_dataset</span><span class="o">=</span><span class="n">val</span><span class="p">,</span>
+    <span class="n">bags</span><span class="o">=</span><span class="p">[</span><span class="n">bags_10x</span><span class="p">,</span> <span class="n">bags_40x</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You can use any number of modalities, and the feature extractors for each modality can be different. For example, you could train a multimodal model using features from a custom SimCLR model at 5x and features from a pretrained CTransPath model at 20x.</p>
+<p>The feature extractors used for each modality, as specified in the <code class="docutils literal notranslate"><span class="pre">bags_config.json</span></code> files in the bag directories, will be logged in the final <code class="docutils literal notranslate"><span class="pre">mil_params.json</span></code> file. Multimodal MIL models can be interactively viewed in <a class="reference internal" href="studio.html#studio"><span class="std std-ref">HistoX Studio</span></a>, allowing you to visualize the attention weights for each modality separately.</p>
+</section>
+<section id="custom-architectures">
+<span id="custom-mil"></span><h3>Custom Architectures<a class="headerlink" href="#custom-architectures" title="Link to this heading">#</a></h3>
+<p>Training custom MIL models is straightforward with HistoX, particularly if your model can adhere to a few simple guidelines:</p>
+<ul class="simple">
+<li><p>Initialized with <code class="docutils literal notranslate"><span class="pre">(num_feats,</span> <span class="pre">num_outputs)</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">Attention_MIL(768,</span> <span class="pre">2)</span></code>)</p></li>
+<li><p>Input is feature bags with shape <code class="docutils literal notranslate"><span class="pre">(batch,</span> <span class="pre">num_tiles,</span> <span class="pre">num_feats)</span></code>. If the model needs a “lens” input, then the model attribute <code class="docutils literal notranslate"><span class="pre">use_lens</span></code> should be True.</p></li>
+<li><p>Has a <code class="docutils literal notranslate"><span class="pre">relocate()</span></code> function that moves the model to detected device/GPU</p></li>
+<li><dl class="simple">
+<dt>Ability to get attention through one of two methods:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">forward()</span></code> function includes an optional <code class="docutils literal notranslate"><span class="pre">return_attention</span></code> argument, which if True returns attention scores after model output</p></li>
+<li><p>Has a <code class="docutils literal notranslate"><span class="pre">calculate_attention()</span></code> function that returns attention scores</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>If the above applies to your model, you can train it simply by passing it as the first argument to <a class="reference internal" href="mil_module.html#histox.mil.mil_config" title="histox.mil.mil_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">histox.mil.mil_config()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">mil_config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">my_module</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomMIL</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">mil_config</span><span class="p">(</span><span class="n">CustomMIL</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For larger projects, or if you are designing a plugin/extension for HistoX, custom models can be registered to facilitate easy creation. If your model adheres to the above guidelines, you can register it for use with the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_model</span>
+
+<span class="nd">@register_model</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_model</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">MyModelClass</span>
+</pre></div>
+</div>
+<p>You can then use your model when creating an MIL configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">mil</span><span class="o">.</span><span class="n">mil_config</span><span class="p">(</span><span class="s1">&#39;my_model&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the above guidelines do <em>not</em> apply to your model, or if you want to customize model logic or functionality, you can supply a custom MIL configuration class that will supervise model building and dataset preparation. Your custom configuration class should inherit <code class="docutils literal notranslate"><span class="pre">histox.mil.MILModelConfig</span></code>, and methods in this class can be overloaded to provide additional functionality. For example, to create an MIL configuration that uses a custom loss and custom metrics:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">MILModelConfig</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyModelConfig</span><span class="p">(</span><span class="n">MILModelConfig</span><span class="p">):</span>
+
+<span class="nd">@property</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">loss_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">my_custom_loss</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">my_metric1</span><span class="p">,</span> <span class="n">my_metric2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>When registering your model, you should specify that it should use your custom configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@register_model</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">MyModelConfig</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_model</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">MyModelClass</span>
+</pre></div>
+</div>
+<p>For an example of how to utilize model registration and configuration customization, see our <a class="reference external" href="https://github.com/slideflow/slideflow-gpl/blob/main/slideflow_gpl/clam/config.py">CLAM implementation</a> available through <code class="docutils literal notranslate"><span class="pre">slideflow-gpl</span></code>.</p>
+</section>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
+<p>To evaluate a saved MIL model on an external dataset, first extract features from a dataset, then use <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.Project.evaluate_mil()</span></code>, which displays evaluation metrics and returns predictions as a DataFrame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">histox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hx</span>
+
+<span class="c1"># Prepare a project and dataset</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
+
+<span class="c1"># Generate features using CTransPath</span>
+<span class="n">ctranspath</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">build_feature_extractor</span><span class="p">(</span><span class="s1">&#39;ctranspath&#39;</span><span class="p">,</span> <span class="n">resize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">DatasetFeatures</span><span class="p">(</span><span class="n">ctranspath</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">features</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="s1">&#39;/path/to/bag_directory&#39;</span><span class="p">)</span>
+
+<span class="c1"># Evaluate a saved MIL model</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">evaluate_mil</span><span class="p">(</span>
+    <span class="s1">&#39;/path/to/saved_model&#39;</span>
+    <span class="n">outcomes</span><span class="o">=</span><span class="s1">&#39;HPV_status&#39;</span><span class="p">,</span>
+    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+    <span class="n">bags</span><span class="o">=</span><span class="s1">&#39;/path/to/bag_directory&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>As with training, attention heatmaps can be generated for attention-based MIL models with the argument <code class="docutils literal notranslate"><span class="pre">attention_heatmaps=True</span></code>, and these can be customized using <code class="docutils literal notranslate"><span class="pre">cmap</span></code> and <code class="docutils literal notranslate"><span class="pre">interpolation</span></code> arguments.</p>
+<img alt="att_heatmap.jpg" src="att_heatmap.jpg" />
+</section>
+<section id="generating-predictions">
+<h2>Generating Predictions<a class="headerlink" href="#generating-predictions" title="Link to this heading">#</a></h2>
+<p>In addition to generating slide-level predictions during training and evaluation, you can also generate tile-level predictions and attention scores for a dataset using <a class="reference internal" href="mil_module.html#histox.mil.get_mil_tile_predictions" title="histox.mil.get_mil_tile_predictions"><code class="xref py py-func docutils literal notranslate"><span class="pre">histox.mil.get_mil_tile_predictions()</span></code></a>. This function returns a DataFrame containing tile-level predictions and attention.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_mil_tile_predictions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">get_mil_tile_predictions</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">bags</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">                        slide  loc_x  loc_y  ...   y_pred3   y_pred4   y_pred5</span>
+<span class="go">0       TCGA-4V-A9QI-01Z-0...   2210   7349  ...  0.181155  0.468446  0.070175</span>
+<span class="go">1       TCGA-4V-A9QI-01Z-0...   5795   1971  ...  0.243721  0.131991  0.009169</span>
+<span class="go">2       TCGA-4V-A9QI-01Z-0...   6273   5437  ...  0.096196  0.583367  0.090258</span>
+<span class="go">3       TCGA-4V-A9QI-01Z-0...   2330   3047  ...  0.056426  0.264386  0.300199</span>
+<span class="go">4       TCGA-4V-A9QI-01Z-0...   3644   3525  ...  0.134535  0.534353  0.013619</span>
+<span class="go">...                       ...    ...    ...  ...       ...       ...       ...</span>
+<span class="go">391809  TCGA-4X-A9FA-01Z-0...   6034   3352  ...  0.004119  0.003636  0.005673</span>
+<span class="go">391810  TCGA-4X-A9FA-01Z-0...   6643   1401  ...  0.012790  0.010269  0.011726</span>
+<span class="go">391811  TCGA-4X-A9FA-01Z-0...   5546   2011  ...  0.009777  0.013556  0.025255</span>
+<span class="go">391812  TCGA-4X-A9FA-01Z-0...   6277   2864  ...  0.026638  0.018499  0.031061</span>
+<span class="go">391813  TCGA-4X-A9FA-01Z-0...   4083   4205  ...  0.009875  0.009582  0.022125</span>
+
+<span class="go">[391814 rows x 15 columns]</span>
+</pre></div>
+</div>
+</section>
+<section id="single-slide-inference">
+<h2>Single-Slide Inference<a class="headerlink" href="#single-slide-inference" title="Link to this heading">#</a></h2>
+<p>Predictions can also be generated for individual slides, without requiring the user to manually generate feature bags. Use <code class="xref py py-func docutils literal notranslate"><span class="pre">histox.model.predict_slide()</span></code> to generate predictions for a single slide. The first argument is th path to the saved MIL model (a directory containing <code class="docutils literal notranslate"><span class="pre">mil_params.json</span></code>), and the second argument can either be a path to a slide or a loaded <code class="xref py py-class docutils literal notranslate"><span class="pre">hx.WSI</span></code> object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">histox.mil</span><span class="w"> </span><span class="kn">import</span> <span class="n">predict_slide</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">histox.slide</span><span class="w"> </span><span class="kn">import</span> <span class="n">qc</span>
+
+<span class="c1"># Load a slide and apply Otsu thresholding</span>
+<span class="n">slide</span> <span class="o">=</span> <span class="s1">&#39;/path/to/slide.svs&#39;</span>
+<span class="n">wsi</span> <span class="o">=</span> <span class="n">hx</span><span class="o">.</span><span class="n">WSI</span><span class="p">(</span><span class="n">slide</span><span class="p">,</span> <span class="n">tile_px</span><span class="o">=</span><span class="mi">299</span><span class="p">,</span> <span class="n">tile_um</span><span class="o">=</span><span class="mi">302</span><span class="p">)</span>
+<span class="n">wsi</span><span class="o">.</span><span class="n">qc</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">Otsu</span><span class="p">())</span>
+
+<span class="c1"># Calculate predictions and attention heatmap</span>
+<span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/mil_model&#39;</span>
+<span class="n">y_pred</span><span class="p">,</span> <span class="n">y_att</span> <span class="o">=</span> <span class="n">predict_slide</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">wsi</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The function will return a tuple of predictions and attention heatmaps. If the model is not attention-based, the attention heatmap will be <code class="docutils literal notranslate"><span class="pre">None</span></code>. To calculate attention for a model, set <code class="docutils literal notranslate"><span class="pre">attention=True</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_att</span> <span class="o">=</span> <span class="n">predict_slide</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">attention</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The returned attention values will be a masked <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> with the same shape as the slide tile extraction grid. Unused tiles will have masked attention values.</p>
+</section>
+<section id="visualizing-predictions">
+<h2>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Link to this heading">#</a></h2>
+<p>Heatmaps of attention and tile-level predictions can be interactively visualized in HistoX Studio by enabling the Multiple-Instance Learning extension (new in HistoX 2.1.0). This extension is discussed in more detail in the <a class="reference internal" href="studio.html#extensions"><span class="std std-ref">Extensions</span></a> section.</p>
+</section>
+</section>
+
+
+                </article>
+              
+</div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item">
+<div class="feedback">
+  
+<div class="rating">
+    Rate this Page
+    <div class="stars">
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="1" data-value="1">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="2" data-value="2">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="3" data-value="3">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="4" data-value="4">★</span>
+        
+        <span class="star" data-behavior="tutorial-rating" data-count="5" data-value="5">★</span>
+        
+    </div>
+</div>
+
+  <div class="feedback-send">
+    <button class="feedback-btn"
+            onclick="openGitHubIssue()"
+            data-bs-title="Create a GitHub Issue"
+            data-bs-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-gtm="feedback-btn-click">Send Feedback
+    </button>
+  </div>
+</div>
+
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uq.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uncertainty Quantification</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ssl.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Self-Supervised Learning (SSL)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+
+<div class="footer-info">
+  <p class="copyright">
+    
+  </p>
+
+  <p class="theme-version">
+    Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  </p>
+</div>
+</div>
+  
+</div>
+                </footer>
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uq.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uncertainty Quantification</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ssl.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Self-Supervised Learning (SSL)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+    
+       <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-features">Generating Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-configuration">Model Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-regression">Classification &amp; Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-an-mil-model">Training an MIL Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-magnification-mil">Multi-Magnification MIL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-architectures">Custom Architectures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-predictions">Generating Predictions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-slide-inference">Single-Slide Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-predictions">Visualizing Predictions</a></li>
+</ul>
+  </nav></div>
+    
+       <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/leicaohmu/histox/edit/develop/docs/source/mil.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+    
+       <div class="sidebar-secondary-item">
+    <div class="tocsection sourcelink">
+      <a href="_sources/mil.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+      </a>
+    </div>
+</div>
+    
+
+
+
+
+</div>
+</div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Docs</a>
+      <a href="tutorials.html">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
+</footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "Multiple-Instance Learning (MIL)",
+       "headline": "Multiple-Instance Learning (MIL)",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/mil.html",
+       "articleBody": "Multiple-Instance Learning (MIL)# In addition to standard tile-based neural networks, HistoX also supports training multiple-instance learning (MIL) models. Several architectures are available, including attention-based MIL (\"Attention_MIL\"), CLAM (\"CLAM_SB\", \"CLAM_MB\", \"MIL_fc\", \"MIL_fc_mc\"), TransMIL (\"TransMIL\"), and HistoBistro Transformer (\"bistro.transformer\"). Custom architectures can also be trained. MIL training requires PyTorch. Skip to Tutorial 8: Multiple-Instance Learning for a complete example of MIL training. See histox.mil for more information on the MIL API. Generating Features# The first step in MIL model development is generating features from image tiles, as discussed in the Generating Features section. Features from whole-slide images are exported as \u201cbags\u201d of features, where each bag contains a set of features from a single slide. Each bag is a PyTorch tensor saved in *.pt format. Bags are saved in a directory, and the directory path is passed to the MIL model during training and evaluation. Training# Model Configuration# To train an MIL model using exported features, first prepare an MIL configuration using histox.mil.mil_config(). The first argument to this function is the model architecture (which can be a name or a custom torch.nn.Module model), and the remaining arguments are used to configure the training process, such as learning rate and number of epochs. Training is executed using FastAI with 1cycle learning rate scheduling. import histox as hx from histox.mil import mil_config config = mil_config(\u0027attention_mil\u0027, lr=1e-3) Available models out-of-the-box include attention-based MIL (\"Attention_MIL\"), transformer MIL (\"TransMIL\"), and HistoBistro Transformer (\"bistro.transformer\"). CLAM (\"CLAM_SB\", \"CLAM_MB\", \"MIL_fc\", \"MIL_fc_mc\") models are available through slideflow-gpl: pip install slideflow-gpl Custom MIL models can also be trained with this API, as discussed below. Classification \u0026 Regression# MIL models can be trained for both classification and regression tasks. The type of outcome is determined through the loss function, which defaults to \"cross_entropy\". To train a model for regression, set the loss function to one of the following regression losses, and ensure that your outcome labels are continuous. You can also train to multiple outcomes by passing a list of outcome names. \u201cmse\u201d (nn.CrossEntropyLoss): Mean squared error. \u201cmae\u201d (nn.L1Loss): Mean absolute error. \u201chuber\u201d (nn.SmoothL1Loss): Huber loss. # Prepare a regression-compatible MIL configuration config = mil_config(\u0027attention_mil\u0027, lr=1e-3, loss=\u0027mse\u0027) # Train the model project.train_mil( config=config, ..., outcomes=[\u0027age\u0027, \u0027grade\u0027] ) Training an MIL Model# Next, prepare a training and validation dataset and use histox.Project.train_mil() to start training. For example, to train a model using three-fold cross-validation to the outcome \u201cHPV_status\u201d: ... # Prepare a project and dataset P = hx.Project(...) full_dataset = dataset = P.dataset(tile_px=299, tile_um=302) # Split the dataset using three-fold, site-preserved cross-validation splits = full_dataset.kfold_split( k=3, labels=\u0027HPV_status\u0027, preserved_site=True ) # Train on each cross-fold for train, val in splits: P.train_mil( config=config, outcomes=\u0027HPV_status\u0027, train_dataset=train, val_dataset=val, bags=\u0027/path/to/bag_directory\u0027 ) Model training statistics, including validation performance (AUROC, AP) and predictions on the validation dataset, will be saved in an mil subfolder within the main project directory. If you are training an attention-based MIL model (attention_mil, clam_sb, clam_mb), heatmaps of attention can be generated for each slide in the validation dataset by using the argument attention_heatmaps=True. You can customize these heatmaps with interpolation and cmap arguments to control the heatmap interpolation and colormap, respectively. # Generate attention heatmaps, # using the \u0027magma\u0027 colormap and no interpolation. P.train_mil( attention_heatmaps=True, cmap=\u0027magma\u0027, interpolation=None ) Hyperparameters, model configuration, and feature extractor information is logged to mil_params.json in the model directory. This file also contains information about the input and output shapes of the MIL network and outcome labels. An example file is shown below. { \"trainer\": \"fastai\", \"params\": { }, \"outcomes\": \"histology\", \"outcome_labels\": { \"0\": \"Adenocarcinoma\", \"1\": \"Squamous\" }, \"bags\": \"/mnt/data/projects/example_project/bags/simclr-263510/\", \"input_shape\": 1024, \"output_shape\": 2, \"bags_encoder\": { \"extractor\": { \"class\": \"histox.model.extractors.simclr.SimCLR_Features\", \"kwargs\": { \"center_crop\": false, \"ckpt\": \"/mnt/data/projects/example_project/simclr/00001-EXAMPLE/ckpt-263510.ckpt\" } }, \"normalizer\": null, \"num_features\": 1024, \"tile_px\": 299, \"tile_um\": 302 } } Multi-Magnification MIL# HistoX 2.2 introduced a multi-magnification, multi-modal MIL model, MultiModal_Attention_MIL (\"mm_attention_mil\"). This late-fusion multimodal model is based on standard attention-based MIL, but accepts multiple input modalities (e.g., multiple magnifications) simultaneously. Each input modality is processed by a separate encoder network and a separate attention module. The attention-weighted features from each modality are then concatenated and passed to a fully-connected layer. Multimodal models are trained using the same API as standard MIL models. Modalities are specified using the bags argument to histox.Project.train_mil(), where the number of modes is determined by the number of bag directories provided. Within each bag directory, bags should be generated using the same feature extractor and at the same magnification, but feature extractors and magnifications can vary between bag directories. For example, to train a multimodal model using two magnifications, you would pass two bag paths to the model. In this case, the /path/to/bags_10x directory contains bags generated from a 10x feature extractor, and the /path/to/bags_40x directory contains bags generated from a 40x feature extractor. # Configure a multimodal MIL model. config = mil_config(\u0027mm_attention_mil\u0027, lr=1e-4) # Set the bags paths for each modality. bags_10x = \u0027/path/to/bags_10x\u0027 bags_40x = \u0027/path/to/bags_40x\u0027 P.train_mil( config=config, outcomes=\u0027HPV_status\u0027, train_dataset=train, val_dataset=val, bags=[bags_10x, bags_40x] ) You can use any number of modalities, and the feature extractors for each modality can be different. For example, you could train a multimodal model using features from a custom SimCLR model at 5x and features from a pretrained CTransPath model at 20x. The feature extractors used for each modality, as specified in the bags_config.json files in the bag directories, will be logged in the final mil_params.json file. Multimodal MIL models can be interactively viewed in HistoX Studio, allowing you to visualize the attention weights for each modality separately. Custom Architectures# Training custom MIL models is straightforward with HistoX, particularly if your model can adhere to a few simple guidelines: Initialized with (num_feats, num_outputs) (e.g., Attention_MIL(768, 2)) Input is feature bags with shape (batch, num_tiles, num_feats). If the model needs a \u201clens\u201d input, then the model attribute use_lens should be True. Has a relocate() function that moves the model to detected device/GPU Ability to get attention through one of two methods: forward() function includes an optional return_attention argument, which if True returns attention scores after model output Has a calculate_attention() function that returns attention scores If the above applies to your model, you can train it simply by passing it as the first argument to histox.mil.mil_config(). import histox as hx from histox.mil import mil_config from my_module import CustomMIL config = mil_config(CustomMIL, lr=1e-3) For larger projects, or if you are designing a plugin/extension for HistoX, custom models can be registered to facilitate easy creation. If your model adheres to the above guidelines, you can register it for use with the following: from histox.mil import register_model @register_model def my_model(): return MyModelClass You can then use your model when creating an MIL configuration: config = hx.mil.mil_config(\u0027my_model\u0027, ...) If the above guidelines do not apply to your model, or if you want to customize model logic or functionality, you can supply a custom MIL configuration class that will supervise model building and dataset preparation. Your custom configuration class should inherit histox.mil.MILModelConfig, and methods in this class can be overloaded to provide additional functionality. For example, to create an MIL configuration that uses a custom loss and custom metrics: from histox.mil import MILModelConfig class MyModelConfig(MILModelConfig): @property def loss_fn(self): return my_custom_loss def get_metrics(self): return [my_metric1, my_metric2] When registering your model, you should specify that it should use your custom configuration: @register_model(config=MyModelConfig) def my_model(): return MyModelClass For an example of how to utilize model registration and configuration customization, see our CLAM implementation available through slideflow-gpl. Evaluation# To evaluate a saved MIL model on an external dataset, first extract features from a dataset, then use histox.Project.evaluate_mil(), which displays evaluation metrics and returns predictions as a DataFrame. import histox as hx # Prepare a project and dataset P = hx.Project(...) dataset = P.dataset(tile_px=299, tile_um=302) # Generate features using CTransPath ctranspath = hx.build_feature_extractor(\u0027ctranspath\u0027, resize=True) features = hx.DatasetFeatures(ctranspath, dataset=dataset) features.to_torch(\u0027/path/to/bag_directory\u0027) # Evaluate a saved MIL model df = P.evaluate_mil( \u0027/path/to/saved_model\u0027 outcomes=\u0027HPV_status\u0027, dataset=dataset, bags=\u0027/path/to/bag_directory\u0027, ) As with training, attention heatmaps can be generated for attention-based MIL models with the argument attention_heatmaps=True, and these can be customized using cmap and interpolation arguments. Generating Predictions# In addition to generating slide-level predictions during training and evaluation, you can also generate tile-level predictions and attention scores for a dataset using histox.mil.get_mil_tile_predictions(). This function returns a DataFrame containing tile-level predictions and attention. \u003e\u003e\u003e from histox.mil import get_mil_tile_predictions \u003e\u003e\u003e df = get_mil_tile_predictions(model, dataset, bags) \u003e\u003e\u003e df slide loc_x loc_y ... y_pred3 y_pred4 y_pred5 0 TCGA-4V-A9QI-01Z-0... 2210 7349 ... 0.181155 0.468446 0.070175 1 TCGA-4V-A9QI-01Z-0... 5795 1971 ... 0.243721 0.131991 0.009169 2 TCGA-4V-A9QI-01Z-0... 6273 5437 ... 0.096196 0.583367 0.090258 3 TCGA-4V-A9QI-01Z-0... 2330 3047 ... 0.056426 0.264386 0.300199 4 TCGA-4V-A9QI-01Z-0... 3644 3525 ... 0.134535 0.534353 0.013619 ... ... ... ... ... ... ... ... 391809 TCGA-4X-A9FA-01Z-0... 6034 3352 ... 0.004119 0.003636 0.005673 391810 TCGA-4X-A9FA-01Z-0... 6643 1401 ... 0.012790 0.010269 0.011726 391811 TCGA-4X-A9FA-01Z-0... 5546 2011 ... 0.009777 0.013556 0.025255 391812 TCGA-4X-A9FA-01Z-0... 6277 2864 ... 0.026638 0.018499 0.031061 391813 TCGA-4X-A9FA-01Z-0... 4083 4205 ... 0.009875 0.009582 0.022125 [391814 rows x 15 columns] Single-Slide Inference# Predictions can also be generated for individual slides, without requiring the user to manually generate feature bags. Use histox.model.predict_slide() to generate predictions for a single slide. The first argument is th path to the saved MIL model (a directory containing mil_params.json), and the second argument can either be a path to a slide or a loaded hx.WSI object. from histox.mil import predict_slide from histox.slide import qc # Load a slide and apply Otsu thresholding slide = \u0027/path/to/slide.svs\u0027 wsi = hx.WSI(slide, tile_px=299, tile_um=302) wsi.qc(qc.Otsu()) # Calculate predictions and attention heatmap model = \u0027/path/to/mil_model\u0027 y_pred, y_att = predict_slide(model, wsi) The function will return a tuple of predictions and attention heatmaps. If the model is not attention-based, the attention heatmap will be None. To calculate attention for a model, set attention=True: y_pred, y_att = predict_slide(model, slide, attention=True) The returned attention values will be a masked numpy.ndarray with the same shape as the slide tile extraction grid. Unused tiles will have masked attention values. Visualizing Predictions# Heatmaps of attention and tile-level predictions can be interactively visualized in HistoX Studio by enabling the Multiple-Instance Learning extension (new in HistoX 2.1.0). This extension is discussed in more detail in the Extensions section.",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/mil.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
+      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
+  </script>
+  
+  </body>
+</html>

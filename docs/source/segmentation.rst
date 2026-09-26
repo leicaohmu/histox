@@ -5,16 +5,16 @@
 Tissue Segmentation
 ===================
 
-In addition to classification tasks, Slideflow also supports training and deploying whole-slide tissue segmentation models. Segmentation models identify and label regions of interest in a slide, and can be used for tasks such as tumor identification, tissue labeling, or quality control. Once trained, these models can be used for :ref:`slide QC <filtering>`, generating :ref:`regions of interest <regions_of_interest>`, or live deployment in :ref:`Slideflow Studio <studio>`.
+In addition to classification tasks, HistoX also supports training and deploying whole-slide tissue segmentation models. Segmentation models identify and label regions of interest in a slide, and can be used for tasks such as tumor identification, tissue labeling, or quality control. Once trained, these models can be used for :ref:`slide QC <filtering>`, generating :ref:`regions of interest <regions_of_interest>`, or live deployment in :ref:`HistoX Studio <studio>`.
 
 .. note::
 
-    Tissue segmentation requires PyTorch. Dependencies can be installed with ``pip install slideflow[torch]``.
+    Tissue segmentation requires PyTorch. Dependencies can be installed with ``pip install histox[torch]``.
 
 Segmentation Modes
 ------------------
 
-Tissue segmentation is performed at the whole-slide level, trained on randomly cropped sections of the slide thumbnail at a specified resolution. Slideflow supports three segmentation modes:
+Tissue segmentation is performed at the whole-slide level, trained on randomly cropped sections of the slide thumbnail at a specified resolution. HistoX supports three segmentation modes:
 
 - ``'binary'``: For binary segmentation, the goal is to differentiate a single tissue type from background.
 - ``'multiclass'``: For multiclass segmentation, the goal is twofold: differentiate tissue from background, and assign a class label to each identified region. This is useful in instances where regions have non-overlapping labels.
@@ -27,11 +27,11 @@ Generating Data
     Segmentation thumbnails and masks do not need to be explicitly exported prior to training. They will be generated automatically during training if they do not exist. However, exporting them beforehand can be useful for data visualization, troubleshooting, and computational efficiency.
 
 
-Segmentation models in Slideflow are trained on regions of interest, which can be generated as discussed in :ref:`regions_of_interest` and :ref:`studio_roi`. Once ROIs have been generated and (optionally) labeled, whole-slide thumbnails and ROI masks can be exported using ``segment.export_thumbs_and_masks()``. The ``mpp`` argument specifies the resolution of the exported images in microns-per-pixel. We recommend ``mpp=20`` for a good balance between image size and memory requirements, or ``mpp=10`` for tasks needing higher resolution.
+Segmentation models in HistoX are trained on regions of interest, which can be generated as discussed in :ref:`regions_of_interest` and :ref:`studio_roi`. Once ROIs have been generated and (optionally) labeled, whole-slide thumbnails and ROI masks can be exported using ``segment.export_thumbs_and_masks()``. The ``mpp`` argument specifies the resolution of the exported images in microns-per-pixel. We recommend ``mpp=20`` for a good balance between image size and memory requirements, or ``mpp=10`` for tasks needing higher resolution.
 
 .. code-block:: python
 
-    from slideflow import segment
+    from histox import segment
 
     # Load a project and dataset
     project = histox.load_project('path/to/project')
@@ -67,7 +67,7 @@ Segmentation models are configured using a :class:`segment.SegmentConfig` object
 
 .. code-block:: python
 
-    from slideflow import segment
+    from histox import segment
 
     # Create a config object
     config = segment.SegmentConfig(
@@ -82,7 +82,7 @@ Segmentation models are configured using a :class:`segment.SegmentConfig` object
         lr=1e-4,
     )
 
-Slideflow uses the `segmentation_models_pytorch <https://github.com/qubvel/segmentation_models.pytorch>`_ library to implement segmentation models. The ``arch`` argument specifies the model architecture, and the ``encoder_name`` argument specifies the encoder backbone. See available models and encoders in the `segmentation_models_pytorch documentation <https://smp.readthedocs.io/en/latest/models.html>`_.
+HistoX uses the `segmentation_models_pytorch <https://github.com/qubvel/segmentation_models.pytorch>`_ library to implement segmentation models. The ``arch`` argument specifies the model architecture, and the ``encoder_name`` argument specifies the encoder backbone. See available models and encoders in the `segmentation_models_pytorch documentation <https://smp.readthedocs.io/en/latest/models.html>`_.
 
 The segmentation model can then be trained using the :func:`segment.train` function. This function takes a :class:`segment.SegmentConfig` object and a :class:`histox.Dataset` object as arguments. During training, segmentation thumbnails and masks are randomly cropped to the specified ``size``, and images/masks then undergo augmentation with random flipping/rotating.
 
@@ -90,7 +90,7 @@ For example, to train a model for binary segmentation with a resolution of 20 MP
 
 .. code-block:: python
 
-    from slideflow import segment
+    from histox import segment
 
     # Create a config object
     config = segment.SegmentConfig(mpp=20, mode='binary', arch='FPN')
@@ -102,7 +102,7 @@ To use thumbnails and masks previously exported with :func:`segment.export_thumb
 
 .. code-block:: python
 
-    from slideflow import segment
+    from histox import segment
 
     # Export thumbnails and masks
     segment.export_thumbs_and_masks(dataset, mpp=20, dest='masks/')
@@ -122,7 +122,7 @@ After training, models can be loaded using :func:`segment.load_model_and_config`
 
 .. code-block:: python
 
-    from slideflow import segment
+    from histox import segment
 
     # Load the model and config
     model, config = segment.load_model_and_config('path/to/model.pth')
@@ -131,7 +131,7 @@ To run inference on a slide, use the :meth:`segment.SegmentModel.run_slide_infer
 
 .. code-block:: python
 
-    from slideflow import segment
+    from histox import segment
 
     # Load the model and config
     model, config = segment.load_model_and_config('path/to/model.pth')
@@ -148,11 +148,11 @@ The :class:`histox.slide.qc.Segment` class provides an easy interface for genera
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     from histox.slide import qc
 
     # Load a project and dataset
-    project = sf.load_project('path/to/project')
+    project = hx.load_project('path/to/project')
     dataset = project.dataset(299, 302)
 
     # Create a QC mask
@@ -165,11 +165,11 @@ You can also use this interface for applying QC to a single slide:
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     from histox.slide import qc
 
     # Load the slide
-    wsi = sf.WSI('/path/to/slide', ...)
+    wsi = hx.WSI('/path/to/slide', ...)
 
     # Create the QC algorithm
     segmenter = qc.Segment('/path/to/model.pth')
@@ -204,11 +204,11 @@ The :class:`histox.slide.qc.Segment` also provides an easy interface for generat
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
     from histox.slide import qc
 
     # Load a project and dataset
-    wsi = sf.WSI('/path/to/slide', ...)
+    wsi = hx.WSI('/path/to/slide', ...)
 
     # Create a QC mask
     segmenter = qc.Segment('/path/to/model.pth')
@@ -222,10 +222,10 @@ In addition to generating ROIs for a single slide, you can also generate ROIs fo
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a project and dataset.
-    project = sf.load_project('path/to/project')
+    project = hx.load_project('path/to/project')
     dataset = project.dataset()
 
     # Generate ROIs for all slides in the dataset.
@@ -244,7 +244,7 @@ Deployment in Studio
 
 |
 
-Segmentation models can be deployed in :ref:`Slideflow Studio <studio>` for live segmentation and QC. To do this, start by training a segmentation model as described above. Then, see the :ref:`studio_segmentation` documentation for instructions on how to deploy the model for live QC and/or ROI generation.
+Segmentation models can be deployed in :ref:`HistoX Studio <studio>` for live segmentation and QC. To do this, start by training a segmentation model as described above. Then, see the :ref:`studio_segmentation` documentation for instructions on how to deploy the model for live QC and/or ROI generation.
 
 
 Complete Example
@@ -260,11 +260,11 @@ Create labeled ROIs as described in :ref:`studio_roi`.
 
 .. code-block:: python
 
-    import slideflow as sf
-    from slideflow import segment
+    import histox as hx
+    from histox import segment
 
     # Load a project and dataset
-    project = sf.load_project('path/to/project')
+    project = hx.load_project('path/to/project')
     dataset = project.dataset()
 
     # Train a binary segmentation model
@@ -276,10 +276,10 @@ Create labeled ROIs as described in :ref:`studio_roi`.
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Load a project and dataset.
-    project = sf.load_project('path/to/project')
+    project = hx.load_project('path/to/project')
     dataset = project.dataset()
 
     # Generate ROIs for all slides in the dataset.
@@ -288,5 +288,5 @@ Create labeled ROIs as described in :ref:`studio_roi`.
 4. Deploy in Studio
 *******************
 
-Use the model for either QC or ROI generation in Slideflow Studio, as described in :ref:`studio_segmentation`.
+Use the model for either QC or ROI generation in HistoX Studio, as described in :ref:`studio_segmentation`.
 

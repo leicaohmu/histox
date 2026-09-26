@@ -51,9 +51,9 @@ Load a backend-native stain normalizer with ``autoselect``, then transform an im
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    macenko = sf.norm.autoselect('macenko')
+    macenko = hx.norm.autoselect('macenko')
     image = macenko.transform(image)
 
 You can use :meth:`histox.norm.StainNormalizer.fit` to fit the normalizer to a custom reference image, or use one of our preset fits.
@@ -65,13 +65,13 @@ You can apply stain normalization during dataloader preprocessing by passing the
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Get a PyTorch-native Macenko normalizer
-    macenko = sf.norm.autoselect('macenko')
+    macenko = hx.norm.autoselect('macenko')
 
     # Create a PyTorch dataloader that applies stain normalization
-    dataset = sf.Dataset(...)
+    dataset = hx.Dataset(...)
     dataloader = dataset.torch(..., normalizer=macenko)
 
 .. note::
@@ -83,14 +83,14 @@ You can apply stain normalization during dataloader preprocessing by passing the
 
     .. code-block:: python
 
-        # Slideflow dataset
+        # HistoX dataset
         dataset = Project.dataset(tile_px=..., tile_um=...)
 
         # Create PyTorch dataloader
         dataloader = dataset.torch(..., standardize=False)
 
         # Get a stain normalizer
-        normalizer = sf.norm.autoselect('reinhard')
+        normalizer = hx.norm.autoselect('reinhard')
 
         # Iterate through the dataloader
         for img_batch, labels in dataloader:
@@ -128,17 +128,17 @@ Real-time normalization can be performed for most pipeline functions - such as m
     from histox.model import ModelParams
     hp = ModelParams(..., normalizer='reinhard')
 
-If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, ``params.json``, in the saved model folder. Any Slideflow function that uses this model will automatically process images using the same normalization strategy.
+If a model was trained using a normalizer, the normalizer algorithm and fit information will be stored in the model metadata file, ``params.json``, in the saved model folder. Any HistoX function that uses this model will automatically process images using the same normalization strategy.
 
 .. _normalizer_performance:
 
 Performance
 ***********
 
-Slideflow has Tensorflow, PyTorch, and Numpy/OpenCV implementations of stain normalization algorithms. Performance benchmarks for these implementations
+HistoX has Tensorflow, PyTorch, and Numpy/OpenCV implementations of stain normalization algorithms. Performance benchmarks for these implementations
 are given below:
 
-.. list-table:: **Performance Benchmarks** (299 x 299 images, Slideflow 2.0.0, benchmarked on 3960X and A100 40GB)
+.. list-table:: **Performance Benchmarks** (299 x 299 images, HistoX 2.0.0, benchmarked on 3960X and A100 40GB)
     :header-rows: 1
 
     * -
@@ -178,17 +178,17 @@ Contextual stain normalization allows you to stain normalize an image using the 
 
 Contextual normalization can be enabled during tile extraction by passing the argument ``context_normalize=True`` to :meth:`histox.Dataset.extract_tiles()`.
 
-You can use contextual normalization when manually using a ``StainNormalizer`` object by using the ``.context()`` function. The context can either be a slide (path or ``sf.WSI``) or an image (Tensor or np.ndarray).
+You can use contextual normalization when manually using a ``StainNormalizer`` object by using the ``.context()`` function. The context can either be a slide (path or ``hx.WSI``) or an image (Tensor or np.ndarray).
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Get a Macenko normalizer
-    macenko = sf.norm.autoselect('macenko')
+    macenko = hx.norm.autoselect('macenko')
 
     # Use a given slide as context
-    slide = sf.WSI('slide.svs', ...)
+    slide = hx.WSI('slide.svs', ...)
 
     # Context normalize an image
     with macenko.context(slide):
@@ -214,19 +214,19 @@ Contextual normalization is not supported with on-the-fly normalization during t
 Stain Augmentation
 ******************
 
-One of the benefits of on-the-fly stain normalization is the ability to perform dynamic stain augmentation with normalization. For Reinhard normalizers, this is performed by randomizing the channel means and channel standard deviations. For Macenko normalizers, stain augmentation is performed by randomizing the stain matrix target and the target concentrations. In all cases, randomization is performed by sampling from a normal distribution whose mean is the reference fit and whose standard deviation is a predefined value (in ``sf.norm.utils.augment_presets``). Of note, this strategy differs from the more commonly used strategy `described by Tellez <https://doi.org/10.1109/tmi.2018.2820199>`_, where augmentation is performed by randomly perturbing images in the stain matrix space without normalization.
+One of the benefits of on-the-fly stain normalization is the ability to perform dynamic stain augmentation with normalization. For Reinhard normalizers, this is performed by randomizing the channel means and channel standard deviations. For Macenko normalizers, stain augmentation is performed by randomizing the stain matrix target and the target concentrations. In all cases, randomization is performed by sampling from a normal distribution whose mean is the reference fit and whose standard deviation is a predefined value (in ``hx.norm.utils.augment_presets``). Of note, this strategy differs from the more commonly used strategy `described by Tellez <https://doi.org/10.1109/tmi.2018.2820199>`_, where augmentation is performed by randomly perturbing images in the stain matrix space without normalization.
 
 To enable stain augmentation, add the letter 'n' to the ``augment`` parameter when training a model.
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Open a project
-    project = sf.Project(...)
+    project = hx.Project(...)
 
     # Add stain augmentation to augmentation pipeline
-    params = sf.ModelParams(..., augment='xryjn')
+    params = hx.ModelParams(..., augment='xryjn')
 
     # Train a model
     project.train(..., params=params)
@@ -235,10 +235,10 @@ When using a StainNormalizer object, you can perform a combination of normalizat
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Get a Macenko normalizer
-    macenko = sf.norm.autoselect('macenko')
+    macenko = hx.norm.autoselect('macenko')
 
     # Perform combination of stain normalization and augmentation
     img = macenko.transform(img, augment=True)
@@ -247,10 +247,10 @@ To stain augment an image without normalization, use the method :meth:`StainNorm
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Get a Macenko normalizer
-    macenko = sf.norm.autoselect('macenko')
+    macenko = hx.norm.autoselect('macenko')
 
     # Perform stain augmentation
     img = macenko.augment(img)

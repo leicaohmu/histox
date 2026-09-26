@@ -3,6 +3,10 @@
 Tutorial 2: Model training (advanced)
 =======================================
 
+.. raw:: html
+
+   <div class="histox-tutorial-meta" aria-label="Tutorial status"><span><strong>Status</strong> Compatibility tutorial</span><span><strong>Runtime verification</strong> Pending</span><a href="https://github.com/leicaohmu/histox/blob/develop/docs/source/tutorial2.rst">View source</a></div>
+
 In the first tutorial, we used :meth:`histox.Project.train` to execute training. This project function is useful in that it:
 
 1) Configures outcome labels in a manner supporting multiple outcomes
@@ -23,8 +27,8 @@ Using the same project configuration as the first tutorial, we will set up a new
 
 .. code-block:: python
 
-    >>> import slideflow as sf
-    >>> P = sf.Project('/home/er_project', name="Breast_ER", annotations=...)
+    >>> import histox as hx
+    >>> P = hx.Project('/home/er_project', name="Breast_ER", annotations=...)
 
 If you initialize a project with keywords, you will need to manually create a new dataset source with the :meth:`histox.Project.add_dataset` method:
 
@@ -76,7 +80,7 @@ We can use the dataset to get our ER status labels. The :meth:`histox.Dataset.la
     2021-10-06 13:27:00 [INFO] - er_status_by_ihc 'Negative' assigned to value '0' [234 slides]
     2021-10-06 13:27:00 [INFO] - er_status_by_ihc 'Positive' assigned to value '1' [842 slides]
 
-We can see the slideflow logs showing us that 234 slides with the outcome label "Negative" were assigned to the numerical outcome "0", and 842 "Positive" slides were assigned "1".
+We can see the histox logs showing us that 234 slides with the outcome label "Negative" were assigned to the numerical outcome "0", and 842 "Positive" slides were assigned "1".
 
 Next, we'll need to split this dataset into a training and validation set. We'll start by training on the first of 3 k-folds for cross-validated training. To split a dataset, use the :meth:`histox.Dataset.split` method. We'll need to provide our labels to ensure that the outcome categories are balanced in the training and validation sets.
 
@@ -113,7 +117,7 @@ Now that our dataset is prepared, we can begin setting up our model and trainer.
 
 .. code-block:: python
 
-    >>> hp = sf.ModelParams(
+    >>> hp = hx.ModelParams(
     ...   tile_px=256,
     ...   tile_um=128,
     ...   model='xception',
@@ -125,7 +129,7 @@ In addition to the above model parameters, our trainer will need the outcome lab
 
 .. code-block:: python
 
-    >>> trainer = sf.model.build_trainer(
+    >>> trainer = hx.model.build_trainer(
     ...   hp=hp,
     ...   outdir='/some/directory',
     ...   labels=labels,

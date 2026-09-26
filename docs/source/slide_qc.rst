@@ -9,7 +9,7 @@ This module contains functions for slide-level quality control, including Otsu's
 
 .. code-block:: python
 
-  import slideflow as sf
+  import histox as hx
   from histox.slide import qc
 
   # Define custom QC options
@@ -22,7 +22,7 @@ This module contains functions for slide-level quality control, including Otsu's
   P.extract_tiles(qc=qc)
 
   # Alternatively, you can use the same QC directly on a WSI object
-  wsi = sf.WSI(...)
+  wsi = hx.WSI(...)
   wsi.qc(qc).show()
 
 .. autoclass:: Otsu

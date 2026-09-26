@@ -5,7 +5,7 @@ Uncertainty Quantification
 
 Several uncertainty quantification (UQ) methods have been developed for deep learning models and tested in digital histopathology, including MC Dropout, deep ensembles, hyper-deep ensembles, and test-time augmentation.
 
-Slideflow includes a dropout-based method of uncertainty estimation. MC dropout UQ methods exploit the observation that neural networks with dropout approximate sampling of the Bayesian posterior. Images undergo multiple forward passes in a dropout-enabled network during inference, which results in a distribution of predictions. The standard deviation of such a distribution represents the uncertainty estimate.
+HistoX includes a dropout-based method of uncertainty estimation. MC dropout UQ methods exploit the observation that neural networks with dropout approximate sampling of the Bayesian posterior. Images undergo multiple forward passes in a dropout-enabled network during inference, which results in a distribution of predictions. The standard deviation of such a distribution represents the uncertainty estimate.
 
 Training with UQ
 ****************
@@ -14,9 +14,9 @@ Training models with UQ is straightforward, requiring only two hyperparameter se
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    params = sf.ModelParams(
+    params = hx.ModelParams(
       tile_px=299,
       tile_um=302,
       ...,
@@ -46,15 +46,15 @@ Here, we will run through an example of how to apply this UQ thresholding strate
 Prepare an Experiment
 ---------------------
 
-Start by creating a Slideflow project and then initializing a ``biscuit`` experiment, including the outcome target and the two classes.  We will be training models to predict ``"HPV_status"``, with the two classes ``"positive"`` and ``"negative"``.
+Start by creating a HistoX project and then initializing a ``biscuit`` experiment, including the outcome target and the two classes.  We will be training models to predict ``"HPV_status"``, with the two classes ``"positive"`` and ``"negative"``.
 
 .. code-block:: python
 
-    import slideflow as sf
-    from slideflow import biscuit
+    import histox as hx
+    from histox import biscuit
 
-    # Create a Slideflow project
-    P = sf.Project(...)
+    # Create a HistoX project
+    P = hx.Project(...)
 
     # Initialize a biscuit experiment
     experiment = biscuit.Experiment(

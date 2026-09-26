@@ -1,9 +1,9 @@
-.. currentmodule:: slideflow.gan
+.. currentmodule:: histox.gan
 
-slideflow.gan
+histox.gan
 =============
 
-.. automodule:: slideflow.gan
+.. automodule:: histox.gan
    :members:
 
 See :ref:`stylegan` for more information on working with GANs.
@@ -17,5 +17,5 @@ StyleGAN2 Interpolator
 Utility functions
 -----------------
 
-.. automodule:: slideflow.gan.utils
+.. automodule:: histox.gan.utils
    :members:

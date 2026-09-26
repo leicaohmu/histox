@@ -1,9 +1,9 @@
 Troubleshooting
 ===============
 
-If you're running into problems, look for more information by including debug logging. To enable debug logging, set the environmental variable ``SF_LOGGING_LEVEL=10``.
+If you're running into problems, look for more information by including debug logging. To enable debug logging, set the environmental variable ``HX_LOGGING_LEVEL=10``.
 
-To check for errors in your environment or installation, you can also use the test script ``test.py``, which uses the testing suite ``slideflow.test.TestSuite`` to execute all pipeline functions on a set of provided slides.
+To check for errors in your environment or installation, you can also use the test script ``test.py``, which uses the testing suite ``histox.test.TestSuite`` to execute all pipeline functions on a set of provided slides.
 
 Testing
 *******
@@ -33,21 +33,21 @@ To view a list of all tests that will be run (and thus can be skipped), pass the
 Issue Reporting
 ***************
 
-If the issue is still unclear, please submit an Issue on the `project Github page <https://github.com/slideflow/slideflow/issues>`_. Be sure to include the following information:
+If the issue is still unclear, please submit an Issue on the `project Github page <https://github.com/leicaohmu/histox/issues>`_. Be sure to include the following information:
 
-* The version of Slideflow you are using, which can be displayed with ``sf.about()``:
+* The version of HistoX you are using, which can be displayed with ``hx.about()``:
 
 .. code-block:: bash
 
-    $ python3 -c "import slideflow; slideflow.about()"
+    $ python3 -c "import histox; histox.about()"
     ╭=======================╮
-    │       Slideflow       │
+    │       HistoX       │
     │    Version: 2.1.0     │
     │  Backend: tensorflow  │
     │ Slide Backend: cucim  │
-    │ https://slideflow.dev │
+    │ https://histox.readthedocs.io/en/latest │
     ╰=======================╯
 
-* The active deep learning backend (``sf.backend()``) and slide backend (``sf.slide_backend()``)
+* The active deep learning backend (``hx.backend()``) and slide backend (``hx.slide_backend()``)
 * The version of Python you are using (``python3 --version``)
 * The operating system you are using (``uname -a``)

@@ -3,7 +3,7 @@
 Evaluation
 ==========
 
-Slideflow includes several tools for evaluating trained models. In the next sections, we'll review how to evaluate a model on a held-out test set, generate predictions without ground-truth labels, and visualize predictions with heatmaps.
+HistoX includes several tools for evaluating trained models. In the next sections, we'll review how to evaluate a model on a held-out test set, generate predictions without ground-truth labels, and visualize predictions with heatmaps.
 
 Evaluating a test set
 *********************
@@ -72,11 +72,11 @@ You can also generate predictions for a single slide with either :func:`histox.s
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     slide = '/path/to/slide.svs'
     model = '/path/to/model_epoch1'
-    sf.slide.predict(slide, model)
+    hx.slide.predict(slide, model)
 
 .. rst-class:: sphx-glr-script-out
 
@@ -106,13 +106,13 @@ For a single slide
 :class:`histox.Heatmap` provides more granular control for calculating and displaying a heatmap for a given slide. The required arguments are:
 
 - ``slide``: Either a path to a slide, or a :class:`histox.WSI` object.
-- ``model``: Path to a saved Slideflow model.
+- ``model``: Path to a saved HistoX model.
 
 Additional keyword arguments can be used to customize and optimize the heatmap. In this example, we'll increase the batch size to 64 and allow multiprocessing by setting ``num_processes`` equal to our CPU core count, 16.
 
 .. code-block:: python
 
-    heatmap = sf.Heatmap(
+    heatmap = hx.Heatmap(
       slide='/path/to/slide.svs',
       model='/path/to/model'
       batch_size=64,
@@ -126,11 +126,11 @@ If ``slide`` is a :class:`histox.WSI`, the heatmap will be calculated only withi
     from histox.slide import qc
 
     # Prepare the slide
-    wsi = sf.WSI('slide.svs', tile_px=299, tile_um=302, rois='/path')
+    wsi = hx.WSI('slide.svs', tile_px=299, tile_um=302, rois='/path')
     wsi.qc([qc.Otsu(), qc.Gaussian()])
 
     # Generate a heatmap
-    heatmap = sf.Heatmap(
+    heatmap = hx.Heatmap(
       slide=wsi,
       model='/path/to/model'
       batch_size=64,

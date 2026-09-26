@@ -1,107 +1,115 @@
 Installation
 ============
 
-.. figure:: ./_static/histox.png
-   :alt: histox installation
-   :width: 100%
-   :align: center
+HistoX is under active development. The current ``0.2.x`` API is pre-stable,
+so pin the package version in reproducible projects. Python 3.9 is the current
+development and continuous-integration baseline; the package metadata still
+declares Python 3.7 or newer while compatibility is being audited.
 
-HistoX is tested on **Linux-based systems** (Ubuntu, CentOS, Red Hat, and Raspberry Pi OS) and **macOS** (Intel and Apple). Windows support is experimental.
+Development installation
+------------------------
 
-Requirements
-************
-
-- Python >= 3.7 (<3.10 if using `cuCIM <https://docs.rapids.ai/api/cucim/stable/>`_)
-- `PyTorch <https://pytorch.org/>`_ (1.9+) *or* `Tensorflow <https://www.tensorflow.org/>`_ (2.5-2.11)
-    - Core functionality, including tile extraction, data processing, and tile-based model training, is supported for both PyTorch and Tensorflow. Additional advanced tools, such as Multiple-Instance Learning (MIL), GANs, and pretrained foundation models, require PyTorch.
-
-Optional
---------
-
-- `Libvips >= 8.9 <https://libvips.github.io/libvips/>`_ (alternative slide reader, adds support for \*.scn, \*.mrxs, \*.ndpi, \*.vms, and \*.vmu files)
-- Linear solver (for site-preserved cross-validation):
-
-  - `CPLEX 20.1.0 <https://www.ibm.com/docs/en/icos/12.10.0?topic=v12100-installing-cplex-optimization-studio>`_ with `Python API <https://www.ibm.com/docs/en/icos/12.10.0?topic=cplex-setting-up-python-api>`_
-  - *or* `Pyomo <http://www.pyomo.org/installation>`_ with `Bonmin <https://anaconda.org/conda-forge/coinbonmin>`_ solver
-
-
-Download with pip
-*****************
-
-HistoX can be installed either with PyPI or as a Docker container. To install via pip:
+Installing the repository in editable mode is the recommended way to test the
+current code before a formal release:
 
 .. code-block:: bash
 
-    # Update to latest pip
-    pip install --upgrade pip wheel
+   git clone https://github.com/leicaohmu/histox.git
+   cd histox
+   conda create -n histox python=3.9
+   conda activate histox
+   python -m pip install --upgrade pip
+   python -m pip install -e ".[torch]"
 
-    # Current stable release, Tensorflow backend
-    pip install histox[tf] cucim cupy-cuda11x
+Changes made inside the cloned repository are then available immediately in
+the ``histox`` environment; reinstalling after every edit is not required.
 
-    # Alternatively, install with PyTorch backend
-    pip install histox[torch] cucim cupy-cuda11x
+Published package
+-----------------
 
-The ``cupy`` package name depends on the installed CUDA version; `see here <https://docs.cupy.dev/en/stable/install.html#installing-cupy>`_ for installation instructions. ``cucim`` and ``cupy`` are not required if using Libvips.
-
-Build from source
-*****************
-
-To build HistoX from source, clone the repository from the project `Github page <https://github.com/histox/histox>`_:
-
-.. code-block:: bash
-
-    git clone https://github.com/leicaohmu/histox
-    cd histox
-    conda env create -f environment.yml
-    conda activate histox
-    python setup.py bdist_wheel
-    pip install dist/histox* cupy-cuda11x
-
-Extensions
-**********
-
-The core HistoX package is licensed under the **Apache-2.0** license. Additional functionality, such as pretrained foundation models, are distributed in separate packages according to their licensing terms. Available extensions include:
-
-- **Slideflow-GPL**: GPL-3.0 licensed extensions (`GitHub <https://github.com/slideflow/slideflow-gpl>`__)
-    - Includes: `RetCCL <https://www.sciencedirect.com/science/article/abs/pii/S1361841522002730>`__, `CTransPath <https://www.sciencedirect.com/science/article/abs/pii/S1361841522002043>`__, and `CLAM <https://www.nature.com/articles/s41551-020-00682-w>`__.
-- **Slideflow-NonCommercial**: CC BY-NC 4.0 licensed extensions for non-commercial use (`GitHub <https://github.com/slideflow/slideflow-noncommercial>`__)
-    - Includes: `HistoSSL <https://www.medrxiv.org/content/10.1101/2023.07.21.23292757v2.full.pdf>`__, `PLIP <https://www.nature.com/articles/s41591-023-02504-3>`__, `GigaPath <https://aka.ms/gigapath>`__, `UNI <https://www.nature.com/articles/s41591-024-02857-3>`__, `BISCUIT <https://www.nature.com/articles/s41467-022-34025-x>`__, and `StyleGAN3 <https://nvlabs-fi-cdn.nvidia.com/stylegan3/stylegan3-paper.pdf>`__.
-
-These extensions can be installed via pip. The GigaPath feature extractor has additional, more restrictive dependencies that must be installed separately.
+To evaluate the most recent package published on PyPI with the PyTorch
+backend:
 
 .. code-block:: bash
 
-    # Install Slideflow-GPL and Slideflow-NonCommercial
-    pip install slideflow-gpl slideflow-noncommercial
+   python -m pip install "histox[torch]"
 
-    # Install GigaPath dependencies, if desired
-    pip install slideflow-noncommercial[gigapath] git+ssh://git@github.com/prov-gigapath/prov-gigapath
+The repository may contain changes newer than the published package. Check
+``hx.__version__`` and pin the version used by an experiment.
 
+Installation groups
+-------------------
 
-.. note::
-    The Slideflow-GPL and Slideflow-NonCommercial extensions are not included in the default Slideflow package due to their licensing terms. Please review the licensing terms of each extension before use.
+.. list-table:: Optional dependency groups
+   :header-rows: 1
+   :widths: 38 62
 
+   * - Command
+     - Purpose
+   * - ``python -m pip install histox``
+     - Base dependencies; install a model backend separately.
+   * - ``python -m pip install "histox[torch]"``
+     - PyTorch backend and related training tools. Recommended for new work.
+   * - ``python -m pip install "histox[tf]"``
+     - Legacy TensorFlow compatibility for inherited workflows.
+   * - ``python -m pip install "histox[torch,cucim]"``
+     - PyTorch and cuCIM; install the matching CuPy build separately.
+   * - ``python -m pip install "histox[torch,cucim-cuda12]"``
+     - PyTorch, cuCIM, and the CUDA 12 CuPy build.
+   * - ``python -m pip install "histox[torch,cucim-cuda11]"``
+     - PyTorch, cuCIM, and the CUDA 11 CuPy build.
 
-PyTorch vs. Tensorflow
-**********************
+Do not install multiple ``cupy-*`` variants in one environment. Match the
+CuPy build to the CUDA runtime reported by ``nvidia-smi``.
 
-Histox supports both PyTorch and Tensorflow, with cross-compatible TFRecord storage. Histox will default to using PyTorch if both are available, but the backend can be manually specified using the environmental variable ``SF_BACKEND``. For example:
+System requirements
+-------------------
+
+HistoX is developed primarily on Linux. macOS can be used for development and
+CPU workflows; Windows support is experimental.
+
+Whole-slide image reading requires one of the following:
+
+* `libvips <https://www.libvips.org/>`_ with its Python binding, for broad
+  scanner-format support; or
+* `cuCIM <https://docs.rapids.ai/api/cucim/stable/>`_ in a compatible NVIDIA
+  CUDA environment.
+
+Model training also requires the selected deep-learning backend. A CUDA-capable
+GPU is strongly recommended for training, but it is not required to import
+HistoX or create a project.
+
+Verify the installation
+-----------------------
+
+Run this before creating a project:
+
+.. code-block:: python
+
+   import histox as hx
+
+   print("HistoX:", hx.__version__)
+   print("model backend:", hx.backend())
+   print("slide backend:", hx.slide_backend())
+
+For the current development line, the first line should report ``0.2.1``.
+The backend values depend on the packages installed in the environment.
+
+Select backends explicitly
+--------------------------
+
+HistoX prefers PyTorch when both supported model backends are installed. Set
+the model and slide readers before starting Python when an explicit choice is
+needed:
 
 .. code-block:: bash
 
-    export SF_BACKEND=tensorflow
+   export HX_BACKEND=torch
+   export HX_SLIDE_BACKEND=libvips
 
-.. _slide_backend:
+Use ``HX_BACKEND=tensorflow`` only for legacy workflows that require it. The
+``HX_BACKEND`` and ``HX_SLIDE_BACKEND`` names are the supported HistoX
+environment interface.
 
-cuCIM vs. Libvips
-*****************
-
-By default, Histox reads whole-slide images using `cuCIM <https://docs.rapids.ai/api/cucim/stable/>`_. Although much faster than other openslide-based frameworks, it supports fewer slide scanner formats. Histox also includes a `Libvips <https://libvips.github.io/libvips/>`_ backend, which adds support for \*.scn, \*.mrxs, \*.ndpi, \*.vms, and \*.vmu files. You can set the active slide backend with the environmental variable ``SF_SLIDE_BACKEND``:
-
-.. code-block:: bash
-
-    export SF_SLIDE_BACKEND=libvips
-
-
-.. warning::
-    A bug in the pixman library (version=0.38) will corrupt downsampled slide images, resulting in large black boxes across the slide. We have provided a patch for version 0.38 that has been tested for Ubuntu, which is provided in the project `Github page <https://github.com/leicaohmu/histox>`_ (``pixman_repair.sh``), although it may not be suitable for all environments and we make no guarantees regarding its use. The `HistoX docker images <https://hub.docker.com/repository/docker/leicaohmu/histox>`_ already have this applied. If you are installing from source, have pixman version 0.38, and are unable to apply this patch, the use of downsampled image layers must be disabled to avoid corruption (pass ``enable_downsample=False`` to tile extraction functions).
+Next, follow the :doc:`quickstart` to create a local project without
+downloading a public pathology cohort.

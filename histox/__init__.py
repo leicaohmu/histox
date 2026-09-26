@@ -1,11 +1,6 @@
-from importlib.metadata import version, PackageNotFoundError
-
 __author__ = 'Lei Cao'
 __license__ = 'Apache-2.0'
-try:
-    __version__ = version("histox")
-except PackageNotFoundError:
-    __version__ = "unknown"
+from ._release import __version__
 __gitcommit__ = ""
 __github__ = 'https://github.com/leicaohmu/histox'
 
@@ -35,7 +30,9 @@ from histox.stats import SlideMap
 from histox.tfrecord import TFRecord, tfrecord_loader, multi_tfrecord_loader
 from histox.plugin import load_plugins
 
-# ── 扩展模块懒加载 ──────────────────────────────────────
+# Optional extension packages still use their upstream distribution and
+# import names. Keep these identifiers until HistoX-owned replacements are
+# published; they are compatibility boundaries, not public HistoX namespaces.
 _NONCOMMERCIAL_MODULES = {'biscuit', 'stylegan2', 'stylegan3', 'extractors'}
 _GPL_MODULES = {'clam'}
 
@@ -43,8 +40,8 @@ def __getattr__(name):
     if name in _NONCOMMERCIAL_MODULES:
         try:
             import importlib
-            mod = importlib.import_module(f'slideflow_noncommercial.{name}')  # ✅ 显式导入子模块
-            globals()[name] = mod   # 缓存，下次直接访问不再走 __getattr__
+            mod = importlib.import_module(f'slideflow_noncommercial.{name}')
+            globals()[name] = mod
             return mod
         except ImportError:
             raise AttributeError(
@@ -54,12 +51,12 @@ def __getattr__(name):
     if name in _GPL_MODULES:
         try:
             import importlib
-            mod = importlib.import_module(f'histox_contrib.{name}')           # ✅ 显式导入子模块
-            globals()[name] = mod   # 缓存
+            mod = importlib.import_module(f'slideflow_gpl.{name}')
+            globals()[name] = mod
             return mod
         except ImportError:
             raise AttributeError(
-                f"histox.{name} requires the 'histox-contrib' package.\n"
-                f"Install it with:  pip install histox-contrib"
+                f"histox.{name} requires the 'slideflow-gpl' package.\n"
+                f"Install it with:  pip install slideflow-gpl"
             )
     raise AttributeError(f"module 'histox' has no attribute {name!r}")

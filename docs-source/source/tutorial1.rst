@@ -22,9 +22,9 @@ Create a new project, and pass the path to the downloaded slides to the argument
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
-    P = sf.create_project(
+    P = hx.create_project(
         root='/home/er_project',
         slides='/path/to/slides'
     )
@@ -33,7 +33,7 @@ After the project is created, we can load the project with:
 
 .. code-block:: python
 
-    P = sf.load_project('/home/er_project')
+    P = hx.load_project('/home/er_project')
 
 Setting up annotations
 **********************
@@ -49,7 +49,7 @@ somewhere around 10-30% of the dataset for evaluation.
 .. note::
 
     If patient names are identical to the slide filenames, the "slide" column does not need to be manually added, as
-    slideflow will auto-associate slides to patients.
+    histox will auto-associate slides to patients.
 
 Your annotations file should look something like:
 
@@ -92,12 +92,12 @@ Training
 ********
 
 After tiles are extracted, the dataset will be ready for training. We will train with a single set of manually defined
-hyperparameters, which we can configure with :class:`slideflow.ModelParams`. We will use the
+hyperparameters, which we can configure with :class:`histox.ModelParams`. We will use the
 `Xception <https://arxiv.org/abs/1610.02357>`_ model with a batch size of 32, otherwise keeping defaults.
 
 .. code-block:: python
 
-    hp = sf.ModelParams(
+    hp = hx.ModelParams(
         tile_px=256,
         tile_um=128,
         model='xception',
@@ -106,7 +106,7 @@ hyperparameters, which we can configure with :class:`slideflow.ModelParams`. We 
     )
 
 For training, we will use 5-fold cross-validation on the training dataset. To set up training, invoke the
-:meth:`slideflow.Project.train` function with the outcome of interest, our hyperparameters, and our validation plan.
+:meth:`histox.Project.train` function with the outcome of interest, our hyperparameters, and our validation plan.
 We will use the ``filters`` argument to limit our training to the "train" dataset, as well as limit the training
 to only include patients with documented ER status (otherwise a blank "" would be marked as a third outcome).
 
@@ -140,10 +140,10 @@ Now, it's time to start our pipeline. To review, our complete script should look
 
 .. code-block:: python
 
-    import slideflow as sf
+    import histox as hx
 
     # Create a new project
-    P = sf.create_project(
+    P = hx.create_project(
         root='/home/er_project',
         slides='/path/to/slides'
     )

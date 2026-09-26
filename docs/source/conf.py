@@ -1,6 +1,7 @@
 import io as _builtin_io   # ← 提前保护内置 io 模块，防止与 histox.io 冲突
 import os, sys
 import importlib.machinery
+from runpy import run_path
 from unittest.mock import MagicMock
 
 import pytorch_sphinx_theme2
@@ -47,6 +48,7 @@ autodoc_mock_imports = [
     # 细胞分割
     'cellpose',
     'cellpose.models',
+    'segmentation_models_pytorch',
     # Lightning
     'pytorch_lightning',
     'pytorch_lightning.callbacks',
@@ -58,12 +60,12 @@ autodoc_mock_imports = [
 # ── 手动 mock：RST 文件里用到的短名别名模块 ──────────────────────────
 # 注意：histox 自身的子模块不在这里 mock，全部交给 autodoc 按需处理
 MOCK_MODULES = [
-    # biscuit（slideflow-noncommercial）
+    # biscuit (legacy optional distribution)
     'biscuit', 'biscuit.hp', 'biscuit.threshold',
     'biscuit.utils', 'biscuit.delong',
-    # clam（slideflow-gpl）
+    # clam (legacy optional distribution)
     'clam', 'clam.models', 'clam.utils',
-    # slideflow 扩展包
+    # Legacy extension import namespaces retained for compatibility.
     'slideflow_noncommercial',
     'slideflow_noncommercial.biscuit',
     'slideflow_noncommercial.biscuit.hp',
@@ -116,7 +118,9 @@ for alias, full in EXT_SUBMODULES.items():
 project = 'histox'
 copyright = '2026, histox team'
 author = 'histox team'
-release = '0.1.4'
+release = run_path(
+    os.path.join(os.path.dirname(__file__), '..', '..', 'histox', '_release.py')
+)["__version__"]
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -140,39 +144,38 @@ templates_path = [
     os.path.join(os.path.dirname(pytorch_sphinx_theme2.__file__), 'templates'),
 ]
 html_title = 'HistoX documentation'
-html_logo = '_static/histox-wordmark.svg'
-html_favicon = '_static/histox-mark.svg'
+html_logo = None
+# The previous O/X mark is intentionally not used as a favicon while the
+# HistoX identity is being redesigned.
+html_favicon = None
 html_static_path = ['_static']
 html_css_files = ['custom.css']
+html_js_files = ['tutorials.js']
 
 html_theme_options = {
-    'logo': {
-        'image_light': '_static/histox-wordmark.svg',
-        'image_dark': '_static/histox-wordmark-dark.svg',
-    },
     'show_toc_level': 2,
     'navigation_with_keys': True,
     'navbar_align': 'left',
     'navbar_start': ['navbar-logo'],
-    'navbar_center': ['navbar-nav'],
+    'navbar_center': ['histox_navbar'],
     'navbar_end': [
         'search-field-custom',
         'theme-switcher',
         'navbar-icon-links',
     ],
     'navbar_persistent': [],
-    'header_links_before_dropdown': 6,
+    'header_links_before_dropdown': 5,
     'use_edit_page_button': True,
     'show_version_warning_banner': False,
     'show_lf_header': False,
     'show_lf_footer': False,
     'show_pytorch_org_link': False,
-    'external_links': [
-        {
-            'name': 'Tutorials',
-            'url': 'https://histox.readthedocs.io/en/latest/tutorial1.html',
-        },
-    ],
+    'announcement_banner': {
+        'text': 'HistoX is under active development.',
+        'url': 'https://github.com/leicaohmu/histox',
+        'link_text': 'Follow the project on GitHub',
+        'dismissible': False,
+    },
     'icon_links': [
         {
             'name': 'GitHub',
@@ -193,6 +196,12 @@ html_context = {
     'github_repo': 'histox',
     'github_version': 'develop',
     'doc_path': 'docs/source',
+}
+
+# The PyTorch theme's generated global toctree is intentionally minimal.
+# Keep HistoX's high-level task taxonomy stable across reference pages.
+html_sidebars = {
+    '**': ['histox_sidebar.html'],
 }
 
 html_show_sphinx = False

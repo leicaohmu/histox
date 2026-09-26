@@ -615,7 +615,7 @@ def _export_attention(
             raise RuntimeError(
                 "Cannot export multimodal attention scores to a directory (NPZ) "
                 "when ZIP functionality is disabled. Enable zip functionality "
-                "by setting 'SF_ALLOW_ZIP=1' in your environment, or by "
+                "by setting 'HX_ALLOW_ZIP=1' in your environment, or by "
                 "wrapping your script in 'with hx.util.enable_zip():'.")
 
         elif isinstance(att, (list, tuple)):

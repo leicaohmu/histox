@@ -258,12 +258,12 @@ def get_uq_predictions(
 def unwrap(
     model: tf.keras.models.Model
 ) -> Tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
-    """Unwraps a Tensorflow model built in Slideflow, returning the
+    """Unwraps a Tensorflow model built in HistoX, returning the
     input tensor, post-convolutional output tensor, and final model output
     tensor.
 
     Args:
-        model (tf.keras.models.Model): Model built with Slideflow.
+        model (tf.keras.models.Model): Model built with HistoX.
 
     Returns:
         A tuple containing

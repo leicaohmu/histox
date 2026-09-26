@@ -1705,7 +1705,7 @@ class _FeatureGenerator:
                 **kwargs
             )
 
-        # Generator is a path to a trained Slideflow model
+        # Generator is a path to a trained HistoX model
         elif self.is_model_path():
             return hx.model.Features(
                 self.model,

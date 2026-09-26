@@ -97,7 +97,7 @@ def interleave_dataloader(
             if ``from_wsi=True``, for sharing a unified processing pool between
             dataloaders. Defaults to None.
         prefetch_factor (int, optional): Number of batches to prefetch in each
-            SlideflowIterator. Defaults to 1.
+            InterleaveIterator. Defaults to 1.
         prob_weights (dict, optional): Dict mapping tfrecords to probability
             of including in batch. Defaults to None.
         rank (int, optional): Worker ID to identify this worker.

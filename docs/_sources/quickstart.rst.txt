@@ -1,168 +1,153 @@
 Quickstart
 ==========
 
-This section provides an example of using Slideflow to build a deep learning classifier from digital pathology slides. Follow the links in each section for more information.
+This guide starts with a local project that does not download data. Project
+creation and dataset planning can be tested on a laptop; tile extraction and
+training require your own whole-slide images (WSIs), sufficient storage, and
+the appropriate compute environment.
 
-Preparing a project
-*******************
-
-Slideflow experiments are organized using :class:`slideflow.Project`, which supervises storage of data, saved models, and results. The ``slideflow.project`` module has three preconfigured projects with associated slides and clinical annotations: ``LungAdenoSquam``, ``ThyroidBRS``, and ``BreastER``.
-
-For this example, we will the ``LungAdenoSquam`` project to train a classifier to predict lung adenocarcinoma (Adeno) vs. squamous cell carcinoma (Squam).
-
-.. code-block:: python
-
-    import slideflow as sf
-
-    # Download preconfigured project, with slides and annotations.
-    project = sf.create_project(
-        root='data',
-        cfg=sf.project.LungAdenoSquam(),
-        download=True
-    )
-
-Read more about :ref:`setting up a project on your own data <project_setup>`.
-
-Data preparation
-****************
-
-The core imaging data used in Slideflow are image tiles :ref:`extracted from slides <filtering>` at a specific magnification and pixel resolution. Tile extraction and downstream image processing is handled through the primitive :ref:`slideflow.Dataset <datasets_and_validation>`. We can request a ``Dataset`` at a given tile size from our project using :meth:`slideflow.Project.dataset`. Tile magnification can be specified in microns (as an ``int``) or as optical magnification (e.g. ``'40x'``).
+1. Check the active environment
+-------------------------------
 
 .. code-block:: python
 
-    # Prepare a dataset of image tiles.
-    dataset = project.dataset(
-        tile_px=299,   # Tile size, in pixels.
-        tile_um='10x'  # Tile size, in microns or magnification.
-    )
-    dataset.summary()
+   import histox as hx
 
-.. rst-class:: sphx-glr-script-out
+   print("HistoX:", hx.__version__)
+   print("model backend:", hx.backend())
+   print("slide backend:", hx.slide_backend())
 
- .. code-block:: none
+New workflows should use the PyTorch backend. If the import fails, return to
+the :doc:`installation` guide before continuing.
 
-    Overview:
-    ╒===============================================╕
-    │ Configuration file: │ /mnt/data/datasets.json │
-    │ Tile size (px):     │ 299                     │
-    │ Tile size (um):     │ 10x                     │
-    │ Slides:             │ 941                     │
-    │ Patients:           │ 941                     │
-    │ Slides with ROIs:   │ 941                     │
-    │ Patients with ROIs: │ 941                     │
-    ╘===============================================╛
-
-    Filters:
-    ╒====================╕
-    │ Filters:      │ {} │
-    ├--------------------┤
-    │ Filter Blank: │ [] │
-    ├--------------------┤
-    │ Min Tiles:    │ 0  │
-    ╘====================╛
-
-    Sources:
-
-    TCGA_LUNG
-    ╒==============================================╕
-    │ slides    │ /mnt/raid/SLIDES/TCGA_LUNG       │
-    │ roi       │ /mnt/raid/SLIDES/TCGA_LUNG       │
-    │ tiles     │ /mnt/rocket/tiles/TCGA_LUNG      │
-    │ tfrecords │ /mnt/rocket/tfrecords/TCGA_LUNG/ │
-    │ label     │ 299px_10x                        │
-    ╘==============================================╛
-
-    Number of tiles in TFRecords: 0
-    Annotation columns:
-    Index(['patient', 'subtype', 'site', 'slide'],
-        dtype='object')
-
-Tile extraction
----------------
-
-We prepare imaging data for training by extracting tiles from slides. Background areas of slides will be filtered out with Otsu's thresholding.
+2. Create an empty project
+--------------------------
 
 .. code-block:: python
 
-    # Extract tiles from all slides in the dataset.
-    dataset.extract_tiles(qc='otsu')
+   from pathlib import Path
+   import histox as hx
 
-Read more about tile extraction and :ref:`slide processing in Slideflow <filtering>`.
+   workspace = Path("histox-demo")
+   project = hx.create_project(
+       root=str(workspace),
+       name="my-cohort",
+   )
 
-Held-out test sets
-------------------
+   print(project)
+   print(project.annotations)
 
-Now that we have our dataset and we've completed the initial tile image processing, we'll split the dataset into a training cohort and a held-out test cohort with :meth:`slideflow.Dataset.split`. We'll split while balancing the outcome ``'subtype'`` equally in the training and test dataset, with 30% of the data retained in the held-out set.
+This call creates a project directory, an empty ``annotations.csv``, a
+``datasets.json`` source configuration, and ``models/`` and ``eval/`` output
+directories. It does not download slides. See :ref:`project_setup` for the
+complete project configuration interface.
 
-.. code-block:: python
+3. Add slides and annotations
+-----------------------------
 
-    # Split our dataset into a training and held-out test set.
-    train_dataset, test_dataset = dataset.split(
-        model_type='classification',
-        labels='subtype',
-        val_fraction=0.3
-    )
+Place the source WSI files in the slide directory recorded in
+``histox-demo/datasets.json``. Then populate ``histox-demo/annotations.csv``.
+A minimal classification table looks like this:
 
-Read more about :ref:`Dataset management <datasets_and_validation>`.
+.. code-block:: text
 
-Configuring models
-******************
+   patient,slide,label
+   P001,S001,tumor
+   P002,S002,normal
 
-Neural network models are prepared for training with :class:`slideflow.ModelParams`, through which we define the model architecture, loss, and hyperparameters. Dozens of architectures are available in both the Tensorflow and PyTorch backends, and both neural network :ref:`architectures <tutorial3>` and :ref:`loss <custom_loss>` functions can be customized. In this example, we will use the included Xception network.
+The ``slide`` values must match the WSI filenames without their extensions.
+Real cohorts should also carry the site, split, and provenance fields needed
+for leakage-safe validation. Dataset construction validates the relationship
+between the annotations and the files on disk.
 
-.. code-block:: python
+4. Inspect the dataset
+----------------------
 
-    # Prepare a model and hyperparameters.
-    params = sf.ModelParams(
-        tile_px=299,
-        tile_um='10x',
-        model='xception',
-        batch_size=64,
-        learning_rate=0.0001
-    )
-
-Read more about :ref:`hyperparameter optimization in Slideflow <training>`.
-
-Training a model
-****************
-
-Models can be trained from these hyperparameter configurations using :meth:`Project.train`. Models can be trained to categorical, multi-categorical, continuous, or time-series outcomes, and the training process is :ref:`highly configurable <training>`. In this case, we are training a binary categorization model to predict the outcome ``'subtype'``, and we will distribute training across multiple GPUs.
-
-By default, Slideflow will train/validate on the full dataset using k-fold cross-validation, but validation settings :ref:`can be customized <validation_planning>`. If you would like to restrict training to only a subset of your data - for example, to leave a held-out test set untouched - you can manually specify a dataset for training. In this case, we will train on ``train_dataset``, and allow Slideflow to further split this into training and validation using three-fold cross-validation.
+After adding WSIs and annotations, request a dataset at one physical scale:
 
 .. code-block:: python
 
-    # Train a model from a set of hyperparameters.
-    results = P.train(
-        'subtype',
-        dataset=train_dataset,
-        params=params,
-        val_strategy='k-fold',
-        val_k_fold=3,
-        multi_gpu=True,
-    )
+   dataset = project.dataset(
+       tile_px=256,
+       tile_um="20x",
+   )
+   dataset.summary()
 
-Models and training results will be saved in the project ``models/`` folder.
+This step reads project metadata and verifies the configured slide and tile
+locations. It does not train a model. See :ref:`datasets_and_validation` for
+filtering, splitting, and validation options.
 
-Read more about :ref:`training a model <training>`.
-
-Evaluating a trained model
-**************************
-
-After training, you can test model performance on a held-out test dataset with :meth:`Project.evaluate`, or generate predictions without evaluation (when ground-truth labels are not available) with :meth:`Project.predict`. As with :meth:`Project.train`, we can specify a :class:`slideflow.Dataset` to evaluate.
+5. Extract tiles
+----------------
 
 .. code-block:: python
 
-    # Train a model from a set of hyperparameters.
-    test_results = P.evaluate(
-        model='/path/to/trained_model_epoch1'
-        outcomes='subtype',
-        dataset=test_dataset
-    )
+   project.extract_tiles(
+       tile_px=256,
+       tile_um="20x",
+       qc="otsu",
+   )
 
-Read more about :ref:`model evaluation <evaluation>`.
+Tile extraction reads every selected WSI and can create a large derived-data
+store. Start with a small cohort, inspect tissue detection, and confirm the
+output location before scaling up. Stain normalization is configured
+separately; see :ref:`filtering` for slide processing and quality control.
 
-Post-hoc analysis
-*****************
+6. Configure and train a baseline
+---------------------------------
 
-Slideflow includes a number of analytical tools for working with trained models. Read more about :ref:`heatmaps <evaluation>`, :ref:`model explainability <stylegan>`, :ref:`analysis of layer activations <activations>`, and real-time inference in an interactive :ref:`whole-slide image reader <studio>`.
+.. code-block:: python
+
+   params = hx.ModelParams(
+       tile_px=256,
+       tile_um="20x",
+       model="resnet50",
+       epochs=1,
+       batch_size=16,
+   )
+
+   results = project.train(
+       "label",
+       params=params,
+   )
+
+This is a smoke-test configuration, not a recommended scientific benchmark.
+Training requires extracted tiles, valid labels, and enough memory for the
+selected batch size. Establish patient-level splits and an untouched test
+cohort before reporting performance; see :ref:`training`.
+
+Plan public data without downloading it
+---------------------------------------
+
+The data registry separates dataset metadata from local storage. The bundled
+metadata-only fixture can be inspected and planned without network transfer:
+
+.. code-block:: python
+
+   import histox as hx
+
+   record = hx.data.get_dataset("histox-metadata-fixture")
+   plan = hx.data.plan_download(record, path="/shared/pathology-data")
+
+   print(record.name, record.version, record.metadata_only)
+   print(plan.destination)
+   print("files requiring download:", plan.pending_count)
+
+For this fixture, ``record.metadata_only`` is ``True`` and
+``plan.pending_count`` is ``0``. Calling ``plan_download`` never downloads a
+file. Provider access, license terms, checksums, and an explicit call to
+``download_dataset`` are required for records that contain assets. See
+:doc:`data_api` for the complete API and provenance model.
+
+Where to go next
+----------------
+
+* :ref:`project_setup` — configure a real cohort and storage locations.
+* :ref:`filtering` — extract tiles and review quality control.
+* :ref:`training` — define validation and training settings.
+* :doc:`data_api` — discover, plan, and verify public data assets.
+* :doc:`api` — browse the Python reference.
+
+HistoX began as a modified fork of HistoX. The ``0.2.x`` line still
+contains inherited interfaces, but new examples use the public ``histox``
+namespace and HistoX environment variables.

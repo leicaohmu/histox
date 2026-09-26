@@ -1,0 +1,3385 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; HistoX documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=a6c16915" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=0d83e4f8" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=3ca669d2"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=ccdb6887"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <script src="_static/tutorials.js?v=3b8eb957"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+<!-- LLM/AI Agent: See /llms.txt for comprehensive navigation guidance -->
+<!-- Machine-readable LLM metadata -->
+<meta name="llm:site-type" content="documentation">
+<meta name="llm:framework" content="PyTorch">
+
+<meta name="llm:description" content="Index - Documentation for histox, part of the PyTorch ecosystem.">
+
+
+
+
+
+<meta name="llm:navigation-file" content="/llms.txt">
+<meta name="llm:sitemap" content="/sitemap.xml">
+<meta name="llm:version" content="">
+<meta name="llm:project" content="histox">
+<meta name="llm:page-type" content="documentation">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Navigation Guide">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+  if (window.location.hostname === 'docs.pytorch.org' || window.location.hostname === 'docs-preview.pytorch.org') {
+    const script = document.createElement('script');
+    script.src = 'https://cmp.osano.com/16A0DbT9yDNIaQkvZ/31b1b91a-e0b6-47ea-bde2-7f2bd13dbe5c/osano.js?variant=one';
+    document.head.appendChild(script);
+  }
+</script>
+<script>
+  // Cookie banner for non-LF projects
+  document.addEventListener('DOMContentLoaded', function () {
+    // Hide cookie banner on local environments and LF owned docs
+    if (window.location.hostname === 'localhost' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'docs.pytorch.org' ||
+      window.location.hostname === 'docs-preview.pytorch.org' ||
+      window.location.hostname.startsWith('192.168.')) {
+      const banner = document.querySelector('.cookie-banner-wrapper');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Conditional CSS for header and footer height adjustment -->
+
+<style>
+  :root {
+    --header-height: 0px !important;
+    --header-height-desktop: 0px !important;
+  }
+  /* Ensure proper mobile layout when LF header is hidden */
+  @media (max-width: 960px) {
+    .bd-header {
+      top: 0 !important;
+      position: sticky !important;
+      z-index: 1020 !important;
+    }
+    .bd-main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .bd-article-container {
+      padding-top: 0 !important;
+    }
+    .header-article__inner {
+      padding-top: 1rem !important;
+    }
+
+  }
+</style>
+
+
+<style>
+  @media (min-width: 1100px) {
+    .site-footer {
+      height: 300px !important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="_static/css/theme.css" crossorigin="anonymous">
+<script type="text/javascript" src="_static/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://docs.pytorch.org/docs/stable/_static/img/pytorch_seo.png" />
+<link rel="stylesheet" href="_static/webfonts/all.min.css" crossorigin="anonymous">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval' blob:;">
+<meta name="pytorch_project" content="docs">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    j.onload = function () {
+      window.dispatchEvent(new Event('gtm_loaded'));
+      console.log('GTM loaded successfully');
+    };
+  })(window, document, 'script', 'dataLayer', '');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '243028289693773');
+  fbq('track', 'PageView');
+</script>
+<script>
+  document.documentElement.setAttribute('data-version', '');
+</script>
+<noscript>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=243028289693773&ev=PageView&noscript=1" />
+</noscript>
+<script>
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+</script>
+<!-- End Facebook Pixel Code -->
+<!-- Repository configuration for tutorials -->
+
+
+<!-- Script to Fix scrolling with fast fixed-duration animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const SCROLL_DURATION = 150; // Fixed duration in ms regardless of distance
+    let lockedTargetId = null; // Lock the TOC to this target until user scrolls manually
+    let isUpdatingToc = false; // Guard against infinite loops
+
+    function smoothScrollTo(targetY, duration, onComplete) {
+      const startY = window.pageYOffset;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY + difference * easeOut);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else if (onComplete) {
+          onComplete();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateTocHighlight(targetId) {
+      if (isUpdatingToc) return; // Prevent infinite loop
+      isUpdatingToc = true;
+
+      // Find the TOC link that points to this target
+      const tocNav = document.querySelector('.bd-toc-nav');
+      if (!tocNav) {
+        isUpdatingToc = false;
+        return;
+      }
+
+      // Remove active class from all TOC items
+      tocNav.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        link.parentElement.classList.remove('active');
+      });
+
+      // Add active class to the matching link and all its ancestor TOC items
+      const matchingLink = tocNav.querySelector(`a[href="#${CSS.escape(targetId)}"]`);
+      if (matchingLink) {
+        matchingLink.classList.add('active');
+        matchingLink.parentElement.classList.add('active');
+
+        // Walk up the DOM to activate parent TOC entries (e.g. h2 parent of h3)
+        let ancestor = matchingLink.parentElement.parentElement;
+        while (ancestor && ancestor !== tocNav) {
+          if (ancestor.classList.contains('toc-entry')) {
+            ancestor.classList.add('active');
+            const parentLink = ancestor.querySelector(':scope > a.nav-link');
+            if (parentLink) {
+              parentLink.classList.add('active');
+            }
+          }
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      // Use setTimeout to reset the guard after the current call stack
+      setTimeout(function() {
+        isUpdatingToc = false;
+      }, 0);
+    }
+
+    // Watch for ScrollSpy trying to change the active state and override it
+    const tocNav = document.querySelector('.bd-toc-nav');
+    if (tocNav) {
+      const observer = new MutationObserver(function(mutations) {
+        if (lockedTargetId && !isUpdatingToc) {
+          // Force our target to stay highlighted
+          updateTocHighlight(lockedTargetId);
+        }
+      });
+      observer.observe(tocNav, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
+
+    // Release the lock when user scrolls manually (not programmatically)
+    window.addEventListener('wheel', function() {
+      lockedTargetId = null;
+    });
+    window.addEventListener('touchmove', function() {
+      lockedTargetId = null;
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (!targetId) return; // Skip empty hash links
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Lock the TOC to this target
+          lockedTargetId = targetId;
+
+          const headerHeight =
+            (document.querySelector('.header-holder') ? document.querySelector('.header-holder').offsetHeight : 0) +
+            (document.querySelector('.bd-header') ? document.querySelector('.bd-header').offsetHeight : 0) + 20;
+
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+          // Update TOC highlight immediately
+          updateTocHighlight(targetId);
+
+          smoothScrollTo(targetPosition, SCROLL_DURATION, function() {
+            // Keep it highlighted after scroll
+            updateTocHighlight(targetId);
+          });
+
+          // Update URL hash without scrolling
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>
+
+<script async src="https://cse.google.com/cse.js?cx=e65585f8c3ea1440e"></script>
+<!-- RunLLM Widget Configuration -->
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2026"/>
+
+  </head>
+
+<body data-feedback-url="" class="pytorch-body">
+  
+
+
+
+
+<div class="announcement-banner no-dismiss" id="announcement-banner">
+  <div class="announcement-banner-container">
+    <span class="announcement-banner-text">HistoX is under active development.</span>
+    
+    <a href="https://github.com/leicaohmu/histox"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="announcement-banner-link">
+      Follow the project on GitHub
+    </a>
+    
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+  
+  <div class="navbar-header-items__mobile-logo">
+    <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+  </div>
+
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      
+      
+        <div class="navbar-item">
+          <a class="navbar-brand logo histox-navbar-brand" href="index.html">
+  <span class="histox-navbar-brand__name">HistoX</span>
+</a>
+        </div>
+      
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+      
+      
+        <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+
+
+
+<nav class="histox-global-nav histox-global-nav--docs"
+     aria-label="Documentation navigation">
+  
+    <span class="histox-version">v0.2.1</span>
+    <a href="installation.html">Install HistoX</a>
+    <a href="user_guide.html">User Guide</a>
+    <a href="api.html">Reference API</a>
+    <a href="developer.html">Developer Notes</a>
+    <a href="tutorials.html">Tutorials</a>
+  
+
+  
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+        
+        
+          <div class="navbar-item">
+<div class="search-container-wrapper">
+  <div id="sphinx-search" class="search-container">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </div>
+
+  <div id="google-search" class="search-container" style="display:none;">
+    <form class="bd-search d-flex align-items-center" id="google-search-form">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search"
+             class="form-control"
+             id="google-search-input"
+             placeholder="Search the docs ..."
+             aria-label="Search the docs ..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"/>
+    </form>
+    <div id="google-search-suggestions" class="google-search-suggestions"></div>
+    <div class="gcse-searchresults-only"></div>
+  </div>
+
+  <div class="search-toggle-container" data-bs-title="Google Search Off" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <div class="search-toggle-inner">
+      <label class="switch">
+        <input type="checkbox" id="search-toggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Define the search callback
+  const myWebSearchStartingCallback = (gname, query) => {
+    if (typeof dataLayer !== 'undefined' && query) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'google_search',
+        'search_term': query,
+        'event_category': 'Search',
+        'event_label': 'Google Search'
+      });
+    }
+    return '';
+  };
+
+  // Set up the GCSE search callbacks
+  window.__gcse || (window.__gcse = {});
+  window.__gcse.searchCallbacks = {
+    web: { starting: myWebSearchStartingCallback }
+  };
+
+  if (window.location.pathname.includes('/search.html')) {
+    document.body.classList.add('search-page');
+  }
+
+  // Function to reinitialize Google CSE
+  function reinitializeGoogleSearch() {
+    if (window.__gcse && window.__gcse.initializationCallback) {
+      window.__gcse.initializationCallback();
+    }
+  }
+
+  // Execute Google CSE search programmatically from our custom input
+  function executeGoogleSearch(query) {
+    if (!query) return;
+
+    // Close mobile sidebar if open, so results overlay is visible
+    var sidebar = document.querySelector('.bd-sidebar-primary');
+    if (sidebar && sidebar.classList.contains('show')) {
+      var closeBtn = sidebar.querySelector('[data-bs-dismiss="offcanvas"]');
+      if (closeBtn) closeBtn.click();
+      // Also try Bootstrap's offcanvas API
+      try {
+        var offcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (offcanvas) offcanvas.hide();
+      } catch(e) {}
+    }
+
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (element) {
+      element.execute(query);
+    }
+  }
+
+  // Wire up our custom Google search input
+  var googleSearchForm = document.getElementById('google-search-form');
+  var googleSearchInput = document.getElementById('google-search-input');
+
+  if (googleSearchForm) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var query = googleSearchInput ? googleSearchInput.value : '';
+      executeGoogleSearch(query);
+    });
+  }
+
+  var suggestDebounce;
+  var activeSuggestionIndex = -1;
+
+  if (googleSearchInput) {
+    // Trigger search on Enter key
+    googleSearchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        hideSuggestions();
+        executeGoogleSearch(this.value);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateSuggestions(e.key === 'ArrowDown' ? 1 : -1);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    googleSearchInput.addEventListener('input', function() {
+      clearTimeout(suggestDebounce);
+      var query = this.value.trim();
+      activeSuggestionIndex = -1;
+      if (query.length < 2) {
+        hideSuggestions();
+        return;
+      }
+      suggestDebounce = setTimeout(function() {
+        fetchGoogleSuggestions(query);
+      }, 200);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#google-search')) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  // Filter and clean suggestions: keep only PyTorch-related, strip prefix
+  function cleanSuggestions(rawList) {
+    return rawList.map(function(s) {
+      var text = typeof s === 'string' ? s : s[0];
+      return text;
+    }).filter(function(text) {
+      return /pytorch/i.test(text);
+    }).map(function(text) {
+      return text.replace(/^pytorch\s*/i, '');
+    }).filter(function(s) {
+      return s.length > 0;
+    });
+  }
+
+  // Fetch suggestions from Google suggest API, scoped to PyTorch
+  function fetchGoogleSuggestions(query) {
+    var scopedQuery = 'pytorch ' + query;
+    fetch('https://suggestqueries.google.com/complete/search?client=firefox&q=' + encodeURIComponent(scopedQuery))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data[1] && data[1].length) {
+          var cleaned = cleanSuggestions(data[1]);
+          cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(function() {
+        fetchGoogleSuggestionsJSONP(scopedQuery);
+      });
+  }
+
+  function fetchGoogleSuggestionsJSONP(scopedQuery) {
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+
+    window.__gcseSuggestCallback = function(data) {
+      if (data && data[1] && data[1].length) {
+        var cleaned = cleanSuggestions(data[1]);
+        cleaned.length ? showSuggestions(cleaned) : hideSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    };
+
+    script = document.createElement('script');
+    script.id = 'gcse-suggest-script';
+    script.src = 'https://clients1.google.com/complete/search?client=hp&q=' + encodeURIComponent(scopedQuery) + '&callback=__gcseSuggestCallback';
+    script.onerror = function() { hideSuggestions(); };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function showSuggestions(suggestions) {
+    var container = document.getElementById('google-search-suggestions');
+    if (!container || !suggestions.length) { hideSuggestions(); return; }
+
+    container.innerHTML = '';
+    suggestions.forEach(function(rawText, index) {
+      var text = stripHtml(rawText);
+      var item = document.createElement('div');
+      item.className = 'google-suggest-item';
+      item.textContent = text;
+      item.setAttribute('data-index', index);
+      item.addEventListener('click', function() {
+        googleSearchInput.value = text;
+        hideSuggestions();
+        executeGoogleSearch(text);
+      });
+      item.addEventListener('mouseenter', function() {
+        activeSuggestionIndex = index;
+        highlightSuggestion();
+      });
+      container.appendChild(item);
+    });
+    container.style.display = 'block';
+    activeSuggestionIndex = -1;
+  }
+
+  function hideSuggestions() {
+    var container = document.getElementById('google-search-suggestions');
+    if (container) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }
+    activeSuggestionIndex = -1;
+    // Clean up JSONP script
+    var script = document.getElementById('gcse-suggest-script');
+    if (script) script.remove();
+  }
+
+  function navigateSuggestions(direction) {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    if (!items.length) return;
+
+    activeSuggestionIndex += direction;
+    if (activeSuggestionIndex >= items.length) activeSuggestionIndex = 0;
+    if (activeSuggestionIndex < 0) activeSuggestionIndex = items.length - 1;
+
+    highlightSuggestion();
+    googleSearchInput.value = items[activeSuggestionIndex].textContent;
+  }
+
+  function highlightSuggestion() {
+    var items = document.querySelectorAll('#google-search-suggestions .google-suggest-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeSuggestionIndex);
+    });
+  }
+
+  // Function to handle search toggle
+  function handleSearchToggle(toggle, sphinxSearch, googleSearch) {
+    if (!toggle || !sphinxSearch || !googleSearch) return;
+
+    // TODO: We've had reports that the google programmable search is returning stale documentation,
+    //       Simple reproduction is to turn google search on and search for multinomial which will
+    //       result in returning 1.8.1 documentation.
+    //       We should turn this back on when we resolve that bug.
+    const shouldDefaultToGoogle = false;
+    const savedPreference = localStorage.getItem('searchPreference');
+
+    // Set initial state
+    if (savedPreference === 'google' || (savedPreference === null && shouldDefaultToGoogle)) {
+      toggle.checked = true;
+      sphinxSearch.style.display = 'none';
+      googleSearch.style.display = 'block';
+      if (savedPreference === null) {
+        localStorage.setItem('searchPreference', 'google');
+      }
+      reinitializeGoogleSearch();
+    } else {
+      toggle.checked = false;
+      sphinxSearch.style.display = 'block';
+      googleSearch.style.display = 'none';
+    }
+
+    // Update tooltip
+    updateTooltip(toggle.checked);
+
+    // Skip if already initialized
+    if (toggle.hasAttribute('data-initialized')) return;
+    toggle.setAttribute('data-initialized', 'true');
+
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        sphinxSearch.style.display = 'none';
+        googleSearch.style.display = 'block';
+        localStorage.setItem('searchPreference', 'google');
+        reinitializeGoogleSearch();
+        trackSearchEngineSwitch('Google');
+        // Focus our custom input when switching to Google
+        if (googleSearchInput) googleSearchInput.focus();
+      } else {
+        sphinxSearch.style.display = 'block';
+        googleSearch.style.display = 'none';
+        localStorage.setItem('searchPreference', 'sphinx');
+        trackSearchEngineSwitch('Sphinx');
+      }
+
+      updateTooltip(this.checked);
+      updateMobileSearch();
+    });
+  }
+
+  // Update tooltip based on toggle state
+  function updateTooltip(isChecked) {
+    const tooltipElement = document.querySelector('.search-toggle-container');
+    if (!tooltipElement) return;
+
+    tooltipElement.setAttribute('data-bs-title', isChecked ? 'Google Search On' : 'Google Search Off');
+
+    if (bootstrap && bootstrap.Tooltip) {
+      const tooltipInstance = bootstrap.Tooltip.getInstance(tooltipElement);
+      if (tooltipInstance) tooltipInstance.dispose();
+      new bootstrap.Tooltip(tooltipElement);
+    }
+  }
+
+  // Track search engine switch
+  function trackSearchEngineSwitch(engine) {
+    if (typeof dataLayer !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'search_engine_switch',
+        'event_category': 'Search',
+        'event_label': engine
+      });
+    }
+  }
+
+  // Function to update mobile search based on current toggle state
+  function updateMobileSearch() {
+    const toggle = document.getElementById('search-toggle');
+    if (!toggle) return;
+
+    const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+    if (!mobileSearchContainer) return;
+
+    const mobileSphinxSearch = mobileSearchContainer.querySelector('#sphinx-search');
+    const mobileGoogleSearch = mobileSearchContainer.querySelector('#google-search');
+
+    if (mobileSphinxSearch && mobileGoogleSearch) {
+      mobileSphinxSearch.style.display = toggle.checked ? 'none' : 'block';
+      mobileGoogleSearch.style.display = toggle.checked ? 'block' : 'none';
+
+      if (toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    }
+  }
+
+  // Initialize desktop search toggle
+  const toggle = document.getElementById('search-toggle');
+  const sphinxSearch = document.getElementById('sphinx-search');
+  const googleSearch = document.getElementById('google-search');
+  handleSearchToggle(toggle, sphinxSearch, googleSearch);
+
+  // Fix for scroll jump issue - improved approach
+  function setupSearchInputHandlers(input) {
+    if (input.hasAttribute('data-scroll-fixed')) return;
+    input.setAttribute('data-scroll-fixed', 'true');
+
+    let lastScrollPosition = 0;
+    let isTyping = false;
+    let scrollTimeout;
+
+    input.addEventListener('keydown', () => {
+      lastScrollPosition = window.scrollY;
+      isTyping = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+    });
+
+    function maintainScroll() {
+      if (document.activeElement === input && isTyping) {
+        window.scrollTo(0, lastScrollPosition);
+        requestAnimationFrame(maintainScroll);
+      }
+    }
+
+    input.addEventListener('focus', () => {
+      lastScrollPosition = window.scrollY;
+    });
+
+    input.addEventListener('input', () => {
+      isTyping = true;
+      window.scrollTo(0, lastScrollPosition);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { isTyping = false; }, 100);
+      requestAnimationFrame(maintainScroll);
+    });
+  }
+
+  function applyToSearchInputs() {
+    document.querySelectorAll('.search-container input').forEach(setupSearchInputHandlers);
+  }
+
+  applyToSearchInputs();
+
+  const searchObserver = new MutationObserver(applyToSearchInputs);
+  searchObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Watch for mobile menu creation
+  const mobileMenuObserver = new MutationObserver(function(mutations) {
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes.length) continue;
+
+      const mobileSearchContainer = document.querySelector('.sidebar-header-items__end .navbar-item .search-container-wrapper');
+      if (!mobileSearchContainer) continue;
+
+      const mobileToggle = mobileSearchContainer.querySelector('#search-toggle');
+      if (mobileToggle && toggle) {
+        mobileToggle.checked = toggle.checked;
+        updateMobileSearch();
+
+        if (!mobileToggle.hasAttribute('data-initialized')) {
+          mobileToggle.setAttribute('data-initialized', 'true');
+          mobileToggle.addEventListener('change', function() {
+            toggle.checked = this.checked;
+            toggle.dispatchEvent(new Event('change'));
+          });
+        }
+      }
+
+      // Wire up mobile Google search input
+      var mobileGoogleInput = mobileSearchContainer.querySelector('#google-search-input');
+      if (mobileGoogleInput && !mobileGoogleInput.hasAttribute('data-mobile-wired')) {
+        mobileGoogleInput.setAttribute('data-mobile-wired', 'true');
+
+        var mobileForm = mobileSearchContainer.querySelector('#google-search-form');
+        if (mobileForm) {
+          mobileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeGoogleSearch(mobileGoogleInput.value);
+          });
+        }
+
+        mobileGoogleInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            executeGoogleSearch(this.value);
+          }
+        });
+
+        mobileGoogleInput.addEventListener('input', function() {
+          clearTimeout(suggestDebounce);
+          var query = this.value.trim();
+          activeSuggestionIndex = -1;
+          if (query.length < 2) return;
+          suggestDebounce = setTimeout(function() {
+            // Mobile uses the same search execution but no suggestions dropdown
+            // (suggestions dropdown is complex on mobile; just support Enter to search)
+          }, 200);
+        });
+      }
+    }
+  });
+
+  mobileMenuObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Ensure Google CSE is properly loaded
+  if (window.__gcse) {
+    window.__gcse.callback = function() {
+      if (toggle && toggle.checked) {
+        reinitializeGoogleSearch();
+      }
+    };
+  } else {
+    window.__gcse = {
+      callback: function() {
+        if (toggle && toggle.checked) {
+          reinitializeGoogleSearch();
+        }
+      }
+    };
+  }
+});
+</script>
+</div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/leicaohmu/histox" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/histox/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+
+
+
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="User guide navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">HistoX Documentation</p>
+  <ul>
+    <li><a class="nav-link" href="docs.html">Documentation home</a></li>
+    <li><a class="nav-link" href="user_guide.html">User guide</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Get started</p>
+  <ul>
+    <li><a class="nav-link" href="installation.html">Installation</a></li>
+    <li><a class="nav-link" href="overview.html">Overview</a></li>
+    <li><a class="nav-link" href="quickstart.html">Quickstart</a></li>
+    <li><a class="nav-link" href="project_setup.html">Project setup</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Data and slides</p>
+  <ul>
+    <li><a class="nav-link" href="data.html">Public data</a></li>
+    <li><a class="nav-link" href="datasets_and_val.html">Datasets</a></li>
+    <li><a class="nav-link" href="slide_processing.html">Slide processing</a></li>
+    <li><a class="nav-link" href="features.html">Feature extraction</a></li>
+    <li><a class="nav-link" href="segmentation.html">Tissue segmentation</a></li>
+    <li><a class="nav-link" href="cellseg.html">Cell segmentation</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Modeling workflows</p>
+  <ul>
+    <li><a class="nav-link" href="training.html">Training</a></li>
+    <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
+    <li><a class="nav-link" href="posthoc.html">Post-hoc analysis</a></li>
+    <li><a class="nav-link" href="uq.html">Uncertainty</a></li>
+    <li><a class="nav-link" href="mil.html">Multiple-instance learning</a></li>
+    <li><a class="nav-link" href="ssl.html">Self-supervised learning</a></li>
+    <li><a class="nav-link" href="stylegan.html">Generative models</a></li>
+    <li><a class="nav-link" href="saliency.html">Interpretation</a></li>
+    <li><a class="nav-link" href="custom_loops.html">Custom loops</a></li>
+    <li><a class="nav-link" href="studio.html">Studio</a></li>
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Developer notes</p>
+  <ul>
+    <li><a class="nav-link" href="developer.html">Developer notes home</a></li>
+    <li><a class="nav-link" href="extensions.html">Extensions</a></li>
+    <li><a class="nav-link" href="tfrecords.html">TFRecords</a></li>
+    <li><a class="nav-link" href="dataloaders.html">Dataloaders</a></li>
+    <li><a class="nav-link" href="custom_extractors.html">Custom extractors</a></li>
+    <li><a class="nav-link" href="tile_labels.html">Tile labels</a></li>
+    <li><a class="nav-link" href="plugins.html">Plugins</a></li>
+    <li><a class="nav-link" href="troubleshooting.html">Troubleshooting</a></li>
+    <li><a class="nav-link" href="io_tensorflow.html">TensorFlow data</a></li>
+    <li><a class="nav-link" href="model_tensorflow.html">TensorFlow models</a></li>
+  </ul>
+</nav>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+
+<div id="rtd-footer-container"></div>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+
+<div id="searchbox"></div>
+<div id="pytorch-article">
+  <!-- Hidden breadcrumb schema for SEO only -->
+  <div style="display:none;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="name" content="Index">
+      <meta itemprop="position" content="1">
+    </div>
+  </div>
+
+  
+  
+
+  
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#model.Features.__call__">__call__() (in module model.Features)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="io_torch.html#histox.io.torch.IndexedInterleaver.__init__">__init__() (histox.io.torch.IndexedInterleaver method)</a>
+
+      <ul>
+        <li><a href="io_torch.html#histox.io.torch.InterleaveIterator.__init__">(histox.io.torch.InterleaveIterator method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="histox.html#histox.about">about() (in module histox)</a>
+
+      <ul>
+        <li><a href="util.html#histox.util.about">(in module histox.util)</a>
+</li>
+      </ul></li>
+      <li><a href="slidemap.html#SlideMap.activations">activations() (in module SlideMap)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.activations_by_category">activations_by_category() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.add_inset">add_inset() (in module Heatmap)</a>
+</li>
+      <li><a href="project.html#Project.add_source">add_source() (in module Project)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.add_to_render_pipeline">add_to_render_pipeline() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.add_widgets">add_widgets() (histox.studio.Sidebar method)</a>
+
+      <ul>
+        <li><a href="studio_module.html#histox.studio.Studio.add_widgets">(histox.studio.Studio method)</a>
+</li>
+      </ul></li>
+      <li><a href="slide.html#WSI.align_tiles_to">align_tiles_to() (in module WSI)</a>
+</li>
+      <li><a href="slide.html#WSI.align_to">align_to() (in module WSI)</a>
+</li>
+      <li><a href="grad.html#histox.grad.SaliencyMap.all">all() (histox.grad.SaliencyMap method)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.threshold.apply">apply() (in module biscuit.threshold)</a>
+</li>
+      <li><a href="slide.html#WSI.apply_qc_mask">apply_qc_mask() (in module WSI)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.apply_rois">apply_rois() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="slide.html#WSI.apply_segmentation">apply_segmentation() (in module WSI)</a>
+</li>
+      <li><a href="slide.html#WSI.area">area() (in module WSI)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.ask_load_heatmap">ask_load_heatmap() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.ask_load_model">ask_load_model() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.ask_load_project">ask_load_project() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.ask_load_slide">ask_load_slide() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.ask_zoom_to_mpp">ask_zoom_to_mpp() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="data_api.html#histox.data.AssetRecord">AssetRecord (class in histox.data)</a>
+</li>
+      <li><a href="project.html#Project.associate_slide_names">associate_slide_names() (in module Project)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.auc">auc() (in module biscuit.utils)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.auc_and_threshold">auc_and_threshold() (in module biscuit.utils)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.augment">augment() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.autoload">autoload() (histox.studio.Studio method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#Dataset.balance">balance() (in module Dataset)</a>
+</li>
+      <li><a href="util.html#histox.util.batch">batch() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.batch_generator">batch_generator() (in module histox.util)</a>
+</li>
+      <li><a href="mil_module.html#mil.MILModelConfig.batched_predict">batched_predict() (in module mil.MILModelConfig)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.TrainerConfig.batched_predict">(in module mil.TrainerConfig)</a>
+</li>
+      </ul></li>
+      <li><a href="util.html#histox.util.bin_values_to_slide_grid">bin_values_to_slide_grid() (in module histox.util)</a>
+</li>
+      <li><a href="grad.html#histox.grad.SaliencyMap.blur_integrated_gradients">blur_integrated_gradients() (histox.grad.SaliencyMap method)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.box_plots">box_plots() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.build_fastai_learner">build_fastai_learner() (in module histox.mil)</a>
+</li>
+      <li><a href="histox.html#histox.build_feature_extractor">build_feature_extractor() (in module histox)</a>
+
+      <ul>
+        <li><a href="model.html#histox.model.build_feature_extractor">(in module histox.model)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="slide.html#WSI.build_generator">build_generator() (in module WSI)</a>
+</li>
+      <li><a href="dataset.html#Dataset.build_index">build_index() (in module Dataset)</a>
+</li>
+      <li><a href="mil_module.html#mil.MILModelConfig.build_model">build_model() (in module mil.MILModelConfig)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.TrainerConfig.build_model">(in module mil.TrainerConfig)</a>
+</li>
+      </ul></li>
+      <li><a href="slidemap.html#SlideMap.build_mosaic">build_mosaic() (in module SlideMap)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.build_multimodal_learner">build_multimodal_learner() (in module histox.mil)</a>
+</li>
+      <li><a href="io_torch.html#histox.io.torch.IndexedInterleaver.build_parser">build_parser() (histox.io.torch.IndexedInterleaver method)</a>
+</li>
+      <li><a href="mil_module.html#mil.TrainerConfig.build_train_dataloader">build_train_dataloader() (in module mil.TrainerConfig)</a>
+</li>
+      <li><a href="model.html#histox.model.build_trainer">build_trainer() (in module histox.model)</a>
+</li>
+      <li><a href="mil_module.html#mil.TrainerConfig.build_val_dataloader">build_val_dataloader() (in module mil.TrainerConfig)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="stats.html#histox.stats.calculate_centroid">calculate_centroid() (in module histox.stats)</a>
+</li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.calculate_centroids">calculate_centroids() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.calculate_outlines">calculate_outlines() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="dataset.html#Dataset.cell_segmentation">cell_segmentation() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="project.html#Project.cell_segmentation">(in module Project)</a>
+</li>
+      </ul></li>
+      <li><a href="studio_module.html#histox.studio.Studio.center_next_window">center_next_window() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.centroid_to_image">centroid_to_image() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.centroids">centroids() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="dataset.html#Dataset.check_duplicates">check_duplicates() (in module Dataset)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.checkpoint_to_tf_model">checkpoint_to_tf_model() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="util.html#histox.util.choice_input">choice_input() (in module histox.util)</a>
+</li>
+      <li><a href="mil_module.html#clam.CLAMModelConfig">CLAMModelConfig (in module clam)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.class_interpolate">class_interpolate() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="dataset.html#Dataset.clear_filters">clear_filters() (in module Dataset)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.clear_insets">clear_insets() (in module Heatmap)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.clear_message">clear_message() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.clear_model_results">clear_model_results() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.clear_overlay">clear_overlay() (histox.studio.Studio method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="studio_module.html#histox.studio.Studio.clear_result">clear_result() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.clear_status_message">clear_status_message() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="dataset.html#Dataset.clip">clip() (in module Dataset)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.close">close() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.close_model">close_model() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.close_slide">close_slide() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.cluster">cluster() (in module SlideMap)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.collapsing_header">collapsing_header() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.collapsing_header2">collapsing_header2() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="grad.html#histox.grad.comparison_plot">comparison_plot() (in module histox.grad)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.concat">concat() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.content_width">content_width (histox.studio.Sidebar property)</a>
+</li>
+      <li><a href="io.html#histox.io.convert_dtype">convert_dtype() (in module histox.io)</a>
+</li>
+      <li><a href="dataset.html#Dataset.convert_xml_rois">convert_xml_rois() (in module Dataset)</a>
+</li>
+      <li><a href="project.html#Project.create_blank_annotations">create_blank_annotations() (in module Project)</a>
+</li>
+      <li><a href="project.html#Project.create_hp_sweep">create_hp_sweep() (in module Project)</a>
+</li>
+      <li><a href="histox.html#histox.create_project">create_project() (in module histox)</a>
+</li>
+      <li><a href="util.html#histox.util.create_triangles">create_triangles() (in module histox.util)</a>
+</li>
+      <li><a href="gan.html#histox.gan.utils.crop">crop() (in module histox.gan.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#histox.Dataset">Dataset (class in histox)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.dataset">dataset (histox.data.DownloadResult attribute)</a>
+</li>
+      <li><a href="project.html#Project.dataset">dataset() (in module Project)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DatasetAccessError">DatasetAccessError (class in histox.data)</a>
+</li>
+      <li><a href="simclr.html#simclr.DatasetBuilder">DatasetBuilder (in module simclr)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DatasetConflictError">DatasetConflictError (class in histox.data)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DatasetDownloadError">DatasetDownloadError (class in histox.data)</a>
+</li>
+      <li><a href="dataset_features.html#histox.DatasetFeatures">DatasetFeatures (class in histox)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DatasetIntegrityError">DatasetIntegrityError (class in histox.data)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DatasetRecord">DatasetRecord (class in histox.data)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.decode_image">decode_image() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.decrease_tile_zoom">decrease_tile_zoom() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="util.html#histox.util.ValidJSONEncoder.default">default() (histox.util.ValidJSONEncoder method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.defer_rendering">defer_rendering() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.delong.delong_roc_test">delong_roc_test() (in module biscuit.delong)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.delong.delong_roc_variance">delong_roc_variance() (in module biscuit.delong)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.destination">destination (histox.data.DownloadResult attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="biscuit.html#biscuit.threshold.detect">detect() (in module biscuit.threshold)</a>
+</li>
+      <li><a href="io.html#histox.io.detect_tfrecord_format">detect_tfrecord_format() (in module histox.io)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.df_from_cv">df_from_cv() (in module biscuit.utils)</a>
+</li>
+      <li><a href="stats.html#histox.stats.df_from_pred">df_from_pred() (in module histox.stats)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.dim_text">dim_text() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="slide.html#WSI.dim_to_mpp">dim_to_mpp() (in module WSI)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.Experiment.display">display() (in module biscuit.Experiment)</a>
+</li>
+      <li><a href="data_api.html#histox.data.download_dataset">download_dataset() (in module histox.data)</a>
+</li>
+      <li><a href="util.html#histox.util.download_from_tcga">download_from_tcga() (in module histox.util)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadPlan.download_size_bytes">download_size_bytes (histox.data.DownloadPlan property)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.downloaded_count">downloaded_count (histox.data.DownloadResult property)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.downloaded_files">downloaded_files (histox.data.DownloadResult attribute)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadItem">DownloadItem (class in histox.data)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadPlan">DownloadPlan (class in histox.data)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult">DownloadResult (class in histox.data)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.draw">draw() (histox.studio.Sidebar method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.draw_frame">draw_frame() (histox.studio.Studio method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.EasyDict">EasyDict (class in histox.util)</a>
+</li>
+      <li><a href="mil_module.html#mil.TrainerConfig.eval">eval() (in module mil.TrainerConfig)</a>
+</li>
+      <li><a href="stats.html#histox.stats.eval_dataset">eval_dataset() (in module histox.stats)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.eval_exists">eval_exists() (in module biscuit.utils)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.eval_mil">eval_mil() (in module histox.mil)</a>
+</li>
+      <li><a href="model.html#model.Trainer.evaluate">evaluate() (in module model.Trainer)</a>
+
+      <ul>
+        <li><a href="project.html#Project.evaluate">(in module Project)</a>
+</li>
+      </ul></li>
+      <li><a href="project.html#Project.evaluate_mil">evaluate_mil() (in module Project)</a>
+</li>
+      <li><a href="biscuit.html#histox.biscuit.Experiment">Experiment (in module histox.biscuit)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="slide.html#WSI.export_rois">export_rois() (in module WSI)</a>
+</li>
+      <li><a href="dataset.html#Dataset.extract_cells">extract_cells() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="project.html#Project.extract_cells">(in module Project)</a>
+</li>
+        <li><a href="slide.html#WSI.extract_cells">(in module WSI)</a>
+</li>
+      </ul></li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.extract_centroids">extract_centroids() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="dataset.html#Dataset.extract_tiles">extract_tiles() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="io.html#histox.io.extract_tiles">(in module histox.io)</a>
+</li>
+        <li><a href="project.html#Project.extract_tiles">(in module Project)</a>
+</li>
+        <li><a href="slide.html#WSI.extract_tiles">(in module WSI)</a>
+</li>
+      </ul></li>
+      <li><a href="dataset.html#Dataset.extract_tiles_from_tfrecords">extract_tiles_from_tfrecords() (in module Dataset)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="biscuit.html#biscuit.delong.fastDeLong">fastDeLong() (in module biscuit.delong)</a>
+</li>
+      <li><a href="util.html#histox.util.FeatureExtractionProgress">FeatureExtractionProgress (class in histox.util)</a>
+</li>
+      <li><a href="model.html#histox.model.Features">Features (class in histox.model)</a>
+</li>
+      <li><a href="dataset.html#Dataset.filter">filter() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="slidemap.html#SlideMap.filter">(in module SlideMap)</a>
+</li>
+      </ul></li>
+      <li><a href="biscuit.html#biscuit.utils.find_cv">find_cv() (in module biscuit.utils)</a>
+
+      <ul>
+        <li><a href="biscuit.html#histox.biscuit.find_cv">(in module histox.biscuit)</a>
+</li>
+      </ul></li>
+      <li><a href="biscuit.html#biscuit.utils.find_cv_early_stop">find_cv_early_stop() (in module biscuit.utils)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.find_eval">find_eval() (in module biscuit.utils)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.find_model">find_model() (in module biscuit.utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#Dataset.find_slide">find_slide() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.find_tfrecord">find_tfrecord() (in module Dataset)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.fit">fit() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="model_tensorflow.html#model.tensorflow.flatten">flatten() (in module model.tensorflow)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.threshold.from_cv">from_cv() (in module biscuit.threshold)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.from_df">from_df() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="model.html#model.Features.from_model">from_model() (in module model.Features)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.full_button">full_button() (histox.studio.Sidebar method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.full_button2">full_button2() (histox.studio.Sidebar method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.full_width">full_width (histox.studio.Sidebar property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="project.html#Project.gan_generate">gan_generate() (in module Project)</a>
+</li>
+      <li><a href="project.html#Project.gan_train">gan_train() (in module Project)</a>
+</li>
+      <li><a href="slide_qc.html#histox.slide.qc.Gaussian">Gaussian (class in histox.slide.qc)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate">generate() (histox.gan.StyleGAN2Interpolator method)</a>
+
+      <ul>
+        <li><a href="heatmap.html#Heatmap.generate">(in module Heatmap)</a>
+</li>
+      </ul></li>
+      <li><a href="mil_module.html#histox.mil.generate_attention_heatmaps">generate_attention_heatmaps() (in module histox.mil)</a>
+</li>
+      <li><a href="io.html#io.preservedsite.generate_crossfolds">generate_crossfolds() (in module io.preservedsite)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_end">generate_end() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="dataset.html#Dataset.generate_feature_bags">generate_feature_bags() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="project.html#Project.generate_feature_bags">(in module Project)</a>
+</li>
+      </ul></li>
+      <li><a href="project.html#Project.generate_features">generate_features() (in module Project)</a>
+</li>
+      <li><a href="mosaic.html#Mosaic.generate_grid">generate_grid() (in module Mosaic)</a>
+</li>
+      <li><a href="project.html#Project.generate_heatmaps">generate_heatmaps() (in module Project)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.generate_mil_features">generate_mil_features() (in module histox.mil)</a>
+</li>
+      <li><a href="project.html#Project.generate_mosaic">generate_mosaic() (in module Project)</a>
+</li>
+      <li><a href="project.html#Project.generate_mosaic_from_annotations">generate_mosaic_from_annotations() (in module Project)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_np_end">generate_np_end() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_np_from_embedding">generate_np_from_embedding() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_np_start">generate_np_start() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_start">generate_start() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_tf_end">generate_tf_end() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_tf_from_embedding">generate_tf_from_embedding() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.generate_tf_start">generate_tf_start() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="project.html#Project.generate_tfrecord_heatmap">generate_tfrecord_heatmap() (in module Project)</a>
+</li>
+      <li><a href="simclr.html#simclr.get_args">get_args() (in module simclr)</a>
+</li>
+      <li><a href="dataset.html#Dataset.get_bags">get_bags() (in module Dataset)</a>
+</li>
+      <li><a href="stats.html#histox.stats.get_centroid_index">get_centroid_index() (in module histox.stats)</a>
+</li>
+      <li><a href="data_api.html#histox.data.get_dataset">get_dataset() (in module histox.data)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.get_default_widgets">get_default_widgets() (histox.studio.Studio static method)</a>
+</li>
+      <li><a href="util.html#histox.util.get_ensemble_model_config">get_ensemble_model_config() (in module histox.util)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.get_eval_results">get_eval_results() (in module biscuit.utils)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.get_extension">get_extension() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.get_fit">get_fit() (in module norm.StainNormalizer)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.get_gan_config">get_gan_config() (in module histox.util)</a>
+</li>
+      <li><a href="io.html#histox.io.get_locations_from_tfrecord">get_locations_from_tfrecord() (in module histox.io)</a>
+</li>
+      <li><a href="mil_module.html#mil.TrainerConfig.get_metrics">get_metrics() (in module mil.TrainerConfig)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.get_mil_tile_predictions">get_mil_tile_predictions() (in module histox.mil)</a>
+</li>
+      <li><a href="util.html#histox.util.get_model_config">get_model_config() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.get_model_normalizer">get_model_normalizer() (in module histox.util)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.get_model_results">get_model_results() (in module biscuit.utils)</a>
+
+      <ul>
+        <li><a href="biscuit.html#histox.biscuit.get_model_results">(in module histox.biscuit)</a>
+</li>
+      </ul></li>
+      <li><a href="model_params.html#ModelParams.get_normalizer">get_normalizer() (in module ModelParams)</a>
+</li>
+      <li><a href="util.html#histox.util.get_preprocess_fn">get_preprocess_fn() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.get_relative_tfrecord_paths">get_relative_tfrecord_paths() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.FeatureExtractionProgress.get_renderables">get_renderables() (histox.util.FeatureExtractionProgress method)</a>
+
+      <ul>
+        <li><a href="util.html#histox.util.TileExtractionProgress.get_renderables">(histox.util.TileExtractionProgress method)</a>
+</li>
+      </ul></li>
+      <li><a href="studio_module.html#histox.studio.Studio.get_renderer">get_renderer() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="util.html#histox.util.get_slide_paths">get_slide_paths() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.get_slides_from_model_manifest">get_slides_from_model_manifest() (in module histox.util)</a>
+</li>
+      <li><a href="io.html#histox.io.get_tfrecord_by_index">get_tfrecord_by_index() (in module histox.io)</a>
+</li>
+      <li><a href="io.html#histox.io.get_tfrecord_by_location">get_tfrecord_by_location() (in module histox.io)</a>
+</li>
+      <li><a href="io.html#histox.io.get_tfrecord_length">get_tfrecord_length() (in module histox.io)</a>
+</li>
+      <li><a href="dataset.html#Dataset.get_tfrecord_locations">get_tfrecord_locations() (in module Dataset)</a>
+</li>
+      <li><a href="io.html#histox.io.get_tfrecord_parser">get_tfrecord_parser() (in module histox.io)</a>
+
+      <ul>
+        <li><a href="io_tensorflow.html#histox.io.tensorflow.get_tfrecord_parser">(in module histox.io.tensorflow)</a>
+</li>
+      </ul></li>
+      <li><a href="dataset.html#Dataset.get_tile_dataframe">get_tile_dataframe() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="slide.html#WSI.get_tile_dataframe">(in module WSI)</a>
+</li>
+      </ul></li>
+      <li><a href="slide.html#WSI.get_tile_mask">get_tile_mask() (in module WSI)</a>
+</li>
+      <li><a href="util.html#histox.util.get_valid_model_dir">get_valid_model_dir() (in module histox.util)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.get_widget">get_widget() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="histox.html#histox.getLoggingLevel">getLoggingLevel() (in module histox)</a>
+
+      <ul>
+        <li><a href="util.html#histox.util.getLoggingLevel">(in module histox.util)</a>
+</li>
+      </ul></li>
+      <li><a href="util.html#histox.util.global_path">global_path() (in module histox.util)</a>
+</li>
+      <li><a href="grad.html#histox.grad.SaliencyMap.gradcam">gradcam() (histox.grad.SaliencyMap method)</a>
+</li>
+      <li><a href="grad.html#histox.grad.grayscale">grayscale() (in module histox.grad)</a>
+</li>
+      <li><a href="stats.html#histox.stats.group_reduce">group_reduce() (in module histox.stats)</a>
+</li>
+      <li><a href="grad.html#histox.grad.SaliencyMap.guided_integrated_gradients">guided_integrated_gradients() (histox.grad.SaliencyMap method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#Dataset.harmonize_labels">harmonize_labels() (in module Dataset)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.has_live_viewer">has_live_viewer() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="slide.html#WSI.has_rois">has_rois() (in module WSI)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.has_uq">has_uq() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.header">header() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.header_with_buttons">header_with_buttons() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="heatmap.html#histox.Heatmap">Heatmap (class in histox)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.highlighted">highlighted() (histox.studio.Studio method)</a>
+</li>
+      <li>
+    histox.gan
+
+      <ul>
+        <li><a href="gan.html#module-histox.gan">module</a>
+</li>
+      </ul></li>
+      <li>
+    histox.gan.utils
+
+      <ul>
+        <li><a href="gan.html#module-histox.gan.utils">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    histox.grad
+
+      <ul>
+        <li><a href="grad.html#module-histox.grad">module</a>
+</li>
+      </ul></li>
+      <li>
+    histox.io.tensorflow
+
+      <ul>
+        <li><a href="io_tensorflow.html#module-histox.io.tensorflow">module</a>
+</li>
+      </ul></li>
+      <li>
+    histox.io.torch
+
+      <ul>
+        <li><a href="io_torch.html#module-histox.io.torch">module</a>
+</li>
+      </ul></li>
+      <li>
+    histox.studio
+
+      <ul>
+        <li><a href="studio_module.html#module-histox.studio">module</a>
+</li>
+      </ul></li>
+      <li>
+    histox.util
+
+      <ul>
+        <li><a href="util.html#module-histox.util">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.ImgBatchSpeedColumn">ImgBatchSpeedColumn (class in histox.util)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.increase_tile_zoom">increase_tile_zoom() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="io_torch.html#histox.io.torch.IndexedInterleaver">IndexedInterleaver (class in histox.io.torch)</a>
+</li>
+      <li><a href="util.html#histox.util.infer_stride">infer_stride() (in module histox.util)</a>
+</li>
+      <li><a href="grad.html#histox.grad.inferno">inferno() (in module histox.grad)</a>
+</li>
+      <li><a href="mil_module.html#mil.MILModelConfig.inspect_batch">inspect_batch() (in module mil.MILModelConfig)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.TrainerConfig.inspect_batch">(in module mil.TrainerConfig)</a>
+</li>
+      </ul></li>
+      <li><a href="grad.html#histox.grad.SaliencyMap.integrated_gradients">integrated_gradients() (histox.grad.SaliencyMap method)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.interleave">interleave() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="io_torch.html#histox.io.torch.InterleaveIterator">InterleaveIterator (class in histox.io.torch)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.interpolate_and_predict">interpolate_and_predict() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="mil_module.html#mil.MILModelConfig.is_classification">is_classification() (in module mil.MILModelConfig)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.TrainerConfig.is_classification">(in module mil.TrainerConfig)</a>
+</li>
+      </ul></li>
+      <li><a href="dataset.html#Dataset.is_float">is_float() (in module Dataset)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.is_model">is_model() (in module histox.util)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.is_mouse_down">is_mouse_down() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.is_mouse_released">is_mouse_released() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="util.html#histox.util.is_project">is_project() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.is_simclr_model_path">is_simclr_model_path() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.is_slide">is_slide() (in module histox.util)</a>
+</li>
+      <li><a href="model.html#histox.model.is_tensorflow_model">is_tensorflow_model() (in module histox.model)</a>
+</li>
+      <li><a href="util.html#histox.util.is_tensorflow_model_path">is_tensorflow_model_path() (in module histox.util)</a>
+</li>
+      <li><a href="model.html#histox.model.is_tensorflow_tensor">is_tensorflow_tensor() (in module histox.model)</a>
+</li>
+      <li><a href="util.html#histox.util.is_tile_size_compatible">is_tile_size_compatible() (in module histox.util)</a>
+</li>
+      <li><a href="model.html#histox.model.is_torch_model">is_torch_model() (in module histox.model)</a>
+</li>
+      <li><a href="util.html#histox.util.is_torch_model_path">is_torch_model_path() (in module histox.util)</a>
+</li>
+      <li><a href="model.html#histox.model.is_torch_tensor">is_torch_tensor() (in module histox.model)</a>
+</li>
+      <li><a href="util.html#histox.util.is_uq_model">is_uq_model() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.isnumeric">isnumeric() (in module histox.util)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.join_tfrecord">join_tfrecord() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.jpeg_to_jpeg">jpeg_to_jpeg() (in module norm.StainNormalizer)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="norm.html#norm.StainNormalizer.jpeg_to_rgb">jpeg_to_rgb() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="mil_module.html#mil.TrainerConfig.json_dump">json_dump() (in module mil.TrainerConfig)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#Dataset.kfold_split">kfold_split() (in module Dataset)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="slidemap.html#SlideMap.label">label() (in module SlideMap)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.label_by_preds">label_by_preds() (in module SlideMap)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.label_by_slide">label_by_slide() (in module SlideMap)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.label_by_uncertainty">label_by_uncertainty() (in module SlideMap)</a>
+</li>
+      <li><a href="util.html#histox.util.LabeledMofNCompleteColumn">LabeledMofNCompleteColumn (class in histox.util)</a>
+</li>
+      <li><a href="dataset.html#Dataset.labels">labels() (in module Dataset)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.large_image_button">large_image_button() (histox.studio.Sidebar method)</a>
+</li>
+      <li><a href="model_torch.html#model.torch.lazy_load_pretrained">lazy_load_pretrained() (in module model.torch)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.linear_interpolate">linear_interpolate() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="data_api.html#histox.data.list_datasets">list_datasets() (in module histox.data)</a>
+</li>
+      <li><a href="model.html#histox.model.list_extractors">list_extractors() (in module histox.model)</a>
+</li>
+      <li><a href="slide_qc.html#histox.slide.qc.Load">Load (class in histox.slide.qc)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.load">load() (in module Heatmap)</a>
+
+      <ul>
+        <li><a href="model.html#histox.model.load">(in module histox.model)</a>
+</li>
+        <li><a href="model_tensorflow.html#model.tensorflow.load">(in module model.tensorflow)</a>
+</li>
+        <li><a href="model_torch.html#model.torch.load">(in module model.torch)</a>
+</li>
+        <li><a href="model.html#model.Trainer.load">(in module model.Trainer)</a>
+</li>
+        <li><a href="simclr.html#simclr.load">(in module simclr)</a>
+</li>
+        <li><a href="slidemap.html#SlideMap.load">(in module SlideMap)</a>
+</li>
+      </ul></li>
+      <li><a href="dataset.html#Dataset.load_annotations">load_annotations() (in module Dataset)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset_features.html#DatasetFeatures.load_cache">load_cache() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.load_coordinates">load_coordinates() (in module SlideMap)</a>
+</li>
+      <li><a href="slide.html#WSI.load_csv_roi">load_csv_roi() (in module WSI)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.load_heatmap">load_heatmap() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="dataset.html#Dataset.load_indices">load_indices() (in module Dataset)</a>
+</li>
+      <li><a href="util.html#histox.util.load_json">load_json() (in module histox.util)</a>
+</li>
+      <li><a href="slide.html#WSI.load_json_roi">load_json_roi() (in module WSI)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.load_model">load_model() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="simclr.html#simclr.load_model_args">load_model_args() (in module simclr)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.load_npz">load_npz() (in module Heatmap)</a>
+</li>
+      <li><a href="util.html#histox.util.load_predictions">load_predictions() (in module histox.util)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.load_project">load_project() (histox.studio.Studio method)</a>
+
+      <ul>
+        <li><a href="histox.html#histox.load_project">(in module histox)</a>
+</li>
+      </ul></li>
+      <li><a href="slide.html#WSI.load_roi_array">load_roi_array() (in module WSI)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.load_slide">load_slide() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.load_umap">load_umap() (in module SlideMap)</a>
+</li>
+      <li><a href="util.html#histox.util.location_heatmap">location_heatmap() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.log_manifest">log_manifest() (in module histox.util)</a>
+
+      <ul>
+        <li><a href="model_tensorflow.html#model.tensorflow.log_manifest">(in module model.tensorflow)</a>
+</li>
+        <li><a href="model_torch.html#model.torch.log_manifest">(in module model.torch)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.make_dir">make_dir() (in module histox.util)</a>
+</li>
+      <li><a href="dataset.html#Dataset.manifest">manifest() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.manifest_histogram">manifest_histogram() (in module Dataset)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.map_activations">map_activations() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.map_predictions">map_predictions() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="util.html#histox.util.map_values_to_slide_grid">map_values_to_slide_grid() (in module histox.util)</a>
+</li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.mask_to_image">mask_to_image() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="util.html#histox.util.md5">md5() (in module histox.util)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.merge">merge() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DatasetRecord.metadata_only">metadata_only (histox.data.DatasetRecord property)</a>
+</li>
+      <li><a href="stats.html#histox.stats.metrics_from_dataset">metrics_from_dataset() (in module histox.stats)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.mil_config">mil_config() (in module histox.mil)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.MILModelConfig">MILModelConfig (class in histox.mil)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.model">model (histox.studio.Studio property)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.model_exists">model_exists() (in module biscuit.utils)</a>
+</li>
+      <li><a href="model_params.html#ModelParams.model_type">model_type() (in module ModelParams)</a>
+</li>
+      <li><a href="model_params.html#histox.ModelParams">ModelParams (class in histox)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    module
+
+      <ul>
+        <li><a href="gan.html#module-histox.gan">histox.gan</a>
+</li>
+        <li><a href="gan.html#module-histox.gan.utils">histox.gan.utils</a>
+</li>
+        <li><a href="grad.html#module-histox.grad">histox.grad</a>
+</li>
+        <li><a href="io_tensorflow.html#module-histox.io.tensorflow">histox.io.tensorflow</a>
+</li>
+        <li><a href="io_torch.html#module-histox.io.torch">histox.io.torch</a>
+</li>
+        <li><a href="studio_module.html#module-histox.studio">histox.studio</a>
+</li>
+        <li><a href="util.html#module-histox.util">histox.util</a>
+</li>
+      </ul></li>
+      <li><a href="mosaic.html#histox.Mosaic">Mosaic (class in histox)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.mouse_input_is_suspended">mouse_input_is_suspended() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.mouse_is_over_viewer">mouse_is_over_viewer (histox.studio.Studio property)</a>
+</li>
+      <li><a href="slide.html#WSI.mpp_to_dim">mpp_to_dim() (in module WSI)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.multi_image_example">multi_image_example() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="grad.html#histox.grad.multi_plot">multi_plot() (in module histox.grad)</a>
+</li>
+      <li><a href="util.html#histox.util.multi_warn">multi_warn() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.MultiprocessProgress">MultiprocessProgress (class in histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.MultiprocessProgressTracker">MultiprocessProgressTracker (class in histox.util)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="stats.html#histox.stats.name_columns">name_columns() (in module histox.stats)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.hp.nature2022">nature2022() (in module biscuit.hp)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="slidemap.html#SlideMap.neighbors">neighbors() (in module SlideMap)</a>
+</li>
+      <li><a href="gan.html#histox.gan.utils.noise_tensor">noise_tensor() (in module histox.gan.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="studio_module.html#histox.studio.Studio.offset_x">offset_x (histox.studio.Studio property)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.offset_x_pixels">offset_x_pixels (histox.studio.Studio property)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.offset_y">offset_y (histox.studio.Studio property)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.offset_y_pixels">offset_y_pixels (histox.studio.Studio property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="grad.html#histox.grad.oranges">oranges() (in module histox.grad)</a>
+</li>
+      <li><a href="slide_qc.html#histox.slide.qc.Otsu">Otsu (class in histox.slide.qc)</a>
+</li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.outline_to_image">outline_to_image() (in module cellseg.Segmentation)</a>
+</li>
+      <li><a href="grad.html#histox.grad.overlay">overlay() (in module histox.grad)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="studio_module.html#histox.studio.Studio.P">P (histox.studio.Studio property)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.parser_from_labels">parser_from_labels() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="util.html#histox.util.path_input">path_input() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.path_to_ext">path_to_ext() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.path_to_name">path_to_name() (in module histox.util)</a>
+</li>
+      <li><a href="dataset.html#Dataset.patients">patients() (in module Dataset)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadPlan.pending_count">pending_count (histox.data.DownloadPlan property)</a>
+</li>
+      <li><a href="data_api.html#histox.data.plan_download">plan_download() (in module histox.data)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.plot">plot() (in module Heatmap)</a>
+
+      <ul>
+        <li><a href="mosaic.html#Mosaic.plot">(in module Mosaic)</a>
+</li>
+        <li><a href="slidemap.html#SlideMap.plot">(in module SlideMap)</a>
+</li>
+      </ul></li>
+      <li><a href="slidemap.html#SlideMap.plot_3d">plot_3d() (in module SlideMap)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.plot_comparison">plot_comparison() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.plot_thumbnail">plot_thumbnail() (in module Heatmap)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.threshold.plot_uncertainty">plot_uncertainty() (in module biscuit.threshold)</a>
+
+      <ul>
+        <li><a href="heatmap.html#Heatmap.plot_uncertainty">(in module Heatmap)</a>
+</li>
+      </ul></li>
+      <li><a href="biscuit.html#biscuit.Experiment.plot_uq_calibration">plot_uq_calibration() (in module biscuit.Experiment)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.plot_with_logit_cmap">plot_with_logit_cmap() (in module Heatmap)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.png_to_png">png_to_png() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.png_to_rgb">png_to_rgb() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="mosaic.html#Mosaic.points_at_grid_index">points_at_grid_index() (in module Mosaic)</a>
+</li>
+      <li><a href="mil_module.html#mil.MILModelConfig.predict">predict() (in module mil.MILModelConfig)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.TrainerConfig.predict">(in module mil.TrainerConfig)</a>
+</li>
+        <li><a href="model.html#model.Trainer.predict">(in module model.Trainer)</a>
+</li>
+        <li><a href="project.html#Project.predict">(in module Project)</a>
+</li>
+        <li><a href="slide.html#slide.predict">(in module slide)</a>
+</li>
+        <li><a href="slide.html#WSI.predict">(in module WSI)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="stats.html#histox.stats.predict_dataset">predict_dataset() (in module histox.stats)</a>
+</li>
+      <li><a href="project.html#Project.predict_ensemble">predict_ensemble() (in module Project)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.predict_from_bags">predict_from_bags() (in module histox.mil)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.predict_from_multimodal_bags">predict_from_multimodal_bags() (in module histox.mil)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.predict_mil">predict_mil() (in module histox.mil)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.predict_multimodal_mil">predict_multimodal_mil() (in module histox.mil)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.predict_slide">predict_slide() (in module histox.mil)</a>
+</li>
+      <li><a href="project.html#Project.predict_wsi">predict_wsi() (in module Project)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.prediction_metrics">prediction_metrics() (in module biscuit.utils)</a>
+</li>
+      <li><a href="mil_module.html#mil.TrainerConfig.prepare_training">prepare_training() (in module mil.TrainerConfig)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.preprocess_uint8">preprocess_uint8() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadPlan.present_count">present_count (histox.data.DownloadPlan property)</a>
+</li>
+      <li><a href="slide.html#WSI.preview">preview() (in module WSI)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.print_error">print_error() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.print_tfrecord">print_tfrecord() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.threshold.process_group_predictions">process_group_predictions() (in module biscuit.threshold)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.process_image">process_image() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="slide.html#WSI.process_rois">process_rois() (in module WSI)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.threshold.process_tile_predictions">process_tile_predictions() (in module biscuit.threshold)</a>
+</li>
+      <li><a href="project.html#histox.Project">Project (class in histox)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.provenance_path">provenance_path (histox.data.DownloadResult attribute)</a>
+</li>
+      <li><a href="data_api.html#histox.data.ProviderRecord">ProviderRecord (class in histox.data)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="slide.html#WSI.qc">qc() (in module WSI)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="io.html#histox.io.read_and_return_record">read_and_return_record() (in module histox.io)</a>
+
+      <ul>
+        <li><a href="io_tensorflow.html#histox.io.tensorflow.read_and_return_record">(in module histox.io.tensorflow)</a>
+</li>
+      </ul></li>
+      <li><a href="util.html#histox.util.read_annotations">read_annotations() (in module histox.util)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.read_group_predictions">read_group_predictions() (in module biscuit.utils)</a>
+</li>
+      <li><a href="model.html#histox.model.read_hp_sweep">read_hp_sweep() (in module histox.model)</a>
+</li>
+      <li><a href="dataset.html#Dataset.read_tfrecord_by_location">read_tfrecord_by_location() (in module Dataset)</a>
+</li>
+      <li><a href="model.html#histox.model.rebuild_extractor">rebuild_extractor() (in module histox.model)</a>
+</li>
+      <li><a href="dataset.html#Dataset.rebuild_index">rebuild_index() (in module Dataset)</a>
+</li>
+      <li><a href="model.html#histox.model.RegressionTrainer">RegressionTrainer (class in histox.model)</a>
+</li>
+      <li><a href="util.html#histox.util.relative_path">relative_path() (in module histox.util)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.reload_model">reload_model() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.reload_viewer">reload_viewer() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.reload_wsi">reload_wsi() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="dataset.html#Dataset.remove_filter">remove_filter() (in module Dataset)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.remove_from_render_pipeline">remove_from_render_pipeline() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="slide.html#WSI.remove_qc">remove_qc() (in module WSI)</a>
+</li>
+      <li><a href="slide.html#WSI.remove_roi">remove_roi() (in module WSI)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.remove_slide">remove_slide() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.remove_widget">remove_widget() (histox.studio.Sidebar method)</a>
+
+      <ul>
+        <li><a href="studio_module.html#histox.studio.Studio.remove_widget">(histox.studio.Studio method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.ImgBatchSpeedColumn.render">render() (histox.util.ImgBatchSpeedColumn method)</a>
+
+      <ul>
+        <li><a href="util.html#histox.util.LabeledMofNCompleteColumn.render">(histox.util.LabeledMofNCompleteColumn method)</a>
+</li>
+        <li><a href="util.html#histox.util.TileExtractionSpeedColumn.render">(histox.util.TileExtractionSpeedColumn method)</a>
+</li>
+      </ul></li>
+      <li><a href="studio_module.html#histox.studio.Studio.reset_background">reset_background() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.reset_tile_zoom">reset_tile_zoom() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="dataset.html#Dataset.resize_tfrecords">resize_tfrecords() (in module Dataset)</a>
+</li>
+      <li><a href="data_api.html#histox.data.resolve_cache_root">resolve_cache_root() (in module histox.data)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.Experiment.results">results() (in module biscuit.Experiment)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.resume_keyboard_input">resume_keyboard_input() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.resume_mouse_input_handling">resume_mouse_input_handling() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.resumed_count">resumed_count (histox.data.DownloadResult property)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.resumed_files">resumed_files (histox.data.DownloadResult attribute)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.reused_count">reused_count (histox.data.DownloadResult property)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadResult.reused_files">reused_files (histox.data.DownloadResult attribute)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.rgb_to_rgb">rgb_to_rgb() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="dataset.html#Dataset.rois">rois() (in module Dataset)</a>
+</li>
+      <li><a href="mil_module.html#mil.MILModelConfig.run_metrics">run_metrics() (in module mil.MILModelConfig)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.TrainerConfig.run_metrics">(in module mil.TrainerConfig)</a>
+</li>
+      </ul></li>
+      <li><a href="simclr.html#simclr.run_simclr">run_simclr() (in module simclr)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="grad.html#histox.grad.saliency_map_comparison">saliency_map_comparison() (in module histox.grad)</a>
+</li>
+      <li><a href="grad.html#histox.grad.SaliencyMap">SaliencyMap (class in histox.grad)</a>
+</li>
+      <li><a href="slide_qc.html#histox.slide.qc.Save">Save (class in histox.slide.qc)</a>
+</li>
+      <li><a href="histox_cellseg.html#cellseg.Segmentation.save">save() (in module cellseg.Segmentation)</a>
+
+      <ul>
+        <li><a href="heatmap.html#Heatmap.save">(in module Heatmap)</a>
+</li>
+        <li><a href="mosaic.html#Mosaic.save">(in module Mosaic)</a>
+</li>
+        <li><a href="project.html#Project.save">(in module Project)</a>
+</li>
+        <li><a href="slidemap.html#SlideMap.save">(in module SlideMap)</a>
+</li>
+      </ul></li>
+      <li><a href="slidemap.html#SlideMap.save_3d">save_3d() (in module SlideMap)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.save_cache">save_cache() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.save_coordinates">save_coordinates() (in module SlideMap)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.save_encoder">save_encoder() (in module SlideMap)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.save_example_tiles">save_example_tiles() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.save_npz">save_npz() (in module Heatmap)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.save_plot">save_plot() (in module SlideMap)</a>
+</li>
+      <li><a href="mosaic.html#Mosaic.save_report">save_report() (in module Mosaic)</a>
+</li>
+      <li><a href="slidemap.html#SlideMap.save_umap">save_umap() (in module SlideMap)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.seed_search">seed_search() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="histox_cellseg.html#histox.cellseg.segment_slide">segment_slide() (in module histox.cellseg)</a>
+</li>
+      <li><a href="histox_cellseg.html#histox.cellseg.Segmentation">Segmentation (class in histox.cellseg)</a>
+</li>
+      <li><a href="io.html#histox.io.serialized_record">serialized_record() (in module histox.io)</a>
+
+      <ul>
+        <li><a href="io_tensorflow.html#histox.io.tensorflow.serialized_record">(in module histox.io.tensorflow)</a>
+</li>
+      </ul></li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.set_classifier">set_classifier() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.set_fit">set_fit() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.set_grid_overlay">set_grid_overlay() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="util.html#histox.util.set_ignore_sigint">set_ignore_sigint() (in module histox.util)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.set_message">set_message() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.set_overlay">set_overlay() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.set_prediction_message">set_prediction_message() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.set_status_message">set_status_message() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.set_viewer">set_viewer() (histox.studio.Studio method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="histox.html#histox.setLoggingLevel">setLoggingLevel() (in module histox)</a>
+
+      <ul>
+        <li><a href="util.html#histox.util.setLoggingLevel">(in module histox.util)</a>
+</li>
+      </ul></li>
+      <li><a href="slide.html#WSI.show_alignment">show_alignment() (in module WSI)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.show_overlay">show_overlay (histox.studio.Studio property)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.shuffle_tfrecord">shuffle_tfrecord() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.shuffle_tfrecords_by_dir">shuffle_tfrecords_by_dir() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar">Sidebar (class in histox.studio)</a>
+</li>
+      <li><a href="simclr.html#simclr.SimCLR">SimCLR (in module simclr)</a>
+</li>
+      <li><a href="simclr.html#simclr.SimCLR_Args">SimCLR_Args (in module simclr)</a>
+</li>
+      <li><a href="dataset.html#Dataset.slide_manifest">slide_manifest() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.slide_paths">slide_paths() (in module Dataset)</a>
+</li>
+      <li><a href="slidemap.html#histox.SlideMap">SlideMap (class in histox)</a>
+</li>
+      <li><a href="dataset.html#Dataset.slides">slides() (in module Dataset)</a>
+</li>
+      <li><a href="project.html#Project.smac_search">smac_search() (in module Project)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.small_button">small_button() (histox.studio.Sidebar method)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.softmax_mean">softmax_mean() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.softmax_percent">softmax_percent() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.softmax_predict">softmax_predict() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="dataset.html#Dataset.split">split() (in module Dataset)</a>
+</li>
+      <li><a href="util.html#histox.util.split_list">split_list() (in module histox.util)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.split_tfrecord">split_tfrecord() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="dataset.html#Dataset.split_tfrecords_by_roi">split_tfrecords_by_roi() (in module Dataset)</a>
+</li>
+      <li><a href="slide.html#WSI.square_thumb">square_thumb() (in module WSI)</a>
+</li>
+      <li><a href="norm.html#histox.norm.StainNormalizer">StainNormalizer (class in histox.norm)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.stats">stats() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="slide_qc.html#histox.slide.qc.StridedDL">StridedDL (class in histox.slide.qc)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio">Studio (class in histox.studio)</a>
+</li>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator">StyleGAN2Interpolator (class in histox.gan)</a>
+</li>
+      <li><a href="dataset.html#Dataset.summary">summary() (in module Dataset)</a>
+</li>
+      <li><a href="model.html#histox.model.SurvivalTrainer">SurvivalTrainer (class in histox.model)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.suspend_keyboard_input">suspend_keyboard_input() (histox.studio.Studio method)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.suspend_mouse_input_handling">suspend_mouse_input_handling() (histox.studio.Studio method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#Dataset.tensorflow">tensorflow() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="slide.html#WSI.tensorflow">(in module WSI)</a>
+</li>
+      </ul></li>
+      <li><a href="norm.html#norm.StainNormalizer.tf_to_rgb">tf_to_rgb() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.tf_to_tf">tf_to_tf() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.tfrecord_example">tfrecord_example() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="io.html#histox.io.tfrecord_has_locations">tfrecord_has_locations() (in module histox.io)</a>
+</li>
+      <li><a href="dataset.html#Dataset.tfrecord_heatmap">tfrecord_heatmap() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="util.html#histox.util.tfrecord_heatmap">(in module histox.util)</a>
+</li>
+      </ul></li>
+      <li><a href="dataset.html#Dataset.tfrecord_report">tfrecord_report() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.tfrecords">tfrecords() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.tfrecords_by_subfolder">tfrecords_by_subfolder() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.tfrecords_folders">tfrecords_folders() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.tfrecords_from_tiles">tfrecords_from_tiles() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.tfrecords_have_locations">tfrecords_have_locations() (in module Dataset)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Sidebar.theme">theme (histox.studio.Sidebar property)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.Experiment.thresholds_from_nested_cv">thresholds_from_nested_cv() (in module biscuit.Experiment)</a>
+</li>
+      <li><a href="slide.html#WSI.thumb">thumb() (in module WSI)</a>
+</li>
+      <li><a href="dataset.html#Dataset.thumbnails">thumbnails() (in module Dataset)</a>
+</li>
+      <li><a href="studio_module.html#histox.studio.Studio.tile_preview_enabled">tile_preview_enabled (histox.studio.Studio property)</a>
+</li>
+      <li><a href="util.html#histox.util.tile_size_label">tile_size_label() (in module histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.TileExtractionProgress">TileExtractionProgress (class in histox.util)</a>
+</li>
+      <li><a href="util.html#histox.util.TileExtractionSpeedColumn">TileExtractionSpeedColumn (class in histox.util)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.to_csv">to_csv() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.to_df">to_df() (in module DatasetFeatures)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data_api.html#histox.data.DownloadPlan.to_dict">to_dict() (histox.data.DownloadPlan method)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.MILModelConfig.to_dict">(in module mil.MILModelConfig)</a>
+</li>
+        <li><a href="mil_module.html#mil.TrainerConfig.to_dict">(in module mil.TrainerConfig)</a>
+</li>
+        <li><a href="model_params.html#ModelParams.to_dict">(in module ModelParams)</a>
+</li>
+      </ul></li>
+      <li><a href="util.html#histox.util.to_onehot">to_onehot() (in module histox.util)</a>
+</li>
+      <li><a href="dataset_features.html#DatasetFeatures.to_torch">to_torch() (in module DatasetFeatures)</a>
+</li>
+      <li><a href="dataset.html#Dataset.torch">torch() (in module Dataset)</a>
+
+      <ul>
+        <li><a href="slide.html#WSI.torch">(in module WSI)</a>
+</li>
+      </ul></li>
+      <li><a href="norm.html#norm.StainNormalizer.torch_to_torch">torch_to_torch() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadPlan.total_size_bytes">total_size_bytes (histox.data.DownloadPlan property)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.Experiment.train">train() (in module biscuit.Experiment)</a>
+
+      <ul>
+        <li><a href="mil_module.html#mil.TrainerConfig.train">(in module mil.TrainerConfig)</a>
+</li>
+        <li><a href="model.html#model.Trainer.train">(in module model.Trainer)</a>
+</li>
+        <li><a href="project.html#Project.train">(in module Project)</a>
+</li>
+      </ul></li>
+      <li><a href="project.html#Project.train_ensemble">train_ensemble() (in module Project)</a>
+</li>
+      <li><a href="mil_module.html#histox.mil.train_mil">train_mil() (in module histox.mil)</a>
+
+      <ul>
+        <li><a href="project.html#Project.train_mil">(in module Project)</a>
+</li>
+      </ul></li>
+      <li><a href="biscuit.html#biscuit.Experiment.train_nested_cv">train_nested_cv() (in module biscuit.Experiment)</a>
+</li>
+      <li><a href="project.html#Project.train_simclr">train_simclr() (in module Project)</a>
+</li>
+      <li><a href="model.html#histox.model.Trainer">Trainer (class in histox.model)</a>
+</li>
+      <li><a href="mil_module.html#mil.TrainerConfig">TrainerConfig (in module mil)</a>
+</li>
+      <li><a href="norm.html#norm.StainNormalizer.transform">transform() (in module norm.StainNormalizer)</a>
+</li>
+      <li><a href="io_tensorflow.html#histox.io.tensorflow.transform_tfrecord">transform_tfrecord() (in module histox.io.tensorflow)</a>
+</li>
+      <li><a href="dataset.html#Dataset.transform_tfrecords">transform_tfrecords() (in module Dataset)</a>
+</li>
+      <li><a href="biscuit.html#biscuit.utils.truncate_colormap">truncate_colormap() (in module biscuit.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="slidemap.html#SlideMap.umap_transform">umap_transform() (in module SlideMap)</a>
+</li>
+      <li><a href="dataset.html#Dataset.unclip">unclip() (in module Dataset)</a>
+</li>
+      <li><a href="data_api.html#histox.data.DownloadPlan.unknown_size_count">unknown_size_count (histox.data.DownloadPlan property)</a>
+</li>
+      <li><a href="model_tensorflow.html#model.tensorflow.unwrap">unwrap() (in module model.tensorflow)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#Dataset.update_annotations_with_slidenames">update_annotations_with_slidenames() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.update_manifest">update_manifest() (in module Dataset)</a>
+</li>
+      <li><a href="io.html#histox.io.update_manifest_at_dir">update_manifest_at_dir() (in module histox.io)</a>
+</li>
+      <li><a href="util.html#histox.util.update_results_log">update_results_log() (in module histox.util)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model_params.html#ModelParams.validate">validate() (in module ModelParams)</a>
+</li>
+      <li><a href="util.html#histox.util.ValidJSONEncoder">ValidJSONEncoder (class in histox.util)</a>
+</li>
+      <li><a href="grad.html#histox.grad.SaliencyMap.vanilla">vanilla() (histox.grad.SaliencyMap method)</a>
+</li>
+      <li><a href="slide.html#WSI.verify_alignment">verify_alignment() (in module WSI)</a>
+</li>
+      <li><a href="dataset.html#Dataset.verify_annotations_slides">verify_annotations_slides() (in module Dataset)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#Dataset.verify_img_format">verify_img_format() (in module Dataset)</a>
+</li>
+      <li><a href="dataset.html#Dataset.verify_slide_names">verify_slide_names() (in module Dataset)</a>
+</li>
+      <li><a href="heatmap.html#Heatmap.view">view() (in module Heatmap)</a>
+
+      <ul>
+        <li><a href="mosaic.html#Mosaic.view">(in module Mosaic)</a>
+</li>
+        <li><a href="slide.html#WSI.view">(in module WSI)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.write_json">write_json() (in module histox.util)</a>
+</li>
+      <li><a href="io.html#histox.io.write_tfrecords_merge">write_tfrecords_merge() (in module histox.io)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="io.html#histox.io.write_tfrecords_multi">write_tfrecords_multi() (in module histox.io)</a>
+</li>
+      <li><a href="io.html#histox.io.write_tfrecords_single">write_tfrecords_single() (in module histox.io)</a>
+</li>
+      <li><a href="slide.html#histox.slide.WSI">WSI (class in histox.slide)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="grad.html#histox.grad.SaliencyMap.xrai">xrai() (histox.grad.SaliencyMap method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="grad.html#histox.grad.SaliencyMap.xrai_fast">xrai_fast() (histox.grad.SaliencyMap method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="util.html#histox.util.yes_no_input">yes_no_input() (in module histox.util)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gan.html#histox.gan.StyleGAN2Interpolator.z">z() (histox.gan.StyleGAN2Interpolator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+</div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="histox-footer">
+  <div class="histox-footer__inner">
+    <p>HistoX · PyTorch-first deep pathology</p>
+    <nav aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Docs</a>
+      <a href="tutorials.html">Tutorials</a>
+      <a href="https://github.com/leicaohmu/histox">GitHub</a>
+      <a href="https://pypi.org/project/histox/">PyPI</a>
+    </nav>
+    <p class="histox-footer__meta">© 2026, histox team. Built with Sphinx.</p>
+  </div>
+</footer>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, histox team.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  <script type="application/ld+json">
+    {
+       "@context": "https://schema.org",
+       "@type": "Article",
+       "name": "Index",
+       "headline": "Index",
+       "description": "PyTorch Documentation. Explore PyTorch, an open-source machine learning library that accelerates the path from research prototyping to production deployment.",
+       "url": "/genindex.html",
+       "articleBody": "",
+       "author": {
+         "@type": "Organization",
+         "name": "PyTorch Contributors",
+         "url": "https://pytorch.org"
+       },
+       "image": "https://pytorch.org/docs/stable/_static/img/pytorch_seo.png",
+       "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "/genindex.html"
+       },
+       "datePublished": "2023-01-01T00:00:00Z",
+       "dateModified": "2023-01-01T00:00:00Z"
+     }
+ </script>
+  <script>
+    // Tutorials Call to action event tracking
+    $("[data-behavior='call-to-action-event']").on('click', function () {
+      fbq('trackCustom', "Download", {
+        tutorialTitle: $('h1:first').text(),
+        downloadLink: this.href,
+        tutorialLink: window.location.href,
+        downloadTitle: $(this).attr("data-response")
+      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': $(this).attr("data-response"),
+          'event_label': $("h1").first().text(),
+          'tutorial_link': window.location.href
+        });
+      }
+    });
+  </script>
+  
+  </body>
+</html>

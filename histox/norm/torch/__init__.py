@@ -117,7 +117,7 @@ class TorchStainNormalizer(StainNormalizer):
 
         Args:
             arg1: (Dataset, np.ndarray, str): Target to fit. May be a numpy
-                image array (uint8), path to an image, or a Slideflow Dataset.
+                image array (uint8), path to an image, or a HistoX Dataset.
                 If a Dataset is provided, will average fit values across
                 all images in the dataset.
             batch_size (int, optional): Batch size during fitting, if fitting

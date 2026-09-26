@@ -24,9 +24,9 @@ Steps to reproduce the behavior:
 ## Environment:
 <!-- (please complete the following information) -->
 
- - Slideflow Version (e.g., 1.0):
+ - HistoX Version (e.g., 1.0):
  - OS (e.g., Ubuntu):
- - How you installed Slideflow (`pip`, source):
+ - How you installed HistoX (`pip`, source):
  - Python version:
  - CUDA/cuDNN version:
  - GPU models and configuration:

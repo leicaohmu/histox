@@ -1,17 +1,17 @@
-.. slideflow documentation master file
+.. histox documentation master file
 
 .. figure:: https://i.imgur.com/YrsKN4I.jpeg
 
 
 
-Slideflow Documentation
+HistoX Documentation
 =======================
 
-Slideflow is a Python package that provides a unified API for building and testing deep learning models for histopathology, supporting both Tensorflow/Keras and PyTorch.
+HistoX is a Python package that provides a unified API for building and testing deep learning models for histopathology, supporting both Tensorflow/Keras and PyTorch.
 
-Slideflow includes tools for efficient whole-slide image processing, easy and highly customizable model training with uncertainty quantification (UQ), and a number of functional tools to assist with analysis and interpretability, including predictive heatmaps, mosaic maps, GANs, saliency maps, and more. It is built with both `Tensorflow/Keras <https://www.tensorflow.org/>`_ and `PyTorch <https://pytorch.org>`_ backends, with fully cross-compatible TFRecord data storage.
+HistoX includes tools for efficient whole-slide image processing, easy and highly customizable model training with uncertainty quantification (UQ), and a number of functional tools to assist with analysis and interpretability, including predictive heatmaps, mosaic maps, GANs, saliency maps, and more. It is built with both `Tensorflow/Keras <https://www.tensorflow.org/>`_ and `PyTorch <https://pytorch.org>`_ backends, with fully cross-compatible TFRecord data storage.
 
-This documentation starts with a high-level overview of the pipeline and includes examples of how to perform common tasks using the ``Project`` helper class. We also provide several tutorials with examples of how Slideflow can be used and extended for additional functionality.
+This documentation starts with a high-level overview of the pipeline and includes examples of how to perform common tasks using the ``Project`` helper class. We also provide several tutorials with examples of how HistoX can be used and extended for additional functionality.
 
 .. toctree::
    :maxdepth: 1
@@ -52,7 +52,7 @@ This documentation starts with a high-level overview of the pipeline and include
    :maxdepth: 1
    :caption: API
 
-   slideflow
+   histox
    project
    dataset
    dataset_features
@@ -61,7 +61,7 @@ This documentation starts with a high-level overview of the pipeline and include
    mosaic
    slidemap
    biscuit
-   slideflow_cellseg
+   histox_cellseg
    io
    io_tensorflow
    io_torch

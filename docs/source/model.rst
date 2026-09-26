@@ -13,7 +13,7 @@ hyperparameters.
 .. note::
     In order to support both Tensorflow and PyTorch backends, the :mod:`histox.model` module will import either
     :mod:`histox.model.tensorflow` or :mod:`histox.model.torch` according to the currently active backend,
-    indicated by the environmental variable ``SF_BACKEND``.
+    indicated by the environmental variable ``HX_BACKEND``.
 
 See :ref:`training` for a detailed look at how to train models.
 

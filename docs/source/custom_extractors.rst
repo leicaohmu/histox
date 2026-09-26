@@ -3,7 +3,7 @@
 Custom Feature Extractors
 =========================
 
-Slideflow includes several :ref:`pretrained feature extractors <mil>` for converting image tiles into feature vectors as well as tools to assist with building your own feature extractor. In this note, we'll walk through the process of building a custom feature extractor from both a PyTorch and Tensorflow model.
+HistoX includes several :ref:`pretrained feature extractors <mil>` for converting image tiles into feature vectors as well as tools to assist with building your own feature extractor. In this note, we'll walk through the process of building a custom feature extractor from both a PyTorch and Tensorflow model.
 
 PyTorch
 *******
@@ -43,7 +43,7 @@ Next, the initializer should set the number of features expected to be returned 
 
             self.num_features = 1024
 
-The initializer is also responsible for registering image preprocessing. The image preprocessing transformation, a function which converts a raw ``uint8`` image to a ``float32`` tensor for model input, should be stored in ``self.transform``. If the transformation standardizes the images, then the parameter ``self.preprocess_kwargs`` should be set to ``{'standardize': False}``, indicating that Slideflow should not perform any additional standardization. You can use the class method ``.build_transform()`` to use the standard preprocessing pipeline.
+The initializer is also responsible for registering image preprocessing. The image preprocessing transformation, a function which converts a raw ``uint8`` image to a ``float32`` tensor for model input, should be stored in ``self.transform``. If the transformation standardizes the images, then the parameter ``self.preprocess_kwargs`` should be set to ``{'standardize': False}``, indicating that HistoX should not perform any additional standardization. You can use the class method ``.build_transform()`` to use the standard preprocessing pipeline.
 
 .. code-block:: python
 
@@ -56,7 +56,7 @@ The initializer is also responsible for registering image preprocessing. The ima
 
             # Image preprocessing.
             self.transform = self.build_transform(img_size=256)
-            # Disable Slideflow standardization,
+            # Disable HistoX standardization,
             # as we are standardizing with transforms.Normalize
             self.preprocess_kwargs = {'standardize': False}
 
@@ -94,7 +94,7 @@ The final class should look like this:
 
             # Image preprocessing.
             self.transform = self.build_transform(img_size=256)
-            # Disable Slideflow standardization,
+            # Disable HistoX standardization,
             # as we are standardizing with transforms.Normalize
             self.preprocess_kwargs = {'standardize': False}
 
@@ -122,14 +122,14 @@ You can also generate features across whole-slide images, returning a grid of fe
 .. code-block:: python
 
     >>> myfeatures = MyFeatureExtractor()
-    >>> wsi = sf.WSI('path/to/wsi', tile_px=256, tile_um=302)
+    >>> wsi = hx.WSI('path/to/wsi', tile_px=256, tile_um=302)
     >>> features = myfeatures(wsi)
     >>> features.shape
     (24, 33, 1024)
 
 Finally, the feature extractor can also be used to perform latent space analysis and generate mosaic maps, as described in :ref:`activations`.
 
-Slideflow includes a registration system for keeping track of all available feature extractors. To register your feature extractor, use the :func:`histox.model.extractors.register_torch` decorator.
+HistoX includes a registration system for keeping track of all available feature extractors. To register your feature extractor, use the :func:`histox.model.extractors.register_torch` decorator.
 
 .. code-block:: python
 
@@ -143,8 +143,8 @@ Once registered, a feature extractor can be built by name:
 
 .. code-block:: python
 
-    import slideflow as sf
-    extractor = sf.build_feature_extractor('my_feature_extractor')
+    import histox as hx
+    extractor = hx.build_feature_extractor('my_feature_extractor')
 
 
 Tensorflow
@@ -270,5 +270,5 @@ To register your feature extractor, use the :func:`histox.model.extractors.regis
 
 .. code-block:: python
 
-    import slideflow as sf
-    extractor = sf.build_feature_extractor('my_feature_extractor')
+    import histox as hx
+    extractor = hx.build_feature_extractor('my_feature_extractor')

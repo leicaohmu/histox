@@ -1,6 +1,6 @@
-'''Utility script for executing Slideflow project functions.
+'''Utility script for executing HistoX project functions.
 
-For easier experiment tracking, Slideflow projects include an `actions.py`
+For easier experiment tracking, HistoX projects include an `actions.py`
 file in their root directory, with the following structure:
 
     def main(P):
@@ -30,7 +30,7 @@ Then execute the functions in this file using this `run_project.py` script:
 
     python3 run_project.py -p /path/to/project_folder
 
-This functionality is entirely optional, as Slideflow can also be used as
+This functionality is entirely optional, as HistoX can also be used as
 a regular package in scripts, Jupyter notebooks, or an interactive shell.
 '''
 
