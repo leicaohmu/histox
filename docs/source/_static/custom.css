@@ -570,6 +570,15 @@ body:has(#histox-home) .histox-nav-menu__trigger {
   color: #fff;
   font-size: 0.9375rem;
   font-weight: 500;
+  height: calc(100% - 0.5rem);
+  margin-top: 0.5rem;
+}
+
+/* Optically align compact navigation labels with the larger HistoX wordmark. */
+body:has(#histox-home) .histox-global-nav__direct,
+body:has(#histox-home) .histox-global-nav__install,
+body:has(#histox-home) .histox-global-nav__search {
+  transform: translateY(0.25rem);
 }
 
 body:has(#histox-home) .histox-nav-menu:hover .histox-nav-menu__trigger,
