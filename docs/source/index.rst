@@ -8,42 +8,44 @@ HistoX
        <div class="histox-home__hero-inner">
          <div class="histox-home__hero-copy">
            <p class="histox-home__kicker">Open-source deep pathology</p>
-           <h2>Build with<br>HistoX</h2>
-           <p class="histox-home__lead">A PyTorch-first Python library for whole-slide imaging, public pathology data, model development, evaluation, and interpretation.</p>
+           <h2>Deep pathology,<br>from slides to models.</h2>
+           <p class="histox-home__lead">An open-source Python library for whole-slide imaging, public pathology data, model development, evaluation, and interpretation.</p>
            <div class="histox-home__actions">
-             <a class="histox-button histox-button--primary" href="quickstart.html">Get started</a>
-             <a class="histox-button histox-button--secondary" href="tutorials.html">Explore tutorials</a>
+             <a class="histox-button histox-button--primary" href="api.html">View documentation</a>
+             <a class="histox-button histox-button--secondary" href="tutorials.html">Browse tutorials</a>
            </div>
          </div>
        </div>
      </section>
 
-     <section class="histox-home__start">
-       <div class="histox-home__start-inner">
-         <p><strong>Get Started:</strong> Install HistoX and build your first deep pathology project.</p>
-         <a class="histox-button histox-button--light" href="installation.html">Get started</a>
+     <section class="histox-home__pillars" aria-label="HistoX core modules">
+       <div class="histox-home__pillars-inner">
+         <a href="data.html"><strong>Data</strong><span>Discover and cache public cohorts</span></a>
+         <a href="slide_processing.html"><strong>Whole-slide imaging</strong><span>Read, tile, normalize, and segment</span></a>
+         <a href="training.html"><strong>Models</strong><span>Train classification, MIL, and survival pipelines</span></a>
+         <a href="evaluation.html"><strong>Interpretation</strong><span>Evaluate models and inspect spatial evidence</span></a>
        </div>
      </section>
 
      <section class="histox-home__updates" aria-label="HistoX highlights">
        <div class="histox-home__updates-inner">
          <article>
-           <p class="histox-home__update-label">Data</p>
-           <h2>Use public cohorts without bundling the data</h2>
-           <p>Resolve, verify, and cache research datasets where you choose.</p>
-           <a href="data.html">Explore data tools →</a>
+           <p class="histox-home__update-label">Classification</p>
+           <h2>Learn slide-level phenotypes from tiles and features</h2>
+           <p>Build tile, slide, and MIL classifiers with traceable experiments.</p>
+           <a href="training.html">Explore classification →</a>
          </article>
          <article>
-           <p class="histox-home__update-label">PyTorch-first</p>
-           <h2>Build models with familiar training primitives</h2>
-           <p>Move from tiles and features to MIL, survival, and multimodal tasks.</p>
-           <a href="training.html">Explore model training →</a>
+           <p class="histox-home__update-label">Survival</p>
+           <h2>Model time-to-event outcomes from pathology</h2>
+           <p>Connect learned slide representations with prognosis and clinical endpoints.</p>
+           <a href="methods.html">Explore survival methods →</a>
          </article>
          <article>
-           <p class="histox-home__update-label">Whole-slide imaging</p>
-           <h2>Keep the pathology workflow connected</h2>
-           <p>Read, tile, normalize, segment, evaluate, and interpret in one library.</p>
-           <a href="slide_processing.html">Explore slide processing →</a>
+           <p class="histox-home__update-label">Multimodal &amp; VLM</p>
+           <h2>Connect histology with text and other modalities</h2>
+           <p>Develop vision-language and multimodal research workflows in one project structure.</p>
+           <a href="methods.html">Explore multimodal methods →</a>
          </article>
        </div>
      </section>
@@ -69,12 +71,25 @@ HistoX
            <p>Keep slides, annotations, features, experiments, and model outputs connected without forcing large public datasets into the package or your server.</p>
            <a class="histox-text-link" href="project_setup.html">Set up a project →</a>
          </div>
-         <ol class="histox-home__workflow-steps">
-           <li><strong>Acquire</strong><p>Resolve public datasets and download only what the study needs.</p></li>
-           <li><strong>Prepare</strong><p>Run slide QC, tiling, normalization, and feature extraction.</p></li>
-           <li><strong>Learn</strong><p>Train task-specific PyTorch pipelines with traceable configuration.</p></li>
-           <li><strong>Explain</strong><p>Evaluate, visualize, and export evidence for scientific review.</p></li>
-         </ol>
+         <aside class="histox-home__workflow-code" aria-label="HistoX project example">
+           <div class="histox-home__code-head">
+             <span>project.py</span>
+             <span>Python</span>
+           </div>
+           <pre><code><span class="histox-code-keyword">import</span> histox <span class="histox-code-keyword">as</span> hx
+
+   project = hx.create_project(
+       root=<span class="histox-code-string">"study"</span>,
+       annotations=<span class="histox-code-string">"annotations.csv"</span>,
+       slides=<span class="histox-code-string">"/data/slides"</span>,
+   )
+
+   project.extract_tiles(
+       tile_px=<span class="histox-code-number">256</span>,
+       tile_um=<span class="histox-code-string">"20x"</span>,
+   )</code></pre>
+           <a href="project_setup.html">Open the project guide →</a>
+         </aside>
        </div>
      </section>
 

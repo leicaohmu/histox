@@ -528,14 +528,28 @@ body:has(#histox-home) .navbar-header-items__start {
 }
 
 body:has(#histox-home) .navbar-header-items {
+  align-items: stretch;
+  align-self: stretch;
+  display: flex;
   flex: 0 1 auto;
+  height: 100%;
   margin-left: auto;
   padding-left: 0;
 }
 
 body:has(#histox-home) .navbar-header-items__center {
+  align-items: stretch;
+  align-self: stretch;
+  flex-flow: row nowrap;
+  height: 100%;
   margin-left: auto !important;
   margin-right: 0 !important;
+}
+
+body:has(#histox-home) .navbar-header-items__center > .navbar-item {
+  align-items: stretch;
+  height: 100%;
+  max-height: none;
 }
 
 body:has(#histox-home) .navbar-header-items__end {
@@ -570,15 +584,6 @@ body:has(#histox-home) .histox-nav-menu__trigger {
   color: #fff;
   font-size: 0.9375rem;
   font-weight: 500;
-  height: calc(100% - 0.5rem);
-  margin-top: 0.5rem;
-}
-
-/* Optically align compact navigation labels with the larger HistoX wordmark. */
-body:has(#histox-home) .histox-global-nav__direct,
-body:has(#histox-home) .histox-global-nav__install,
-body:has(#histox-home) .histox-global-nav__search {
-  transform: translateY(0.25rem);
 }
 
 body:has(#histox-home) .histox-nav-menu:hover .histox-nav-menu__trigger,
@@ -673,16 +678,36 @@ body:has(#histox-home) .announcement-banner-link {
 }
 
 .histox-home__hero {
-  background:
-    linear-gradient(90deg, rgb(48 10 69 / 94%) 0%, rgb(71 13 92 / 78%) 48%, rgb(82 20 97 / 46%) 100%),
-    url("pathology-hero.jpg") center 48% / cover no-repeat;
+  background: #2f0b3e;
   color: #fff;
-  min-height: 26rem;
+  isolation: isolate;
+  min-height: 29rem;
   overflow: hidden;
+  position: relative;
+}
+
+.histox-home__hero::before {
+  background:
+    linear-gradient(90deg, rgb(24 6 31 / 95%) 0%, rgb(24 6 31 / 82%) 46%, rgb(24 6 31 / 30%) 100%),
+    url("histox-hero-ai-v2.png") center / cover no-repeat;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.histox-home__hero::after {
+  background: linear-gradient(180deg, rgb(12 2 16 / 5%), rgb(12 2 16 / 22%));
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
 }
 
 .histox-home__hero-inner,
-.histox-home__start-inner,
+.histox-home__pillars-inner,
 .histox-home__updates-inner,
 .histox-home__section-inner,
 .histox-home__resources-inner {
@@ -694,8 +719,80 @@ body:has(#histox-home) .announcement-banner-link {
 .histox-home__hero-inner {
   align-items: center;
   display: flex;
-  min-height: 26rem;
-  padding-block: 3.2rem;
+  min-height: 29rem;
+  padding-block: 4.25rem;
+  position: relative;
+}
+
+.histox-home__hero-copy {
+  max-width: 49rem;
+}
+
+.histox-home__code-head {
+  align-items: center;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  color: #aaa1ad;
+  display: flex;
+  font-size: 0.72rem;
+  font-weight: 650;
+  justify-content: space-between;
+  letter-spacing: 0.055em;
+  padding: 0.85rem 1.15rem;
+  text-transform: uppercase;
+}
+
+.histox-home__workflow-code {
+  background: #171219;
+  border: 1px solid rgb(44 36 47 / 14%);
+  box-shadow: 0 1.4rem 3.5rem rgb(38 28 41 / 14%);
+  color: #f5f0f6;
+  overflow: hidden;
+  width: 100%;
+}
+
+.histox-home__workflow-code pre {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #f7f2f7;
+  font-size: clamp(0.86rem, 1.15vw, 1rem);
+  line-height: 1.75;
+  margin: 0 !important;
+  overflow-x: auto;
+  padding: 1.45rem 1.35rem 1.1rem !important;
+}
+
+.histox-home__workflow-code code {
+  background: transparent !important;
+  color: inherit;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.histox-home__workflow-code > a {
+  border-top: 1px solid rgb(255 255 255 / 10%);
+  color: #ff8a6d;
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 700;
+  padding: 0.9rem 1.35rem 1rem;
+  text-decoration: none;
+}
+
+.histox-home__workflow-code > a:hover,
+.histox-home__workflow-code > a:focus-visible {
+  color: #ffb29f;
+}
+
+.histox-code-keyword {
+  color: #f09ddd;
+}
+
+.histox-code-string {
+  color: #f4b58d;
+}
+
+.histox-code-number {
+  color: #b9a7ff;
 }
 
 .histox-home__kicker,
@@ -719,7 +816,7 @@ body:has(#histox-home) .announcement-banner-link {
   letter-spacing: -0.035em;
   line-height: 0.95;
   margin: 0;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .histox-home__lead {
@@ -770,38 +867,42 @@ body:has(#histox-home) .announcement-banner-link {
   color: #17191b !important;
 }
 
-.histox-home__start {
-  background: #121416;
+.histox-home__pillars {
+  background: #171319;
   color: #fff;
 }
 
-.histox-home__start-inner {
-  align-items: center;
+.histox-home__pillars-inner {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 3.75rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding-block: 1.55rem 1.7rem;
+}
+
+.histox-home__pillars a {
+  color: #fff;
   display: flex;
-  justify-content: space-between;
-  min-height: 5.25rem;
-  padding-block: 1rem;
+  flex-direction: column;
+  gap: 0.28rem;
+  min-width: 0;
+  text-decoration: none;
 }
 
-.histox-home__start p {
+.histox-home__pillars strong {
   color: #fff;
-  font-size: 1rem;
-  margin: 0;
-}
-
-.histox-home__start strong {
-  color: #fff;
+  font-size: 0.94rem;
   font-weight: 700;
 }
 
-.histox-button--light {
-  background: var(--histox-orange);
-  color: #151719 !important;
+.histox-home__pillars span {
+  color: #ada5af;
+  font-size: 0.78rem;
+  line-height: 1.45;
 }
 
-.histox-button--light:hover,
-.histox-button--light:focus-visible {
-  background: #ff896b;
+.histox-home__pillars a:hover strong,
+.histox-home__pillars a:focus-visible strong {
+  color: #ff8465;
 }
 
 .histox-home__updates {
@@ -936,29 +1037,6 @@ body:has(#histox-home) .announcement-banner-link {
   line-height: 1.72;
   margin: 1.6rem 0 1.4rem;
   max-width: 36rem;
-}
-
-.histox-home__workflow-steps {
-  display: grid;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.histox-home__workflow-steps li {
-  padding: 0;
-}
-
-.histox-home__workflow-steps strong {
-  color: #202326;
-  font-size: 1.12rem;
-}
-
-.histox-home__workflow-steps p {
-  color: #63696f;
-  font-size: 0.9rem;
-  margin: 0.25rem 0 0;
 }
 
 .histox-home__resources {
@@ -1241,6 +1319,55 @@ body:has(#histox-home) .histox-footer {
   margin: 0;
 }
 
+.histox-footer__identity {
+  align-items: center;
+  display: flex;
+  gap: 1.1rem;
+}
+
+.histox-footer__lab {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.8rem;
+}
+
+.histox-footer__lab img {
+  background: #fff;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 50%;
+  box-shadow: 0 0.45rem 1.4rem rgb(0 0 0 / 26%);
+  display: block;
+  height: 3.75rem;
+  object-fit: cover;
+  width: 3.75rem;
+}
+
+.histox-footer__lab span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.14rem;
+}
+
+.histox-footer__lab small {
+  color: rgb(255 255 255 / 56%);
+  font-size: 0.66rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.histox-footer__lab strong {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.histox-footer__identity > p {
+  border-left: 1px solid rgb(255 255 255 / 18%);
+  color: rgb(255 255 255 / 62%);
+  font-size: 0.84rem;
+  padding-left: 1.1rem;
+}
+
 .histox-footer nav {
   display: flex;
   gap: 1.25rem;
@@ -1265,6 +1392,11 @@ body:has(#histox-home) .histox-footer {
 }
 
 @media (max-width: 1100px) {
+  .histox-home__pillars-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.35rem;
+  }
+
   .histox-home__capabilities {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1392,7 +1524,14 @@ body:has(#histox-home) .histox-footer {
   }
 
   .histox-home__hero-inner {
+    display: flex;
     padding-block: 3.4rem;
+  }
+
+  .histox-home__hero::before {
+    background:
+      linear-gradient(90deg, rgb(24 6 31 / 94%) 0%, rgb(24 6 31 / 88%) 58%, rgb(24 6 31 / 44%) 100%),
+      url("histox-hero-ai-v2.png") 74% center / auto 100% no-repeat;
   }
 
   .histox-home__hero h2 {
@@ -1401,16 +1540,9 @@ body:has(#histox-home) .histox-footer {
     overflow-wrap: normal;
   }
 
-  .histox-home__start-inner {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 1.4rem;
-    justify-content: center;
-    padding-block: 2rem;
-  }
-
-  .histox-button--light {
-    align-self: flex-start;
+  .histox-home__pillars-inner {
+    grid-template-columns: 1fr;
+    padding-block: 1.65rem;
   }
 
   .histox-home__capabilities,
@@ -1480,6 +1612,15 @@ body:has(#histox-home) .histox-footer {
   .histox-footer nav {
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .histox-footer__identity {
+    flex-direction: column;
+  }
+
+  .histox-footer__identity > p {
+    border-left: 0;
+    padding-left: 0;
   }
 
   .histox-footer__meta {
