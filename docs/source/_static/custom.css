@@ -577,6 +577,13 @@ body:has(#histox-home) .histox-global-nav {
   min-height: 2.5rem;
 }
 
+/* Compensate for the header offset observed in the Read the Docs production
+ * shell without changing local Sphinx previews. */
+html:has(meta[name="readthedocs-project-slug"]) body:has(#histox-home) .histox-global-nav {
+  position: relative;
+  top: 1.5rem;
+}
+
 body:has(#histox-home) .histox-global-nav a {
   font-size: 0.9375rem;
   font-weight: 500;
