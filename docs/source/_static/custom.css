@@ -538,7 +538,7 @@ body:has(#histox-home) .navbar-header-items {
 }
 
 body:has(#histox-home) .navbar-header-items__center {
-  align-items: stretch;
+  align-items: center;
   align-self: stretch;
   flex-flow: row nowrap;
   height: 100%;
@@ -547,7 +547,7 @@ body:has(#histox-home) .navbar-header-items__center {
 }
 
 body:has(#histox-home) .navbar-header-items__center > .navbar-item {
-  align-items: stretch;
+  align-items: center;
   height: 100%;
   max-height: none;
 }
@@ -570,9 +570,11 @@ body:has(#histox-home) .histox-navbar-brand__name {
 }
 
 body:has(#histox-home) .histox-global-nav {
+  align-self: center;
   gap: 1.85rem;
-  height: 5rem;
+  height: 2.5rem;
   justify-content: flex-end;
+  min-height: 2.5rem;
 }
 
 body:has(#histox-home) .histox-global-nav a {
