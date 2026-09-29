@@ -1,6 +1,12 @@
 <footer class="histox-footer">
   <div class="histox-footer__inner">
-    <p>HistoX · PyTorch-first deep pathology</p>
+    <div class="histox-footer__identity">
+      <a class="histox-footer__lab" href="https://lei-lab-site.pages.dev/" aria-label="Visit Lei Laboratory">
+        <img src="{{ pathto('_static/logo.png', 1) }}" alt="Lei Laboratory logo">
+        <span><small>Developed by</small><strong>Lei Laboratory</strong></span>
+      </a>
+      <p>HistoX · open-source deep pathology</p>
+    </div>
     <nav aria-label="Footer navigation">
       <a href="{{ pathto('index') }}">Home</a>
       <a href="{{ pathto('docs') }}">Docs</a>
