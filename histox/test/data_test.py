@@ -30,7 +30,7 @@ class _FakeResponse:
 
 class DatasetRegistryTest(unittest.TestCase):
 
-    def test_builtin_metadata_fixture(self):
+    def test_builtin_fixture_records(self):
         records = data.list_datasets()
 
         self.assertIn("histox-metadata-fixture", [record.name for record in records])
@@ -42,6 +42,93 @@ class DatasetRegistryTest(unittest.TestCase):
         download_record = data.get_dataset("histox-download-fixture")
         self.assertFalse(download_record.metadata_only)
         self.assertEqual(download_record.assets[0].checksum_algorithm, "sha256")
+
+    def test_public_openslide_example_contract(self):
+        record = data.get_dataset("openslide-cmu-small")
+
+        self.assertEqual(record.name, "openslide-cmu-small")
+        self.assertEqual(record.version, "1.0")
+        self.assertFalse(record.metadata_only)
+        self.assertEqual(record.access, "open")
+        self.assertEqual(record.license, "CC0-1.0")
+        self.assertEqual(
+            record.terms_url,
+            "https://creativecommons.org/publicdomain/zero/1.0/",
+        )
+        self.assertEqual(record.provider.name, "OpenSlide")
+        self.assertEqual(
+            record.provider.dataset_id,
+            "openslide-testdata:Aperio/CMU-1-Small-Region.svs",
+        )
+        self.assertEqual(
+            record.provider.url,
+            "https://openslide.cs.cmu.edu/download/openslide-testdata/Aperio/",
+        )
+        self.assertEqual(
+            record.citations,
+            (
+                "https://openslide.cs.cmu.edu/download/openslide-testdata/index.json",
+                "https://openslide.org/",
+            ),
+        )
+        self.assertEqual(
+            record.tasks,
+            (
+                "wsi-reading",
+                "tile-extraction",
+                "feature-extraction",
+                "tutorial",
+            ),
+        )
+        self.assertEqual(len(record.assets), 1)
+
+        asset = record.assets[0]
+        self.assertEqual(
+            asset.path,
+            "CMU-1-Small-Region.svs",
+        )
+        self.assertEqual(
+            asset.url,
+            "https://openslide.cs.cmu.edu/download/openslide-testdata/"
+            "Aperio/CMU-1-Small-Region.svs",
+        )
+        self.assertEqual(asset.size_bytes, 1938955)
+        self.assertEqual(asset.checksum_algorithm, "sha256")
+        self.assertEqual(
+            asset.checksum,
+            "ed92d5a9f2e86df67640d6f92ce3e231419ce127131697fbbce42ad5e002c8a7",
+        )
+
+    def test_public_openslide_example_plan_is_read_only(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Path(temp_dir) / "cache"
+            plan = data.plan_download("openslide-cmu-small", path=cache)
+
+            self.assertEqual(
+                plan.destination,
+                cache / "openslide-cmu-small" / "1.0",
+            )
+            self.assertEqual(plan.total_size_bytes, 1938955)
+            self.assertEqual(plan.download_size_bytes, 1938955)
+            self.assertEqual(plan.pending_count, 1)
+            self.assertEqual(len(plan.items), 1)
+            self.assertEqual(plan.items[0].status, "missing")
+            self.assertEqual(
+                plan.items[0].destination,
+                plan.destination / "CMU-1-Small-Region.svs",
+            )
+            self.assertFalse(cache.exists())
+
+            serialized = plan.to_dict()
+            self.assertEqual(serialized["provider"], "OpenSlide")
+            self.assertEqual(
+                serialized["provider_dataset_id"],
+                "openslide-testdata:Aperio/CMU-1-Small-Region.svs",
+            )
+            self.assertEqual(
+                serialized["items"][0]["checksum"],
+                "ed92d5a9f2e86df67640d6f92ce3e231419ce127131697fbbce42ad5e002c8a7",
+            )
 
     def test_unknown_dataset_and_version(self):
         with self.assertRaises(data.DatasetNotFoundError):
