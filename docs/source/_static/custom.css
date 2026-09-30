@@ -23,6 +23,225 @@
   --pst-font-family-monospace: "IBM Plex Mono", "SFMono-Regular", monospace;
 }
 
+/* --------------------------------------------------------------------------
+   Executable examples (Sphinx-Gallery)
+   -------------------------------------------------------------------------- */
+
+.sphx-glr-thumbnails {
+  display: grid !important;
+  gap: 1.4rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1.5rem 0 2.5rem;
+}
+
+.sphx-glr-thumbcontainer {
+  background: var(--pst-color-background, #fff);
+  border: 1px solid var(--histox-border, #d9d9df) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  flex-direction: column;
+  margin: 0 !important;
+  min-height: 100%;
+  padding: 0 !important;
+  width: auto !important;
+}
+
+.sphx-glr-thumbcontainer:hover {
+  border-color: var(--histox-accent, #c03491) !important;
+  transform: none !important;
+}
+
+.sphx-glr-thumbcontainer .figure {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.sphx-glr-thumbcontainer img {
+  aspect-ratio: 10 / 7;
+  border: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  max-width: none !important;
+  object-fit: cover;
+  width: 100% !important;
+}
+
+.sphx-glr-thumbcontainer > p {
+  inset: 0;
+  margin: 0 !important;
+  position: absolute;
+  z-index: 2;
+}
+
+.sphx-glr-thumbcontainer > p a {
+  font-size: 0 !important;
+  height: 100% !important;
+  inset: 0;
+  position: absolute !important;
+  width: 100% !important;
+}
+
+.sphx-glr-thumbnail-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.35;
+  padding: 1rem 1.1rem 1.15rem;
+  text-align: left;
+}
+
+.sphx-glr-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-start !important;
+}
+
+.sphx-glr-footer.sphx-glr-footer-example {
+  display: flex !important;
+  margin-top: 1.25rem;
+}
+
+.sphx-glr-footer-example .sphx-glr-download {
+  display: block !important;
+}
+
+.sphx-glr-download {
+  background: var(--pst-color-background, #fff) !important;
+  border: 1px solid var(--histox-border, #d9d9df) !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0.7rem 0.9rem !important;
+}
+
+.sphx-glr-download:hover {
+  border-color: var(--histox-plum-dark, #702966) !important;
+}
+
+.sphx-glr-download p,
+.sphx-glr-download code {
+  background: transparent !important;
+  color: var(--pst-color-link, #7f2d73) !important;
+  font-size: 0.84rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.sphx-glr-download a {
+  background: transparent !important;
+  color: var(--pst-color-link, #7f2d73) !important;
+  padding: 0 !important;
+}
+
+.sphx-glr-download a::before {
+  content: "\2193\00a0" !important;
+  font-family: inherit !important;
+}
+
+.sphx-glr-script-out .highlight {
+  border-left: 3px solid var(--histox-accent, #c03491);
+}
+
+.sphx-glr-single-img {
+  border: 1px solid var(--histox-border, #d9d9df);
+}
+
+.histox-example-meta {
+  border-block: 1px solid var(--histox-border, #d9d9df);
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 1.5rem 0 0;
+}
+
+.histox-example-meta > p {
+  margin: 0 !important;
+  padding: 0.9rem 1rem;
+}
+
+.histox-example-meta > p + p {
+  border-left: 1px solid var(--histox-border, #d9d9df);
+}
+
+.histox-example-meta strong {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.histox-example-flow {
+  background: var(--histox-code-bg, #f1f2f4);
+  margin: 0;
+  padding: 0.8rem 1rem;
+}
+
+.histox-example-flow p {
+  margin: 0 !important;
+}
+
+.histox-example-flow code {
+  background: transparent !important;
+  color: var(--histox-ink, #262a2e) !important;
+  font-size: 0.86rem;
+  padding: 0 !important;
+}
+
+.histox-example-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0.85rem 0 2rem;
+}
+
+.histox-example-action {
+  border: 1px solid var(--histox-plum-dark, #702966);
+  color: var(--histox-plum-dark, #702966) !important;
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 650;
+  padding: 0.52rem 0.8rem;
+  text-decoration: none !important;
+}
+
+.histox-example-action:hover {
+  background: var(--histox-plum-dark, #702966);
+  color: #fff !important;
+}
+
+.histox-example-action--github {
+  border-color: var(--histox-ink, #262a2e);
+  color: var(--histox-ink, #262a2e) !important;
+}
+
+.histox-example-action--github:hover {
+  background: var(--histox-ink, #262a2e);
+}
+
+@media (max-width: 720px) {
+  .sphx-glr-thumbnails {
+    grid-template-columns: 1fr;
+  }
+
+  .histox-example-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .histox-example-meta > p + p {
+    border-left: 0;
+  }
+
+  .histox-example-meta > p:nth-child(even) {
+    border-left: 1px solid var(--histox-border, #d9d9df);
+  }
+
+  .histox-example-meta > p:nth-child(n + 3) {
+    border-top: 1px solid var(--histox-border, #d9d9df);
+  }
+}
+
 html[data-theme="dark"] {
   --histox-navy: #edf1f7;
   --histox-ink: #eef1f5;
