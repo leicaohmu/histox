@@ -1,4 +1,6 @@
 docs/build/*
+/docs/source/auto_examples/
+/docs/source/sg_execution_times.rst
 *.pyc
 *.egg-info
 *.ipynb_checkpoints

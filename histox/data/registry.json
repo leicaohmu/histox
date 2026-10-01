@@ -44,6 +44,40 @@
           "checksum_algorithm": "sha256"
         }
       ]
+    },
+    {
+      "name": "openslide-cmu-small",
+      "version": "1.0",
+      "default": true,
+      "title": "OpenSlide CMU small Aperio region",
+      "description": "An exported brightfield JPEG region from CMU-1.svs, small enough to contain a single pyramid level.",
+      "provider": {
+        "name": "OpenSlide",
+        "dataset_id": "openslide-testdata:Aperio/CMU-1-Small-Region.svs",
+        "url": "https://openslide.cs.cmu.edu/download/openslide-testdata/Aperio/"
+      },
+      "access": "open",
+      "license": "CC0-1.0",
+      "terms_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "citations": [
+        "https://openslide.cs.cmu.edu/download/openslide-testdata/index.json",
+        "https://openslide.org/"
+      ],
+      "tasks": [
+        "wsi-reading",
+        "tile-extraction",
+        "feature-extraction",
+        "tutorial"
+      ],
+      "assets": [
+        {
+          "path": "CMU-1-Small-Region.svs",
+          "url": "https://openslide.cs.cmu.edu/download/openslide-testdata/Aperio/CMU-1-Small-Region.svs",
+          "size_bytes": 1938955,
+          "checksum": "ed92d5a9f2e86df67640d6f92ce3e231419ce127131697fbbce42ad5e002c8a7",
+          "checksum_algorithm": "sha256"
+        }
+      ]
     }
   ]
 }

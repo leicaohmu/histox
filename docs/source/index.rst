@@ -12,7 +12,7 @@ HistoX
            <p class="histox-home__lead">An open-source Python library for whole-slide imaging, public pathology data, model development, evaluation, and interpretation.</p>
            <div class="histox-home__actions">
              <a class="histox-button histox-button--primary" href="api.html">View documentation</a>
-             <a class="histox-button histox-button--secondary" href="tutorials.html">Browse tutorials</a>
+             <a class="histox-button histox-button--secondary" href="auto_examples/index.html">Browse examples</a>
            </div>
          </div>
        </div>
@@ -96,7 +96,7 @@ HistoX
      <section class="histox-home__resources">
        <div class="histox-home__resources-inner">
          <article><h2>Docs</h2><p>Install HistoX and learn the core project, dataset, and slide concepts.</p><a href="quickstart.html">Read the docs →</a></article>
-         <article><h2>Tutorials</h2><p>Follow complete workflows for training, MIL, heatmaps, and custom pipelines.</p><a href="tutorials.html">Start a tutorial →</a></article>
+         <article><h2>Examples</h2><p>Run downloadable workflows whose code, figures, and outputs stay together.</p><a href="auto_examples/index.html">Browse examples →</a></article>
          <article><h2>Methods</h2><p>Browse implemented and planned methods by pathology task, maturity, and origin.</p><a href="methods.html">Explore methods →</a></article>
        </div>
      </section>
@@ -107,4 +107,5 @@ HistoX
    :hidden:
 
    docs
+   auto_examples/index
    tutorials

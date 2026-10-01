@@ -8,6 +8,8 @@ import pytorch_sphinx_theme2
 
 sys.path.insert(0, os.path.abspath('../..'))
 
+execute_gallery = os.environ.get('HISTOX_DOCS_EXECUTE_GALLERY') == '1'
+
 # ── autodoc_mock_imports：Sphinx 官方机制，专为 autodoc 设计 ──────────
 # 所有有 C 扩展 / 重依赖的库都放这里，autodoc import 时自动走 mock
 autodoc_mock_imports = [
@@ -56,6 +58,14 @@ autodoc_mock_imports = [
     'pytorch_lightning.core',
     'pytorch_lightning.core.lightning',
 ]
+
+# Sphinx's autodoc mocks persist in ``sys.modules``. When the executable
+# gallery is enabled, keep the real PyTorch stack available to the example.
+if execute_gallery:
+    autodoc_mock_imports = [
+        module for module in autodoc_mock_imports
+        if module != 'torch' and not module.startswith('torch.')
+    ]
 
 # ── 手动 mock：RST 文件里用到的短名别名模块 ──────────────────────────
 # 注意：histox 自身的子模块不在这里 mock，全部交给 autodoc 按需处理
@@ -131,7 +141,27 @@ extensions = [
     'sphinx_copybutton',
     'sphinx_design',
     'sphinxcontrib.video',
+    'sphinx_gallery.gen_gallery',
 ]
+
+# Build the examples gallery on every documentation build, but execute the
+# expensive network/model examples only when explicitly requested.  This keeps
+# Read the Docs deterministic while allowing server39 to produce verified
+# outputs with ``HISTOX_DOCS_EXECUTE_GALLERY=1``.
+if not execute_gallery:
+    tags.add('histox_gallery_precomputed')
+
+sphinx_gallery_conf = {
+    'examples_dirs': '../gallery',
+    'gallery_dirs': 'auto_examples',
+    'filename_pattern': r'/plot_',
+    'plot_gallery': execute_gallery,
+    'download_all_examples': True,
+    'remove_config_comments': True,
+    'show_memory': False,
+    'thumbnail_size': (400, 280),
+    'within_subsection_order': 'FileNameSortKey',
+}
 
 # -- HTML theme -----------------------------------------------------------
 #
@@ -150,7 +180,7 @@ html_logo = None
 html_favicon = None
 html_static_path = ['_static']
 html_css_files = ['custom.css']
-html_js_files = ['tutorials.js']
+html_js_files = ['tutorials.js', 'gallery.js']
 
 html_theme_options = {
     'show_toc_level': 2,

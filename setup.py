@@ -88,6 +88,10 @@ setuptools.setup(
             'timm',
             'segmentation-models-pytorch',
         ],
+        'huggingface': [
+            'transformers>=4.32,<5',
+            'safetensors>=0.4',
+        ],
         'tf': [
             'tensorflow>=2.7,<2.12',
             'tensorflow_probability<0.20',
