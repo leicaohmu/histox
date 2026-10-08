@@ -5,8 +5,12 @@ Generating Features
 
 Converting images into feature vectors is a common step for many machine learning tasks, including `feature space analysis <activations>`_ and `multiple-instance learning (MIL) <mil>`_. HistoX provides a simple API for generating features from image tiles and includes several pretrained feature extractors. You can see a list of all available feature extractors with :func:`histox.list_extractors`.
 
-Generating Features
-*******************
+This page describes the shared feature-extraction workflow. For model-specific
+installation, checkpoints, runnable examples, limitations, and licenses, start
+with the :doc:`image encoder guides <methods/encoders/index>`.
+
+Build an extractor
+******************
 
 The first step in generating features from a dataset of images is creating a feature extractor. Many types of feature extractors can be used, including imagenet-pretrained models, models finetuned in HistoX, histology-specific pretrained feature extractors (ie. "foundation models"), or fine-tuned SSL models.  In all cases, feature extractors are built with :func:`histox.build_feature_extractor`, and features are generated for a `Dataset <datasets_and_val>`_ using :meth:`histox.Dataset.generate_feature_bags`, as described :ref:`below <bags>`.
 
@@ -270,6 +274,7 @@ If a model architecture is available in both the Tensorflow and PyTorch backends
 
 You can view all available feature extractors with :func:`histox.model.list_extractors`.
 
+
 Layer Activations
 *****************
 
@@ -297,15 +302,10 @@ For SimCLR models, use ``'simclr'`` as the first argument to ``build_feature_ext
         ckpt='/path/to/simclr.ckpt'
     )
 
-For DinoV2 models, use ``'dinov2'`` as the first argument, and pass the model configuration YAML file to ``cfg`` and the teacher checkpoint weights to ``weights``.
-
-.. code-block:: python
-
-    dinov2 = hx.build_feature_extractor(
-        'dinov2',
-        weights='/path/to/teacher_checkpoint.pth',
-        cfg='/path/to/config.yaml'
-    )
+For a complete DINOv2 workflow—including installation, matching the
+configuration to the teacher checkpoint, tile inference, feature bags, and
+troubleshooting—follow the :doc:`DINOv2 encoder guide
+<methods/encoders/dinov2>`.
 
 
 
