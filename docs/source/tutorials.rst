@@ -50,8 +50,9 @@ marked until their code has been migrated and executed with HistoX.
        <button id="topic-interpretation" type="button" data-topic="interpretation" aria-pressed="false">Interpretation</button>
        <button id="topic-extensions" type="button" data-topic="extensions" aria-pressed="false">Extensions</button>
      </div>
-     <p class="histox-tutorial-results" aria-live="polite"><strong data-result-count>8</strong> tutorials shown</p>
+     <p class="histox-tutorial-results" aria-live="polite"><strong data-result-count>9</strong> tutorials shown</p>
      <div class="histox-tutorial-grid">
+       <a class="histox-tutorial-card" href="auto_examples/basics/plot_open_wsi.html" data-topics="getting-started slides"><span>Getting started · Slides</span><h3>Open your first WSI</h3><p>Download a small public SVS, inspect its physical scale and tile grid, then retrieve a verified RGB tile.</p><strong>Beginner · Executable example</strong></a>
        <a class="histox-tutorial-card" href="tutorial1.html" data-topics="getting-started training"><span>Getting started · Training</span><h3>Train a first model</h3><p>Take a TCGA project from slides and labels to a trained classifier.</p><strong>Compatibility tutorial</strong></a>
        <a class="histox-tutorial-card" href="tutorial2.html" data-topics="training extensions"><span>Training · Extensions</span><h3>Control the training loop</h3><p>Work directly with datasets and trainers for a customized pipeline.</p><strong>Compatibility tutorial</strong></a>
        <a class="histox-tutorial-card" href="tutorial3.html" data-topics="models extensions"><span>Models · Extensions</span><h3>Use a custom architecture</h3><p>Integrate your own vision architecture with the HistoX model interface.</p><strong>Compatibility tutorial</strong></a>

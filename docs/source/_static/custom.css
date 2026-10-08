@@ -791,9 +791,9 @@ body:has(#histox-home) .histox-navbar-brand__name {
 body:has(#histox-home) .histox-global-nav {
   align-self: center;
   gap: 1.85rem;
-  height: 2.5rem;
+  height: 5rem;
   justify-content: flex-end;
-  min-height: 2.5rem;
+  min-height: 5rem;
 }
 
 /* Compensate for the header offset observed in the Read the Docs production
