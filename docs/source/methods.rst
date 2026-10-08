@@ -137,3 +137,9 @@ Before a method is listed as available, its contribution should include:
 
 See :doc:`developer` for repository and contribution guidance, or browse the
 :doc:`api` for the interfaces that are currently part of HistoX.
+
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+
+   methods/encoders/index
