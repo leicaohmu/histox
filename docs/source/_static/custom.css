@@ -283,6 +283,31 @@ html[data-theme="dark"] {
   min-height: 100%;
 }
 
+/* Keep the desktop documentation nav vertically aligned in the header.
+ * Read the Docs loads an additional theme stylesheet after this file, so the
+ * 64 px parent must center its intrinsic-height children explicitly. */
+@media (min-width: 960px) {
+  body:not(:has(#histox-home)) .bd-header__inner,
+  body:not(:has(#histox-home)) .navbar-header-items {
+    align-items: center;
+  }
+
+  body:not(:has(#histox-home)) .navbar-header-items__center {
+    align-items: center;
+    align-self: center;
+    flex-flow: row nowrap;
+  }
+
+  body:not(:has(#histox-home)) .navbar-header-items__center > .navbar-item {
+    align-items: center;
+    display: flex;
+  }
+
+  body:not(:has(#histox-home)) .histox-global-nav {
+    align-self: center;
+  }
+}
+
 .histox-global-nav--tutorial {
   gap: 0.72rem;
 }
