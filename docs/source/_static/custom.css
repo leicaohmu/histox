@@ -281,6 +281,7 @@ html[data-theme="dark"] {
   display: flex;
   gap: 1.2rem;
   min-height: 100%;
+  padding-bottom: 0 !important;
 }
 
 /* Keep the desktop documentation nav vertically aligned in the header.
@@ -819,13 +820,6 @@ body:has(#histox-home) .histox-global-nav {
   height: 5rem;
   justify-content: flex-end;
   min-height: 5rem;
-}
-
-/* Compensate for the header offset observed in the Read the Docs production
- * shell without changing local Sphinx previews. */
-html:has(meta[name="readthedocs-project-slug"]) body:has(#histox-home) .histox-global-nav {
-  position: relative;
-  top: 1.5rem;
 }
 
 body:has(#histox-home) .histox-global-nav a {
