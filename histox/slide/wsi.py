@@ -142,6 +142,8 @@ class WSI:
 
         """
         # Initialize calculated variables
+        if hx.util.is_dicom_slide(path):
+            path = os.path.normpath(path)
         self.pb = pb
         self.name = path_to_name(path)
         self.shortname = hx.util._shortname(self.name)
@@ -150,7 +152,10 @@ class WSI:
         self.thumb_image = None  # type: Optional[Image.Image]
         self.stride_div = stride_div
         self.path = path
-        self.filetype = hx.util.path_to_ext(path)
+        self.filetype = (
+            'dcm' if hx.util.is_dicom_slide(path)
+            else hx.util.path_to_ext(path)
+        )
         self.blur_burden = None  # type: Optional[float]
         self.roi_method = None  # type: Optional[str]
         self.extracted_x_size = 0  # type: int

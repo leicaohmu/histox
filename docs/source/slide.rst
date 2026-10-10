@@ -8,6 +8,47 @@ generally not be performed by instancing these classes directly, but by calling 
 :func:`histox.Project.extract_tiles` or :func:`histox.Dataset.extract_tiles`, which include performance
 optimizations and additional functionality.
 
+DICOM Slide Microscopy
+----------------------
+
+Install the optional reader before opening DICOM whole-slide images:
+
+.. code-block:: bash
+
+   python -m pip install "histox[dicom]"
+
+A DICOM WSI is usually a *series* of ``.dcm`` instances rather than one file.
+Place one series in its own directory and pass the directory to :class:`WSI`:
+
+.. code-block:: python
+
+   import histox as hx
+
+   slide = hx.WSI(
+       "/data/idc/1.3.6.1.4.1.example/",
+       tile_px=256,
+       tile_um=256,
+       roi_method="ignore",
+   )
+
+   print(slide.filetype)          # dcm
+   print(slide.dimensions)        # base-level (width, height)
+   print(slide.level_downsamples)
+   tile = slide[0, 0]             # uint8 RGB NumPy array
+
+Passing one ``.dcm`` file is also supported, but only the instances supplied
+to the reader can contribute pyramid levels. Pass the series directory when a
+complete pyramid is required. :func:`histox.util.get_slide_paths` groups a
+directory containing ``.dcm`` files as one slide, so keep different series in
+different directories.
+
+HistoX reads DICOM pixel spacing as microns per pixel and uses the dedicated
+``wsidicom`` adapter regardless of ``HX_SLIDE_BACKEND``. The current adapter
+opens local files and directories; it does not treat an HTTP or DICOMweb URL
+as a :class:`WSI` path. Cloud frame access can also be slow for older converted
+slides that contain neither a Basic nor Extended Offset Table. Download those
+series locally before repeated tile extraction.
+
 histox.WSI
 *************
 

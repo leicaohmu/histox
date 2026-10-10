@@ -55,7 +55,7 @@ except Exception:
 
 SUPPORTED_FORMATS = ['svs', 'tif', 'ndpi', 'vms', 'vmu', 'scn', 'mrxs',
                      'tiff', 'svslide', 'bif', 'jpg', 'jpeg', 'png',
-                     'ome.tif', 'ome.tiff']
+                     'ome.tif', 'ome.tiff', 'dcm']
 EMPTY = ['', ' ', None, np.nan]
 CPLEX_AVAILABLE = (importlib.util.find_spec('cplex') is not None)
 try:
@@ -614,6 +614,29 @@ def is_slide(path: str) -> bool:
     """Checks if the given path is a supported slide."""
     return (os.path.isfile(path)
             and hx.util.path_to_ext(path).lower() in SUPPORTED_FORMATS)
+
+
+def is_dicom_slide(path: str) -> bool:
+    """Return whether ``path`` identifies a DICOM slide or series directory.
+
+    A directory is considered one DICOM series when it contains one or more
+    ``.dcm`` files directly. Nested directories are intentionally not searched.
+    """
+    if not isinstance(path, (str, os.PathLike)):
+        return False
+    path = os.fspath(path)
+    if os.path.isfile(path):
+        return path_to_ext(path).lower() == 'dcm'
+    if not os.path.isdir(path):
+        return False
+    try:
+        with os.scandir(path) as entries:
+            return any(
+                entry.is_file() and entry.name.lower().endswith('.dcm')
+                for entry in entries
+            )
+    except OSError:
+        return False
 
 
 def is_tensorflow_model_path(path: str) -> bool:
@@ -1269,9 +1292,20 @@ def get_preprocess_fn(model_path: str):
 
 def get_slide_paths(slides_dir: str) -> List[str]:
     '''Get all slide paths from a given directory containing slides.'''
-    slide_list = [i for i in glob(join(slides_dir, '**/*.*')) if is_slide(i)]
-    slide_list.extend([i for i in glob(join(slides_dir, '*.*')) if is_slide(i)])
-    return slide_list
+    slide_list = [
+        path for path in glob(join(slides_dir, '**/*.*'))
+        if is_slide(path) and path_to_ext(path).lower() != 'dcm'
+    ]
+    slide_list.extend([
+        path for path in glob(join(slides_dir, '*.*'))
+        if is_slide(path) and path_to_ext(path).lower() != 'dcm'
+    ])
+    dicom_series = []
+    for root, directories, files in os.walk(slides_dir):
+        if any(name.lower().endswith('.dcm') for name in files):
+            dicom_series.append(root)
+            directories[:] = []
+    return list(dict.fromkeys([*slide_list, *dicom_series]))
 
 
 def read_annotations(path: str) -> Tuple[List[str], List[Dict]]:
