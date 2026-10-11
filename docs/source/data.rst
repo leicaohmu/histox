@@ -11,12 +11,6 @@ inspect provenance, and reuse the verified cache.
 The example downloads HistoX's 11 KB license file, not pathology data. You can
 therefore run it before configuring WSI storage.
 
-.. note::
-
-   This page documents the current development version. Until the next package
-   release includes A4b2, install the repository checkout in editable mode to
-   run these examples: ``python -m pip install -e .``
-
 :download:`Download the complete Python example
 <../examples/data_quickstart.py>` or follow the steps below interactively.
 
@@ -47,6 +41,8 @@ Expected output:
 
     histox-download-fixture 1.0 open
     histox-metadata-fixture 1.0 open
+    openslide-cmu-small 1.0 open
+    tcga-coad-slide-processing 1.0 open
 
 Load one record and inspect its source and terms before downloading:
 
@@ -68,9 +64,14 @@ Expected output begins with:
     Apache-2.0 ...
     1 LICENSE
 
-The other built-in record, ``histox-metadata-fixture``, deliberately has no
-assets. It exercises discovery and planning without creating files or using the
-network.
+The ``histox-metadata-fixture`` record deliberately has no assets. It exercises
+discovery and planning without creating files or using the network. The
+``openslide-cmu-small`` record supplies the public 1.9 MB SVS used by the
+:doc:`first-WSI executable example
+<auto_examples/basics/plot_open_wsi>`.
+The ``tcga-coad-slide-processing`` record supplies the 1.23 GB open-access
+TCGA-COAD diagnostic slide used throughout :doc:`slide_processing`. Review
+the GDC data-analysis policies recorded in ``terms_url`` before downloading.
 
 2. Review the download plan
 ---------------------------
@@ -193,11 +194,12 @@ Access-controlled datasets
 
 The generic downloader accepts only ``access="open"`` records with direct
 HTTP(S) asset URLs. It does not accept credentials or bypass access controls.
-Controlled datasets, including authenticated GDC workflows, require an
-official provider client and the user's own account.
+Controlled datasets require an official provider client and the user's own
+account. Open-access GDC assets with a direct file URL, such as the registered
+TCGA-COAD tutorial slide, can use the generic downloader without a token.
 
-The inherited :func:`histox.create_project` TCGA download path is unchanged and
-is not yet connected to :mod:`histox.data`.
+The inherited :func:`histox.create_project` download path remains separate;
+adding this registry record does not change project-creation behavior.
 
 API reference
 -------------

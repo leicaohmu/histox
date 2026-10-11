@@ -1,0 +1,106 @@
+{
+  "source": {
+    "filename": "TCGA-3L-AA1B-01Z-00-DX1.8923A151-A690-40B7-9E5A-FCBEDFC2394F.svs",
+    "program": "TCGA",
+    "data_portal": "NCI Genomic Data Commons",
+    "gdc_file_id": "ed5f8c30-29e3-4144-948b-b8658564f2d6",
+    "access": "open",
+    "file_size_bytes": 1228418533,
+    "md5": "1f0cdb5cacd17c3dbf99f82ac41339dd"
+  },
+  "blur_source": {
+    "filename": "TCGA-3L-AA1B-01Z-00-DX1.8923A151-A690-40B7-9E5A-FCBEDFC2394F.svs",
+    "program": "TCGA",
+    "data_portal": "NCI Genomic Data Commons",
+    "access": "open"
+  },
+  "histox_version": "0.2.1",
+  "workflow": {
+    "retained_tiles_after_otsu": 731,
+    "displayed_tile_samples": 3,
+    "normalizer": "reinhard_mask",
+    "normalizer_preset": "v3"
+  },
+  "roi": {
+    "coverage_0.01_tiles": 90,
+    "center_rule_tiles": 74,
+    "coverage_1.0_tiles": 54
+  },
+  "otsu": {
+    "candidate_tiles": 456,
+    "retained_tiles": 195,
+    "excluded_fraction": 0.6370375093447358
+  },
+  "blur": {
+    "candidate_tiles": 1776,
+    "tissue_tiles_after_otsu": 731,
+    "retained_tiles_after_combined_qc": 722,
+    "rejected_tiles_after_gaussian": 9,
+    "rejected_grid_locations": [
+      [
+        5,
+        32
+      ],
+      [
+        6,
+        32
+      ],
+      [
+        7,
+        32
+      ],
+      [
+        9,
+        31
+      ],
+      [
+        10,
+        31
+      ],
+      [
+        16,
+        30
+      ],
+      [
+        16,
+        31
+      ],
+      [
+        17,
+        30
+      ],
+      [
+        39,
+        28
+      ]
+    ],
+    "final_qc": "otsu + gaussian_v2",
+    "gaussian_parameters": {
+      "mpp": 8,
+      "sigma": 3,
+      "threshold": 0.12
+    }
+  },
+  "normalization": {
+    "methods": [
+      "macenko",
+      "reinhard",
+      "reinhard_mask",
+      "reinhard_fast",
+      "reinhard_fast_mask",
+      "vahadane_sklearn",
+      "vahadane_spams"
+    ],
+    "presets": {
+      "macenko": "v3",
+      "reinhard": "v3",
+      "reinhard_mask": "v3",
+      "reinhard_fast": "v3",
+      "reinhard_fast_mask": "v3",
+      "vahadane_sklearn": "v2",
+      "vahadane_spams": "v2"
+    },
+    "input": "whole-slide thumbnail",
+    "layout": "legacy 4x2 comparison"
+  }
+}

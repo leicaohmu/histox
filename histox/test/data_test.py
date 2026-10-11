@@ -130,6 +130,34 @@ class DatasetRegistryTest(unittest.TestCase):
                 "ed92d5a9f2e86df67640d6f92ce3e231419ce127131697fbbce42ad5e002c8a7",
             )
 
+    def test_public_tcga_slide_processing_contract(self):
+        record = data.get_dataset("tcga-coad-slide-processing")
+
+        self.assertEqual(record.version, "1.0")
+        self.assertEqual(record.access, "open")
+        self.assertIsNone(record.license)
+        self.assertEqual(record.provider.name, "NCI Genomic Data Commons")
+        self.assertEqual(
+            record.provider.dataset_id,
+            "gdc:ed5f8c30-29e3-4144-948b-b8658564f2d6",
+        )
+        self.assertEqual(len(record.assets), 1)
+
+        asset = record.assets[0]
+        self.assertEqual(
+            asset.path,
+            "TCGA-3L-AA1B-01Z-00-DX1."
+            "8923A151-A690-40B7-9E5A-FCBEDFC2394F.svs",
+        )
+        self.assertEqual(
+            asset.url,
+            "https://api.gdc.cancer.gov/data/"
+            "ed5f8c30-29e3-4144-948b-b8658564f2d6",
+        )
+        self.assertEqual(asset.size_bytes, 1228418533)
+        self.assertEqual(asset.checksum_algorithm, "md5")
+        self.assertEqual(asset.checksum, "1f0cdb5cacd17c3dbf99f82ac41339dd")
+
     def test_unknown_dataset_and_version(self):
         with self.assertRaises(data.DatasetNotFoundError):
             data.get_dataset("not-a-dataset")
