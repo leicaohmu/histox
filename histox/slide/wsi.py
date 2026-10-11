@@ -120,7 +120,7 @@ class WSI:
             ignore_missing_mpp (bool, optional): If a slide does not have
                 microns-per-pixel (MPP) information stored in EXIF data
                 (key 65326), set the MPP to a default value
-                (``hx.slide.DEFAULG_JPG_MPP``). If False and MPP data is
+                (``hx.slide.DEFAULT_JPG_MPP``). If False and MPP data is
                 missing, raises ``hx.errors.SlideMissingMPPError``.
             use_bounds (bool): If True, use the slide bounds to determine
                 the slide dimensions. This will crop out unscanned white space.

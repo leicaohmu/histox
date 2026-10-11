@@ -242,6 +242,173 @@
   }
 }
 
+/* ------------------------------------------------------------------------- */
+/* Executed method notebooks                                                  */
+/* ------------------------------------------------------------------------- */
+
+#histox-dinov2-notebook {
+  --histox-nb-input: #2563a6;
+  --histox-nb-output: #a33a3a;
+  --histox-nb-cell-bg: #f7f7f8;
+  --histox-nb-cell-border: #d9dce1;
+}
+
+.histox-nb-toolbar {
+  align-items: center;
+  background: #f7f7f8;
+  border: 1px solid #d9dce1;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--pst-font-family-monospace);
+  font-size: 0.78rem;
+  gap: 0.45rem 1.1rem;
+  margin: 1.4rem 0 2rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.histox-nb-toolbar__status {
+  color: #227a49;
+  font-weight: 700;
+}
+
+.histox-nb-toolbar span:not(:last-child) {
+  border-right: 1px solid #c9cdd3;
+  padding-right: 1.1rem;
+}
+
+.histox-nb-objectives {
+  border-left: 3px solid var(--histox-accent, #7d2a72);
+  margin: 1.5rem 0 2.2rem;
+  padding: 0.15rem 0 0.15rem 1rem;
+}
+
+.histox-nb-cell {
+  align-items: start;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 4.4rem minmax(0, 1fr);
+  margin: 0.85rem 0 1.25rem;
+}
+
+.histox-nb-prompt {
+  font-family: var(--pst-font-family-monospace);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  padding-top: 0.8rem;
+  text-align: right;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.histox-nb-cell-input .histox-nb-prompt {
+  color: var(--histox-nb-input);
+}
+
+.histox-nb-cell-output .histox-nb-prompt {
+  color: var(--histox-nb-output);
+}
+
+.histox-nb-cell > div[class*="highlight-"],
+.histox-nb-cell > figure,
+.histox-nb-cell > .histox-nb-output-body,
+.histox-nb-cell > table {
+  grid-column: 2;
+  margin: 0 !important;
+  min-width: 0;
+}
+
+.histox-nb-cell-input > div[class*="highlight-"] {
+  background: var(--histox-nb-cell-bg);
+  border: 1px solid var(--histox-nb-cell-border);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.histox-nb-cell-input .highlight,
+.histox-nb-cell-input .highlight pre {
+  background: var(--histox-nb-cell-bg) !important;
+}
+
+.histox-nb-cell-input .highlight pre {
+  padding: 1rem 1.1rem;
+}
+
+.histox-nb-cell-output > div[class*="highlight-"] {
+  background: transparent !important;
+  border-left: 2px solid #e1e3e7;
+  padding-left: 1rem;
+}
+
+.histox-nb-cell-output .highlight,
+.histox-nb-cell-output .highlight pre {
+  background: transparent !important;
+}
+
+.histox-nb-cell-output .highlight pre {
+  padding: 0.65rem 0;
+}
+
+.histox-nb-cell-rich figure img {
+  border: 1px solid #e0e2e6;
+  display: block;
+}
+
+.histox-nb-caption {
+  color: var(--pst-color-text-muted);
+  font-size: 0.9rem;
+  margin: -0.45rem 0 1.8rem 5.15rem;
+}
+
+.histox-nb-checkpoint {
+  background: #f6faf7;
+  border-left: 3px solid #2d8a57;
+  margin: 1.4rem 0 2rem;
+  padding: 0.75rem 1rem;
+}
+
+html[data-theme="dark"] #histox-dinov2-notebook {
+  --histox-nb-input: #7db7ef;
+  --histox-nb-output: #f09a9a;
+  --histox-nb-cell-bg: #202226;
+  --histox-nb-cell-border: #3a3d43;
+}
+
+html[data-theme="dark"] .histox-nb-toolbar,
+html[data-theme="dark"] .histox-nb-checkpoint {
+  background: #202226;
+  border-color: #3a3d43;
+}
+
+@media (max-width: 720px) {
+  .histox-nb-toolbar span:not(:last-child) {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .histox-nb-cell {
+    gap: 0.25rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .histox-nb-prompt,
+  .histox-nb-cell > div[class*="highlight-"],
+  .histox-nb-cell > figure,
+  .histox-nb-cell > .histox-nb-output-body,
+  .histox-nb-cell > table {
+    grid-column: 1;
+  }
+
+  .histox-nb-prompt {
+    padding-top: 0;
+    text-align: left;
+  }
+
+  .histox-nb-caption {
+    margin-left: 0;
+  }
+}
+
 html[data-theme="dark"] {
   --histox-navy: #edf1f7;
   --histox-ink: #eef1f5;
@@ -1537,6 +1704,430 @@ body:has(#histox-home) .announcement-banner-link {
   line-height: 1.45;
 }
 
+/* Methods registry. */
+.histox-method-registry {
+  margin: 1.75rem 0 4.5rem;
+}
+
+.histox-method-registry__toolbar {
+  border-bottom: 1px solid var(--histox-border);
+  border-top: 3px solid var(--histox-ink);
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem 0;
+}
+
+.histox-method-registry__search {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 8.5rem minmax(0, 30rem);
+}
+
+.histox-method-registry__search span {
+  color: var(--histox-ink);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.histox-method-registry__search input {
+  background: var(--pst-color-background);
+  border: 1px solid var(--histox-border);
+  border-radius: 0;
+  color: var(--histox-ink);
+  font: inherit;
+  min-height: 44px;
+  padding: 0.62rem 0.75rem;
+  width: 100%;
+}
+
+.histox-method-registry__search input:focus {
+  border-color: var(--histox-plum-dark);
+  box-shadow: 0 0 0 2px rgb(62 22 82 / 18%);
+  outline: 0;
+}
+
+.histox-method-registry__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.histox-method-registry__filters button {
+  background: transparent;
+  border: 1px solid var(--histox-border);
+  border-radius: 0;
+  color: var(--histox-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 650;
+  min-height: 40px;
+  padding: 0.45rem 0.72rem;
+}
+
+.histox-method-registry__filters button:hover,
+.histox-method-registry__filters button:focus-visible {
+  border-color: var(--histox-plum-dark);
+  color: var(--histox-plum-dark);
+}
+
+.histox-method-registry__filters button.is-active {
+  background: var(--histox-ink);
+  border-color: var(--histox-ink);
+  color: var(--pst-color-background);
+}
+
+.histox-method-registry__results {
+  color: var(--histox-muted);
+  font-size: 0.8rem;
+  margin: 0.8rem 0;
+}
+
+.histox-method-registry__list {
+  border-top: 1px solid var(--histox-border);
+}
+
+.histox-method-entry {
+  align-items: start;
+  border-bottom: 1px solid var(--histox-border);
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 7.5rem minmax(0, 1fr) 8.5rem;
+  padding: 1.35rem 0;
+}
+
+.histox-method-entry[hidden] {
+  display: none;
+}
+
+.histox-method-entry__task {
+  color: var(--histox-plum-dark);
+  font-size: 0.69rem;
+  font-weight: 750;
+  letter-spacing: 0.07em;
+  padding-top: 0.25rem;
+  text-transform: uppercase;
+}
+
+.histox-method-entry__body h3 {
+  font-size: 1.12rem;
+  margin: 0 0 0.38rem;
+}
+
+.histox-method-entry__body > p {
+  color: var(--histox-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.histox-method-entry__symbol {
+  margin-top: 0.55rem !important;
+}
+
+.histox-method-entry__symbol code {
+  background: transparent;
+  color: var(--histox-ink);
+  font-size: 0.76rem;
+  padding: 0;
+}
+
+.histox-method-entry__meta {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.histox-method-entry__meta > span {
+  color: #2f6b45;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.histox-method-entry__meta small {
+  color: var(--histox-muted);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.histox-method-entry__meta a {
+  font-size: 0.76rem;
+  font-weight: 700;
+  margin-top: 0.45rem;
+  text-decoration: none;
+}
+
+.histox-method-entry__meta a:hover,
+.histox-method-entry__meta a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.histox-method-registry__empty {
+  border-bottom: 1px solid var(--histox-border);
+  color: var(--histox-muted);
+  margin: 0;
+  padding: 2rem 0;
+}
+
+/* Source-checked method guide. Dense and restrained, like scientific API docs. */
+.histox-method-summary {
+  border-bottom: 1px solid var(--histox-border);
+  border-top: 3px solid var(--histox-ink);
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: minmax(15rem, 1fr) minmax(24rem, 1.45fr);
+  margin: 1rem 0 0;
+  padding: 1.25rem 0 1.1rem;
+}
+
+.histox-method-summary__primary p {
+  margin: 0;
+}
+
+.histox-method-summary__primary > p:last-child {
+  color: var(--histox-muted);
+  line-height: 1.55;
+  margin-top: 0.42rem;
+  max-width: 34rem;
+}
+
+.histox-method-summary__facts {
+  display: grid;
+  gap: 0.8rem 1.15rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+
+.histox-method-summary__facts div {
+  min-width: 0;
+}
+
+.histox-method-summary__facts dt {
+  color: var(--histox-muted);
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.16rem;
+  text-transform: uppercase;
+}
+
+.histox-method-summary__facts dd {
+  color: var(--histox-ink);
+  font-size: 0.82rem;
+  font-weight: 650;
+  margin: 0;
+}
+
+.histox-method-state {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.36rem;
+}
+
+.histox-method-state::before {
+  border-radius: 50%;
+  content: "";
+  height: 0.48rem;
+  width: 0.48rem;
+}
+
+.histox-method-state--ready::before {
+  background: #2f7a4b;
+}
+
+.histox-method-actions {
+  border-bottom: 1px solid var(--histox-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.35rem;
+  margin: 0 0 0.8rem;
+  padding: 0.7rem 0;
+}
+
+.histox-method-actions a {
+  color: var(--histox-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.histox-method-actions a::after {
+  color: var(--histox-plum-dark);
+  content: " →";
+}
+
+.histox-method-actions a[href^="#"]::after {
+  content: " ↓";
+}
+
+.histox-method-actions a.histox-method-actions__external::after {
+  content: " ↗";
+}
+
+.histox-method-actions a:hover,
+.histox-method-actions a:focus-visible {
+  color: var(--histox-plum-dark);
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.histox-method-review {
+  border-left: 3px solid var(--histox-plum-dark);
+  color: var(--histox-muted);
+  font-size: 0.76rem;
+  line-height: 1.55;
+  margin: 0.8rem 0 1.65rem;
+  padding: 0.5rem 0 0.5rem 0.85rem;
+}
+
+.histox-method-review strong {
+  color: var(--histox-ink);
+}
+
+.histox-method-review span {
+  color: #9a5c00;
+}
+
+html[data-theme="dark"] .histox-method-review span {
+  color: #e0ae5e;
+}
+
+.histox-encoder-contract {
+  border-bottom: 1px solid var(--histox-border);
+  border-top: 1px solid var(--histox-border);
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(13rem, 0.9fr) 7.5rem minmax(13rem, 1fr);
+  margin: 1.25rem 0 1.75rem;
+  padding: 1rem 0 0;
+}
+
+.histox-encoder-contract__image {
+  background-image: url("pathology-hero.jpg");
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  min-height: 13rem;
+}
+
+.histox-encoder-contract__step {
+  align-items: center;
+  color: var(--histox-muted);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.68rem;
+  font-weight: 750;
+  justify-content: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.histox-encoder-contract__step b {
+  color: var(--histox-plum-dark);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+
+.histox-encoder-contract__output {
+  align-items: flex-start;
+  background: var(--histox-surface);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.histox-encoder-contract__output span {
+  color: var(--histox-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.histox-encoder-contract__output strong {
+  color: var(--histox-ink);
+  font-size: clamp(1.55rem, 3.5vw, 2.35rem);
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  margin: 0.45rem 0 0.7rem;
+}
+
+.histox-encoder-contract__output code {
+  background: transparent;
+  color: var(--histox-plum-dark);
+  font-size: 0.82rem;
+  padding: 0;
+}
+
+.histox-encoder-contract figcaption {
+  color: var(--histox-muted);
+  font-size: 0.72rem;
+  grid-column: 1 / -1;
+  line-height: 1.5;
+  padding: 0.7rem 0 0.8rem;
+}
+
+.histox-verification-table {
+  border-top: 2px solid var(--histox-ink);
+  margin: 1rem 0 2rem;
+}
+
+.histox-verification-table > div {
+  border-bottom: 1px solid var(--histox-border);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(10rem, 1fr) minmax(7rem, 0.55fr) minmax(14rem, 1.55fr);
+  padding: 0.72rem 0;
+}
+
+.histox-verification-table__head {
+  color: var(--histox-muted);
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.histox-verification-table > div:not(.histox-verification-table__head) {
+  color: var(--histox-ink);
+  font-size: 0.8rem;
+}
+
+.histox-verification-table b {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.histox-verification-table .is-checked {
+  color: #2f7a4b;
+}
+
+.histox-verification-table .is-pending {
+  color: #9a5c00;
+}
+
+html[data-theme="dark"] .histox-method-state--ready::before {
+  background: #76c28e;
+}
+
+html[data-theme="dark"] .histox-verification-table .is-checked {
+  color: #76c28e;
+}
+
+html[data-theme="dark"] .histox-verification-table .is-pending {
+  color: #e0ae5e;
+}
+
 /* Footer. */
 .histox-footer {
   background: #151719;
@@ -1847,6 +2438,64 @@ body:has(#histox-home) .histox-footer {
 
   .histox-tutorial-grid p {
     min-height: auto;
+  }
+
+  .histox-method-registry__search {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .histox-method-entry {
+    gap: 0.65rem;
+    grid-template-columns: 1fr;
+  }
+
+  .histox-method-entry__meta {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.85rem;
+  }
+
+  .histox-method-entry__meta a {
+    margin-left: auto;
+    margin-top: 0;
+  }
+
+  .histox-method-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .histox-method-summary__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .histox-encoder-contract {
+    grid-template-columns: 1fr;
+  }
+
+  .histox-encoder-contract__image {
+    min-height: min(72vw, 20rem);
+  }
+
+  .histox-encoder-contract__step {
+    flex-direction: row;
+    gap: 0.55rem;
+    padding: 0.75rem 0;
+  }
+
+  .histox-encoder-contract__step b {
+    margin: 0;
+    transform: rotate(90deg);
+  }
+
+  .histox-verification-table > div {
+    gap: 0.35rem;
+    grid-template-columns: 1fr;
+  }
+
+  .histox-verification-table__head {
+    display: none !important;
   }
 
   .histox-footer__inner {

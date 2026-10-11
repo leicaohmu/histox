@@ -76,6 +76,8 @@ Records
 Errors
 ------
 
+.. autoclass:: DatasetNotFoundError
+
 .. autoclass:: DatasetDownloadError
 
 .. autoclass:: DatasetAccessError

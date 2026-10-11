@@ -11,12 +11,52 @@
   'mil_module', 'model', 'model_torch', 'norm', 'simclr', 'slide',
   'slide_qc', 'stats', 'util', 'studio_module'
 ] %}
+{% set is_example_page = pagename.startswith('auto_examples') %}
+{% set is_method_page = pagename == 'methods' or pagename.startswith('methods/') %}
 
 {% macro nav_link(page, label) -%}
 <li><a class="nav-link{% if pagename == page %} active{% endif %}" href="{{ pathto(page) }}">{{ label }}</a></li>
 {%- endmacro %}
 
-{% if pagename in tutorial_pages %}
+{% if is_example_page %}
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="Examples navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Examples</p>
+  <ul>{{ nav_link('auto_examples/index', 'Examples gallery') }}</ul>
+
+  <p class="caption" role="heading" aria-level="2">Feature extraction</p>
+  <ul>
+    {{ nav_link('auto_examples/feature_extraction/index', 'Feature extraction examples') }}
+    {{ nav_link('auto_examples/feature_extraction/plot_dinov2_wsi', 'DINOv2 on a whole slide') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Related documentation</p>
+  <ul>
+    {{ nav_link('methods/encoders/dinov2', 'DINOv2 method guide') }}
+    {{ nav_link('features', 'Feature extraction concepts') }}
+    {{ nav_link('api', 'API reference') }}
+  </ul>
+</nav>
+{% elif is_method_page %}
+<nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="Methods navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Methods</p>
+  <ul>{{ nav_link('methods', 'Methods hub') }}</ul>
+
+  <p class="caption" role="heading" aria-level="2">Image encoders</p>
+  <ul>
+    {{ nav_link('methods/encoders/index', 'Image encoders') }}
+    {{ nav_link('methods/encoders/dinov2', 'DINOv2') }}
+    {{ nav_link('methods/encoders/vit', 'Vision Transformer') }}
+    {{ nav_link('methods/encoders/virchow', 'Virchow') }}
+  </ul>
+
+  <p class="caption" role="heading" aria-level="2">Use the methods</p>
+  <ul>
+    {{ nav_link('auto_examples/index', 'Examples gallery') }}
+    {{ nav_link('features', 'Feature extraction') }}
+    {{ nav_link('api', 'API reference') }}
+  </ul>
+</nav>
+{% elif pagename in tutorial_pages %}
 <nav class="bd-docs-nav bd-links histox-sidebar-nav" aria-label="Tutorial navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Tutorials</p>
   <ul>{{ nav_link('tutorials', 'Tutorials home') }}</ul>

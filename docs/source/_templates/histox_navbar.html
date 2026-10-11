@@ -5,10 +5,12 @@
   'tutorial3', 'tutorial4', 'tutorial5', 'tutorial6', 'tutorial7',
   'tutorial8'
 ] %}
+{% set is_example_page = pagename.startswith('auto_examples') %}
 {% set method_pages = [
   'methods', 'training', 'mil', 'segmentation', 'cellseg', 'gan',
   'stylegan', 'norm', 'slide_qc', 'heatmap', 'saliency', 'grad', 'uq'
 ] %}
+{% set is_method_page = pagename == 'methods' or pagename.startswith('methods/') %}
 {% set data_pages = ['data', 'datasets_and_val', 'dataset', 'data_api'] %}
 {% set docs_pages = ['docs', 'user_guide', 'api', 'developer'] %}
 {% set is_project_page = pagename == 'index' %}
@@ -27,20 +29,19 @@
     </div>
   </details>
 
-  <details class="histox-nav-menu{% if pagename in tutorial_pages %} is-current{% endif %}">
+  <details class="histox-nav-menu{% if pagename in tutorial_pages or is_example_page %} is-current{% endif %}">
     <summary class="histox-nav-menu__trigger" aria-haspopup="true">
-      Tutorials <span class="histox-nav-menu__caret" aria-hidden="true"></span>
+      Examples <span class="histox-nav-menu__caret" aria-hidden="true"></span>
     </summary>
     <div class="histox-nav-menu__panel">
-      <a href="{{ pathto('tutorials') }}"><strong>All tutorials</strong><span>Browse complete examples by topic.</span></a>
+      <a href="{{ pathto('auto_examples/index') }}"><strong>Examples gallery</strong><span>Run complete, downloadable workflows.</span></a>
+      <a href="{{ pathto('auto_examples/feature_extraction/plot_dinov2_wsi') }}"><strong>DINOv2 feature extraction</strong><span>Go from a public SVS to a feature bag.</span></a>
+      <a href="{{ pathto('tutorials') }}"><strong>Guided tutorials</strong><span>Browse task-oriented learning material.</span></a>
       <a href="{{ pathto('tutorials_training') }}"><strong>Training</strong><span>Models, loops, and augmentation.</span></a>
-      <a href="{{ pathto('tutorials_evaluation') }}"><strong>Evaluation</strong><span>Metrics, heatmaps, and mosaics.</span></a>
-      <a href="{{ pathto('tutorials_slides') }}"><strong>Slides</strong><span>Processing and custom filters.</span></a>
-      <a href="{{ pathto('tutorials_mil') }}"><strong>MIL</strong><span>Weakly supervised slide learning.</span></a>
     </div>
   </details>
 
-  <details class="histox-nav-menu{% if pagename in method_pages %} is-current{% endif %}">
+  <details class="histox-nav-menu{% if pagename in method_pages or is_method_page %} is-current{% endif %}">
     <summary class="histox-nav-menu__trigger" aria-haspopup="true">
       Methods <span class="histox-nav-menu__caret" aria-hidden="true"></span>
     </summary>
