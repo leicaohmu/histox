@@ -180,7 +180,7 @@ html_logo = None
 html_favicon = None
 html_static_path = ['_static']
 html_css_files = ['custom.css']
-html_js_files = ['tutorials.js', 'gallery.js']
+html_js_files = ['tutorials.js', 'methods.js', 'gallery.js']
 
 html_theme_options = {
     'show_toc_level': 2,

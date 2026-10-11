@@ -5,9 +5,9 @@ The HistoX Methods Hub organizes pathology algorithms by research task. It is
 the stable entry point for methods reproduced from published work, adaptations
 maintained by HistoX, and methods developed by the HistoX team.
 
-This page distinguishes available documentation from planned method families.
-An entry is not considered implemented until its code, tests, usage example,
-and provenance are present in the repository.
+This page distinguishes callable implementations from planned method families.
+``Available`` means that the current HistoX source contains an implementation
+and corresponding documentation; it does not imply clinical validation.
 
 Browse by task
 --------------
@@ -63,23 +63,186 @@ Browse by task
 
       **Available**
 
+.. _method-registry:
+
+Method registry
+---------------
+
+Search the implementations that are currently exposed by HistoX. The registry
+links to usage documentation rather than duplicating API details. Paper-level
+provenance, licenses, weight requirements, and known limitations remain part of
+each method record as the catalog matures.
+
+.. raw:: html
+
+   <section class="histox-method-registry" data-method-registry aria-labelledby="histox-method-registry-title">
+     <h2 id="histox-method-registry-title" class="visually-hidden">Available HistoX methods</h2>
+     <div class="histox-method-registry__toolbar">
+       <label class="histox-method-registry__search" for="histox-method-search">
+         <span>Search methods</span>
+         <input id="histox-method-search" type="search" placeholder="Try DINOv2, MIL, normalization…" autocomplete="off" data-method-search>
+       </label>
+       <div class="histox-method-registry__filters" role="group" aria-label="Filter methods by task">
+         <button type="button" data-method-filter="all" aria-pressed="true">All</button>
+         <button type="button" data-method-filter="encoders" aria-pressed="false">Encoders</button>
+         <button type="button" data-method-filter="mil" aria-pressed="false">MIL</button>
+         <button type="button" data-method-filter="segmentation" aria-pressed="false">Segmentation</button>
+         <button type="button" data-method-filter="preprocessing" aria-pressed="false">Preprocessing</button>
+         <button type="button" data-method-filter="interpretation" aria-pressed="false">Interpretation</button>
+       </div>
+     </div>
+     <p class="histox-method-registry__results" data-method-results role="status" aria-live="polite"></p>
+     <div class="histox-method-registry__list">
+       <article class="histox-method-entry" data-method-entry data-task="encoders">
+         <div class="histox-method-entry__task">Encoder</div>
+         <div class="histox-method-entry__body">
+           <h3>DINOv2</h3>
+           <p>Build a DINOv2 feature extractor for tiles, tensors, and whole-slide workflows.</p>
+           <p class="histox-method-entry__symbol"><code>histox.model.build_feature_extractor("dinov2", cfg="config.yaml", weights="teacher.pth")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>External integration</small><a href="methods/encoders/dinov2.html">Open guide <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="encoders">
+         <div class="histox-method-entry__task">Encoder</div>
+         <div class="histox-method-entry__body">
+           <h3>Virchow</h3>
+           <p>Use Virchow as a pathology feature encoder with an explicit weights contract.</p>
+           <p class="histox-method-entry__symbol"><code>histox.model.build_feature_extractor("virchow", weights="virchow.pth")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>External integration</small><a href="methods/encoders/virchow.html">Open guide <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="encoders">
+         <div class="histox-method-entry__task">Encoder</div>
+         <div class="histox-method-entry__body">
+           <h3>Vision Transformer</h3>
+           <p>Construct a configurable ViT extractor through the common HistoX feature interface.</p>
+           <p class="histox-method-entry__symbol"><code>histox.model.build_feature_extractor("vit", size="base", weights="model.pth")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>External integration</small><a href="methods/encoders/vit.html">Open guide <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="mil">
+         <div class="histox-method-entry__task">MIL</div>
+         <div class="histox-method-entry__body">
+           <h3>Attention MIL</h3>
+           <p>Train attention-based multiple-instance models from slide-level feature bags.</p>
+           <p class="histox-method-entry__symbol"><code>histox.mil.mil_config("attention_mil")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>Published method</small><a href="mil.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="mil">
+         <div class="histox-method-entry__task">MIL</div>
+         <div class="histox-method-entry__body">
+           <h3>Multimodal Attention MIL</h3>
+           <p>Combine multiple feature bags in the HistoX multimodal MIL training path.</p>
+           <p class="histox-method-entry__symbol"><code>histox.mil.mil_config("mm_attention_mil")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>Integrated workflow</small><a href="mil.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="mil">
+         <div class="histox-method-entry__task">MIL</div>
+         <div class="histox-method-entry__body">
+           <h3>TransMIL</h3>
+           <p>Model correlations between instances with the registered transformer MIL architecture.</p>
+           <p class="histox-method-entry__symbol"><code>histox.mil.mil_config("transmil")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>Published method</small><a href="mil.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="segmentation">
+         <div class="histox-method-entry__task">Segmentation</div>
+         <div class="histox-method-entry__body">
+           <h3>Whole-slide tissue segmentation</h3>
+           <p>Train binary, multiclass, or multilabel tissue models and run tiled slide inference.</p>
+           <p class="histox-method-entry__symbol"><code>histox.segment.SegmentConfig</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>HistoX workflow</small><a href="segmentation.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="segmentation">
+         <div class="histox-method-entry__task">Segmentation</div>
+         <div class="histox-method-entry__body">
+           <h3>Cell segmentation</h3>
+           <p>Segment cells from whole-slide tiles and export compressed masks for downstream analysis.</p>
+           <p class="histox-method-entry__symbol"><code>histox.cellseg.Segmentation</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>External integration</small><a href="cellseg.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="preprocessing">
+         <div class="histox-method-entry__task">Normalization</div>
+         <div class="histox-method-entry__body">
+           <h3>Macenko</h3>
+           <p>Normalize and augment stain appearance with NumPy, TensorFlow, or PyTorch implementations.</p>
+           <p class="histox-method-entry__symbol"><code>histox.norm.autoselect("macenko")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>Published method</small><a href="norm.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="preprocessing">
+         <div class="histox-method-entry__task">Normalization</div>
+         <div class="histox-method-entry__body">
+           <h3>Reinhard</h3>
+           <p>Apply reference-based color normalization, including fast and masked variants.</p>
+           <p class="histox-method-entry__symbol"><code>histox.norm.autoselect("reinhard")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>Published method</small><a href="norm.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="preprocessing">
+         <div class="histox-method-entry__task">Normalization</div>
+         <div class="histox-method-entry__body">
+           <h3>Vahadane</h3>
+           <p>Perform sparse stain separation through SPAMS- or scikit-learn-based implementations.</p>
+           <p class="histox-method-entry__symbol"><code>histox.norm.autoselect("vahadane_sklearn")</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>Published method</small><a href="norm.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="preprocessing">
+         <div class="histox-method-entry__task">Quality control</div>
+         <div class="histox-method-entry__body">
+           <h3>Slide quality control</h3>
+           <p>Compose Otsu, Gaussian blur, DeepFocus, saved-mask, and segmentation-based QC.</p>
+           <p class="histox-method-entry__symbol"><code>histox.slide.qc</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>Integrated workflow</small><a href="slide_qc.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="interpretation">
+         <div class="histox-method-entry__task">Interpretation</div>
+         <div class="histox-method-entry__body">
+           <h3>Whole-slide heatmaps</h3>
+           <p>Inspect spatial predictions and model attention across a whole-slide image.</p>
+           <p class="histox-method-entry__symbol"><code>histox.Heatmap</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>HistoX workflow</small><a href="heatmap.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="interpretation">
+         <div class="histox-method-entry__task">Interpretation</div>
+         <div class="histox-method-entry__body">
+           <h3>Saliency maps</h3>
+           <p>Explain model predictions with gradients and integrated-gradient methods.</p>
+           <p class="histox-method-entry__symbol"><code>histox.grad.SaliencyMap</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Available</span><small>HistoX workflow</small><a href="saliency.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+     </div>
+     <p class="histox-method-registry__empty" data-method-empty hidden>No methods match the current filters.</p>
+   </section>
+
+Planned method families
+-----------------------
+
 .. _methods-foundation:
 
 Foundation models and VLM
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This family is reserved for pathology foundation encoders, zero-shot
-classification, image-text retrieval, visual question answering, and other
-vision-language workflows. Implementations will appear here only after their
-weights, preprocessing contract, license, and evaluation example are verified.
+HistoX currently exposes selected encoder integrations such as DINOv2 and
+Virchow in the registry above. This planned area is for a unified foundation
+model catalog, zero-shot classification, image-text retrieval, visual question
+answering, and other vision-language workflows.
 
-**Status:** Planned catalog area. No unified HistoX foundation-model API is
-claimed on this page yet.
+**Status:** Planned catalog expansion. Available encoder integrations do not
+yet constitute a unified HistoX foundation-model or VLM API.
 
 .. _methods-survival:
 
 Survival and prognosis
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 This family will cover time-to-event prediction, censoring-aware objectives,
 risk stratification, and multimodal prognosis. Each implementation must state
@@ -92,15 +255,17 @@ used experimentally, but a stable survival interface is not documented yet.
 .. _methods-multimodal:
 
 Multimodal and spatial methods
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This family is reserved for methods that combine histology with text, clinical
-variables, genomics, spatial transcriptomics, or other molecular measurements.
-Entries must document modality alignment, missing-data behavior, and cohort
-requirements.
+HistoX currently includes multimodal Attention MIL for combining multiple
+feature bags. This planned area covers broader methods that combine histology
+with text, clinical variables, genomics, spatial transcriptomics, or other
+molecular measurements. Entries must document modality alignment, missing-data
+behavior, and cohort requirements.
 
-**Status:** Planned catalog area. Methods will be added as tested workflows
-rather than as a list of unsupported paper names.
+**Status:** Planned catalog expansion beyond the available feature-bag MIL
+workflow. Methods will be added as tested workflows rather than as a list of
+unsupported paper names.
 
 Method records
 --------------
@@ -114,7 +279,7 @@ Every method added to HistoX should expose the same minimum record:
    * - Field
      - What it records
    * - Origin
-     - ``reproduced``, ``adapted``, or ``histox-original``.
+     - ``reproduced``, ``adapted``, ``integration``, or ``histox-original``.
    * - Maturity
      - ``experimental``, ``beta``, or ``stable``.
    * - Provenance

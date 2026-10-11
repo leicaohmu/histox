@@ -78,6 +78,41 @@
           "checksum_algorithm": "sha256"
         }
       ]
+    },
+    {
+      "name": "tcga-coad-slide-processing",
+      "version": "1.0",
+      "default": true,
+      "title": "TCGA-COAD slide processing tutorial",
+      "description": "The open-access diagnostic slide used by the HistoX Slide Processing tutorial and its generated figures.",
+      "provider": {
+        "name": "NCI Genomic Data Commons",
+        "dataset_id": "gdc:ed5f8c30-29e3-4144-948b-b8658564f2d6",
+        "url": "https://portal.gdc.cancer.gov/files/ed5f8c30-29e3-4144-948b-b8658564f2d6"
+      },
+      "access": "open",
+      "license": null,
+      "terms_url": "https://gdc.cancer.gov/analyze-data/data-analysis-policies",
+      "citations": [
+        "https://portal.gdc.cancer.gov/files/ed5f8c30-29e3-4144-948b-b8658564f2d6",
+        "https://www.cancer.gov/ccg/research/genome-sequencing/tcga"
+      ],
+      "tasks": [
+        "wsi-reading",
+        "tile-extraction",
+        "quality-control",
+        "stain-normalization",
+        "tutorial"
+      ],
+      "assets": [
+        {
+          "path": "TCGA-3L-AA1B-01Z-00-DX1.8923A151-A690-40B7-9E5A-FCBEDFC2394F.svs",
+          "url": "https://api.gdc.cancer.gov/data/ed5f8c30-29e3-4144-948b-b8658564f2d6",
+          "size_bytes": 1228418533,
+          "checksum": "1f0cdb5cacd17c3dbf99f82ac41339dd",
+          "checksum_algorithm": "md5"
+        }
+      ]
     }
   ]
 }

@@ -143,6 +143,8 @@ def list_datasets() -> Tuple[DatasetRecord, ...]:
         ...     print(record.name, record.version)
         histox-download-fixture 1.0
         histox-metadata-fixture 1.0
+        openslide-cmu-small 1.0
+        tcga-coad-slide-processing 1.0
     """
 
     records, _ = _load_registry()

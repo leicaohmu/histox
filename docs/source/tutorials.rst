@@ -8,6 +8,11 @@ interpretation.
 What's new in HistoX tutorials?
 -------------------------------
 
+* The :doc:`executable examples gallery <auto_examples/index>` now provides
+  downloadable Python source and Jupyter notebooks generated from the same
+  files used to build each example page.
+* :doc:`tutorials/feature_bags` is a source-checked draft workflow for turning
+  a WSI project into feature bags for MIL; runtime validation is still pending.
 * The :doc:`quickstart` now uses the HistoX package and PyTorch-first workflow.
 * The :doc:`data` guide documents the public-data registry and local cache.
 * Eight inherited workflow tutorials remain available while their examples are
@@ -50,9 +55,11 @@ marked until their code has been migrated and executed with HistoX.
        <button id="topic-interpretation" type="button" data-topic="interpretation" aria-pressed="false">Interpretation</button>
        <button id="topic-extensions" type="button" data-topic="extensions" aria-pressed="false">Extensions</button>
      </div>
-     <p class="histox-tutorial-results" aria-live="polite"><strong data-result-count>9</strong> tutorials shown</p>
+     <p class="histox-tutorial-results" aria-live="polite"><strong data-result-count>11</strong> tutorials shown</p>
      <div class="histox-tutorial-grid">
        <a class="histox-tutorial-card" href="auto_examples/basics/plot_open_wsi.html" data-topics="getting-started slides"><span>Getting started · Slides</span><h3>Open your first WSI</h3><p>Download a small public SVS, inspect its physical scale and tile grid, then retrieve a verified RGB tile.</p><strong>Beginner · Executable example</strong></a>
+       <a class="histox-tutorial-card" href="auto_examples/feature_extraction/plot_dinov2_wsi.html" data-topics="models slides"><span>Models · Slides</span><h3>Extract DINOv2 WSI features</h3><p>Download a public SVS, encode retained tiles, inspect the spatial embedding map, and save a reusable feature bag.</p><strong>Executable example</strong></a>
+       <a class="histox-tutorial-card" href="tutorials/feature_bags.html" data-topics="models slides mil"><span>Models · Slides · MIL</span><h3>Generate feature bags</h3><p>Take an existing WSI project through tile extraction, ResNet-50 encoding, and output validation.</p><strong>Source-checked draft</strong></a>
        <a class="histox-tutorial-card" href="tutorial1.html" data-topics="getting-started training"><span>Getting started · Training</span><h3>Train a first model</h3><p>Take a TCGA project from slides and labels to a trained classifier.</p><strong>Compatibility tutorial</strong></a>
        <a class="histox-tutorial-card" href="tutorial2.html" data-topics="training extensions"><span>Training · Extensions</span><h3>Control the training loop</h3><p>Work directly with datasets and trainers for a customized pipeline.</p><strong>Compatibility tutorial</strong></a>
        <a class="histox-tutorial-card" href="tutorial3.html" data-topics="models extensions"><span>Models · Extensions</span><h3>Use a custom architecture</h3><p>Integrate your own vision architecture with the HistoX model interface.</p><strong>Compatibility tutorial</strong></a>
@@ -66,15 +73,16 @@ marked until their code has been migrated and executed with HistoX.
 
 .. note::
 
-   Compatibility tutorials still contain examples inherited from HistoX.
-   Treat their APIs as migration references until each page is marked as
-   verified for the current HistoX release.
+   Compatibility tutorials still contain examples inherited from the legacy
+   codebase. Treat their APIs as migration references until each page is
+   marked as verified for the current HistoX release.
 
 Additional resources
 --------------------
 
 * :doc:`installation` — supported installation paths and dependency groups.
 * :doc:`data` — discover, download, verify, and cache public datasets.
+* :doc:`auto_examples/index` — executable examples with source and notebook downloads.
 * :doc:`api` — package API organized by module and task.
 
 .. toctree::
@@ -85,3 +93,4 @@ Additional resources
    tutorials_evaluation
    tutorials_slides
    tutorials_mil
+   tutorials/feature_bags

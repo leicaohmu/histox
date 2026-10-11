@@ -108,6 +108,11 @@ setuptools.setup(
             'cucim',
             'cupy-cuda11x',
         ],
+        'dicom': [
+            'wsidicom>=0.20.6,<0.21; python_version >= "3.9" and python_version < "3.10"',
+            'wsidicom>=0.35,<0.36; python_version >= "3.10" and python_version < "3.11"',
+            'wsidicom>=0.36.1,<0.37; python_version >= "3.11"',
+        ],
         'noncommercial': [
             'slideflow-noncommercial',
         ],

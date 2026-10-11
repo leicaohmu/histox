@@ -58,6 +58,9 @@ Installation groups
      - PyTorch, cuCIM, and the CUDA 12 CuPy build.
    * - ``python -m pip install "histox[torch,cucim-cuda11]"``
      - PyTorch, cuCIM, and the CUDA 11 CuPy build.
+   * - ``python -m pip install "histox[dicom]"``
+     - Local DICOM Slide Microscopy files and multi-instance series via
+       ``wsidicom``. This group requires Python 3.9 or newer.
 
 Do not install multiple ``cupy-*`` variants in one environment. Match the
 CuPy build to the CUDA runtime reported by ``nvidia-smi``.
@@ -73,7 +76,9 @@ Whole-slide image reading requires one of the following:
 * `libvips <https://www.libvips.org/>`_ with its Python binding, for broad
   scanner-format support; or
 * `cuCIM <https://docs.rapids.ai/api/cucim/stable/>`_ in a compatible NVIDIA
-  CUDA environment.
+  CUDA environment; or
+* the ``dicom`` optional dependency group for DICOM Slide Microscopy. DICOM
+  series reading is independent of the selected libvips/cuCIM backend.
 
 Model training also requires the selected deep-learning backend. A CUDA-capable
 GPU is strongly recommended for training, but it is not required to import

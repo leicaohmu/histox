@@ -120,7 +120,7 @@ class WSI:
             ignore_missing_mpp (bool, optional): If a slide does not have
                 microns-per-pixel (MPP) information stored in EXIF data
                 (key 65326), set the MPP to a default value
-                (``hx.slide.DEFAULG_JPG_MPP``). If False and MPP data is
+                (``hx.slide.DEFAULT_JPG_MPP``). If False and MPP data is
                 missing, raises ``hx.errors.SlideMissingMPPError``.
             use_bounds (bool): If True, use the slide bounds to determine
                 the slide dimensions. This will crop out unscanned white space.
@@ -142,6 +142,8 @@ class WSI:
 
         """
         # Initialize calculated variables
+        if hx.util.is_dicom_slide(path):
+            path = os.path.normpath(path)
         self.pb = pb
         self.name = path_to_name(path)
         self.shortname = hx.util._shortname(self.name)
@@ -150,7 +152,10 @@ class WSI:
         self.thumb_image = None  # type: Optional[Image.Image]
         self.stride_div = stride_div
         self.path = path
-        self.filetype = hx.util.path_to_ext(path)
+        self.filetype = (
+            'dcm' if hx.util.is_dicom_slide(path)
+            else hx.util.path_to_ext(path)
+        )
         self.blur_burden = None  # type: Optional[float]
         self.roi_method = None  # type: Optional[str]
         self.extracted_x_size = 0  # type: int
