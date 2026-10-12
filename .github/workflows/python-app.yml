@@ -44,3 +44,7 @@ jobs:
           python scripts/check_dist.py
           python -m pip install --no-deps dist/*.whl
           python -c "from importlib.metadata import version; print(version('histox'))"
+          smoke_root="$(mktemp -d)"
+          mkdir "$smoke_root/histox"
+          cd "$smoke_root"
+          python -c "import importlib.util as u; s = u.find_spec('histox'); assert s is not None and s.origin is not None, s; print(s.origin)"
