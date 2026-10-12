@@ -42,11 +42,11 @@ The example is a data-access check, not a diagnostic or training workflow.
 # ----------------
 #
 # Install HistoX in a Python 3.9 environment and make sure ``libvips`` is
-# available on the host. A development checkout can be installed with:
+# available on the host:
 #
 # .. code-block:: bash
 #
-#    python -m pip install -e .
+#    python -m pip install "histox[torch]"
 #
 # The download location is explicit so you always know where the example put
 # its data. Set ``HISTOX_EXAMPLE_DIR`` to keep it somewhere else.

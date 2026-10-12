@@ -6,16 +6,38 @@ so pin the package version in reproducible projects. Python 3.9 is the current
 development and continuous-integration baseline; the package metadata still
 declares Python 3.7 or newer while compatibility is being audited.
 
-Development installation
+Recommended installation
 ------------------------
 
-Installing the repository in editable mode is the recommended way to test the
-current code before a formal release:
+Install the published package with the PyTorch backend:
 
 .. code-block:: bash
 
-   git clone https://github.com/leicaohmu/histox.git
-   cd histox
+   conda create -n histox python=3.9
+   conda activate histox
+   python -m pip install --upgrade pip
+   python -m pip install "histox[torch]"
+
+To evaluate the current GitHub ``master`` branch without retaining a source
+checkout, let pip build and install it directly:
+
+.. code-block:: bash
+
+   python -m pip install "histox[torch] @ git+https://github.com/leicaohmu/histox.git@master"
+
+The repository may contain changes newer than the published package. Check
+``hx.__version__`` and pin the version or Git commit used by an experiment.
+
+Contributor installation
+------------------------
+
+Editable mode is for contributors who intend to modify HistoX. Clone into a
+directory whose name is distinct from the import package:
+
+.. code-block:: bash
+
+   git clone https://github.com/leicaohmu/histox.git histox-src
+   cd histox-src
    conda create -n histox python=3.9
    conda activate histox
    python -m pip install --upgrade pip
@@ -23,19 +45,9 @@ current code before a formal release:
 
 Changes made inside the cloned repository are then available immediately in
 the ``histox`` environment; reinstalling after every edit is not required.
-
-Published package
------------------
-
-To evaluate the most recent package published on PyPI with the PyTorch
-backend:
-
-.. code-block:: bash
-
-   python -m pip install "histox[torch]"
-
-The repository may contain changes newer than the published package. Check
-``hx.__version__`` and pin the version used by an experiment.
+The ``histox-src`` name also prevents an outer checkout directory named
+``histox`` from being mistaken for a namespace package when Python is started
+from its parent directory.
 
 Installation groups
 -------------------
@@ -94,11 +106,28 @@ Run this before creating a project:
    import histox as hx
 
    print("HistoX:", hx.__version__)
+   print("package location:", hx.__file__)
    print("model backend:", hx.backend())
    print("slide backend:", hx.slide_backend())
 
 For the current development line, the first line should report ``0.2.1``.
-The backend values depend on the packages installed in the environment.
+The package location must point to a real ``histox/__init__.py`` file rather
+than ``None``. The backend values depend on the packages installed in the
+environment.
+
+Troubleshoot ``unknown location``
+------------------------------------
+
+If Python reports ``cannot import name ... from histox (unknown location)``,
+inspect package resolution without importing HistoX:
+
+.. code-block:: bash
+
+   python -c "import importlib.util as u; s=u.find_spec('histox'); print(s.origin, s.submodule_search_locations)"
+
+An origin of ``None`` means that Python found an outer directory named
+``histox`` instead of the installed package. Reinstall without editable mode,
+or rename the source checkout to ``histox-src`` and reinstall it.
 
 Select backends explicitly
 --------------------------

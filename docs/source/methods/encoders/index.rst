@@ -59,8 +59,10 @@ All three encoders require the PyTorch dependencies:
 
    python -m pip install "histox[torch]"
 
-For an editable checkout, use ``python -m pip install -e ".[torch]"`` from the
-repository root. DINOv2 has one additional dependency described in its
+Contributors using an editable ``histox-src`` checkout can instead run
+``python -m pip install -e ".[torch]"`` from the repository root. See
+:doc:`../../installation` for the distinction between user and contributor
+installs. DINOv2 has one additional dependency described in its
 :doc:`dedicated guide <dinov2>`.
 
 Common input contract

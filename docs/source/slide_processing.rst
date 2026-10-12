@@ -15,9 +15,9 @@ Whole-slide histopathological images present many challenges for machine learnin
 
 .. note::
 
-   The figures on this page were generated with the current HistoX
-   implementation, not copied from Slideflow. They use open-access TCGA slide
-   images from the `NCI Genomic Data Commons <https://gdc.cancer.gov/access-data/gdc-data-portal>`_.
+   The figures on this page were generated specifically with the current
+   HistoX implementation. They use open-access TCGA slide images from the
+   `NCI Genomic Data Commons <https://gdc.cancer.gov/access-data/gdc-data-portal>`_.
    The exact source filenames and processing parameters are recorded by
    ``docs/tools/generate_slide_processing_assets.py``.
 

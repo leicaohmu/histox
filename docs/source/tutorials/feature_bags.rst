@@ -49,12 +49,14 @@ You need:
 * network access on the first run if the pretrained ResNet-50 weights are not
   already cached by TorchVision.
 
-Install an editable development checkout with:
+Install HistoX with the PyTorch dependency group:
 
 .. code-block:: bash
 
-   cd /path/to/histox
-   python -m pip install -e ".[torch]"
+   python -m pip install "histox[torch]"
+
+To run against the current GitHub version, follow :doc:`../installation`
+rather than creating an editable checkout solely for this tutorial.
 
 .. warning::
 

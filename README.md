@@ -52,13 +52,23 @@ Install the published package with the PyTorch extras:
 python -m pip install "histox[torch]"
 ```
 
-For development from the current repository:
+To install the current GitHub version without keeping a source checkout:
 
 ```bash
-git clone https://github.com/leicaohmu/histox.git
-cd histox
+python -m pip install "histox[torch] @ git+https://github.com/leicaohmu/histox.git@master"
+```
+
+Editable installation is intended for contributors. Use a checkout directory
+whose name is distinct from the import package:
+
+```bash
+git clone https://github.com/leicaohmu/histox.git histox-src
+cd histox-src
 python -m pip install -e ".[torch]"
 ```
+
+Using `histox-src` avoids an outer directory named `histox` shadowing the
+installed package when Python is started from the checkout's parent directory.
 
 Optional installation groups are retained for existing workflows:
 
@@ -80,12 +90,14 @@ CuPy package to the CUDA runtime reported by `nvidia-smi`.
 import histox as hx
 
 print("HistoX:", hx.__version__)
+print("package location:", hx.__file__)
 print("model backend:", hx.backend())
 print("slide backend:", hx.slide_backend())
 ```
 
-With PyTorch installed, `hx.backend()` should report `torch` unless
-`HX_BACKEND` explicitly selects another supported backend.
+The package location must point to a real ``histox/__init__.py`` file. With
+PyTorch installed, `hx.backend()` should report `torch` unless `HX_BACKEND`
+explicitly selects another supported backend.
 
 ## Minimal project workflow
 
