@@ -131,6 +131,18 @@ def logging_level(level: int):
 
 
 def addLoggingFileHandler(path):
+    """Add file logging and return the configured handler.
+
+    File logging is opt-in. HistoX logs to the console by default and only
+    creates a log file when this function is called or ``HX_LOG_FILE`` is set.
+
+    Args:
+        path (str or os.PathLike): Destination log file.
+
+    Returns:
+        histox.util.log_utils.MultiProcessingHandler: Configured handler.
+
+    """
     fh = logging.FileHandler(path)
     fh.setFormatter(log_utils.FileFormatter())
     handler = log_utils.MultiProcessingHandler(
@@ -139,6 +151,18 @@ def addLoggingFileHandler(path):
     )
     log.addHandler(handler)
     atexit.register(handler.close)
+    return handler
+
+
+def _configure_file_logging():
+    path = os.environ.get('HX_LOG_FILE')
+    if not path:
+        return None
+    try:
+        return addLoggingFileHandler(path)
+    except OSError as e:
+        log.warning("Unable to create HistoX log file %r: %s", path, e)
+        return None
 
 
 # Add tqdm-friendly stream handler
@@ -161,12 +185,9 @@ else:
     ch.setLevel(logging.INFO)
 log.addHandler(ch)
 
-# Add multiprocessing-friendly file handler
-try:
-    addLoggingFileHandler("histox.log")
-except Exception as e:
-    # If we can't write to the log file, just ignore it
-    pass
+# File logging is explicitly enabled with HX_LOG_FILE. Importing HistoX must
+# not create files in the user's current working directory.
+_configure_file_logging()
 
 # Workaround for duplicate logging with TF 2.9
 log.propagate = False

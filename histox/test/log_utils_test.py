@@ -1,7 +1,11 @@
 import io
 import logging
+import os
+import tempfile
 import unittest
+from unittest import mock
 
+import histox as hx
 from histox.util.log_utils import MultiProcessingHandler
 
 
@@ -47,6 +51,57 @@ class MultiProcessingHandlerTest(unittest.TestCase):
         self.handler.close()
 
         self.assertFalse(listener_thread.is_alive())
+
+
+class LoggingConfigurationTest(unittest.TestCase):
+
+    def _assert_file_handler_writes(self, handler, path):
+        try:
+            record = logging.LogRecord(
+                name='histox',
+                level=logging.INFO,
+                pathname=__file__,
+                lineno=0,
+                msg='explicit file logging',
+                args=(),
+                exc_info=None,
+            )
+            handler.emit(record)
+            handler.close()
+
+            with open(path, encoding='utf-8') as log_file:
+                self.assertIn('explicit file logging', log_file.read())
+        finally:
+            hx.log.removeHandler(handler)
+            handler.close()
+
+    def test_file_logging_is_disabled_by_default(self):
+        file_handlers = [
+            handler for handler in hx.log.handlers
+            if isinstance(
+                getattr(handler, 'sub_handler', None),
+                logging.FileHandler,
+            )
+        ]
+
+        self.assertEqual(file_handlers, [])
+
+    def test_file_logging_can_be_enabled_programmatically(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = os.path.join(tmp_dir, 'histox.log')
+
+            handler = hx.util.addLoggingFileHandler(path)
+
+            self._assert_file_handler_writes(handler, path)
+
+    def test_file_logging_can_be_enabled_from_environment(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = os.path.join(tmp_dir, 'histox.log')
+            with mock.patch.dict(os.environ, {'HX_LOG_FILE': path}):
+                handler = hx.util._configure_file_logging()
+
+            self.assertIsNotNone(handler)
+            self._assert_file_handler_writes(handler, path)
 
 
 if __name__ == '__main__':
