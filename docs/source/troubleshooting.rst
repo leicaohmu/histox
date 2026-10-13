@@ -1,7 +1,32 @@
 Troubleshooting
 ===============
 
-If you're running into problems, look for more information by including debug logging. To enable debug logging, set the environmental variable ``HX_LOGGING_LEVEL=10``.
+Logging
+*******
+
+HistoX logs to the terminal by default. Importing HistoX does not create a log
+file in the current working directory.
+
+To include debug messages in the terminal output, set
+``HX_LOGGING_LEVEL=10`` before starting Python:
+
+.. code-block:: bash
+
+    export HX_LOGGING_LEVEL=10
+
+File logging is opt-in. Set ``HX_LOG_FILE`` to an explicit destination:
+
+.. code-block:: bash
+
+    export HX_LOG_FILE=/path/to/logs/histox.log
+
+Alternatively, enable it programmatically:
+
+.. code-block:: python
+
+    from histox.util import addLoggingFileHandler
+
+    addLoggingFileHandler("/path/to/logs/histox.log")
 
 To check for errors in your environment or installation, you can also use the test script ``test.py``, which uses the testing suite ``histox.test.TestSuite`` to execute all pipeline functions on a set of provided slides.
 
