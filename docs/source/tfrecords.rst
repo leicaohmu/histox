@@ -34,6 +34,53 @@ HistoX uses TFRecord index files to keep track of the internal structure of each
 
 Index files for an entire dataset can be rebuilt using :meth:`histox.Dataset.rebuild_index()`. You can manually create an index file for a single TFRecord using :func:`hx.util.tfrecord2idx.create_index()`.
 
+.. _tfrecord_performance:
+
+When to use TFRecords
+*********************
+
+Reading tiles from TFRecords avoids re-reading and re-decoding the whole-slide
+image on every pass. The cost is a one-time extraction step and disk space.
+The benchmark below used six open-access TCGA diagnostic slides from different
+tissue source sites (87,412 tiles at 224 px / 112 µm, Otsu QC, no stain
+normalization), ResNet-50 ImageNet features, and one NVIDIA RTX 3090. Both
+paths processed the same tiles; feature-extraction timings include image
+decoding.
+
+.. list-table::
+    :header-rows: 1
+    :widths: 40 30 30
+
+    * - Step
+      - Directly from slides
+      - From TFRecords
+    * - One-time TFRecord extraction
+      - --
+      - 272 s, 2.9 GB
+    * - Feature extraction, per pass
+      - 154--174 s
+      - 50--53 s
+    * - Total for one pass
+      - ~164 s
+      - ~324 s
+    * - Total for ten passes
+      - ~1,640 s
+      - ~790 s
+
+Each pass over TFRecords is about three times faster, and from the third pass
+onward the TFRecord path is faster overall. Use TFRecords when the same tiles
+are read repeatedly: training tile-level models for several epochs, data
+augmentation, hyperparameter searches, or comparing feature extractors. For a
+single pass, for example extracting foundation-model features once for MIL,
+reading directly from the slides (``extractor(wsi)``) is faster and needs no
+extra disk space. Either way, the resulting feature bags can be reused for all
+later MIL training.
+
+Timings depend on hardware and storage; the extraction time includes HistoX's
+default PDF extraction report. Reproduce the benchmark with
+``scripts/benchmarks/tfrecord_vs_wsi.py``; the raw results are in
+``scripts/benchmarks/results/tfrecord_vs_wsi_2026-11-19.json``.
+
 Creating TFRecords
 ******************
 

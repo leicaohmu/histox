@@ -1,0 +1,42 @@
+{
+  "histox_version": "0.2.1",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "slides": [
+    "TCGA-3L-AA1B-01Z-00-DX1.8923A151-A690-40B7-9E5A-FCBEDFC2394F.svs",
+    "TCGA-4N-A93T-01Z-00-DX1.82E240B1-22C3-46E3-891F-0DCE35C43F8B.svs",
+    "TCGA-4T-AA8H-01Z-00-DX1.A46C759C-74A2-4724-B6B5-DECA0D16E029.svs",
+    "TCGA-5M-AAT4-01Z-00-DX1.725C46CA-9354-43AC-AA81-3E5A66354D6B.svs",
+    "TCGA-A6-2671-01Z-00-DX1.13d1a0d9-78cd-4cfc-b670-34a79ebe52ee.svs",
+    "TCGA-AA-3514-01Z-00-DX1.9e135da2-436e-47e3-9dbf-b2f577677828.svs"
+  ],
+  "tile_px": 224,
+  "tile_um": 112,
+  "batch_size": 64,
+  "extractor": "resnet50_imagenet",
+  "qc": "otsu",
+  "runs": [
+    {
+      "wsi_read_s": 118.05,
+      "wsi_read_tiles": 87412,
+      "tfr_read_s": 1.85,
+      "tfr_read_tiles": 87412,
+      "wsi_features_s": 153.83,
+      "wsi_features_tiles": 87412,
+      "tfr_features_s": 53.08,
+      "tfr_features_tiles": 87412
+    },
+    {
+      "wsi_read_s": 117.96,
+      "wsi_read_tiles": 87412,
+      "tfr_read_s": 1.98,
+      "tfr_read_tiles": 87412,
+      "wsi_features_s": 174.38,
+      "wsi_features_tiles": 87412,
+      "tfr_features_s": 50.17,
+      "tfr_features_tiles": 87412
+    }
+  ],
+  "tfrecord_extract_s": 271.62,
+  "tfrecord_bytes": 2907613979,
+  "tfrecord_tiles": 87412
+}
