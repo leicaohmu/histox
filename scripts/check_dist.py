@@ -12,7 +12,6 @@ FORBIDDEN_SDIST_PREFIXES = (
     "datasets/",
     "dist/",
     "docs/",
-    "docs-source/",
 )
 FORBIDDEN_PACKAGE_PATHS = {
     "histox/norm/norm_tile.jpg",
