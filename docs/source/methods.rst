@@ -31,6 +31,14 @@ Browse by task
 
       **Available**
 
+   .. grid-item-card:: Survival & multimodal prognosis
+      :link: methods/multimodal/ps3
+      :link-type: doc
+
+      Combine histology, pathways, and pathology reports for time-to-event research.
+
+      **Experimental**
+
    .. grid-item-card:: Segmentation & detection
       :link: segmentation
       :link-type: doc
@@ -86,6 +94,7 @@ each method record as the catalog matures.
          <button type="button" data-method-filter="all" aria-pressed="true">All</button>
          <button type="button" data-method-filter="encoders" aria-pressed="false">Encoders</button>
          <button type="button" data-method-filter="mil" aria-pressed="false">MIL</button>
+         <button type="button" data-method-filter="survival" aria-pressed="false">Survival</button>
          <button type="button" data-method-filter="segmentation" aria-pressed="false">Segmentation</button>
          <button type="button" data-method-filter="preprocessing" aria-pressed="false">Preprocessing</button>
          <button type="button" data-method-filter="interpretation" aria-pressed="false">Interpretation</button>
@@ -128,6 +137,15 @@ each method record as the catalog matures.
            <p class="histox-method-entry__symbol"><code>histox.mil.mil_config("attention_mil")</code></p>
          </div>
          <div class="histox-method-entry__meta"><span>Available</span><small>Published method</small><a href="mil.html">Documentation <span aria-hidden="true">→</span></a></div>
+       </article>
+       <article class="histox-method-entry" data-method-entry data-task="survival">
+         <div class="histox-method-entry__task">Multimodal survival</div>
+         <div class="histox-method-entry__body">
+           <h3>PS3</h3>
+           <p>Fuse pathway, histology, and diagnostic-report prototypes into a patient-level log-risk score.</p>
+           <p class="histox-method-entry__symbol"><code>histox.mil.models.PS3SurvivalModel</code></p>
+         </div>
+         <div class="histox-method-entry__meta"><span>Experimental</span><small>Independent paper-derived implementation</small><a href="methods/multimodal/ps3.html">Open guide <span aria-hidden="true">→</span></a></div>
        </article>
        <article class="histox-method-entry" data-method-entry data-task="mil">
          <div class="histox-method-entry__task">MIL</div>
@@ -249,8 +267,9 @@ risk stratification, and multimodal prognosis. Each implementation must state
 its endpoint definition, censoring assumptions, split unit, and reported
 metrics.
 
-**Status:** Planned catalog area. Existing general training utilities may be
-used experimentally, but a stable survival interface is not documented yet.
+**Status:** The PS3 adapter uses the experimental HistoX survival workflow for
+training, prediction, C-index evaluation, checkpoints, and attention output.
+External-cohort validation and pretrained survival weights are not available.
 
 .. _methods-multimodal:
 
@@ -258,14 +277,14 @@ Multimodal and spatial methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HistoX currently includes multimodal Attention MIL for combining multiple
-feature bags. This planned area covers broader methods that combine histology
-with text, clinical variables, genomics, spatial transcriptomics, or other
-molecular measurements. Entries must document modality alignment, missing-data
-behavior, and cohort requirements.
+feature bags and an experimental PS3 prototype-fusion model for histology,
+transcriptomics, and pathology reports. This area will expand to clinical
+variables, spatial transcriptomics, and other molecular measurements. Entries
+must document modality alignment, missing-data behavior, and cohort
+requirements.
 
-**Status:** Planned catalog expansion beyond the available feature-bag MIL
-workflow. Methods will be added as tested workflows rather than as a list of
-unsupported paper names.
+**Status:** Experimental expansion beyond the stable feature-bag MIL workflow.
+Methods are added as tested code paths rather than as unsupported paper names.
 
 Method records
 --------------
@@ -308,3 +327,4 @@ See :doc:`developer` for repository and contribution guidance, or browse the
    :maxdepth: 2
 
    methods/encoders/index
+   methods/multimodal/index

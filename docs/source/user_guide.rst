@@ -35,6 +35,7 @@ Modeling workflows
 .. toctree::
    :maxdepth: 1
 
+   workflows
    methods
    training
    evaluation
