@@ -177,3 +177,6 @@ Whole-slide prediction helper
 .. currentmodule:: histox.slide
 
 .. autofunction:: predict
+
+.. minigallery:: histox.WSI
+   :add-heading: Examples using ``histox.WSI``

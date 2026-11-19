@@ -129,6 +129,8 @@ An origin of ``None`` means that Python found an outer directory named
 ``histox`` instead of the installed package. Reinstall without editable mode,
 or rename the source checkout to ``histox-src`` and reinstall it.
 
+.. _slide_backend:
+
 Select backends explicitly
 --------------------------
 

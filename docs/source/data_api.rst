@@ -85,3 +85,6 @@ Errors
 .. autoclass:: DatasetConflictError
 
 .. autoclass:: DatasetIntegrityError
+
+.. minigallery:: histox.data
+   :add-heading: Examples using ``histox.data``
