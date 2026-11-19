@@ -1,0 +1,76 @@
+{
+  "description": "Stain-normalization examples generated with HistoX.",
+  "histox_version": "0.2.1",
+  "script": "docs/figures/make_norm_compare.py",
+  "data": {
+    "program": "TCGA",
+    "data_portal": "NCI Genomic Data Commons",
+    "access": "open",
+    "slides": [
+      {
+        "filename": "TCGA-AA-3514-01Z-00-DX1.9e135da2-436e-47e3-9dbf-b2f577677828.svs",
+        "tissue_source_site": "AA"
+      },
+      {
+        "filename": "TCGA-AG-3574-01Z-00-DX1.a6400d6e-305f-4889-a32a-a6247d0c39ba.svs",
+        "tissue_source_site": "AG"
+      },
+      {
+        "filename": "TCGA-A6-2671-01Z-00-DX1.13d1a0d9-78cd-4cfc-b670-34a79ebe52ee.svs",
+        "tissue_source_site": "A6"
+      },
+      {
+        "filename": "TCGA-CM-4743-01Z-00-DX1.f54a6355-5623-498c-96b9-2ff1de6576c6.svs",
+        "tissue_source_site": "CM"
+      },
+      {
+        "filename": "TCGA-D5-5537-01Z-00-DX1.14709d4c-eba0-48d0-87b8-5f34f74429d6.svs",
+        "tissue_source_site": "D5"
+      },
+      {
+        "filename": "TCGA-G4-6293-01Z-00-DX1.62ed5ed9-a79a-487a-bd6f-1f3f0571d44d.svs",
+        "tissue_source_site": "G4"
+      },
+      {
+        "filename": "TCGA-DM-A0X9-01Z-00-DX1.C7FC2C17-12CC-4F10-B54F-7C29379D834E.svs",
+        "tissue_source_site": "DM"
+      },
+      {
+        "filename": "TCGA-AZ-4308-01Z-00-DX1.804e054d-e206-4b34-a992-86317ef515d9.svs",
+        "tissue_source_site": "AZ"
+      },
+      {
+        "filename": "TCGA-AF-2687-01Z-00-DX1.bbcd88f6-11d5-4b57-9693-693124b2b7e7.svs",
+        "tissue_source_site": "AF"
+      }
+    ]
+  },
+  "thumbnail_width_px": 480,
+  "tile": {
+    "tile_px": 480,
+    "tile_um": 240,
+    "qc": "otsu",
+    "selection": "highest tissue score in first 400 tiles"
+  },
+  "grid_order": "row-major, same slide order as data.slides",
+  "comparison_figures_use": "first slide in data.slides",
+  "presets": [
+    "v1",
+    "v2"
+  ],
+  "tile_reinhard_uses": "reinhard_mask",
+  "files": {
+    "tile_macenko_v1.jpg": "5b540c1814ab7fabf1f151f49258b6d51c0bcd3c746efeac26e7e6771b487474",
+    "tile_macenko_v2.jpg": "159617fa5ced6d53d8f79374d6761a080206c7036b64e1cc5fff2f44ed8f2a68",
+    "tile_norm_compare.jpg": "7c3aedd7de13707fddb6439e1b6495fd81c308c9aefd641db734fe7b167cba6f",
+    "tile_reinhard_v1.jpg": "3820090d79ae128d3828fff136d1b8ea4298b142fab24e514b482e0bb20ae33e",
+    "tile_reinhard_v2.jpg": "aa8cdcf0d0b7ff40681656046386611d690ca52a79bd94393093eaff7e82adc4",
+    "tile_unnormalized.jpg": "16460bb54f19268f278f171c3aa724c5f58b22b800a4fb5aff83ce4dd45ab3f8",
+    "wsi_macenko_v1.jpg": "14c7e7eb75a6cf6e034e7abdce023b78c6d38303aab934a797dfa9cb11e09694",
+    "wsi_macenko_v2.jpg": "33028636228a227e2a16aaa150ca08f0210409e5a78980ee20d465087b795c74",
+    "wsi_norm_compare.jpg": "32d4a764f222e5f857c7361dd4c0aa2c6b83e37e9a5e64a12e83007a194cc888",
+    "wsi_reinhard_v1.jpg": "f78764e6cb60198070a7236f3fa57c441b2786bc6d49914c3a1b66a8230002fc",
+    "wsi_reinhard_v2.jpg": "78a8ed6e285c5d955516ea56b01b5e7bbcd8a281ccff112e2f617b410d261213",
+    "wsi_unnormalized.jpg": "5aed3210bb46ac676de56712576eef66311d9eb49b07ab7ea0b70e71c5024340"
+  }
+}

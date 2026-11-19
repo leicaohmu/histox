@@ -277,6 +277,18 @@ StainNormalizer
 Example images
 **************
 
+These examples were generated with HistoX from nine open-access TCGA
+diagnostic slides, each from a different tissue source site, by
+``docs/figures/make_norm_compare.py``. The exact slides, tile settings, and
+file checksums are recorded in ``norm_compare/generation_metadata.json``.
+
+.. note::
+
+    Vahadane examples are temporarily omitted. The ``vahadane_sklearn``
+    implementation currently places the sparsity constraint on the stain
+    vectors instead of the stain concentrations and can produce colour
+    casts on some images. The examples will return once this is fixed.
+
 .. figure:: norm_compare/wsi_norm_compare.jpg
 
     Comparison of normalizers applied to a whole-slide image.
@@ -305,22 +317,6 @@ Example images
 
     Whole-slide images normalized with **Macenko**, fit to preset "v2"
 
-.. figure:: norm_compare/wsi_vahadane_v1.jpg
-
-    Whole-slide images normalized with **Vahadane**, fit to preset "v1" (default)
-
-.. figure:: norm_compare/wsi_vahadane_v2.jpg
-
-    Whole-slide images normalized with **Vahadane**, fit to preset "v2"
-
-.. figure:: norm_compare/wsi_vahadane_spams_v1.jpg
-
-    Whole-slide images normalized with **Vahadane (SPAMS)**, fit to preset "v1" (default)
-
-.. figure:: norm_compare/wsi_vahadane_spams_v2.jpg
-
-    Whole-slide images normalized with **Vahadane (SPAMS)**, fit to preset "v2"
-
 .. figure:: norm_compare/tile_unnormalized.jpg
 
     Unnormalized image tiles.
@@ -340,19 +336,3 @@ Example images
 .. figure:: norm_compare/tile_macenko_v2.jpg
 
     Image tiles normalized with **Macenko**, fit to preset "v2"
-
-.. figure:: norm_compare/tile_vahadane_v1.jpg
-
-    Image tiles normalized with **Vahadane**, fit to preset "v1" (default)
-
-.. figure:: norm_compare/tile_vahadane_v2.jpg
-
-    Image tiles normalized with **Vahadane**, fit to preset "v2"
-
-.. figure:: norm_compare/tile_vahadane_spams_v1.jpg
-
-    Image tiles normalized with **Vahadane (SPAMS)**, fit to preset "v1" (default)
-
-.. figure:: norm_compare/tile_vahadane_spams_v2.jpg
-
-    Image tiles normalized with **Vahadane (SPAMS)**, fit to preset "v2"
