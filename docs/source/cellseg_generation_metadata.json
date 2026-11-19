@@ -1,0 +1,37 @@
+{
+  "description": "Cell image examples generated with HistoX cell segmentation.",
+  "histox_version": "0.2.1",
+  "script": "docs/figures/make_cellseg_examples.py",
+  "data": {
+    "dataset": "tcga-coad-slide-processing",
+    "file": "TCGA-3L-AA1B-01Z-00-DX1.8923A151-A690-40B7-9E5A-FCBEDFC2394F.svs",
+    "program": "TCGA",
+    "data_portal": "NCI Genomic Data Commons",
+    "access": "open",
+    "region": {
+      "tile_px": 1024,
+      "mpp": 0.25,
+      "location": [
+        null,
+        null
+      ],
+      "selection": "highest nuclear-pixel score in the first 3000 Otsu-retained tiles"
+    }
+  },
+  "segmentation": {
+    "model": "cyto2",
+    "window_px": 256,
+    "window_um": 102
+  },
+  "extraction": {
+    "tile_px": 96,
+    "tile_um": 24,
+    "cells_extracted": 208,
+    "candidates_after_filtering": 116,
+    "selected_file": "region-484-235.png"
+  },
+  "files": {
+    "cell_masked.png": "c09ee1501c0378dea95a6e903e86eb3ffd4a06cccb4537cc30e690e45ae4ad67",
+    "cell_unmasked.png": "c68914687a61634b5d477221e50e55bd1e1d9a1a1f104697485b2174d208a4b0"
+  }
+}

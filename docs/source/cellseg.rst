@@ -228,6 +228,10 @@ Start by loading the saved segmentation, as described above. Then, use :meth:`hi
 
       - .. image:: cell_unmasked.png
 
+*The cell images above were generated with HistoX (Cellpose* ``cyto2``
+*model) from a 40x region of the open-access TCGA slide used in the slide
+processing guide, by* ``docs/figures/make_cellseg_examples.py``.
+
 Tile extraction is then performed as usual. Cell images (tiles) can either be saved as loose images or in TFRecord format. See :meth:`histox.WSI.extract_cells` for more information.
 
 From all slides
