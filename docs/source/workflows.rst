@@ -210,23 +210,5 @@ requests replacement.
 API reference
 -------------
 
-.. autoclass:: histox.workflows.DataSpec
-   :members:
-
-.. autoclass:: histox.workflows.Task
-   :members:
-
-.. autoclass:: histox.workflows.Method
-   :members:
-
-.. autoclass:: histox.workflows.Experiment
-   :members:
-
-.. autoclass:: histox.workflows.RunResult
-   :members:
-
-.. autoclass:: histox.workflows.Artifact
-   :members:
-
-.. autoclass:: histox.workflows.engines.SurvivalEngine
-   :members:
+Classes, registries, engines, and exceptions are documented in
+:doc:`histox.workflows <workflows_api>`.
