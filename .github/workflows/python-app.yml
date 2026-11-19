@@ -2,14 +2,18 @@ name: Package checks
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     name: Build and validate distribution
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
@@ -48,3 +52,35 @@ jobs:
           mkdir "$smoke_root/histox"
           cd "$smoke_root"
           python -c "import importlib.util as u; s = u.find_spec('histox'); assert s is not None and s.origin is not None, s; print(s.origin)"
+
+  unit-tests:
+    name: Unit tests (Python 3.9, CPU)
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+          cache: pip
+
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips
+
+      - name: Install HistoX with CPU PyTorch
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e ".[torch,huggingface]"
+
+      - name: Run unit tests
+        run: |
+          # slide_test is a functional suite that needs real slides; run it
+          # through scripts/test.py instead.
+          modules=$(ls histox/test/*_test.py | grep -v '/slide_test.py$' | sed 's#/#.#g; s#\.py$##')
+          python -m unittest -v $modules
