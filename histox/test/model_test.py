@@ -1,3 +1,4 @@
+import os
 import unittest
 import sys
 import numpy as np
@@ -27,6 +28,12 @@ try:
 except ImportError:
     torch_models = []
     pass
+
+# Downloading ImageNet weights for every architecture is slow and needs
+# network access. By default these tests build randomly initialized models
+# and only check construction and forward passes. Set
+# HISTOX_TEST_PRETRAINED=1 to also exercise pretrained weight loading.
+PRETRAIN = 'imagenet' if os.environ.get('HISTOX_TEST_PRETRAINED') == '1' else None
 
 # -----------------------------------------------------------------------------
 
@@ -109,7 +116,7 @@ class TestSlide(unittest.TestCase):
             include_top=include_top,
             hidden_layers=0
         )
-        model = hp.build_model(num_classes=1, pretrain='imagenet')
+        model = hp.build_model(num_classes=1, pretrain=PRETRAIN)
         res = model(img, training=(stage=='train'))
         self.assertIsInstance(res, tf.Tensor)
         self.assertTrue(res.shape == (2, 1))
@@ -149,7 +156,7 @@ class TestSlide(unittest.TestCase):
             include_top=include_top,
             hidden_layers=0
         )
-        model = hp.build_model(num_classes=1, pretrain='imagenet')
+        model = hp.build_model(num_classes=1, pretrain=PRETRAIN)
         if stage == 'eval':
             model.eval()
         res = model(img)
