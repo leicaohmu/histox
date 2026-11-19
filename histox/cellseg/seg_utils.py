@@ -67,9 +67,16 @@ def fast_outlines_list(masks, num_threads=None):
 
 
 def sparse_split_indices(shape, splits):
-    ar = np.arange(1, shape, int(shape/splits))
-    ar[-1] = shape-1
-    return list(zip(ar[0:-1], ar[1:]))
+    """Split mask rows 1..shape-1 into at most ``splits`` contiguous chunks.
+
+    Row 0 of the sparse mask is background; rows 1..shape-1 are cell labels.
+    Every label row is covered exactly once.
+    """
+    if shape <= 1:
+        return []
+    n = max(1, min(int(splits), shape - 1))
+    bounds = np.linspace(1, shape, num=n + 1).astype(int)
+    return [(int(i), int(j)) for i, j in zip(bounds[:-1], bounds[1:]) if j > i]
 
 
 def get_sparse_chunk_centroid(sparse_mask, shape):
@@ -81,11 +88,14 @@ def get_sparse_chunk_centroid(sparse_mask, shape):
 
 def get_sparse_centroid(mask, sparse_mask):
     n_proc = hx.util.num_cpu(default=8)
-    with mp.Pool(n_proc) as pool:
+    chunks = sparse_split_indices(sparse_mask.shape[0], n_proc)
+    if not chunks:
+        return np.zeros((0, 2), dtype=np.int32)
+    with mp.Pool(min(n_proc, len(chunks))) as pool:
         return np.concatenate(
             pool.map(
                 partial(get_sparse_chunk_centroid, shape=mask.shape),
-                [sparse_mask[i:j] for (i, j) in sparse_split_indices(sparse_mask.shape[0], n_proc)]
+                [sparse_mask[i:j] for (i, j) in chunks]
             ))
 
 def sparse_mask(mask):
