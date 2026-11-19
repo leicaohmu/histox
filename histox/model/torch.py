@@ -86,8 +86,11 @@ class ModelWrapper(torch.nn.Module):
         self.has_aux = False
         log.debug(f'Model class name: {model.__class__.__name__}')
         if not drop_images:
-            # Check for auxillary classifier
-            if model.__class__.__name__ in ('Inception3',):
+            # Check for auxillary classifier. Torchvision enables it for
+            # Inception3 and, when built without pretrained weights, GoogLeNet;
+            # in training mode both then return a namedtuple, not a tensor.
+            if (model.__class__.__name__ in ('Inception3', 'GoogLeNet')
+               and getattr(model, 'aux_logits', False)):
                 log.debug("Auxillary classifier detected")
                 self.has_aux = True
 
