@@ -100,3 +100,5 @@ Once installed, the class is available at ``histox.clam.CLAMModelConfig``.
 
 .. autoclass:: clam.CLAMModelConfig
 
+.. minigallery:: histox.mil
+   :add-heading: Examples using ``histox.mil``

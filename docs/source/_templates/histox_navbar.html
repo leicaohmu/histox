@@ -1,92 +1,25 @@
-{% set learn_pages = ['quickstart', 'installation', 'project_setup', 'overview'] %}
-{% set tutorial_pages = [
-  'tutorials', 'tutorials_training', 'tutorials_evaluation',
-  'tutorials_slides', 'tutorials_mil', 'tutorial1', 'tutorial2',
-  'tutorial3', 'tutorial4', 'tutorial5', 'tutorial6', 'tutorial7',
-  'tutorial8'
-] %}
-{% set is_example_page = pagename.startswith('auto_examples') %}
-{% set method_pages = [
-  'methods', 'training', 'mil', 'segmentation', 'cellseg', 'gan',
-  'stylegan', 'norm', 'slide_qc', 'heatmap', 'saliency', 'grad', 'uq'
-] %}
-{% set is_method_page = pagename == 'methods' or pagename.startswith('methods/') %}
-{% set data_pages = ['data', 'datasets_and_val', 'dataset', 'data_api'] %}
-{% set docs_pages = ['docs', 'user_guide', 'api', 'developer'] %}
-{% set is_project_page = pagename == 'index' %}
-{% set methods_page_url = '' if pagename == 'methods' else pathto('methods') %}
-
+{#- Rendered from docs/source/_nav.py; edit the navigation there. -#}
+{%- set owner = histox_page_owners.get(pagename) -%}
+{%- macro nav_href(target) -%}
+  {%- if '://' in target -%}{{ target }}{%- else -%}{{ pathto(target) }}{%- endif -%}
+{%- endmacro -%}
 <nav class="histox-global-nav" aria-label="Primary navigation">
-  <details class="histox-nav-menu{% if pagename in learn_pages %} is-current{% endif %}">
+  {%- for section in histox_nav %}
+  <details class="histox-nav-menu{% if owner == section.key %} is-current{% endif %}">
     <summary class="histox-nav-menu__trigger" aria-haspopup="true">
-      Learn <span class="histox-nav-menu__caret" aria-hidden="true"></span>
+      {{ section.title }} <span class="histox-nav-menu__caret" aria-hidden="true"></span>
     </summary>
-    <div class="histox-nav-menu__panel">
-      <a href="{{ pathto('quickstart') }}"><strong>Get started</strong><span>Run a first HistoX workflow.</span></a>
-      <a href="{{ pathto('installation') }}"><strong>Installation</strong><span>Choose core and optional dependencies.</span></a>
-      <a href="{{ pathto('project_setup') }}"><strong>Project setup</strong><span>Organize slides, data, and outputs.</span></a>
-      <a href="{{ pathto('overview') }}"><strong>Concepts</strong><span>Understand the HistoX workflow.</span></a>
+    <div class="histox-nav-menu__panel{% if section.wide %} histox-nav-menu__panel--wide{% endif %}{% if section.right %} histox-nav-menu__panel--right{% endif %}">
+      {%- for target, label, blurb in section.menu %}
+      <a{% if loop.first and section.wide %} class="histox-nav-menu__featured"{% endif %} href="{{ nav_href(target) }}"><strong>{{ label }}</strong><span>{{ blurb }}</span></a>
+      {%- endfor %}
     </div>
   </details>
+  {%- endfor %}
 
-  <details class="histox-nav-menu{% if pagename in tutorial_pages or is_example_page %} is-current{% endif %}">
-    <summary class="histox-nav-menu__trigger" aria-haspopup="true">
-      Examples <span class="histox-nav-menu__caret" aria-hidden="true"></span>
-    </summary>
-    <div class="histox-nav-menu__panel">
-      <a href="{{ pathto('auto_examples/index') }}"><strong>Examples gallery</strong><span>Run complete, downloadable workflows.</span></a>
-      <a href="{{ pathto('auto_examples/feature_extraction/plot_dinov2_wsi') }}"><strong>DINOv2 feature extraction</strong><span>Go from a public SVS to a feature bag.</span></a>
-      <a href="{{ pathto('tutorials') }}"><strong>Guided tutorials</strong><span>Browse task-oriented learning material.</span></a>
-      <a href="{{ pathto('tutorials_training') }}"><strong>Training</strong><span>Models, loops, and augmentation.</span></a>
-    </div>
-  </details>
-
-  <details class="histox-nav-menu{% if pagename in method_pages or is_method_page %} is-current{% endif %}">
-    <summary class="histox-nav-menu__trigger" aria-haspopup="true">
-      Methods <span class="histox-nav-menu__caret" aria-hidden="true"></span>
-    </summary>
-    <div class="histox-nav-menu__panel histox-nav-menu__panel--wide">
-      <a class="histox-nav-menu__featured" href="{{ pathto('methods') }}"><strong>Methods Hub</strong><span>Browse methods by task, maturity, and origin.</span></a>
-      <a href="{{ methods_page_url }}#methods-foundation"><strong>Foundation models &amp; VLM</strong><span>Encoders and vision-language workflows.</span></a>
-      <a href="{{ pathto('training') }}"><strong>Classification</strong><span>Tile- and slide-level prediction.</span></a>
-      <a href="{{ pathto('mil') }}"><strong>MIL &amp; weak supervision</strong><span>Learn from slide-level labels.</span></a>
-      <a href="{{ methods_page_url }}#methods-survival"><strong>Survival &amp; prognosis</strong><span>Time-to-event modeling.</span></a>
-      <a href="{{ pathto('segmentation') }}"><strong>Segmentation &amp; detection</strong><span>Tissue, cells, and spatial targets.</span></a>
-      <a href="{{ methods_page_url }}#methods-multimodal"><strong>Multimodal &amp; spatial</strong><span>Combine images, text, and omics.</span></a>
-      <a href="{{ pathto('gan') }}"><strong>Generative methods</strong><span>Synthesis and representation learning.</span></a>
-      <a href="{{ pathto('norm') }}"><strong>Normalization &amp; QC</strong><span>Prepare consistent slide inputs.</span></a>
-      <a href="{{ pathto('heatmap') }}"><strong>Explainability</strong><span>Inspect evidence and uncertainty.</span></a>
-    </div>
-  </details>
-
-  <details class="histox-nav-menu{% if pagename in data_pages %} is-current{% endif %}">
-    <summary class="histox-nav-menu__trigger" aria-haspopup="true">
-      Data <span class="histox-nav-menu__caret" aria-hidden="true"></span>
-    </summary>
-    <div class="histox-nav-menu__panel histox-nav-menu__panel--right">
-      <a href="{{ pathto('data') }}"><strong>Data overview</strong><span>Work with local and public cohorts.</span></a>
-      <a href="{{ pathto('datasets_and_val') }}"><strong>Datasets</strong><span>Build and validate study datasets.</span></a>
-      <a href="{{ pathto('dataset') }}"><strong>Dataset guide</strong><span>Configure sources and annotations.</span></a>
-      <a href="{{ pathto('data_api') }}"><strong>Data API</strong><span>Resolve, download, and cache assets.</span></a>
-    </div>
-  </details>
-
-  <details class="histox-nav-menu{% if pagename in docs_pages %} is-current{% endif %}">
-    <summary class="histox-nav-menu__trigger" aria-haspopup="true">
-      Docs <span class="histox-nav-menu__caret" aria-hidden="true"></span>
-    </summary>
-    <div class="histox-nav-menu__panel histox-nav-menu__panel--right">
-      <a href="{{ pathto('docs') }}"><strong>Documentation</strong><span>Choose the right guide or reference.</span></a>
-      <a href="{{ pathto('user_guide') }}"><strong>User guide</strong><span>Learn the end-to-end workflow.</span></a>
-      <a href="{{ pathto('api') }}"><strong>Reference API</strong><span>Look up modules and arguments.</span></a>
-      <a href="{{ pathto('developer') }}"><strong>Developer notes</strong><span>Extend and contribute to HistoX.</span></a>
-    </div>
-  </details>
-
-  <a class="histox-global-nav__direct" href="https://github.com/leicaohmu/histox">GitHub</a>
   <a class="histox-global-nav__install" href="{{ pathto('installation') }}">Install</a>
 
-  {% if is_project_page %}
+  {%- if pagename == 'index' %}
     <a class="histox-global-nav__search" href="{{ pathto('search') }}" aria-label="Search documentation"><span aria-hidden="true"></span></a>
-  {% endif %}
+  {%- endif %}
 </nav>

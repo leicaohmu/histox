@@ -7,6 +7,8 @@ from unittest.mock import MagicMock
 import pytorch_sphinx_theme2
 
 sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _nav  # noqa: E402  (navigation source of truth)
 
 execute_gallery = os.environ.get('HISTOX_DOCS_EXECUTE_GALLERY') == '1'
 
@@ -162,6 +164,10 @@ sphinx_gallery_conf = {
     'show_memory': False,
     'thumbnail_size': (400, 280),
     'within_subsection_order': 'FileNameSortKey',
+    # 'Examples using ...' sections on API pages.
+    'backreferences_dir': 'gen_modules/backreferences',
+    'doc_module': ('histox',),
+    'reference_url': {'histox': None},
 }
 
 # -- HTML theme -----------------------------------------------------------
@@ -241,3 +247,31 @@ html_last_updated_fmt = '%b %d, %Y'
 # Keep interactive prompts out of copied snippets while leaving output intact.
 copybutton_prompt_text = r'>>> |\.\.\. '
 copybutton_prompt_is_regexp = True
+
+
+# -- Navigation (docs/source/_nav.py) ---------------------------------------
+html_context = {
+    **globals().get('html_context', {}),
+    'histox_nav': _nav.NAV,
+    'histox_page_owners': _nav.page_owners(),
+}
+
+
+def _check_histox_nav(app, env):
+    """Warn (and so fail CI) when _nav.py and the documents drift apart."""
+    from sphinx.util import logging as sphinx_logging
+    log = sphinx_logging.getLogger('histox.nav')
+    owners = _nav.page_owners()
+    for doc in sorted(env.found_docs):
+        if (doc not in owners and doc not in _nav.UNOWNED
+                and not doc.endswith('sg_execution_times')):
+            log.warning("document %r is not in the HistoX navigation; "
+                        "add it to docs/source/_nav.py", doc)
+    for page in sorted(_nav.linked_pages()):
+        if page not in env.found_docs:
+            log.warning("navigation entry %r in docs/source/_nav.py does not "
+                        "match any document", page)
+
+
+def setup(app):
+    app.connect('env-check-consistency', _check_histox_nav)

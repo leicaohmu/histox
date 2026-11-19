@@ -51,3 +51,6 @@ Other functions
 .. autofunction:: is_torch_tensor
 .. autofunction:: read_hp_sweep
 .. autofunction:: rebuild_extractor
+
+.. minigallery:: histox.model.build_feature_extractor
+   :add-heading: Examples using ``histox.model.build_feature_extractor``

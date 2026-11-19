@@ -19,3 +19,4 @@ histox.log
 
 # Sphinx build output
 docs/_build/
+/docs/source/gen_modules/

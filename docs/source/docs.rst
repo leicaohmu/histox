@@ -28,6 +28,11 @@ Start here
    :maxdepth: 1
    :hidden:
 
+   installation
+   quickstart
+   overview
+   project_setup
    user_guide
+   methods
    api
    developer

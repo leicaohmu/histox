@@ -16,14 +16,5 @@ researchers building components beyond the high-level user guide.
    plugins
    troubleshooting
 
-Compatibility APIs
-------------------
-
-TensorFlow compatibility remains documented while HistoX moves toward a
-PyTorch-first public interface.
-
-.. toctree::
-   :maxdepth: 1
-
-   io_tensorflow
-   model_tensorflow
+TensorFlow compatibility APIs are listed in the :doc:`API reference <api>`
+under *Legacy TensorFlow*.
