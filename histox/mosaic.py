@@ -240,15 +240,20 @@ class Mosaic:
         coords: List[Union[Tuple[int, int], np.ndarray]]
     ) -> None:
         """Prepare the Mosaic map from a set of images and coordinates."""
+        import pandas as pd
         log.info('Loading coordinates and plotting points...')
         self.images = images
         self.mapped_tiles = []  # type: List[int]
-        self.points = [{
-            'coord': coords[i],
-            'global_index': i,
+        coords = np.asarray(coords, dtype=float).reshape(len(images), 2)
+        self.points = pd.DataFrame({
+            'x': coords[:, 0],
+            'y': coords[:, 1],
+            'global_index': np.arange(len(images)),
+            'points_index': np.arange(len(images)),
+            'alpha': 1.,
             'category': 'none',
             'has_paired_tile': False,
-        } for i in range(len(coords))]
+        })
 
     def _prepare_from_slidemap(
         self,
@@ -273,22 +278,28 @@ class Mosaic:
         images: List[Tuple[str, int]],
         coords: List[Union[Tuple[int, int], np.ndarray]],
     ) -> None:
-        """Prepare from a list of tuples with TFRecord names/indices."""
-        log.info('Loading coordinates from SlideMap and plotting points...')
+        """Prepare from a list of tuples with TFRecord names/indices.
+
+        Each tuple is ``(slide, index)`` when ``tfrecords`` was provided, or
+        ``(tfrecord_path, index)`` otherwise.
+        """
+        import pandas as pd
+        log.info('Loading coordinates from TFRecord indices and plotting points...')
         self.mapped_tiles = {}  # type: Dict[str, List[int]]
-        self.points = []
-        for i, (tfr, idx) in enumerate(images):
-            self.points.append({
-                'coord': np.array(coords[i]),
-                'global_index': i,
-                'category': 'none',
-                'slide': (tfr if self.tfrecords is not None
-                          else hx.util.path_to_name(tfr)),
-                'tfrecord': (tfr if self.tfrecords is None
-                             else self._get_tfrecords_from_slide(tfr)),
-                'tfrecord_index': idx,
-                'has_paired_tile': None,
-            })
+        if self.tfrecords is None:
+            self.tfrecords = sorted({tfr for tfr, _ in images})
+        coords = np.asarray(coords, dtype=float).reshape(len(images), 2)
+        self.points = pd.DataFrame({
+            'x': coords[:, 0],
+            'y': coords[:, 1],
+            'global_index': np.arange(len(images)),
+            'points_index': np.arange(len(images)),
+            'alpha': 1.,
+            'category': 'none',
+            'slide': [hx.util.path_to_name(tfr) for tfr, _ in images],
+            'tfr_index': [int(idx) for _, idx in images],
+            'has_paired_tile': False,
+        })
 
     def _get_image_from_point(self, index):
         point = self.points.loc[index]
