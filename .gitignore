@@ -7,8 +7,6 @@ docs/build/*
 *.pdf
 .vscode/*
 .neptune/*
-docs-source/build/*
-docs-source/pytorch_sphinx_theme/yarn.lock.backup
 build/*
 dist/*
 tutorials/*

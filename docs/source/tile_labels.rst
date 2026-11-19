@@ -15,7 +15,7 @@ The first step is to create regions of interest (ROIs). The fastest way to creat
 
 ROI CSV files are formatted with three required columns: "roi_name", "x_base", and "y_base". Each row is a single point in an ROI, with the "x_base" and "y_base" columns specifying the X/Y coordinates in the slide's lowest (base) dimension. Individual ROIs are grouped by the "roi_name" column, with each ROI having a unique name. An optional fourth column, "label", can be used to assign a label to each ROI. For example:
 
-.. code-block:: csv
+.. code-block:: text
 
     roi_name,x_base,y_base,label
     1,100,100,tumor

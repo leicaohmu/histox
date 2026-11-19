@@ -11,7 +11,6 @@ SCAN_ROOTS = (
     ROOT / "histox",
     ROOT / "scripts",
     ROOT / "docs" / "source",
-    ROOT / "docs-source" / "source",
     ROOT / ".github",
 )
 SCAN_FILES = (

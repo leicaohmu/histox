@@ -84,3 +84,41 @@ jobs:
           # through scripts/test.py instead.
           modules=$(ls histox/test/*_test.py | grep -v '/slide_test.py$' | sed 's#/#.#g; s#\.py$##')
           python -m unittest -v $modules
+
+  docs:
+    name: Documentation build
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Install HistoX and documentation dependencies
+        # Mirrors .readthedocs.yaml: install the package, then the docs
+        # requirements (which pin a CPU PyTorch wheel) in a separate step.
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install .
+          python -m pip install -r docs/requirements.txt
+
+      - name: Build documentation
+        run: |
+          python -m sphinx -b html -q -w sphinx-warnings.txt docs/source docs/_build/html
+
+      - name: Fail on new Sphinx warnings
+        run: |
+          # Extensionless GitHub video URLs on the Studio page trigger a
+          # known, harmless sphinxcontrib-video warning.
+          known='The provided file type ("") is not a supported format'
+          if grep -vF "$known" sphinx-warnings.txt | grep -q .; then
+            echo "::error::New Sphinx warnings:"
+            grep -vF "$known" sphinx-warnings.txt
+            exit 1
+          fi
+          echo "No new Sphinx warnings."
