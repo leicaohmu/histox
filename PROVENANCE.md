@@ -47,3 +47,15 @@ Every contribution that copies or adapts third-party material must record:
 Do not add copied source, model weights, datasets, fonts, icons or other assets
 without a documented redistribution basis. External datasets and weights are
 not automatically covered by the HistoX repository license.
+
+## Independent paper-derived implementations
+
+`histox/mil/models/ps3.py` is a HistoX-authored implementation of the prototype
+construction and multimodal fusion equations described by Raza et al., "PS3: A
+Multimodal Transformer Integrating Pathology Reports with Histology Images and
+Biological Pathways for Cancer Survival Prediction" (ICCV 2025). No source was
+copied from `manahilr/PS3` or `leicaohmu/PS3-CRC-reproduction`; neither
+repository contained a detected source-code license at the time of integration.
+The HistoX implementation does not claim compatibility with upstream
+checkpoints or reproduce the paper's reported performance without a separate
+controlled experiment.

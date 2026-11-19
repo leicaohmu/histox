@@ -11,7 +11,7 @@ from ._backend import backend, slide_backend
 from histox.util import getLoggingLevel, log, setLoggingLevel, about
 
 ...
-from histox import data, io, model, norm, stats, gan
+from histox import data, io, model, norm, stats, gan, workflows
 from histox.dataset import Dataset
 from histox.heatmap import Heatmap
 from histox.model import DatasetFeatures, ModelParams
@@ -29,6 +29,30 @@ from histox.slide import WSI
 from histox.stats import SlideMap
 from histox.tfrecord import TFRecord, tfrecord_loader, multi_tfrecord_loader
 from histox.plugin import load_plugins
+from histox.workflows import (
+    Artifact,
+    DataSpec,
+    DuplicateRegistrationError,
+    Experiment,
+    IncompatibleWorkflowError,
+    InvalidDataSpecError,
+    Method,
+    PS3PretrainedBundle,
+    RegistryError,
+    RunResult,
+    SurvivalTask,
+    Task,
+    UnknownMethodError,
+    UnknownTaskError,
+    UnsupportedStageError,
+    WorkflowError,
+    build_method,
+    build_task,
+    list_methods,
+    list_tasks,
+    register_method,
+    register_task,
+)
 
 # Optional extension packages still use their upstream distribution and
 # import names. Keep these identifiers until HistoX-owned replacements are

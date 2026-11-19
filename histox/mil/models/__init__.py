@@ -2,3 +2,10 @@
 
 from .att_mil import Attention_MIL, MultiModal_Attention_MIL, UQ_MultiModal_Attention_MIL
 from .transmil import TransMIL
+from .ps3 import (
+    CoxPHLoss,
+    DiagnosticPrototypeSelector,
+    PS3PrototypeFusion,
+    PS3SurvivalModel,
+    PathwayPrototypeEncoder,
+)
