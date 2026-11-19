@@ -63,7 +63,7 @@
 <rect x="362" y="485" width="36" height="36" fill="none" stroke="#000" stroke-width="2"/>
 <line x1="271" y1="548" x2="271.0" y2="583.0" stroke="#000" stroke-width="4"/>
 <polygon points="271.0,603.0 261.1,583.0 280.9,583.0" fill="#000"/>
-<text x="248" y="580" font-size="31" font-weight="400" text-anchor="end">Features</text>
+<text x="248" y="580" font-size="31" font-weight="400" text-anchor="end">Storage</text>
 <rect x="245.4" y="606.6" width="86" height="86" rx="7" fill="#f4f4f4" stroke="#000" stroke-width="3"/>
 <rect x="234.2" y="617.8" width="86" height="86" rx="7" fill="#f4f4f4" stroke="#000" stroke-width="3"/>
 <rect x="223.0" y="629.0" width="86" height="86" rx="7" fill="#e6e6e6" stroke="#000" stroke-width="4"/>
@@ -71,7 +71,7 @@
 <line x1="226.0" y1="657.7" x2="306.0" y2="657.7" stroke="#000" stroke-width="2"/>
 <line x1="280.3" y1="632.0" x2="280.3" y2="712.0" stroke="#000" stroke-width="2"/>
 <line x1="226.0" y1="686.3" x2="306.0" y2="686.3" stroke="#000" stroke-width="2"/>
-<text x="271" y="752" font-size="24" font-weight="700" text-anchor="middle">Feature bags</text>
+<text x="271" y="752" font-size="24" font-weight="700" text-anchor="middle">TFRecords</text>
 <text x="48" y="756" font-size="46" font-weight="700" text-anchor="start">1</text>
 <rect x="611.4" y="79.6" width="86" height="86" rx="7" fill="#f4f4f4" stroke="#000" stroke-width="3"/>
 <rect x="600.2" y="90.8" width="86" height="86" rx="7" fill="#f4f4f4" stroke="#000" stroke-width="3"/>

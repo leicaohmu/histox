@@ -64,7 +64,7 @@ def framed_image(uri, x, y, w, h, r=10, inset=6, bg='#ffffff', aspect='xMidYMid 
 
 
 def stack(cx, cy, s=86):
-    """Data icon: three offset tiles with a 3x3 grid on the front tile."""
+    """TFRecord icon: a stack of tiles with a 3x3 grid on the front tile."""
     off = s * 0.13
     for k in (2, 1):
         x, y = cx - s / 2 + k * off, cy - s / 2 - k * off
@@ -171,9 +171,9 @@ for i, t in enumerate(tiles):
     emit(f'<rect x="{x}" y="{y}" width="36" height="36" fill="none" stroke="{INK}" stroke-width="2"/>')
 
 arrow(271, 548, 271, 603)
-text(248, 580, 'Features', anchor='end')
+text(248, 580, 'Storage', anchor='end')
 stack(266, 672)
-text(271, 752, 'Feature bags', size=24, weight=700, anchor='middle')
+text(271, 752, 'TFRecords', size=24, weight=700, anchor='middle')
 text(48, 756, '1', size=46, weight=700)
 
 # ------------------------------------------------------------------ phase 2
