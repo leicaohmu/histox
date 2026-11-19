@@ -67,6 +67,13 @@ their own terms. Their presence in documentation or dependency metadata does not
 make them Apache-2.0. This includes optional Slideflow extensions, pretrained
 models and public pathology datasets downloaded by users.
 
+The PS3 method page links to `manahilr/PS3` and
+`leicaohmu/PS3-CRC-reproduction` as external research records. Their source,
+weights and data are not included in HistoX. Neither repository contained a
+detected source-code license during the HistoX integration review; the
+paper-derived implementation in `histox/mil/models/ps3.py` was written
+independently.
+
 ## Items that must still be resolved before a new release
 
 1. **Legacy branding:** replace the inherited Slideflow logo and Studio

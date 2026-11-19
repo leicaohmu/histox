@@ -23,6 +23,11 @@ from ._params import (
     MILModelConfig
 )
 from .utils import load_model_weights, load_mil_config
+from .ps3 import (
+    PS3HistologyPrototypeEncoder,
+    PS3PathwayPreprocessor,
+    PS3ReportEncoder,
+)
 from ._registry import (
     list_trainers, list_models, is_trainer, is_model,
     get_trainer, get_model, get_model_config_class,
