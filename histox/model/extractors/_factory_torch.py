@@ -41,6 +41,11 @@ def dinov2(**kwargs):
     return DinoV2Features(**kwargs)
 
 @register_torch
+def plip(**kwargs):
+    from .plip import PLIPFeatures
+    return PLIPFeatures(**kwargs)
+
+@register_torch
 def resnet18_imagenet(tile_px, **kwargs):
     return TorchImagenetLayerExtractor('resnet18', tile_px, **kwargs)
 
