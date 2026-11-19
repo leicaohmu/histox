@@ -139,6 +139,7 @@ def features_from_slide_tf(
     normalizer: Optional[Union[str, "StainNormalizer"]] = None,
     normalizer_source: Optional[str] = None,
     preprocess_fn: Optional[Callable] = None,
+    prefetch: bool = True,
     **kwargs
 ) -> Optional[np.ndarray]:
 
@@ -158,6 +159,12 @@ def features_from_slide_tf(
             backend='tensorflow'
         )
     _log_normalizer(normalizer)
+
+    # Read the slide sequentially into the page cache before random tile
+    # reads (large speedup on spinning disks and network storage).
+    if prefetch:
+        from histox.util.prefetch import prefetch_file
+        prefetch_file(slide.path)
 
     generator = slide.build_generator(
         img_format=img_format,

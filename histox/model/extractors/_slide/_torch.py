@@ -52,6 +52,7 @@ def features_from_slide_torch(
     callback: Optional[Callable] = None,
     normalizer: Optional[Union[str, "StainNormalizer"]] = None,
     preprocess_fn: Optional[Callable] = None,
+    prefetch: bool = True,
     **kwargs
 ) -> Optional[np.ndarray]:
 
@@ -67,6 +68,12 @@ def features_from_slide_torch(
     opencv_norm = (isinstance(normalizer, str)
                    or (isinstance(normalizer, hx.norm.StainNormalizer)
                        and normalizer.__class__ == 'StainNormalizer'))
+
+    # Read the slide sequentially into the page cache before random tile
+    # reads (large speedup on spinning disks and network storage).
+    if prefetch:
+        from histox.util.prefetch import prefetch_file
+        prefetch_file(slide.path)
 
     # Build the tile generator
     generator = slide.build_generator(
