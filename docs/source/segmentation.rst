@@ -239,7 +239,7 @@ By default, ROIs will be generated for all slides in the dataset, skipping slide
 Deployment in Studio
 --------------------
 
-.. video:: tissue_seg.mp4
+.. video:: https://media.githubusercontent.com/media/slideflow/slideflow/master/docs/tissue_seg.mp4
     :autoplay:
 
 |

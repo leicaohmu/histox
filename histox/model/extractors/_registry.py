@@ -39,14 +39,14 @@ def list_extractors():
         - `build_feature_extractor`: Build an extractor by name.
 
     Examples:
-        ```python
-        import histox as hx
+        .. code-block:: python
 
-        # List all available extractors
-        extractors = hx.model.list_extractors()
-        print(extractors)
-        # ['vgg19_imagenet', 'resnet101_v2_imagenet', 'virchow', ...]
-        ```
+            import histox as hx
+
+            # List all available extractors
+            extractors = hx.model.list_extractors()
+            print(extractors)
+            # ['vgg19_imagenet', 'resnet101_v2_imagenet', 'virchow', ...]
     """
     return list(set(list(_tf_extractors.keys()) + list(_torch_extractors.keys())))
 
