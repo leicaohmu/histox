@@ -13,7 +13,7 @@ concurrency:
 jobs:
   build:
     name: Build and validate distribution
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
@@ -55,7 +55,7 @@ jobs:
 
   unit-tests:
     name: Unit tests (Python 3.9, CPU)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
