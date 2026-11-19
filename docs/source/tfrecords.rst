@@ -39,45 +39,52 @@ Index files for an entire dataset can be rebuilt using :meth:`histox.Dataset.reb
 When to use TFRecords
 *********************
 
-Reading tiles from TFRecords avoids re-reading and re-decoding the whole-slide
-image on every pass. The cost is a one-time extraction step and disk space.
+TFRecords hold only the tissue tiles that passed QC, already resized and
+JPEG-compressed. Reading them avoids re-reading and decoding the whole-slide
+image on every pass, at the cost of a one-time extraction step and disk space.
+
 The benchmark below used six open-access TCGA diagnostic slides from different
-tissue source sites (87,412 tiles at 224 px / 112 µm, Otsu QC, no stain
-normalization), ResNet-50 ImageNet features, and one NVIDIA RTX 3090. Both
-paths processed the same tiles; feature-extraction timings include image
-decoding.
+tissue source sites (7.2 GB of slide files; 87,412 tiles at 224 px / 112 µm;
+Otsu QC; no stain normalization), ResNet-50 ImageNet features, and one NVIDIA
+RTX 3090. Both paths processed the same tiles, and the direct path read tiles
+with 16 processes. *Cold* means the files were evicted from the operating
+system's page cache before each step, as happens when a cohort is larger than
+memory; *warm* means they were already cached.
 
 .. list-table::
     :header-rows: 1
-    :widths: 40 30 30
+    :widths: 46 27 27
 
     * - Step
-      - Directly from slides
-      - From TFRecords
-    * - One-time TFRecord extraction
-      - --
-      - 272 s, 2.9 GB
-    * - Feature extraction, per pass
-      - 154--174 s
-      - 50--53 s
-    * - Total for one pass
-      - ~164 s
-      - ~324 s
-    * - Total for ten passes
-      - ~1,640 s
-      - ~790 s
+      - Cold cache
+      - Warm cache
+    * - One-time TFRecord extraction (2.9 GB)
+      - 317 s
+      - 46 s
+    * - Feature pass, directly from slides
+      - 160 s
+      - 70 s
+    * - Feature pass, from TFRecords
+      - 51 s
+      - 52 s
 
-Each pass over TFRecords is about three times faster, and from the third pass
-onward the TFRecord path is faster overall. Use TFRecords when the same tiles
-are read repeatedly: training tile-level models for several epochs, data
-augmentation, hyperparameter searches, or comparing feature extractors. For a
-single pass, for example extracting foundation-model features once for MIL,
-reading directly from the slides (``extractor(wsi)``) is faster and needs no
-extra disk space. Either way, the resulting feature bags can be reused for all
-later MIL training.
+Each pass over TFRecords was about 3x faster when the slides had to be read
+from disk and about 1.3x faster when they were cached. Including the
+extraction cost, TFRecords were faster overall from the third pass in both
+cases. Use TFRecords when the same tiles are read repeatedly: training
+tile-level models for several epochs, data augmentation, hyperparameter
+searches, or comparing feature extractors. For a single pass, for example
+extracting foundation-model features once for MIL, reading directly from the
+slides was faster (160 s vs 368 s cold; 70 s vs 98 s warm) and needs no extra
+disk space.
 
-Timings depend on hardware and storage; the extraction time includes HistoX's
-default PDF extraction report. Reproduce the benchmark with
+.. tip::
+
+    When reading directly from slides, use parallel tile-reading processes,
+    for example ``extractor(wsi, num_processes=16)``. With the default threaded
+    reader the same pass took 154--174 s on cached slides.
+
+Timings depend on hardware and storage. Reproduce the benchmark with
 ``scripts/benchmarks/tfrecord_vs_wsi.py``; the raw results are in
 ``scripts/benchmarks/results/tfrecord_vs_wsi_2026-11-19.json``.
 

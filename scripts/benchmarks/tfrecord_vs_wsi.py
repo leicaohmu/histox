@@ -1,5 +1,8 @@
-"""Benchmark: reading tiles and extracting features directly from WSIs vs.
-from HistoX TFRecords.
+"""Benchmark: extracting features directly from WSIs vs. from HistoX TFRecords.
+
+Measures, under cold and warm OS page cache: one-time TFRecord extraction,
+one feature-extraction pass reading tiles directly from the slides (with
+parallel tile-reading processes), and one pass reading from TFRecords.
 
 Usage:
     python scripts/benchmarks/tfrecord_vs_wsi.py SLIDE_DIR WORK_DIR [--slides 6]
@@ -27,9 +30,10 @@ p.add_argument('--slides', type=int, default=6)
 p.add_argument('--tile-px', type=int, default=224)
 p.add_argument('--tile-um', type=int, default=112)
 p.add_argument('--batch-size', type=int, default=64)
-p.add_argument('--repeats', type=int, default=2)
+p.add_argument('--repeats', type=int, default=1)
+p.add_argument('--processes', type=int, default=16, help='tile-reading processes for the direct path')
 args = p.parse_args()
-PX, UM, BS = args.tile_px, args.tile_um, args.batch_size
+PX, UM, BS, NPROC = args.tile_px, args.tile_um, args.batch_size, args.processes
 
 
 def pick_slides():
@@ -48,6 +52,18 @@ def pick_slides():
     raise RuntimeError('not enough slides')
 
 
+def evict(paths):
+    """Drop files from the OS page cache (no root needed) to measure cold reads."""
+    for path in paths:
+        path = Path(path)
+        for f in ([path] if path.is_file() else [q for q in path.rglob('*') if q.is_file()]):
+            fd = os.open(os.path.realpath(f), os.O_RDONLY)
+            try:
+                os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+            finally:
+                os.close(fd)
+
+
 def sync():
     if torch.cuda.is_available():
         torch.cuda.synchronize()
@@ -64,27 +80,11 @@ def wsi(path):
     return w
 
 
-def wsi_read(slides):
-    n = 0
-    for s in slides:
-        for _ in wsi(s).build_generator(shuffle=False, img_format='numpy')():
-            n += 1
-    return n
-
-
 def wsi_features(slides, extractor):
     n = 0
     for s in slides:
-        f = extractor(wsi(s), batch_size=BS)
+        f = extractor(wsi(s), batch_size=BS, num_processes=NPROC)
         n += int((~np.ma.getmaskarray(f)[..., 0]).sum()) if np.ma.isMaskedArray(f) else int(np.prod(f.shape[:-1]))
-    return n
-
-
-def tfr_read(dataset):
-    n = 0
-    for tfr in dataset.tfrecords():
-        for _ in hx.io.TFRecordIterator(tfr) if hasattr(hx.io, 'TFRecordIterator') else hx.tfrecord_loader(tfr):
-            n += 1
     return n
 
 
@@ -111,22 +111,34 @@ def main():
            'slides': [s.name for s in slides], 'tile_px': PX, 'tile_um': UM, 'batch_size': BS,
            'extractor': 'resnet50_imagenet', 'qc': 'otsu', 'runs': []}
 
-    t, _ = timed(lambda: project.extract_tiles(PX, UM, qc='otsu'))
-    dataset = project.dataset(PX, UM)
-    res['tfrecord_extract_s'] = round(t, 2)
-    res['tfrecord_bytes'] = dir_size(Path(project.root) / 'tfrecords')
-    res['tfrecord_tiles'] = int(sum(dataset.num_tiles for _ in [0]))
-    print('extract', t, res['tfrecord_bytes'] / 1e9, 'GB', flush=True)
-
-    for r in range(args.repeats):
-        run = {}
-        run['wsi_read_s'], run['wsi_read_tiles'] = timed(lambda: wsi_read(slides))
-        run['tfr_read_s'], run['tfr_read_tiles'] = timed(lambda: tfr_read(dataset))
-        run['wsi_features_s'], run['wsi_features_tiles'] = timed(lambda: wsi_features(slides, extractor))
-        run['tfr_features_s'], run['tfr_features_tiles'] = timed(lambda: tfr_features(dataset, extractor, work / 'bags'))
-        run = {k: (round(v, 2) if isinstance(v, float) else v) for k, v in run.items()}
-        res['runs'].append(run); print('run', r, run, flush=True)
-        (work / 'results.json').write_text(json.dumps(res, indent=2))
+    res['processes_direct'] = NPROC
+    tfr_dir = Path(project.root) / 'tfrecords'
+    for cache in ('cold', 'warm'):
+        for r in range(args.repeats):
+            run = {'cache': cache}
+            def prep(paths):
+                if cache == 'cold':
+                    evict(paths)
+                else:   # warm: read once so the files are cached
+                    for path in paths:
+                        for f in ([Path(path)] if Path(path).is_file() else Path(path).rglob('*')):
+                            if f.is_file():
+                                Path(os.path.realpath(f)).read_bytes()
+            shutil.rmtree(tfr_dir, ignore_errors=True)
+            prep(slides)
+            run['extract_s'], _ = timed(lambda: project.extract_tiles(PX, UM, qc='otsu', skip_extracted=False))
+            dataset = project.dataset(PX, UM)
+            run['tiles'] = int(dataset.num_tiles)
+            run['tfrecord_bytes'] = dir_size(tfr_dir)
+            prep(slides)
+            run['wsi_features_s'], run['wsi_features_tiles'] = timed(lambda: wsi_features(slides, extractor))
+            prep([tfr_dir])
+            run['tfr_features_s'], run['tfr_features_tiles'] = timed(lambda: tfr_features(dataset, extractor, work / 'bags'))
+            run = {k: (round(v, 2) if isinstance(v, float) else v) for k, v in run.items()}
+            res['runs'].append(run); print('run', run, flush=True)
+            (work / 'results.json').write_text(json.dumps(res, indent=2))
+    res['slide_bytes'] = sum(os.path.getsize(os.path.realpath(s)) for s in slides)
+    (work / 'results.json').write_text(json.dumps(res, indent=2))
     print(json.dumps(res, indent=2))
 
 

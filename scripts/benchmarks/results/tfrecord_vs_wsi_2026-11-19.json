@@ -16,27 +16,26 @@
   "qc": "otsu",
   "runs": [
     {
-      "wsi_read_s": 118.05,
-      "wsi_read_tiles": 87412,
-      "tfr_read_s": 1.85,
-      "tfr_read_tiles": 87412,
-      "wsi_features_s": 153.83,
+      "cache": "cold",
+      "extract_s": 317.23,
+      "tiles": 87412,
+      "tfrecord_bytes": 2907605645,
+      "wsi_features_s": 159.58,
       "wsi_features_tiles": 87412,
-      "tfr_features_s": 53.08,
+      "tfr_features_s": 51.33,
       "tfr_features_tiles": 87412
     },
     {
-      "wsi_read_s": 117.96,
-      "wsi_read_tiles": 87412,
-      "tfr_read_s": 1.98,
-      "tfr_read_tiles": 87412,
-      "wsi_features_s": 174.38,
+      "cache": "warm",
+      "extract_s": 46.23,
+      "tiles": 87412,
+      "tfrecord_bytes": 2907625970,
+      "wsi_features_s": 69.68,
       "wsi_features_tiles": 87412,
-      "tfr_features_s": 50.17,
+      "tfr_features_s": 52.26,
       "tfr_features_tiles": 87412
     }
   ],
-  "tfrecord_extract_s": 271.62,
-  "tfrecord_bytes": 2907613979,
-  "tfrecord_tiles": 87412
+  "processes_direct": 16,
+  "slide_bytes": 7151813513
 }
