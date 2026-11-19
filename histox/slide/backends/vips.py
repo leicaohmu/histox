@@ -372,10 +372,13 @@ def tile_worker(
         region = region.resize(args.tile_px/args.extract_px)
     assert(region.width == region.height == args.tile_px)
 
-    # Apply segmentation mask
+    # Apply segmentation mask. Masks hold cell labels, not 0/1, so keep the
+    # original pixels wherever the label is non-zero (matching the cuCIM
+    # backend) instead of multiplying, which rescaled pixel values and
+    # changed the band format.
     if tile_mask is not None:
-        vips_mask = vips.Image.new_from_array(tile_mask)
-        region = region.multiply(vips_mask)
+        vips_mask = vips.Image.new_from_array((tile_mask > 0).astype(np.uint8))
+        region = vips_mask.ifthenelse(region, [0] * region.bands)
 
     if args.img_format != 'numpy':
         if args.img_format == 'png':

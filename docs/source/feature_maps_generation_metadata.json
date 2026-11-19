@@ -1,0 +1,126 @@
+{
+  "description": "Feature-space examples generated with HistoX.",
+  "histox_version": "0.2.1",
+  "script": "docs/figures/make_feature_maps.py",
+  "data": {
+    "program": "TCGA",
+    "data_portal": "NCI Genomic Data Commons",
+    "access": "open",
+    "slides": [
+      {
+        "filename": "TCGA-A6-2671-01Z-00-DX1.13d1a0d9-78cd-4cfc-b670-34a79ebe52ee.svs",
+        "group": "Colorectal (TCGA-COAD/READ)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-A6-2672-01Z-00-DX1.e2a845c8-6d77-4120-9f43-abec84a66c1c.svs",
+        "group": "Colorectal (TCGA-COAD/READ)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-A6-2674-01Z-00-DX1.d301f1f5-6f4a-49e6-9c93-f4e8b7f616b8.svs",
+        "group": "Colorectal (TCGA-COAD/READ)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-A6-2675-01Z-00-DX1.d37847d6-c17f-44b9-b90a-84cd1946c8ab.svs",
+        "group": "Colorectal (TCGA-COAD/READ)",
+        "tiles": 1
+      },
+      {
+        "filename": "TCGA-A6-2676-01Z-00-DX1.c465f6e0-b47c-48e9-bdb1-67077bb16c67.svs",
+        "group": "Colorectal (TCGA-COAD/READ)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-A6-2677-01Z-00-DX1.dc0903dc-fef2-47ca-8f04-1ef25a4d8338.svs",
+        "group": "Colorectal (TCGA-COAD/READ)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-05-4244-01Z-00-DX1.d4ff32cd-38cf-40ea-8213-45c2b100ac01_0316.svs",
+        "group": "Lung (TCGA-LUAD/LUSC)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-05-4245-01Z-00-DX1.36ff5403-d4bb-4415-b2c5-7c750d655cde_0916.svs",
+        "group": "Lung (TCGA-LUAD/LUSC)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-05-4249-01Z-00-DX1.9fce0297-cc19-4c04-872c-4466ee4024db_0264.svs",
+        "group": "Lung (TCGA-LUAD/LUSC)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-05-4250-01Z-00-DX1.90f67fdf-dff9-46ca-af71-0978d7c221ba_0527.svs",
+        "group": "Lung (TCGA-LUAD/LUSC)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-05-4382-01Z-00-DX1.76b49a4c-dbbb-48b0-b677-6d3037e5ce88_0816.svs",
+        "group": "Lung (TCGA-LUAD/LUSC)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-05-4395-01Z-00-DX1.20205276-ca16-46b2-914a-fe5e576a5cf9_0614.svs",
+        "group": "Lung (TCGA-LUAD/LUSC)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-2A-A8VL-01Z-00-DX1.2C2BD6EF-EC17-4117-AE89-A22B67AFB233.svs",
+        "group": "Prostate (TCGA-PRAD)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-2A-A8VT-01Z-00-DX1.F2CD9AAB-7B40-46A4-832B-1279A8A77737.svs",
+        "group": "Prostate (TCGA-PRAD)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-2A-A8VV-01Z-00-DX1.DD094519-863E-42EF-8B36-F52418265E3E.svs",
+        "group": "Prostate (TCGA-PRAD)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-2A-A8VX-01Z-00-DX1.2A244F16-C24E-4CE9-8820-9E36B5441EC7.svs",
+        "group": "Prostate (TCGA-PRAD)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-2A-A8W3-01Z-00-DX1.CC00522F-8A47-4C63-B9CC-F215F9EAAFBA.svs",
+        "group": "Prostate (TCGA-PRAD)",
+        "tiles": 60
+      },
+      {
+        "filename": "TCGA-2A-AAYF-01Z-00-DX1.D0ADEB9A-37A4-451C-B91C-4AB014A6857A.svs",
+        "group": "Prostate (TCGA-PRAD)",
+        "tiles": 60
+      }
+    ]
+  },
+  "tiles": {
+    "tile_px": 224,
+    "tile_um": 224,
+    "qc": "otsu",
+    "per_slide": 60,
+    "selection": "evenly spaced over the first 1200 retained tiles"
+  },
+  "features": "resnet50_imagenet (histox.build_feature_extractor)",
+  "umap": {
+    "n_neighbors": 30,
+    "min_dist": 0.2,
+    "random_state": 42
+  },
+  "mosaic": {
+    "num_tiles_x": 30,
+    "figsize_in": [
+      12,
+      12
+    ]
+  },
+  "files": {
+    "umap_example.png": "ceaabc54c5ae6b7a87e150f61c3f343f3267cfc52d4c06dc0ee20c8d9e68178b",
+    "mosaic_example.png": "c86140574c8b3c0d728bfbe8b10f2235dd1935cf1b8f1905ed62e60d5b58f287"
+  }
+}
