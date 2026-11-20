@@ -78,6 +78,13 @@ extractors. For a single pass, for example extracting foundation-model
 features once for MIL, reading directly from the slides was as fast or faster
 (119 s vs 121 s cold; 74 s vs 103 s warm) and needs no extra disk space.
 
+If you are not sure, you do not have to choose up front: a direct pass can
+write TFRecords as it goes, with ``extractor(wsi, tfrecord_dir=...)``. In two
+cold-cache runs on the same slides, this added about 33 s to a 160--176 s
+direct pass, while a separate :meth:`histox.Dataset.extract_tiles` took about
+88 s. The TFRecords written this way held the same tiles at the same
+coordinates as those from ``extract_tiles``.
+
 .. note::
 
     Two defaults make both paths fast on slow storage. Before reading a
@@ -103,6 +110,29 @@ From a Dataset
 --------------
 
 The typical way to create TFRecords is to use the :meth:`histox.Dataset.extract_tiles` function, as described in :ref:`filtering`. TFRecords will be exported to the destination configured in the :class:`histox.Dataset` object (see: :ref:`datasets_and_validation`).
+
+During feature extraction
+-------------------------
+
+Feature extraction directly from a slide can write the tiles it reads to a
+TFRecord at the same time. Write them into the dataset's TFRecord folder so the
+dataset finds them later:
+
+.. code-block:: python
+
+    dataset = project.dataset(tile_px=224, tile_um=112)
+    tfrecord_dir = dataset.tfrecords_folders()[0]
+    for path in dataset.slide_paths():
+        wsi = hx.WSI(path, tile_px=224, tile_um=112)
+        wsi.qc('otsu')
+        features = extractor(wsi, tfrecord_dir=tfrecord_dir)
+
+    # Later passes read the TFRecords instead of the slides.
+    dataset.generate_feature_bags(extractor, 'bags/')
+
+Each TFRecord is first written as ``<slide>.tfrecords.partial`` and renamed
+when the slide is finished, so an interrupted run never leaves a truncated
+TFRecord behind.
 
 From a slide
 ------------
@@ -153,7 +183,7 @@ The TFRecord object has several useful attributes:
     ['image_raw', 'slide', 'loc_x', 'loc_y']
     >>> tfr.img_format
     'jpeg'
-    >>> tfr.length
+    >>> len(tfr)
     1000
     >>> tfr.locations
     [(768, 256), (768, 512), ...]
@@ -162,7 +192,7 @@ The ``fields`` attribute is a list of the fields in the TFRecord.
 
 The ``img_format`` attribute is the image format of the TFRecord (either ``"jpeg"`` or ``"png"``).
 
-The ``length`` attribute is the number of tiles in the TFRecord.
+``len(tfr)`` is the number of tiles in the TFRecord.
 
 The ``locations`` attribute is a list of the x- and y- center coordinates of each tile, if available, otherwise None.
 

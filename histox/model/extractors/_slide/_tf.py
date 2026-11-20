@@ -6,7 +6,7 @@ import tensorflow as tf
 from typing import Optional, Callable, Union, TYPE_CHECKING
 from histox import log
 
-from ._utils import _build_grid, _log_normalizer, _use_numpy_if_png
+from ._utils import _build_grid, _log_normalizer, _use_numpy_if_png, _tfrecord_img_format, _tee_to_tfrecord
 
 if TYPE_CHECKING:
     from histox.model.base import BaseFeatureExtractor
@@ -140,12 +140,15 @@ def features_from_slide_tf(
     normalizer_source: Optional[str] = None,
     preprocess_fn: Optional[Callable] = None,
     prefetch: bool = True,
+    tfrecord_dir: Optional[str] = None,
     **kwargs
 ) -> Optional[np.ndarray]:
 
     log.debug(f"Slide prediction (batch_size={batch_size}, "
               f"img_format={img_format})")
 
+    if tfrecord_dir is not None:
+        img_format = _tfrecord_img_format(img_format)
     img_format = _use_numpy_if_png(img_format)
 
     # Create the output array
@@ -175,6 +178,8 @@ def features_from_slide_tf(
     if not generator:
         log.error(f"No tiles extracted from slide [green]{slide.name}")
         return None
+    if tfrecord_dir is not None:
+        generator = _tee_to_tfrecord(generator, slide, tfrecord_dir)
 
     # Build the Tensorflow dataset
     tile_dataset = _build_slide_iterator(
