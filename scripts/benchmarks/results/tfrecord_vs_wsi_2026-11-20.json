@@ -17,25 +17,25 @@
   "runs": [
     {
       "cache": "cold",
-      "extract_s": 317.23,
+      "extract_s": 69.67,
       "tiles": 87412,
-      "tfrecord_bytes": 2907605645,
-      "wsi_features_s": 159.58,
+      "tfrecord_bytes": 2907613998,
+      "wsi_features_s": 118.61,
       "wsi_features_tiles": 87412,
-      "tfr_features_s": 51.33,
+      "tfr_features_s": 50.73,
       "tfr_features_tiles": 87412
     },
     {
       "cache": "warm",
-      "extract_s": 46.23,
+      "extract_s": 52.05,
       "tiles": 87412,
-      "tfrecord_bytes": 2907625970,
-      "wsi_features_s": 69.68,
+      "tfrecord_bytes": 2907651367,
+      "wsi_features_s": 74.22,
       "wsi_features_tiles": 87412,
-      "tfr_features_s": 52.26,
+      "tfr_features_s": 51.49,
       "tfr_features_tiles": 87412
     }
   ],
-  "processes_direct": 16,
+  "processes_direct": null,
   "slide_bytes": 7151813513
 }

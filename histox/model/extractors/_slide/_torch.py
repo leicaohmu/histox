@@ -8,7 +8,7 @@ import torchvision
 from typing import Optional, Callable, Union, TYPE_CHECKING
 from histox import log
 
-from ._utils import _build_grid, _log_normalizer, _use_numpy_if_png
+from ._utils import _build_grid, _log_normalizer, _use_numpy_if_png, _tfrecord_img_format, _tee_to_tfrecord
 
 if TYPE_CHECKING:
     from histox.model.base import BaseFeatureExtractor
@@ -52,12 +52,16 @@ def features_from_slide_torch(
     callback: Optional[Callable] = None,
     normalizer: Optional[Union[str, "StainNormalizer"]] = None,
     preprocess_fn: Optional[Callable] = None,
+    prefetch: bool = True,
+    tfrecord_dir: Optional[str] = None,
     **kwargs
 ) -> Optional[np.ndarray]:
 
     log.debug(f"Slide prediction (batch_size={batch_size}, "
               f"img_format={img_format})")
 
+    if tfrecord_dir is not None:
+        img_format = _tfrecord_img_format(img_format)
     img_format = _use_numpy_if_png(img_format)
 
     # Create the output array
@@ -67,6 +71,12 @@ def features_from_slide_torch(
     opencv_norm = (isinstance(normalizer, str)
                    or (isinstance(normalizer, hx.norm.StainNormalizer)
                        and normalizer.__class__ == 'StainNormalizer'))
+
+    # Read the slide sequentially into the page cache before random tile
+    # reads (large speedup on spinning disks and network storage).
+    if prefetch:
+        from histox.util.prefetch import prefetch_file
+        prefetch_file(slide.path)
 
     # Build the tile generator
     generator = slide.build_generator(
@@ -78,6 +88,8 @@ def features_from_slide_torch(
     if not generator:
         log.error(f"No tiles extracted from slide [green]{slide.name}")
         return None
+    if tfrecord_dir is not None:
+        generator = _tee_to_tfrecord(generator, slide, tfrecord_dir)
 
     # Build the PyTorch dataloader
     tile_dataset = torch.utils.data.DataLoader(

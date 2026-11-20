@@ -44,10 +44,10 @@ JPEG-compressed. Reading them avoids re-reading and decoding the whole-slide
 image on every pass, at the cost of a one-time extraction step and disk space.
 
 The benchmark below used six open-access TCGA diagnostic slides from different
-tissue source sites (7.2 GB of slide files; 87,412 tiles at 224 px / 112 µm;
-Otsu QC; no stain normalization), ResNet-50 ImageNet features, and one NVIDIA
-RTX 3090. Both paths processed the same tiles, and the direct path read tiles
-with 16 processes. *Cold* means the files were evicted from the operating
+tissue source sites (7.2 GB of slide files on spinning disks; 87,412 tiles at
+224 px / 112 µm; Otsu QC; no stain normalization), ResNet-50 ImageNet features,
+and one NVIDIA RTX 3090, with HistoX's default settings. Both paths processed
+the same tiles. *Cold* means the files were evicted from the operating
 system's page cache before each step, as happens when a cohort is larger than
 memory; *warm* means they were already cached.
 
@@ -59,34 +59,49 @@ memory; *warm* means they were already cached.
       - Cold cache
       - Warm cache
     * - One-time TFRecord extraction (2.9 GB)
-      - 317 s
-      - 46 s
-    * - Feature pass, directly from slides
-      - 160 s
       - 70 s
+      - 52 s
+    * - Feature pass, directly from slides
+      - 119 s
+      - 74 s
     * - Feature pass, from TFRecords
       - 51 s
-      - 52 s
+      - 51 s
 
-Each pass over TFRecords was about 3x faster when the slides had to be read
-from disk and about 1.3x faster when they were cached. Including the
-extraction cost, TFRecords were faster overall from the third pass in both
-cases. Use TFRecords when the same tiles are read repeatedly: training
-tile-level models for several epochs, data augmentation, hyperparameter
-searches, or comparing feature extractors. For a single pass, for example
-extracting foundation-model features once for MIL, reading directly from the
-slides was faster (160 s vs 368 s cold; 70 s vs 98 s warm) and needs no extra
-disk space.
+Each pass over TFRecords was about 2.3x faster than reading the slides from
+disk and about 1.5x faster when the slides were cached. Including the
+extraction cost, TFRecords were faster overall from the second pass with a
+cold cache and from the third pass with a warm one. Use TFRecords when the
+same tiles are read repeatedly: training tile-level models for several
+epochs, data augmentation, hyperparameter searches, or comparing feature
+extractors. For a single pass, for example extracting foundation-model
+features once for MIL, reading directly from the slides was as fast or faster
+(119 s vs 121 s cold; 74 s vs 103 s warm) and needs no extra disk space.
 
-.. tip::
+If you are not sure, you do not have to choose up front: a direct pass can
+write TFRecords as it goes, with ``extractor(wsi, tfrecord_dir=...)``. In two
+cold-cache runs on the same slides, this added about 33 s to a 160--176 s
+direct pass, while a separate :meth:`histox.Dataset.extract_tiles` took about
+88 s. The TFRecords written this way held the same tiles at the same
+coordinates as those from ``extract_tiles``.
 
-    When reading directly from slides, use parallel tile-reading processes,
-    for example ``extractor(wsi, num_processes=16)``. With the default threaded
-    reader the same pass took 154--174 s on cached slides.
+.. note::
 
-Timings depend on hardware and storage. Reproduce the benchmark with
-``scripts/benchmarks/tfrecord_vs_wsi.py``; the raw results are in
-``scripts/benchmarks/results/tfrecord_vs_wsi_2026-11-19.json``.
+    Two defaults make both paths fast on slow storage. Before reading a
+    slide's tiles, HistoX reads the slide file once, sequentially, into the
+    operating system's page cache; tile extraction does this one slide ahead
+    in the background. On spinning disks this turned scattered tile reads at
+    about 27 MB/s into sequential reads at about 150 MB/s, cutting cold
+    extraction from 312 s to 96 s in a separate run. Slides larger than half
+    the available memory are skipped. Pass ``prefetch=False`` to
+    :meth:`histox.Dataset.extract_tiles` or to a feature extractor call, or
+    set ``HX_PREFETCH=0``, to turn it off. With the cuCIM backend on Linux,
+    tiles are also read with a process pool rather than threads, which was
+    about 2.5x faster for direct feature extraction.
+
+Timings depend on hardware, storage, and other load on the machine. Reproduce
+the benchmark with ``scripts/benchmarks/tfrecord_vs_wsi.py``; the raw results
+are in ``scripts/benchmarks/results/tfrecord_vs_wsi_2026-11-20.json``.
 
 Creating TFRecords
 ******************
@@ -95,6 +110,29 @@ From a Dataset
 --------------
 
 The typical way to create TFRecords is to use the :meth:`histox.Dataset.extract_tiles` function, as described in :ref:`filtering`. TFRecords will be exported to the destination configured in the :class:`histox.Dataset` object (see: :ref:`datasets_and_validation`).
+
+During feature extraction
+-------------------------
+
+Feature extraction directly from a slide can write the tiles it reads to a
+TFRecord at the same time. Write them into the dataset's TFRecord folder so the
+dataset finds them later:
+
+.. code-block:: python
+
+    dataset = project.dataset(tile_px=224, tile_um=112)
+    tfrecord_dir = dataset.tfrecords_folders()[0]
+    for path in dataset.slide_paths():
+        wsi = hx.WSI(path, tile_px=224, tile_um=112)
+        wsi.qc('otsu')
+        features = extractor(wsi, tfrecord_dir=tfrecord_dir)
+
+    # Later passes read the TFRecords instead of the slides.
+    dataset.generate_feature_bags(extractor, 'bags/')
+
+Each TFRecord is first written as ``<slide>.tfrecords.partial`` and renamed
+when the slide is finished, so an interrupted run never leaves a truncated
+TFRecord behind.
 
 From a slide
 ------------
@@ -145,7 +183,7 @@ The TFRecord object has several useful attributes:
     ['image_raw', 'slide', 'loc_x', 'loc_y']
     >>> tfr.img_format
     'jpeg'
-    >>> tfr.length
+    >>> len(tfr)
     1000
     >>> tfr.locations
     [(768, 256), (768, 512), ...]
@@ -154,7 +192,7 @@ The ``fields`` attribute is a list of the fields in the TFRecord.
 
 The ``img_format`` attribute is the image format of the TFRecord (either ``"jpeg"`` or ``"png"``).
 
-The ``length`` attribute is the number of tiles in the TFRecord.
+``len(tfr)`` is the number of tiles in the TFRecord.
 
 The ``locations`` attribute is a list of the x- and y- center coordinates of each tile, if available, otherwise None.
 

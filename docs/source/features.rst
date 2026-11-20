@@ -453,6 +453,17 @@ Feature extractors can also create features from a whole-slide image. This is us
     # Shape: (width, height, n_features)
     features = ctranspath(wsi)
 
+To keep the tiles for later passes, pass ``tfrecord_dir``. The tiles read for
+this pass are also written to ``<tfrecord_dir>/<slide name>.tfrecords``, with
+the same tiles, coordinates, and JPEG encoding as
+:meth:`histox.Dataset.extract_tiles`, so later passes can read the TFRecords
+instead of the slide (see :ref:`tfrecord_performance`). Tiles are read as JPEG
+in this mode, so the model sees exactly the stored tiles.
+
+.. code-block:: python
+
+    features = ctranspath(wsi, tfrecord_dir='/path/to/tfrecords')
+
 
 Mixed precision
 ---------------

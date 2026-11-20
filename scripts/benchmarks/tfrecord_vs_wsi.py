@@ -1,8 +1,9 @@
 """Benchmark: extracting features directly from WSIs vs. from HistoX TFRecords.
 
 Measures, under cold and warm OS page cache: one-time TFRecord extraction,
-one feature-extraction pass reading tiles directly from the slides (with
-parallel tile-reading processes), and one pass reading from TFRecords.
+one feature-extraction pass reading tiles directly from the slides (with the
+library's default tile reader and slide prefetching), and one pass reading
+from TFRecords.
 
 Usage:
     python scripts/benchmarks/tfrecord_vs_wsi.py SLIDE_DIR WORK_DIR [--slides 6]
@@ -31,7 +32,8 @@ p.add_argument('--tile-px', type=int, default=224)
 p.add_argument('--tile-um', type=int, default=112)
 p.add_argument('--batch-size', type=int, default=64)
 p.add_argument('--repeats', type=int, default=1)
-p.add_argument('--processes', type=int, default=16, help='tile-reading processes for the direct path')
+p.add_argument('--processes', type=int, default=None,
+               help='tile-reading processes for the direct path (default: library default)')
 args = p.parse_args()
 PX, UM, BS, NPROC = args.tile_px, args.tile_um, args.batch_size, args.processes
 
@@ -83,7 +85,8 @@ def wsi(path):
 def wsi_features(slides, extractor):
     n = 0
     for s in slides:
-        f = extractor(wsi(s), batch_size=BS, num_processes=NPROC)
+        kw = {} if NPROC is None else {'num_processes': NPROC}
+        f = extractor(wsi(s), batch_size=BS, **kw)
         n += int((~np.ma.getmaskarray(f)[..., 0]).sum()) if np.ma.isMaskedArray(f) else int(np.prod(f.shape[:-1]))
     return n
 
