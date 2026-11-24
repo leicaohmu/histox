@@ -1,6 +1,13 @@
-"""Registries for HistoX workflow tasks and methods."""
+"""Registries for HistoX workflow tasks and methods.
 
-from typing import Any, Callable, Dict, List, Optional
+Both registries are :class:`histox.registry.Registry` instances. Names are
+case-insensitive and duplicate registrations are rejected unless
+``replace=True`` is passed.
+"""
+
+from typing import List
+
+from histox.registry import Registry
 
 from .exceptions import (
     DuplicateRegistrationError,
@@ -9,96 +16,63 @@ from .exceptions import (
 )
 
 
-_TASK_REGISTRY: Dict[str, Callable[..., Any]] = {}
-_METHOD_REGISTRY: Dict[str, Callable[..., Any]] = {}
-
-
-def _normalise_name(name: str, kind: str) -> str:
+def _normalise_name(name: str) -> str:
     if not isinstance(name, str) or not name.strip():
-        raise ValueError("{} name must be a non-empty string".format(kind))
+        raise ValueError("Workflow names must be non-empty strings")
     return name.strip().lower()
 
 
-def _register(
-    registry: Dict[str, Callable[..., Any]],
-    factory: Callable[..., Any],
-    name: Optional[str],
-    kind: str,
-    replace: bool,
-) -> Callable[..., Any]:
-    key = _normalise_name(name or factory.__name__, kind)
-    if key in registry and not replace:
-        raise DuplicateRegistrationError(
-            "{} {!r} is already registered".format(kind.capitalize(), key)
-        )
-    registry[key] = factory
-    return factory
-
-
-def _decorator(
-    registry: Dict[str, Callable[..., Any]],
-    name: Optional[str],
-    kind: str,
-    replace: bool,
-):
-    def decorate(factory: Callable[..., Any]) -> Callable[..., Any]:
-        return _register(registry, factory, name, kind, replace)
-
-    return decorate
+_TASK_REGISTRY = Registry(
+    'task',
+    normalize=_normalise_name,
+    duplicates='error',
+    unknown_error=UnknownTaskError,
+    duplicate_error=DuplicateRegistrationError,
+)
+_METHOD_REGISTRY = Registry(
+    'method',
+    normalize=_normalise_name,
+    duplicates='error',
+    unknown_error=UnknownMethodError,
+    duplicate_error=DuplicateRegistrationError,
+)
 
 
 def register_task(name=None, replace: bool = False):
-    """Register a task class or factory.
+    """Register a task factory or class.
 
-    The decorator accepts either ``@register_task`` or
-    ``@register_task("survival")``. Existing registrations are protected by
-    default so importing an extension cannot silently replace another task.
+    Use as ``@register_task``, ``@register_task("survival")``, or
+    ``register_task("survival")(SurvivalTask)``. Existing registrations are
+    protected unless ``replace=True``.
     """
-    if callable(name):
-        factory = name
-        return _register(_TASK_REGISTRY, factory, None, "task", replace)
-    return _decorator(_TASK_REGISTRY, name, "task", replace)
+    return _TASK_REGISTRY.register(name, replace=replace)
 
 
 def register_method(name=None, replace: bool = False):
-    """Register a workflow method class or factory."""
-    if callable(name):
-        factory = name
-        return _register(_METHOD_REGISTRY, factory, None, "method", replace)
-    return _decorator(_METHOD_REGISTRY, name, "method", replace)
+    """Register a workflow method factory or class.
+
+    Use as ``@register_method``, ``@register_method("ps3")``, or
+    ``register_method("ps3")(PS3Method)``. Existing registrations are
+    protected unless ``replace=True``.
+    """
+    return _METHOD_REGISTRY.register(name, replace=replace)
 
 
 def list_tasks() -> List[str]:
     """Return registered task names in stable order."""
-    return sorted(_TASK_REGISTRY)
+    return _TASK_REGISTRY.names()
 
 
 def list_methods() -> List[str]:
     """Return registered workflow method names in stable order."""
-    return sorted(_METHOD_REGISTRY)
+    return _METHOD_REGISTRY.names()
 
 
 def build_task(name: str, **config):
     """Construct a registered task from keyword configuration."""
-    key = _normalise_name(name, "task")
-    try:
-        factory = _TASK_REGISTRY[key]
-    except KeyError:
-        raise UnknownTaskError(
-            "Unknown task {!r}. Available tasks: {}".format(key, list_tasks())
-        )
-    return factory(**config)
+    return _TASK_REGISTRY.get(name)(**config)
 
 
 def build_method(name: str, **config):
     """Construct a registered method from keyword configuration."""
-    key = _normalise_name(name, "method")
-    try:
-        factory = _METHOD_REGISTRY[key]
-    except KeyError:
-        raise UnknownMethodError(
-            "Unknown method {!r}. Available methods: {}".format(
-                key, list_methods()
-            )
-        )
-    return factory(**config)
+    return _METHOD_REGISTRY.get(name)(**config)
