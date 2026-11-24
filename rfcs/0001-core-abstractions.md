@@ -101,7 +101,7 @@ Goals:
 Non-goals for this RFC:
 
 - Rewriting `Project`, `Dataset`, or `WSI` from scratch.
-- Removing the TensorFlow backend (a separate decision; see section 8).
+- Removing the TensorFlow backend. It is deprecated (section 8, decision 1); its removal is a separate change.
 - Designing cell-graph models, multiplex imaging, spatial transcriptomics, or distributed training in detail. Section 5 only reserves room for them.
 - Studio. It should depend only on public APIs and is migrated last.
 
@@ -144,8 +144,7 @@ their mechanism and register into these registries.
 2. Re-implement `histox/workflows/_registry.py` on top of it; the public functions are unchanged.
 3. Re-implement the extractor and MIL registries the same way; `list_extractors()`, `register_torch()`, `get_model()`, and the other existing functions become thin wrappers.
 
-**Open question:** the extras hints point at `slideflow-noncommercial` and
-`slideflow-gpl`. Should HistoX publish its own extras packages under its own name?
+Extras hints point at HistoX-named packages (decision 2 in section 8).
 
 ### P2. Coordinate convention
 
@@ -181,14 +180,14 @@ class Bag:
     extractor: Optional[str]    # registry name (P1)
     config: dict                # provenance, as in bags_config.json
 
-    def save(self, directory): ...           # same .pt / .index.npz / bags_config.json
+    def save(self, directory, dtype=torch.float16): ...  # same .pt / .index.npz / bags_config.json
     @classmethod
     def load(cls, directory, slide): ...
     def subset(self, mask_or_indices): ...   # used by filter_bags_by_roi
 ```
 
 `BagDataset` accepts `Bag` objects in addition to the inputs it accepts today.
-The on-disk format does not change in this step.
+The file layout does not change in this step. New bags are stored as float16 (section 8, decision 4).
 
 **Later:** `Bag.to_h5()` / `Bag.from_h5()` for interoperability with CLAM and
 TRIDENT feature files. Before writing this converter, verify whether those
@@ -341,7 +340,7 @@ The documentation marks each public module with its level.
 Each step is one pull request, with tests, docs, and no breaking change.
 
 1. Accept this RFC.
-2. P1 registry; migrate the workflows registry, then the extractor and MIL registries.
+2. P1 registry; migrate the workflows registry, then the extractor and MIL registries. The extras hints switch to HistoX-named packages (section 8, decision 2).
 3. P2 convention and `histox/geometry.py`.
 4. P3 `Bag`, keeping today's file format.
 5. P4 `TileSpec`.
@@ -351,13 +350,29 @@ Each step is one pull request, with tests, docs, and no breaking change.
 9. P8 `Cohort` and `histox.splits`.
 10. P9 `ClassificationTask`, `Method("mil")`, `Method("tile_classifier")`.
 
+Independently of these steps: deprecate the TensorFlow backend for `0.3` (section 8, decision 1), and prepare the `histox-noncommercial` and `histox-gpl` packages with their license notices.
+
 Every step that touches `heatmap`, `segment`, `grad`, or MIL adds the tests
 those modules lack today.
 
-## 8. Decisions needed from maintainers
+## 8. Decisions
 
-1. **TensorFlow backend.** The roadmap says "PyTorch first". Deprecate in `0.3` and remove in `0.5`? This affects the size of P6 and P7.
-2. **Minimum Python version.** `setup.py` declares `>=3.7`, but CI tests only 3.9. Proposal: `>=3.10`, tested on 3.10–3.12.
-3. **Extras packages.** Keep pointing at `slideflow-noncommercial` / `slideflow-gpl`, or publish HistoX-named packages?
-4. **Naming.** Keep `WSI` (this RFC assumes so) rather than renaming it to `Slide`. Names for new modules: `histox.registry`, `histox.geometry`, `histox.transforms`, `histox.splits`; `Bag`, `SpatialMap`, `Cohort`, and `TileSpec` exported at top level.
-5. **Bag precision.** Bags are stored as float32 today; extraction defaults to float16. Store float16 to halve disk use?
+Resolved in review on 2026-11-24:
+
+1. **TensorFlow backend: deprecated.** Using it emits `HistoXDeprecationWarning` from `0.3`, and it is removed no earlier than `0.5`, following section 6. The new abstractions in this RFC (P3–P9) are PyTorch-only and do not get TensorFlow variants. P6 and P7 migrate only the PyTorch code paths, including `histox/norm/torch/` and `TorchFeatureExtractor`.
+2. **Extras packages: HistoX-named.**
+   - Extractors and MIL models now hinted as `slideflow-noncommercial` and `slideflow-gpl` move to `histox-noncommercial` and `histox-gpl`, next to the existing `histox-contrib`.
+   - The optional imports in `histox/__init__.py` (`slideflow_noncommercial`, `slideflow_gpl`) follow.
+   - Each package keeps the license of the code it contains, with its notices: non-commercial terms for the first, GPL for the second.
+   - While the new packages are not yet published, the old names keep working, with a deprecation warning.
+3. **Naming: `WSI` stays.** Renaming the central class would break every user script for no functional gain. New modules are `histox.registry`, `histox.geometry`, `histox.transforms`, and `histox.splits`. `Bag`, `SpatialMap`, `Cohort`, and `TileSpec` are exported at top level, alongside `WSI`, `Dataset`, and `Project`.
+4. **Bag precision: float16 on disk, float32 in memory.**
+   - Features are already computed in mixed precision, so storing them as float32 doubles disk use and I/O without adding information.
+   - `Bag.save()` writes float16 by default. If any value is outside the float16 range, it writes float32 and logs a warning.
+   - `Bag.load()` and `BagDataset` return float32, as `BagDataset` already does through its `dtype` argument.
+   - `Bag.save(dtype=torch.float32)` keeps full precision on request.
+   - Readers accept both precisions, so existing bags stay valid.
+
+Still open:
+
+5. **Minimum Python version.** `setup.py` declares `>=3.7`, but CI tests only 3.9. Proposal: `>=3.10`, tested on 3.10–3.12.
