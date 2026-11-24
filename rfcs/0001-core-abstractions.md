@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Draft |
+| Status | Accepted |
 | Author | leicaohmu |
 | Created | 2026-11-24 |
 | Applies to | `0.2.x` → `1.0` |
@@ -357,7 +357,7 @@ those modules lack today.
 
 ## 8. Decisions
 
-Resolved in review on 2026-11-24:
+Resolved in review on 2026-11-24.
 
 1. **TensorFlow backend: deprecated.** Using it emits `HistoXDeprecationWarning` from `0.3`, and it is removed no earlier than `0.5`, following section 6. The new abstractions in this RFC (P3–P9) are PyTorch-only and do not get TensorFlow variants. P6 and P7 migrate only the PyTorch code paths, including `histox/norm/torch/` and `TorchFeatureExtractor`.
 2. **Extras packages: HistoX-named.**
@@ -373,6 +373,7 @@ Resolved in review on 2026-11-24:
    - `Bag.save(dtype=torch.float32)` keeps full precision on request.
    - Readers accept both precisions, so existing bags stay valid.
 
-Still open:
-
-5. **Minimum Python version.** `setup.py` declares `>=3.7`, but CI tests only 3.9. Proposal: `>=3.10`, tested on 3.10–3.12.
+5. **Python versions: follow PyTorch.** HistoX supports the Python versions that the current PyTorch release supports, and drops a version in the same release cycle PyTorch does (PyTorch's RFC-0038 policy).
+   - Python 3.10 reached end of life in October 2026, and PyTorch 2.15 requires Python 3.11 or newer.
+   - So `python_requires` becomes `>=3.11`, and CI tests 3.11, 3.12, and 3.13.
+   - Python 3.9 environments, including the lab server's current development environment, need a new environment with a current PyTorch. This change ships with the `0.3` release notes.

@@ -18,4 +18,4 @@ and a one-line reason, so the reasoning stays on record.
 
 | RFC | Title | Status |
 |---|---|---|
-| [0001](0001-core-abstractions.md) | Core abstractions | Draft |
+| [0001](0001-core-abstractions.md) | Core abstractions | Accepted |
