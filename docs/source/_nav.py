@@ -187,6 +187,7 @@ NAV = [
             ]),
             ('Models and workflows', [
                 ('workflows_api', 'histox.workflows'),
+                ('registry', 'histox.registry'),
                 ('model', 'histox.model'),
                 ('model_torch', 'histox.model.torch'),
                 ('mil_module', 'histox.mil'),

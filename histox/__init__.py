@@ -11,7 +11,7 @@ from ._backend import backend, slide_backend
 from histox.util import getLoggingLevel, log, setLoggingLevel, about
 
 ...
-from histox import data, io, model, norm, stats, gan, workflows
+from histox import data, io, model, norm, registry, stats, gan, workflows
 from histox.dataset import Dataset
 from histox.heatmap import Heatmap
 from histox.model import DatasetFeatures, ModelParams
