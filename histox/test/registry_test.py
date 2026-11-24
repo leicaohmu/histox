@@ -134,7 +134,8 @@ class MigratedRegistriesTest(unittest.TestCase):
     """The existing registries are Registry instances with unchanged APIs."""
 
     def test_all_registries_exist(self):
-        import histox  # noqa: F401  (imports the modules that own them)
+        import histox  # noqa: F401
+        import histox.mil  # noqa: F401  (MIL registries are created on import)
         for kind in ('extractor.torch', 'extractor.tensorflow', 'mil_model',
                      'mil_trainer', 'task', 'method'):
             self.assertIsInstance(get_registry(kind), Registry)

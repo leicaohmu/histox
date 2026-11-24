@@ -9,9 +9,10 @@ components that live in optional extras packages.
 .. code-block:: python
 
     import histox as hx
+    import histox.mil   # MIL registries are created when histox.mil is imported
 
     hx.registry.list_registries()
-    # ['extractor.tensorflow', 'extractor.torch', 'mil_model', ...]
+    # ['extractor.tensorflow', 'extractor.torch', 'method', 'mil_model', ...]
 
     extractors = hx.registry.get_registry('extractor.torch')
     extractors.names()
