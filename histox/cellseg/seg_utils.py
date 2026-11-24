@@ -103,6 +103,9 @@ def sparse_mask(mask):
     raveled = np.ravel(mask)
     nonzero = raveled > 0
     cols = np.where(nonzero)[0]
+    if not len(cols):
+        # No labelled cells (e.g. all removed by an ROI): background row only.
+        return csr_matrix((1, 1), dtype=np.uint32)
     return csr_matrix((cols, (raveled[nonzero], cols)),
                       shape=(mask.max() + 1, cols[-1]+1),
                       dtype=(np.uint32 if (cols[-1]+1) < 4294967295 else np.uint64))

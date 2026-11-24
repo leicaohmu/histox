@@ -10,6 +10,8 @@ import os
 import cv2
 import numpy as np
 
+from histox import geometry as hx_geometry
+
 from pathlib import Path
 from skimage.color import rgb2hsv
 from types import SimpleNamespace
@@ -59,8 +61,7 @@ def tile_worker(
         tile_mask = None
         x, y, grid_x, grid_y = c
 
-    x_coord = int(x + args.full_extract_px / 2)
-    y_coord = int(y + args.full_extract_px / 2)
+    x_coord, y_coord = (int(v) for v in hx_geometry.tile_center((x, y), args.full_extract_px))
     slide = get_dicom_reader(
         args.path,
         args.mpp_override,
