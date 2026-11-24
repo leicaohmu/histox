@@ -4,6 +4,8 @@ This roadmap separates the capabilities available in the current package from
 the interfaces HistoX plans to add. It is a direction document, not a promise
 of release dates or backward compatibility during the pre-stable phase.
 
+Larger design changes are proposed as RFCs in [`rfcs/`](rfcs/README.md).
+
 ## Design principles
 
 1. **PyTorch first.** New training, inference, and model integrations should
