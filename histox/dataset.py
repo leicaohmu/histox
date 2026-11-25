@@ -511,7 +511,7 @@ class Dataset:
         self,
         config: Optional[Union[str, Dict[str, Dict[str, str]]]] = None,
         sources: Optional[Union[str, List[str]]] = None,
-        tile_px: Optional[int] = None,
+        tile_px: Optional[Union[int, "hx.TileSpec"]] = None,
         tile_um: Optional[Union[str, int]] = None,
         *,
         tfrecords: Optional[str] = None,
@@ -558,7 +558,8 @@ class Dataset:
             sources (List[str]): List of dataset sources to include from
                 configuration. If not provided, will use all sources in the
                 provided configuration. Defaults to None.
-            tile_px (int): Tile size in pixels.
+            tile_px (int or :class:`histox.TileSpec`): Tile size in pixels,
+                or a TileSpec giving ``tile_px`` and ``tile_um`` at once.
             tile_um (int or str): Tile size in microns (int) or magnification
                 (str, e.g. "20x").
 
@@ -579,6 +580,16 @@ class Dataset:
             errors.SourceNotFoundError: If provided source does not exist
                 in the dataset config.
         """
+        if isinstance(tile_px, hx.TileSpec):
+            spec = tile_px
+            if spec.stride_div != 1 or spec.origin != (0, 0):
+                raise ValueError(
+                    "A Dataset uses only tile_px and tile_um from a TileSpec. "
+                    "Pass stride_div / randomize_origin to extract_tiles() instead, "
+                    "or use Project.extract_tiles(spec).")
+            if tile_um is not None:
+                raise ValueError("Dataset: pass either a TileSpec or tile_um, not both")
+            tile_px, tile_um = spec.tile_px, spec.tile_um
         if isinstance(tile_um, str):
             hx.util.assert_is_mag(tile_um)
             tile_um = tile_um.lower()
@@ -654,6 +665,16 @@ class Dataset:
             self.tile_px,
             self.tile_um
         )
+
+    @property
+    def tile_spec(self) -> Optional["hx.TileSpec"]:
+        """The dataset's tile size as a :class:`histox.TileSpec`.
+
+        ``None`` if the dataset was created without a tile size.
+        """
+        if self.tile_px is None or self.tile_um is None:
+            return None
+        return hx.TileSpec(self.tile_px, self.tile_um)
 
     @property
     def annotations(self) -> Optional[pd.DataFrame]:

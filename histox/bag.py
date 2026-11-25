@@ -38,6 +38,7 @@ import numpy as np
 
 if TYPE_CHECKING:
     import torch
+    from histox.slide.tile_spec import TileSpec
 
 __all__ = ['Bag', 'list_bags', 'load_features', 'load_coords', 'FLOAT16_MAX']
 
@@ -114,6 +115,17 @@ class Bag:
     def tile_um(self) -> Optional[Union[int, str]]:
         """Tile size in microns (or magnification), from the extraction config."""
         return self.config.get('tile_um')
+
+    @property
+    def tile_spec(self) -> Optional["TileSpec"]:
+        """Tile size as a :class:`histox.TileSpec`, from the extraction config.
+
+        ``None`` if the config does not record ``tile_px`` and ``tile_um``.
+        """
+        from histox.slide.tile_spec import TileSpec
+        if self.tile_px is None or self.tile_um is None:
+            return None
+        return TileSpec.from_dict(self.config)
 
     @property
     def extractor(self) -> Optional[str]:
