@@ -34,6 +34,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, Union, Sequence
 
 import histox as hx
 from histox import geometry as hx_geometry
+from histox.slide.tile_spec import TileSpec, resolve_tile_args
 import histox.slide.qc
 from histox.util import log, path_to_name  # noqa F401
 from .report import SlideReport
@@ -83,16 +84,16 @@ class WSI:
     def __init__(
         self,
         path: str,
-        tile_px: int,
-        tile_um: Union[int, str],
-        stride_div: int = 1,
+        tile_px: Union[int, "TileSpec"],
+        tile_um: Optional[Union[int, str]] = None,
+        stride_div: Optional[int] = None,
         *,
         enable_downsample: bool = True,
         roi_dir: Optional[str] = None,
         rois: Optional[List[str]] = None,
         roi_method: str = 'auto',
         roi_filter_method: Union[str, float] = 'center',
-        origin: Union[str, Tuple[int, int]] = (0, 0),
+        origin: Optional[Union[str, Tuple[int, int]]] = None,
         pb: Optional[Progress] = None,
         verbose: bool = True,
         use_edge_tiles: bool = False,
@@ -106,9 +107,13 @@ class WSI:
 
         Args:
             path (str): Path to slide.
-            tile_px (int): Size of tiles to extract, in pixels.
+            tile_px (int or :class:`histox.TileSpec`): Size of tiles to
+                extract, in pixels. Alternatively, a :class:`histox.TileSpec`
+                giving ``tile_px``, ``tile_um``, ``stride_div``, and ``origin``
+                at once; the separate arguments must then be left unset.
             tile_um (int or str): Size of tiles to extract, in microns (int) or
-                magnification (str, e.g. "20x").
+                magnification (str, e.g. "20x"). Required unless ``tile_px``
+                is a TileSpec.
             stride_div (int, optional): Stride divisor for tile extraction
                 (1 = no tile overlap; 2 = 50% overlap, etc). Defaults to 1.
             enable_downsample (bool, optional): Allow use of downsampled
@@ -173,6 +178,17 @@ class WSI:
                 Defaults to an empty list.
 
         """
+        # Accept a TileSpec in place of tile_px / tile_um / stride_div / origin.
+        tile_px, tile_um, stride_div, origin = resolve_tile_args(
+            tile_px, tile_um, stride_div, origin, caller='WSI')
+        if tile_um is None:
+            raise TypeError("WSI() missing required argument: 'tile_um'")
+        if stride_div is None:
+            stride_div = 1
+        if origin is None:
+            origin = (0, 0)
+        self._requested_tile_um = tile_um
+
         # Initialize calculated variables
         if hx.util.is_dicom_slide(path):
             path = os.path.normpath(path)
@@ -321,6 +337,17 @@ class WSI:
 
         # Summarize slide information
         self._log_slide_summary()
+
+    @property
+    def tile_spec(self) -> TileSpec:
+        """The :class:`histox.TileSpec` this slide was tiled with.
+
+        ``tile_um`` is returned as requested (e.g. ``'20x'``), even though
+        ``WSI.tile_um`` holds the equivalent size in microns.
+        """
+        return TileSpec(self.tile_px,
+                        getattr(self, '_requested_tile_um', self.tile_um),
+                        self.stride_div, self.origin)
 
     def __repr__(self) -> str:
         base = "WSI(\n"

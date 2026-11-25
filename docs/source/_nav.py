@@ -183,6 +183,7 @@ NAV = [
                 ('dataset_features', 'DatasetFeatures'),
                 ('bag', 'histox.Bag'),
                 ('slide', 'histox.WSI'),
+                ('tile_spec', 'histox.TileSpec'),
                 ('slide_qc', 'histox.slide.qc'),
                 ('io', 'histox.io'),
                 ('io_torch', 'histox.io.torch'),

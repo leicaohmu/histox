@@ -26,7 +26,7 @@ from histox.mosaic import Mosaic
 from histox.project import Project
 from histox.project import create as create_project
 from histox.project import load as load_project
-from histox.slide import WSI
+from histox.slide import TileSpec, WSI
 from histox.stats import SlideMap
 from histox.tfrecord import TFRecord, tfrecord_loader, multi_tfrecord_loader
 from histox.plugin import load_plugins
