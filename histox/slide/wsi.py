@@ -33,6 +33,7 @@ from types import SimpleNamespace
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union, Sequence
 
 import histox as hx
+from histox import geometry as hx_geometry
 import histox.slide.qc
 from histox.util import log, path_to_name  # noqa F401
 from .report import SlideReport
@@ -1508,7 +1509,8 @@ class WSI:
             (centroids, np.expand_dims(np.arange(centroids.shape[0]), axis=-1)),
             axis=-1)
         nonzero = self.seg_coord[:, 0] > 0
-        self.seg_coord[:, 0:2][nonzero] -= int(self.full_extract_px/2)
+        self.seg_coord[:, 0:2][nonzero] = hx_geometry.tile_topleft(
+            self.seg_coord[:, 0:2][nonzero], self.full_extract_px)
         self.estimated_num_tiles = centroids.shape[0]
 
     def area(self) -> float:
@@ -1871,8 +1873,7 @@ class WSI:
         if anchor not in ('topleft', 'center'):
             raise ValueError("anchor must be 'topleft' or 'center'")
         if anchor == 'center':
-            x -= int(self.full_extract_px/2)
-            y -= int(self.full_extract_px/2)
+            x, y = hx_geometry.tile_topleft((x, y), self.full_extract_px)
         coord_idx, = np.where((
             (self.coord[:, 0] == x)
             & (self.coord[:, 1] == y)
@@ -2070,8 +2071,7 @@ class WSI:
             self.grid[tuple(self.coord[:, 2:4].T)].astype(bool)
         ].copy()
         if anchor == 'center':
-            c[:, 0] += int(self.full_extract_px/2)
-            c[:, 1] += int(self.full_extract_px/2)
+            c[:, 0:2] = hx_geometry.tile_center(c[:, 0:2], self.full_extract_px)
         return c
 
     def get_tile_dataframe(self) -> pd.DataFrame:
@@ -2100,8 +2100,7 @@ class WSI:
             _, roi = self.get_tile_roi(grid=(xi, yi))
 
             # Convert from top-left to center coordinates
-            x += int(self.full_extract_px/2)
-            y += int(self.full_extract_px/2)
+            x, y = hx_geometry.tile_center((x, y), self.full_extract_px)
 
             loc.append([x, y])
             grid.append([xi, yi])
@@ -2555,8 +2554,7 @@ class WSI:
         assert len(grid_idx) == 1
         x, y, grid_x, grid_y = self.coord[grid_idx[0]]
         if anchor == 'center':
-            x += int(self.full_extract_px/2)
-            y += int(self.full_extract_px/2)
+            x, y = hx_geometry.tile_center((x, y), self.full_extract_px)
         return x, y
 
     def get_tile_mask(self, index, sparse_mask) -> np.ndarray:

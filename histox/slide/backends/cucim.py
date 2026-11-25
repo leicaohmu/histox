@@ -6,6 +6,8 @@ Requires: cuCIM (...)
 import cv2
 import numpy as np
 
+from histox import geometry as hx_geometry
+
 from types import SimpleNamespace
 from typing import Optional, Dict, Any, Tuple, List, TYPE_CHECKING
 from histox.util import log
@@ -119,8 +121,7 @@ def tile_worker(
         tile_mask = None
         x, y, grid_x, grid_y = c
 
-    x_coord = int(x + args.full_extract_px / 2)
-    y_coord = int(y + args.full_extract_px / 2)
+    x_coord, y_coord = (int(v) for v in hx_geometry.tile_center((x, y), args.full_extract_px))
 
     # If downsampling is enabled, read image from highest level
     # to perform filtering; otherwise filter from our target level

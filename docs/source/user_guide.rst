@@ -24,6 +24,7 @@ follow the chapters below in order.
    :maxdepth: 1
 
    slide_processing
+   coordinates
    segmentation
    cellseg
    features

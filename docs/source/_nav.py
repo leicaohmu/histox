@@ -94,6 +94,7 @@ NAV = [
             ]),
             ('2. Slide processing', [
                 ('slide_processing', 'Slide processing'),
+                ('coordinates', 'Coordinates'),
                 ('segmentation', 'Tissue segmentation'),
                 ('cellseg', 'Cell segmentation'),
                 ('features', 'Feature extraction'),

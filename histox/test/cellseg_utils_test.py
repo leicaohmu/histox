@@ -32,5 +32,11 @@ class TestSparseCentroids(unittest.TestCase):
         self.assertEqual(len(centroids), 1)
 
 
+    def test_no_cells(self):
+        masks = np.zeros((32, 32), dtype=np.int32)
+        centroids = seg_utils.get_sparse_centroid(masks, seg_utils.sparse_mask(masks))
+        self.assertEqual(centroids.shape, (0, 2))
+
+
 if __name__ == '__main__':
     unittest.main()
