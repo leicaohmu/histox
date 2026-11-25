@@ -28,6 +28,7 @@ from .ps3 import (
     PS3PathwayPreprocessor,
     PS3ReportEncoder,
 )
+from ._aggregator import SlideAggregator, uses_lens
 from ._registry import (
     list_trainers, list_models, is_trainer, is_model,
     get_trainer, get_model, get_model_config_class,
