@@ -338,14 +338,16 @@ class DatasetFeatures:
             :class:`DatasetFeatures`: DatasetFeatures object
 
         """
-        import torch
-        slides = [hx.util.path_to_name(b) for b in os.listdir(bags) if b.endswith('.pt')]
+        from histox.bag import Bag, list_bags
+        slides = list_bags(bags)
         obj = cls(None, None)
         obj.slides = slides
         for slide in slides:
-            activations = torch.load(join(bags, f'{slide}.pt'))
-            obj.activations[slide] = activations.numpy()
-            obj.locations[slide] = tfrecord2idx.load_index(join(bags, f'{slide}.index'))
+            bag = Bag.load(bags, slide)   # float32, whatever the storage precision
+            if bag.coords is None:
+                raise OSError(f"Could not find index path for bag {slide} in {bags}")
+            obj.activations[slide] = bag.features.numpy()
+            obj.locations[slide] = bag.coords
         return obj
 
     @classmethod
@@ -728,18 +730,28 @@ class DatasetFeatures:
         self,
         outdir: str,
         slides: Optional[List[str]] = None,
-        verbose: bool = True
+        verbose: bool = True,
+        *,
+        dtype: Optional["torch.dtype"] = None,
     ) -> None:
-        """Export activations in torch format to .pt files in the directory.
+        """Export activations as feature bags (.pt files) in the directory.
 
-        Used for training MIL models.
+        Used for training MIL models. Writes, for each slide, ``<slide>.pt``
+        and ``<slide>.index.npz`` (tile centers), plus ``bags_config.json``
+        once per directory. See :class:`histox.Bag`.
 
         Args:
             outdir (str): Path to directory in which to save .pt files.
+            slides (list(str), optional): Slides to export. Defaults to all.
             verbose (bool): Verbose logging output. Defaults to True.
+            dtype (torch.dtype, optional): Storage precision. Defaults to
+                ``torch.float16``, which halves disk use; bags with values
+                outside the float16 range are stored as float32. Bags are
+                loaded back as float32. Pass ``torch.float32`` to store full
+                precision.
 
         """
-        import torch
+        from histox.bag import Bag, _write_config
 
         if not exists(outdir):
             os.makedirs(outdir)
@@ -748,28 +760,15 @@ class DatasetFeatures:
             if not len(self.activations[slide]):
                 log.info(f'Skipping empty slide [green]{slide}')
                 continue
-            slide_activations = torch.from_numpy(
-                self.activations[slide].astype(np.float32)
-            )
-            torch.save(slide_activations, join(outdir, f'{slide}.pt'))
-            tfrecord2idx.save_index(
+            bag = Bag(
+                self.activations[slide].astype(np.float32),
                 self.locations[slide],
-                join(outdir, f'{slide}.index')
+                slide=slide,
             )
+            bag.save(outdir, dtype=dtype, write_config=False)
 
         # Log the feature extraction configuration
-        config = self.dump_config()
-        if exists(join(outdir, 'bags_config.json')):
-            old_config = hx.util.load_json(join(outdir, 'bags_config.json'))
-            if old_config != config:
-                log.warning(
-                    "Feature extraction configuration does not match the "
-                    "configuration used to generate the existing bags at "
-                    f"{outdir}. Current configuration will not be saved. "
-                    f"Current configuration:\n{config}"
-                )
-        else:
-            hx.util.write_json(config, join(outdir, 'bags_config.json'))
+        _write_config(outdir, self.dump_config())
 
         log_fn = log.info if verbose else log.debug
         log_fn(f'Activations exported in Torch format to {outdir}')

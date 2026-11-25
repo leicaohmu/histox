@@ -1985,13 +1985,16 @@ class Dataset:
         *,
         tile_df: Optional[pd.DataFrame] = None
     ) -> None:
-        """Filter bags by tiles in an ROI."""
-        import torch
+        """Filter bags by tiles in an ROI.
+
+        Writes, for each slide with at least one tile inside an ROI, a bag
+        with only those tiles to ``dest``, together with its tile index and
+        the source directory's ``bags_config.json``.
+        """
+        from histox.bag import Bag
 
         #TODO: extend to tfrecords
         #TODO: accelerate with multiprocessing
-        #TODO: save filtered indices
-        #TODO: copy bags config
 
         if tile_df is None:
             tile_df = self.get_tile_dataframe()
@@ -2007,28 +2010,26 @@ class Dataset:
                 continue
 
             # Get the bag
-            bag = torch.load(join(bags_path, slide+'.pt'))
-            bag_index = np.load(join(bags_path, slide+'.index.npz'))['arr_0']
+            bag = Bag.load(bags_path, slide)
+            if bag.coords is None:
+                log.warning(f"No tile index for bag {slide}; skipping.")
+                continue
 
             # Subset the ROI based on this slide
             slide_df = roi_df.loc[roi_df.slide == slide]
 
-            # Get the common locations (in an ROI)
-            bag_locs = {tuple(r) for r in bag_index}
+            # Find the tiles of the bag that lie in an ROI
             roi_locs = {tuple(r) for r in np.stack([slide_df.loc_x.values, slide_df.loc_y.values], axis=1)}
-            common_locs = bag_locs.intersection(roi_locs)
+            in_roi = np.array([tuple(row) in roi_locs for row in bag.coords], dtype=bool)
 
-            # Find indices in the bag that match the common locations (in an ROI)
-            bag_i = [i for i, row in enumerate(bag_index) if tuple(row) in common_locs]
-
-            if not len(bag_i):
+            if not in_roi.any():
                 log.debug("No common locations found for {}".format(slide))
                 continue
 
-            # Subset and save the bag
-            bag = bag[bag_i]
-            torch.save(bag, join(dest, slide+'.pt'))
-            log.debug("Subset size ({}): {} -> {}".format(slide, len(bag_index), len(bag)))
+            # Subset and save the bag, its index, and the extraction config
+            subset = bag.subset(in_roi)
+            subset.save(dest)
+            log.debug("Subset size ({}): {} -> {}".format(slide, len(bag), len(subset)))
             n_complete += 1
 
         log.info("Bag filtering complete. {} bags filtered.".format(n_complete))

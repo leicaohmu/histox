@@ -4,6 +4,7 @@ import os
 import inspect
 import pandas as pd
 import histox as hx
+from histox.bag import load_coords
 import numpy as np
 
 from rich.progress import Progress, track
@@ -965,9 +966,8 @@ def get_mil_tile_predictions(
         n_bags = len(tile_pred)
 
         # Find the associated locations.
-        bag_index = join(dirname(bag), f'{slide}.index.npz')
-        if exists(bag_index):
-            locations = np.load(bag_index)['arr_0']
+        locations = load_coords(bag)
+        if locations is not None:
             assert len(locations) == n_bags
             df_loc_x.append(locations[:, 0])
             df_loc_y.append(locations[:, 1])

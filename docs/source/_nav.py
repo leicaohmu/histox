@@ -181,6 +181,7 @@ NAV = [
             ('Data and slides', [
                 ('data_api', 'histox.data'),
                 ('dataset_features', 'DatasetFeatures'),
+                ('bag', 'histox.Bag'),
                 ('slide', 'histox.WSI'),
                 ('slide_qc', 'histox.slide.qc'),
                 ('io', 'histox.io'),
