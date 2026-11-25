@@ -1992,7 +1992,7 @@ class WSI:
             self.coord[:, 2:4].T,
             dims=self.grid.shape
         )
-        unmasked_coord_indices = np.in1d(
+        unmasked_coord_indices = np.isin(
             linear_indices_of_coord,
             true_grid_indices
         )
@@ -3100,7 +3100,7 @@ class WSI:
             method (str, Callable, list(Callable)): Quality control method(s).
                 If a string, may be 'blur', 'otsu', or 'both'.
                 If a callable (or list of callables), each must accept a hx.WSI
-                object and return a np.ndarray (dtype=np.bool).
+                object and return a np.ndarray (dtype=bool).
             blur_radius (int, optional): Blur radius. Only used if method is
                 'blur' or 'both'.
             blur_threshold (float, optional): Blur threshold. Only used if

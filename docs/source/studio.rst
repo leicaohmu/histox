@@ -10,7 +10,15 @@ HistoX Studio: Live Visualization
 
 HistoX Studio provides powerful tools for interactive visualization of whole-slide images, model predictions, and GAN-generated images. It's also fast - with an OpenGL renderer and highly optimized whole-slide image viewer, you'll get a smooth experience that can even run on a Raspberry Pi.
 
-If you have installed histox via PIP, you can run Studio from a terminal with:
+Studio's graphical dependencies are optional. Install them with:
+
+.. code-block:: bash
+
+    pip install "histox[studio]"
+
+They are not yet available for Python 3.13, so use Python 3.11 or 3.12 for Studio.
+
+Then run Studio from a terminal with:
 
 .. code-block:: bash
 

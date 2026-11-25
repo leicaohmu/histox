@@ -65,11 +65,7 @@ setuptools.setup(
         'rasterio',
         'rich',
         'pillow>=6.0.0',
-        'imgui>=2.0.0',
-        'pyopengl',
-        'glfw',
         'saliency',
-        'pyperclip',
         'requests',
         'parameterized',
         # histox.cellseg relies on zarr 2 internals removed in zarr 3.
@@ -95,6 +91,14 @@ setuptools.setup(
         'hpo': [
             'smac==1.4.0',
             'ConfigSpace',
+        ],
+        # HistoX Studio, the interactive slide viewer (histox-studio).
+        # pyimgui has no Python 3.13 build yet.
+        'studio': [
+            'imgui>=2.0.0',
+            'pyopengl',
+            'glfw',
+            'pyperclip',
         ],
         'huggingface': [
             'transformers>=4.32,<5',
