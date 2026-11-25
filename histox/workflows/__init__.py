@@ -27,7 +27,7 @@ from .exceptions import (
 from .experiment import Experiment
 from .pretrained import PS3PretrainedBundle
 from .tasks import ClassificationTask, RegressionTask, SurvivalTask
-from .methods import MILMethod, PS3Method
+from .methods import MILMethod, PS3Method, TileClassifierMethod
 
 __all__ = [
     "Artifact",
@@ -45,6 +45,7 @@ __all__ = [
     "ClassificationTask",
     "RegressionTask",
     "MILMethod",
+    "TileClassifierMethod",
     "Task",
     "UnknownMethodError",
     "UnknownTaskError",

@@ -62,6 +62,9 @@ Methods
 .. autoclass:: histox.workflows.MILMethod
    :members: trainer_config, build_model, stage_fit, stage_evaluate
 
+.. autoclass:: histox.workflows.TileClassifierMethod
+   :members: project, model_params, build_model, stage_fit, stage_evaluate
+
 Exceptions
 ----------
 
