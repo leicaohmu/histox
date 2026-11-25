@@ -164,6 +164,11 @@ class Segmentation:
             # No ROIs to apply
             return
 
+    def to_spatial_map(self) -> "hx.SpatialMap":
+        """Return the label masks as a :class:`histox.SpatialMap` (needs ``wsi_dim``)."""
+        from histox.spatial import SpatialMap
+        return SpatialMap.from_segmentation(self)
+
     def centroids(self, wsi_dim: bool = False) -> np.ndarray:
         """Calculate and return mask centroids.
 

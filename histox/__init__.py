@@ -22,6 +22,7 @@ from histox.model import (
     build_tensorflow_feature_extractor, rebuild_extractor
 )
 from histox.bag import Bag
+from histox.spatial import SpatialMap
 from histox.mosaic import Mosaic
 from histox.project import Project
 from histox.project import create as create_project

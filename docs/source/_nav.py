@@ -201,6 +201,7 @@ NAV = [
                 ('norm', 'histox.norm'),
             ]),
             ('Pathology and utilities', [
+                ('spatial', 'histox.SpatialMap'),
                 ('heatmap', 'histox.Heatmap'),
                 ('mosaic', 'histox.Mosaic'),
                 ('slidemap', 'histox.SlideMap'),
