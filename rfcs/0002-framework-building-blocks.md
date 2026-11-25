@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Draft |
+| Status | Accepted |
 | Author | leicaohmu |
 | Created | 2026-11-25 |
 | Applies to | `0.4` → `1.0` |
@@ -327,12 +327,13 @@ Each step is one pull request with tests and docs.
 P7 runs alongside: each step also moves the matching `Project` methods onto the
 new blocks.
 
-## 7. Open questions
+## 7. Decisions
 
-Each has a proposed answer, to be confirmed in review.
+Resolved in review on 2026-11-25, when this RFC was merged. Each question was
+accepted with the proposed answer.
 
-1. **Sample format: `dict` or a dataclass?** Proposed: `dict`. It works with the default `collate_fn` and allows extra keys, as torchvision's v2 transforms and Hugging Face datasets do.
-2. **`mask` or `lens` for padded bags?** Proposed: a boolean `mask`. It is what attention layers consume, and it also covers non-contiguous padding. `lens` is converted automatically during migration.
-3. **Should core HistoX depend on fastai or Lightning?** Proposed: no. Both stay optional extras for the trainers that use them.
-4. **Module names.** Proposed: `histox.nn` for base classes, layers, and losses; `histox.models` for complete reference models; `histox.data` for datasets. This mirrors `torch.nn` and `torchvision.models`. `histox.data` already exists for public-dataset discovery, and the dataset classes are added next to it.
-5. **Where does `Aggregator` attention live for multi-head models?** Proposed: `attention` may be `[B, N]` or `[B, heads, N]`; `SpatialMap.from_bag` takes a `head` argument.
+1. **Sample format: `dict`.** It works with the default `collate_fn` and allows extra keys, as torchvision's v2 transforms and Hugging Face datasets do.
+2. **Padded bags use a boolean `mask`.** It is what attention layers consume, and it also covers non-contiguous padding. `lens` is converted automatically during migration.
+3. **Core HistoX does not depend on fastai or Lightning.** Both stay optional extras for the trainers that use them.
+4. **Module names:** `histox.nn` for base classes, layers, and losses; `histox.models` for complete reference models; `histox.data` for datasets. This mirrors `torch.nn` and `torchvision.models`. `histox.data` already exists for public-dataset discovery, and the dataset classes are added next to it.
+5. **Multi-head attention:** `attention` may be `[B, N]` or `[B, heads, N]`; `SpatialMap.from_bag` takes a `head` argument.
