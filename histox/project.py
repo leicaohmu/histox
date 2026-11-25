@@ -1444,8 +1444,8 @@ class Project:
 
     def extract_tiles(
         self,
-        tile_px: int,
-        tile_um: Union[int, str],
+        tile_px: Union[int, "hx.TileSpec"],
+        tile_um: Optional[Union[int, str]] = None,
         *,
         filters: Optional[Dict] = None,
         filter_blank: Optional[Union[str, List[str]]] = None,
@@ -1456,7 +1456,9 @@ class Project:
         Preferred use is calling :meth:`histox.Dataset.extract_tiles`.
 
         Args:
-            tile_px (int): Size of tiles to extract, in pixels.
+            tile_px (int or :class:`histox.TileSpec`): Size of tiles to
+                extract, in pixels; or a TileSpec, whose ``stride_div`` and
+                ``origin`` (``(0, 0)`` or ``'random'``) also apply.
             tile_um (int or str): Size of tiles to extract, in microns (int) or
                 magnification (str, e.g. "20x").
 
@@ -1567,6 +1569,23 @@ class Project:
             (:class:`histox.slide.report.SlideReport`)
 
         """
+        if isinstance(tile_px, hx.TileSpec):
+            # A Dataset holds only tile_px / tile_um; the stride and origin of
+            # the spec apply to this extraction.
+            spec = tile_px
+            if tile_um is not None:
+                raise ValueError("Pass either a TileSpec or tile_um, not both")
+            if 'stride_div' in kwargs or 'randomize_origin' in kwargs:
+                raise ValueError(
+                    "Pass stride_div / randomize_origin either in the TileSpec or "
+                    "as arguments, not both")
+            if spec.origin == 'random':
+                kwargs['randomize_origin'] = True
+            elif spec.origin != (0, 0):
+                raise ValueError(
+                    "Project.extract_tiles supports origin (0, 0) or 'random'")
+            kwargs['stride_div'] = spec.stride_div
+            tile_px, tile_um = spec.tile_px, spec.tile_um
         dataset = self.dataset(
             tile_px,
             tile_um,
@@ -2534,7 +2553,7 @@ class Project:
 
     def dataset(
         self,
-        tile_px: Optional[int] = None,
+        tile_px: Optional[Union[int, "hx.TileSpec"]] = None,
         tile_um: Optional[Union[int, str]] = None,
         *,
         verification: Optional[str] = 'both',
@@ -2543,7 +2562,8 @@ class Project:
         """Return a :class:`histox.Dataset` object using project settings.
 
         Args:
-            tile_px (int): Tile size in pixels
+            tile_px (int or :class:`histox.TileSpec`): Tile size in pixels,
+                or a TileSpec giving ``tile_px`` and ``tile_um`` at once.
             tile_um (int or str): Tile size in microns (int) or magnification
                 (str, e.g. "20x").
 
@@ -3105,6 +3125,8 @@ class Project:
                 pd.DataFrame: History of hyperparameters resulting metrics.
 
         """
+        from histox.util.smac_utils import require_hpo
+        require_hpo()
         from smac.facade.smac_bb_facade import SMAC4BB  # noqa: F811
         from smac.scenario.scenario import Scenario
 

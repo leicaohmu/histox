@@ -12,7 +12,7 @@ See :ref:`mil_api` for more information on the MIL API.
 Generating Features
 *******************
 
-The first step in MIL model development is generating features from image tiles, as discussed in the :ref:`features` section. Features from whole-slide images are exported as "bags" of features, where each bag contains a set of features from a single slide. Each bag is a PyTorch tensor saved in ``*.pt`` format. Bags are saved in a directory, and the directory path is passed to the MIL model during training and evaluation.
+The first step in MIL model development is generating features from image tiles, as discussed in the :ref:`features` section. Features from whole-slide images are exported as "bags" of features, where each bag contains a set of features from a single slide. Each bag is a PyTorch tensor saved in ``*.pt`` format, stored as float16 and loaded as float32; see :class:`histox.Bag`. Bags are saved in a directory, and the directory path is passed to the MIL model during training and evaluation.
 
 Training
 ********
@@ -178,13 +178,24 @@ Custom Architectures
 Training custom MIL models is straightforward with HistoX, particularly if your model can adhere to a few simple guidelines:
 
 - Initialized with ``(num_feats, num_outputs)`` (e.g., ``Attention_MIL(768, 2)``)
-- Input is feature bags with shape ``(batch, num_tiles, num_feats)``. If the model needs a "lens" input, then the model attribute ``use_lens`` should be True.
+- Input is feature bags with shape ``(batch, num_tiles, num_feats)``. If the model needs a "lens" input (``forward(bags, lens)``), then the model attribute ``use_lens`` should be True; a second ``forward`` parameter named ``lens`` is also recognized.
 - Has a ``relocate()`` function that moves the model to detected device/GPU
 - Ability to get attention through one of two methods:
     - ``forward()`` function includes an optional ``return_attention`` argument, which if True returns attention scores after model output
     - Has a ``calculate_attention()`` function that returns attention scores
 
 If the above applies to your model, you can train it simply by passing it as the first argument to :func:`histox.mil.mil_config`.
+
+Inference, evaluation, and feature analysis call every MIL model through :class:`histox.mil.SlideAggregator`, which reads these conventions from the model. You can use it directly to run any MIL model the same way:
+
+.. code-block:: python
+
+    from histox.mil import SlideAggregator
+
+    agg = SlideAggregator(model)
+    logits = agg.predict(bags)                       # bags: (batch, num_tiles, num_feats)
+    logits, attention = agg.predict(bags, attention=True)
+    activations, _ = agg.activations(bags)
 
 .. code-block:: python
 

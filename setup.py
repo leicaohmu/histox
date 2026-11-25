@@ -35,9 +35,12 @@ setuptools.setup(
     scripts=['scripts/histox-studio'],
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.11',
     install_requires=[
         'gast>=0.3.3',
         'scipy',
@@ -60,18 +63,13 @@ setuptools.setup(
         'numpy',
         'tabulate',
         'rasterio',
-        'smac==1.4.0',
-        'ConfigSpace',
         'rich',
         'pillow>=6.0.0',
-        'imgui>=2.0.0',
-        'pyopengl',
-        'glfw',
         'saliency',
-        'pyperclip',
         'requests',
         'parameterized',
-        'zarr',
+        # histox.cellseg relies on zarr 2 internals removed in zarr 3.
+        'zarr>=2.16,<3',
         'gdown',
         'triangle',
         'pyarrow',
@@ -81,21 +79,37 @@ setuptools.setup(
             'torch',
             'torchvision',
             'pretrainedmodels',
+            'six',  # needed by pretrainedmodels, which does not declare it
             'cellpose<2.2',
-            'spacy<3.8',
             'fastai',
             'pytorch-lightning',
             'timm',
             'segmentation-models-pytorch',
+        ],
+        # Bayesian hyperparameter search (Project.smac_search). SMAC 1.x
+        # builds pyrfr from source on Python 3.11+, which requires SWIG.
+        'hpo': [
+            'smac==1.4.0',
+            'ConfigSpace',
+        ],
+        # HistoX Studio, the interactive slide viewer (histox-studio).
+        # pyimgui has no Python 3.13 build yet.
+        'studio': [
+            'imgui>=2.0.0',
+            'pyopengl',
+            'glfw',
+            'pyperclip',
         ],
         'huggingface': [
             'transformers>=4.32,<5',
             'safetensors>=0.4',
         ],
         'tf': [
-            'tensorflow>=2.7,<2.12',
-            'tensorflow_probability<0.20',
-            'tensorflow_datasets<4.9.0',
+            # Deprecated backend. TensorFlow 2.12-2.15 supports Python 3.11
+            # and still uses Keras 2, which the legacy code is written for.
+            'tensorflow>=2.12,<2.16',
+            'tensorflow_probability>=0.20,<0.24',
+            'tensorflow_datasets>=4.9,<4.10',
         ],
         'cucim': [
             'cucim',
@@ -109,9 +123,7 @@ setuptools.setup(
             'cupy-cuda11x',
         ],
         'dicom': [
-            'wsidicom>=0.20.6,<0.21; python_version >= "3.9" and python_version < "3.10"',
-            'wsidicom>=0.35,<0.36; python_version >= "3.10" and python_version < "3.11"',
-            'wsidicom>=0.36.1,<0.37; python_version >= "3.11"',
+            'wsidicom>=0.36.1,<0.37',
         ],
         'noncommercial': [
             'slideflow-noncommercial',

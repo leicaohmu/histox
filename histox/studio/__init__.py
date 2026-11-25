@@ -2,10 +2,17 @@ import os
 import time
 import numpy as np
 import webbrowser
-import pyperclip
-import imgui
-import glfw
-import OpenGL.GL as gl
+try:
+    import pyperclip
+    import imgui
+    import glfw
+    import OpenGL.GL as gl
+except ImportError as e:
+    raise ImportError(
+        "HistoX Studio requires the optional 'studio' dependencies: "
+        "pip install 'histox[studio]'. They are not yet available for "
+        "Python 3.13."
+    ) from e
 from contextlib import contextmanager
 from typing import List, Any, Optional, Dict, Union, Tuple
 from os.path import join, dirname, abspath

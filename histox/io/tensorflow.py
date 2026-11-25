@@ -3,6 +3,7 @@ import shutil
 import numpy as np
 import multiprocessing as mp
 import tensorflow as tf
+from histox._deprecation import warn_tensorflow
 from functools import partial
 from glob import glob
 from os import listdir
@@ -24,6 +25,7 @@ if TYPE_CHECKING:
     from histox.norm import StainNormalizer
     from tensorflow.core.example.feature_pb2 import Example, Feature
 
+warn_tensorflow()
 
 FEATURE_DESCRIPTION = None  # type: ignore  # initialized lazily at runtime
 
@@ -297,8 +299,8 @@ def decode_image(
 
 def auto_decode_image(img_string: bytes, *, img_type: Optional[str] = None):
     if img_type is None:
-        import imghdr
-        img_type = imghdr.what('', img_string)
+        from histox.io.io_utils import detect_image_format
+        img_type = detect_image_format(img_string)
     return decode_image(img_string, img_type)
 
 

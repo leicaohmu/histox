@@ -41,6 +41,14 @@ Main functions
 .. autofunction:: generate_attention_heatmaps
 .. autofunction:: generate_mil_features
 
+Calling convention
+******************
+
+.. autoclass:: SlideAggregator
+   :members:
+
+.. autofunction:: uses_lens
+
 TrainerConfig
 *************
 

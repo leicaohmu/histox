@@ -94,6 +94,7 @@ NAV = [
             ]),
             ('2. Slide processing', [
                 ('slide_processing', 'Slide processing'),
+                ('coordinates', 'Coordinates'),
                 ('segmentation', 'Tissue segmentation'),
                 ('cellseg', 'Cell segmentation'),
                 ('features', 'Feature extraction'),
@@ -175,27 +176,34 @@ NAV = [
                 ('histox', 'histox'),
                 ('project', 'histox.Project'),
                 ('dataset', 'histox.Dataset'),
+                ('cohort', 'histox.Cohort'),
                 ('model_params', 'histox.ModelParams'),
             ]),
             ('Data and slides', [
                 ('data_api', 'histox.data'),
                 ('dataset_features', 'DatasetFeatures'),
+                ('bag', 'histox.Bag'),
                 ('slide', 'histox.WSI'),
+                ('tile_spec', 'histox.TileSpec'),
                 ('slide_qc', 'histox.slide.qc'),
                 ('io', 'histox.io'),
                 ('io_torch', 'histox.io.torch'),
             ]),
             ('Models and workflows', [
                 ('workflows_api', 'histox.workflows'),
+                ('registry', 'histox.registry'),
                 ('model', 'histox.model'),
+                ('model_card', 'Model cards'),
                 ('model_torch', 'histox.model.torch'),
                 ('mil_module', 'histox.mil'),
                 ('simclr', 'histox.simclr'),
                 ('gan', 'histox.gan'),
                 ('grad', 'histox.grad'),
                 ('norm', 'histox.norm'),
+                ('transforms', 'histox.transforms'),
             ]),
             ('Pathology and utilities', [
+                ('spatial', 'histox.SpatialMap'),
                 ('heatmap', 'histox.Heatmap'),
                 ('mosaic', 'histox.Mosaic'),
                 ('slidemap', 'histox.SlideMap'),
@@ -205,7 +213,7 @@ NAV = [
                 ('util', 'histox.util'),
                 ('studio_module', 'histox.studio'),
             ]),
-            ('Legacy TensorFlow', [
+            ('Legacy TensorFlow (deprecated)', [
                 ('io_tensorflow', 'histox.io.tensorflow'),
                 ('model_tensorflow', 'histox.model.tensorflow'),
             ]),
@@ -220,6 +228,7 @@ NAV = [
             ('extensions', 'Extensions', 'Optional packages built on HistoX.'),
             ('plugins', 'Plugins', 'Register your own components.'),
             ('troubleshooting', 'Troubleshooting', 'Diagnose common problems.'),
+            ('release_notes', 'Release notes', 'Changes, deprecations, and fixes by release.'),
             ('https://github.com/leicaohmu/histox', 'GitHub', 'Source code, issues, and pull requests.'),
         ],
         'sidebar': [
@@ -234,6 +243,7 @@ NAV = [
             ]),
             ('Support', [
                 ('troubleshooting', 'Troubleshooting'),
+                ('release_notes', 'Release notes'),
             ]),
         ],
     },

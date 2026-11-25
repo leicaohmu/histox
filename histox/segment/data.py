@@ -303,7 +303,7 @@ class TileMaskDataset(torch.utils.data.Dataset):
                 self.coords.append([name] + c)
             self.all_wsi[name] = wsi
             self.all_wsi_with_roi[name] = wsi_with_rois
-            self.all_extract_px[name] = int(wsi.tile_um / wsi.mpp)
+            self.all_extract_px[name] = wsi.full_extract_px
 
     def __len__(self):
         return len(self.coords)

@@ -1,7 +1,7 @@
 """Feature extractor registry."""
 
-_tf_extractors = dict()
-_torch_extractors = dict()
+from histox.registry import Registry
+
 _known_extras_packages = {
      'histox-contrib': ['retccl', 'ctranspath'],
      'slideflow-noncommercial': ['gigapath', 'gigapath.tile', 'gigapath.slide', 'histossl']
@@ -11,6 +11,15 @@ _extras_extractors = {
     for package, extractors in _known_extras_packages.items() 
     for extractor in extractors
 }
+
+# Both registries replace silently on re-registration, as before: optional
+# packages and plugins may override a built-in extractor of the same name.
+_tf_extractors = Registry(
+    'extractor.tensorflow', duplicates='replace', extras=_extras_extractors,
+    label='TensorFlow feature extractor')
+_torch_extractors = Registry(
+    'extractor.torch', duplicates='replace', extras=_extras_extractors,
+    label='PyTorch feature extractor')
 
 __all__ = ['list_extractors', 'list_tensorflow_extractors', 'list_torch_extractors',
            'is_extractor', 'is_tensorflow_extractor', 'is_torch_extractor']
@@ -30,8 +39,8 @@ def list_extractors():
     under the **currently active backend**.
 
     Returns:
-        extractor_lists: list[str], a deduplicated list of extractor names. Note that the
-            order of the returned list is not guaranteed.
+        extractor_lists: list[str], a deduplicated list of extractor names,
+            sorted by name.
 
     See Also:
         - `list_tensorflow_extractors`: List only Tensorflow extractors.
@@ -48,15 +57,15 @@ def list_extractors():
             print(extractors)
             # ['vgg19_imagenet', 'resnet101_v2_imagenet', 'virchow', ...]
     """
-    return list(set(list(_tf_extractors.keys()) + list(_torch_extractors.keys())))
+    return sorted(set(_tf_extractors) | set(_torch_extractors))
 
 def list_tensorflow_extractors():
     """Return a list of all Tensorflow feature extractors."""
-    return list(_tf_extractors.keys())
+    return _tf_extractors.names()
 
 def list_torch_extractors():
     """Return a list of all PyTorch feature extractors."""
-    return list(_torch_extractors.keys())
+    return _torch_extractors.names()
 
 def is_extractor(name):
     """Checks if a given name is a valid feature extractor."""
@@ -73,32 +82,19 @@ def is_torch_extractor(name):
 
 # -----------------------------------------------------------------------------
 
-def register_torch(key_name=None):
-    """Decorator to register a PyTorch feature extractor."""
+def register_torch(key_name=None, **metadata):
+    """Decorator to register a PyTorch feature extractor.
 
-    def decorator(fn):
-        # Use the custom key name if provided, otherwise use the function's name
-        name = key_name if isinstance(key_name, str) else fn.__name__
-        _torch_extractors[name] = fn
-        return fn
+    Use as ``@register_torch`` or ``@register_torch('name')``. Keyword
+    arguments (e.g. ``license=...``, ``citation=...``) are stored as registry
+    metadata.
+    """
+    return _torch_extractors.register(key_name, **metadata)
 
-    # If the decorator is used without arguments, the key_name will be the function itself
-    if callable(key_name):
-        return decorator(key_name)
 
-    return decorator
+def register_tf(key_name=None, **metadata):
+    """Decorator to register a Tensorflow feature extractor.
 
-def register_tf(key_name=None):
-    """Decorator to register a Tensorflow feature extractor."""
-
-    def decorator(fn):
-        # Use the custom key name if provided, otherwise use the function's name
-        name = key_name if isinstance(key_name, str) else fn.__name__
-        _tf_extractors[name] = fn
-        return fn
-
-    # If the decorator is used without arguments, the key_name will be the function itself
-    if callable(key_name):
-        return decorator(key_name)
-
-    return decorator
+    Use as ``@register_tf`` or ``@register_tf('name')``.
+    """
+    return _tf_extractors.register(key_name, **metadata)

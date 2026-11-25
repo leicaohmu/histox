@@ -6,6 +6,19 @@ from typing import Optional, List, Union, Tuple, TYPE_CHECKING
 if TYPE_CHECKING:
     from ConfigSpace import ConfigurationSpace
 
+_HPO_HINT = ("Bayesian hyperparameter search requires the optional 'hpo' "
+             "dependencies: pip install 'histox[hpo]'. SMAC 1.x builds pyrfr "
+             "from source, which requires SWIG (e.g. conda install swig).")
+
+
+def require_hpo() -> None:
+    """Raise a helpful ImportError if SMAC or ConfigSpace is not installed."""
+    try:
+        import ConfigSpace  # noqa: F401
+        import smac  # noqa: F401
+    except ImportError as e:
+        raise ImportError(_HPO_HINT) from e
+
 def broad_search_space(
     *,
     batch_size: Optional[List[int]] = [8, 16, 32, 64],                  # Ordinal
@@ -261,6 +274,7 @@ def create_search_space(
 
     """
     # Delayed imports due to long import time
+    require_hpo()
     import ConfigSpace.hyperparameters as cs_hp
     from ConfigSpace import (
         ConfigurationSpace, NotEqualsCondition, LessThanCondition

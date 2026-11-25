@@ -25,22 +25,22 @@ def build_torch_feature_extractor(name, **kwargs):
 
 # -----------------------------------------------------------------------------
 
-@register_torch
+@register_torch(card_cls='histox.model.extractors.virchow.VirchowFeatures')
 def virchow(weights, **kwargs):
     from .virchow import VirchowFeatures
     return VirchowFeatures(weights, **kwargs)
 
-@register_torch
+@register_torch(card_cls='histox.model.extractors.vit.ViTFeatures')
 def vit(**kwargs):
     from .vit import ViTFeatures
     return ViTFeatures(**kwargs)
 
-@register_torch
+@register_torch(card_cls='histox.model.extractors.dinov2.DinoV2Features')
 def dinov2(**kwargs):
     from .dinov2 import DinoV2Features
     return DinoV2Features(**kwargs)
 
-@register_torch
+@register_torch(card_cls='histox.model.extractors.plip.PLIPFeatures')
 def plip(**kwargs):
     from .plip import PLIPFeatures
     return PLIPFeatures(**kwargs)

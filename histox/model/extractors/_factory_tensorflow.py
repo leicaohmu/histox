@@ -11,6 +11,8 @@ from ..base import BaseFeatureExtractor
 
 
 def build_tensorflow_feature_extractor(name, **kwargs):
+    from histox._deprecation import warn_tensorflow
+    warn_tensorflow()
     if is_tensorflow_extractor(name):
         if name in _tf_extractors:
             return _tf_extractors[name](**kwargs)
@@ -21,7 +23,7 @@ def build_tensorflow_feature_extractor(name, **kwargs):
 
 # -----------------------------------------------------------------------------
 
-@register_tf
+@register_tf(card_cls='histox.model.extractors.simclr.SimCLR_Features')
 def simclr(ckpt, **kwargs):
     from .simclr import SimCLR_Features
     return SimCLR_Features(ckpt, **kwargs)

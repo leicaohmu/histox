@@ -10,6 +10,7 @@ from .report import ExtractionPDF  # noqa F401
 from .report import ExtractionReport, SlideReport
 from .utils import *
 from .backends import tile_worker, wsi_reader, backend_formats
+from .tile_spec import TileSpec
 from .wsi import WSI
 
 warnings.simplefilter('ignore', Image.DecompressionBombWarning)

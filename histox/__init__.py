@@ -5,13 +5,14 @@ __gitcommit__ = ""
 __github__ = 'https://github.com/leicaohmu/histox'
 
 # Configure deep learning and slide backends
+from ._deprecation import HistoXDeprecationWarning
 from ._backend import backend, slide_backend
 
 # Import logging functions required for other submodules
 from histox.util import getLoggingLevel, log, setLoggingLevel, about
 
 ...
-from histox import data, io, model, norm, stats, gan, workflows
+from histox import data, io, model, norm, registry, stats, gan, workflows
 from histox.dataset import Dataset
 from histox.heatmap import Heatmap
 from histox.model import DatasetFeatures, ModelParams
@@ -21,11 +22,15 @@ from histox.model import (
     build_feature_extractor, build_torch_feature_extractor,
     build_tensorflow_feature_extractor, rebuild_extractor
 )
+from histox.bag import Bag
+from histox.cohort import Cohort
+from histox import splits
+from histox.spatial import SpatialMap
 from histox.mosaic import Mosaic
 from histox.project import Project
 from histox.project import create as create_project
 from histox.project import load as load_project
-from histox.slide import WSI
+from histox.slide import TileSpec, WSI
 from histox.stats import SlideMap
 from histox.tfrecord import TFRecord, tfrecord_loader, multi_tfrecord_loader
 from histox.plugin import load_plugins
@@ -41,6 +46,8 @@ from histox.workflows import (
     RegistryError,
     RunResult,
     SurvivalTask,
+    ClassificationTask,
+    RegressionTask,
     Task,
     UnknownMethodError,
     UnknownTaskError,
@@ -60,7 +67,28 @@ from histox.workflows import (
 _NONCOMMERCIAL_MODULES = {'biscuit', 'stylegan2', 'stylegan3', 'extractors'}
 _GPL_MODULES = {'clam'}
 
+# Subpackages that ``import histox`` does not load eagerly, because they are
+# slow to import or need optional dependencies. They are imported on first
+# attribute access, so ``hx.mil.train_mil(...)`` works after ``import histox
+# as hx`` regardless of what else has been imported.
+_LAZY_SUBMODULES = {
+    'transforms', 'mil', 'cellseg', 'segment', 'simclr', 'grad',
+    'experimental', 'studio',
+}
+
+
 def __getattr__(name):
+    if name in _LAZY_SUBMODULES:
+        import importlib
+        try:
+            mod = importlib.import_module(f'histox.{name}')
+        except ImportError as e:
+            # AttributeError keeps hasattr() working; the message keeps the
+            # original reason, such as a missing optional dependency.
+            raise AttributeError(
+                f"histox.{name} could not be imported: {e}") from e
+        globals()[name] = mod
+        return mod
     if name in _NONCOMMERCIAL_MODULES:
         try:
             import importlib

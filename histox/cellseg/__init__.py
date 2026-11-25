@@ -22,6 +22,7 @@ from PIL import Image, ImageDraw
 from cellpose.models import Cellpose
 from cellpose import transforms, plot, dynamics
 
+from histox.geometry import rc_to_xy, to_level0
 from histox.segment.utils import outlines_list
 from histox.slide.utils import draw_roi
 from histox.util import batch_generator, log
@@ -109,6 +110,11 @@ class Segmentation:
         return self._outlines
 
     @property
+    def _offset(self) -> Tuple[float, float]:
+        """Level-0 (x, y) of the mask origin; (0, 0) if ``wsi_offset`` is unset."""
+        return (0, 0) if self.wsi_offset is None else tuple(self.wsi_offset)
+
+    @property
     def wsi_ratio(self) -> Optional[float]:
         """Ratio of WSI base dimension to the mask shape.
 
@@ -133,13 +139,15 @@ class Segmentation:
 
         """
         if self.wsi_ratio is not None and len(annpolys):
+            # ROI coordinates * scale are level-0 pixels; map them into mask
+            # space: (level0 - wsi_offset) / wsi_ratio.
             roi_seg_scale = scale / self.wsi_ratio
+            off_x, off_y = self._offset
             scaled_polys = [
-                sa.scale(
+                sa.affine_transform(
                     poly,
-                    xfact=roi_seg_scale,
-                    yfact=roi_seg_scale,
-                    origin=(0, 0)
+                    [roi_seg_scale, 0, 0, roi_seg_scale,
+                     -off_x / self.wsi_ratio, -off_y / self.wsi_ratio]
                 ) for poly in annpolys
             ]
             roi_seg_mask = rasterio.features.rasterize(
@@ -156,6 +164,11 @@ class Segmentation:
             # No ROIs to apply
             return
 
+    def to_spatial_map(self) -> "hx.SpatialMap":
+        """Return the label masks as a :class:`histox.SpatialMap` (needs ``wsi_dim``)."""
+        from histox.spatial import SpatialMap
+        return SpatialMap.from_segmentation(self)
+
     def centroids(self, wsi_dim: bool = False) -> np.ndarray:
         """Calculate and return mask centroids.
 
@@ -164,7 +177,10 @@ class Segmentation:
                 Requires that ``wsi_dim`` was provided during initialization.
 
         Returns:
-            A ``np.ndarray`` with shape ``(2, num_masks)``.
+            A ``np.ndarray`` with shape ``(num_masks, 2)``. With
+            ``wsi_dim=True``, each row is an ``(x, y)`` point in level-0 slide
+            pixels (int32). Otherwise each row is a ``(row, col)`` position in
+            mask pixels.
 
         """
         if self._centroids is None:
@@ -173,8 +189,9 @@ class Segmentation:
             if self.wsi_dim is None:
                 raise ValueError("Unable to calculate wsi_dim for centroids - "
                                  "wsi_dim is not set.")
-            ratio = self.wsi_dim[1] / self.masks.shape[0]
-            return ((self._centroids * ratio)[:, ::-1] + self.wsi_offset).astype(np.int32)
+            return to_level0(
+                rc_to_xy(self._centroids), self.wsi_ratio, self._offset
+            ).astype(np.int32)
         else:
             return self._centroids
 
@@ -241,14 +258,23 @@ class Segmentation:
             A generator which yields a numpy array, with shape
                 ``(tile_px, tile_px, 3)``, at each mask centroid.
         """
+        if self._centroids is None:
+            self.calculate_centroids()
         reader = hx.slide.wsi_reader(slide)
-        factor = reader.dimensions[1] / self.masks.shape[0]
+        # Mask pixels -> level-0 pixels. The masks cover the area given by
+        # ``wsi_dim``, which can be smaller than the whole slide.
+        if self.wsi_ratio is not None:
+            factor = self.wsi_ratio
+        else:
+            factor = reader.dimensions[1] / self.masks.shape[0]
+        offset = self._offset
+        half = tile_px / 2
 
         def generator():
             for c in self._centroids:
-                cf = c * factor + self.wsi_offset
+                x, y = to_level0(rc_to_xy(c), factor, offset)
                 yield reader.read_from_pyramid(
-                    (cf[1]-(tile_px/2), cf[0]-(tile_px/2)),
+                    (x - half, y - half),
                     (tile_px, tile_px),
                     (tile_px, tile_px),
                     convert='numpy',

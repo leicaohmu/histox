@@ -21,18 +21,9 @@ autodoc_mock_imports = [
     'tensorflow.keras.layers',
     'tensorflow.keras.models',
     'tensorflow.keras.optimizers',
-    # PyTorch
-    'torch',
-    'torch.nn',
-    'torch.nn.functional',
-    'torch.utils',
-    'torch.utils.data',
-    'torch.optim',
-    'torch.cuda',
-    'torch.distributed',
-    'torchvision',
-    'torchvision.transforms',
-    'torchvision.models',
+    # PyTorch and torchvision are not mocked: docs/requirements.txt installs
+    # CPU builds. Mocking them breaks SciPy and scikit-learn, which call
+    # issubclass() on torch.Tensor when torch is loaded.
     # 图像/WSI
     'cv2',
     'openslide',
@@ -60,14 +51,6 @@ autodoc_mock_imports = [
     'pytorch_lightning.core',
     'pytorch_lightning.core.lightning',
 ]
-
-# Sphinx's autodoc mocks persist in ``sys.modules``. When the executable
-# gallery is enabled, keep the real PyTorch stack available to the example.
-if execute_gallery:
-    autodoc_mock_imports = [
-        module for module in autodoc_mock_imports
-        if module != 'torch' and not module.startswith('torch.')
-    ]
 
 # ── 手动 mock：RST 文件里用到的短名别名模块 ──────────────────────────
 # 注意：histox 自身的子模块不在这里 mock，全部交给 autodoc 按需处理

@@ -71,7 +71,7 @@ def decode_image(
     if isinstance(image, np.ndarray):
         return image
     else:
-        image_arr = np.fromstring(image, np.uint8)
+        image_arr = np.frombuffer(image, np.uint8)
         tile_image_bgr = cv2.imdecode(image_arr, cv2.IMREAD_COLOR)
         return cv2.cvtColor(tile_image_bgr, cv2.COLOR_BGR2RGB)
 

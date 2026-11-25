@@ -85,7 +85,7 @@ print("Working directory:", WORK_DIR)
 #
 #    .. code-block:: text
 #
-#       HistoX: 0.2.1
+#       HistoX: 0.3.0
 #       Slide backend: cucim
 
 

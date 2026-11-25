@@ -1,7 +1,7 @@
-"""Feature extractor registry."""
+"""Registries for MIL models and trainers."""
 
-_mil_trainers = dict()
-_mil_models = dict()
+from histox.registry import Registry
+
 _known_extras_trainers = {
     'slideflow-gpl': ['legacy_clam'],
 }
@@ -19,18 +19,28 @@ _extras_models = {
     for model in models
 }
 
+# Re-registration replaces silently, as before, so optional packages can
+# override built-in entries.
+_mil_trainers = Registry(
+    'mil_trainer', duplicates='replace', extras=_extras_trainers,
+    label='MIL trainer')
+# Each model is stored with its config class in the entry metadata.
+_mil_models = Registry(
+    'mil_model', duplicates='replace', extras=_extras_models,
+    label='MIL model')
+
 __all__ = ['list_trainers', 'list_models', 'is_trainer', 'is_model']
 
 # -----------------------------------------------------------------------------
 
 def list_trainers():
     """List all available trainers."""
-    return list(set(list(_mil_trainers.keys())))
+    return _mil_trainers.names()
 
 
 def list_models():
     """List all available models."""
-    return list(set(list(_mil_models.keys())))
+    return _mil_models.names()
 
 
 def is_trainer(name):
@@ -58,8 +68,7 @@ def get_trainer(trainer_name):
 def get_model(model_name):
     """Get a model by name."""
     if is_model(model_name):
-        model_fn, config_class = _mil_models[model_name]
-        return model_fn()
+        return _mil_models[model_name]()
     if model_name in _extras_models:
         package = _extras_models[model_name]
         raise ValueError(f"Model '{model_name}' is part of the '{package}' package. Please install it to use this model.")
@@ -69,8 +78,7 @@ def get_model(model_name):
 def get_model_config_class(model_name):
     """Get the model configuration class."""
     if is_model(model_name):
-        _, config_class = _mil_models[model_name]
-        return config_class
+        return _mil_models.metadata(model_name)['config']
     if model_name in _extras_models:
         package = _extras_models[model_name]
         raise ValueError(f"Model '{model_name}' is part of the '{package}' package. Please install it to use this model.")
@@ -81,7 +89,7 @@ def get_model_config_class(model_name):
 def build_model_config(model_name, **kwargs):
     """Get a model config by name."""
     if is_model(model_name):
-        model_fn, config_class = _mil_models[model_name]
+        config_class = _mil_models.metadata(model_name)['config']
         return config_class(model_name, **kwargs)
     if model_name in _extras_models:
         package = _extras_models[model_name]
@@ -94,7 +102,7 @@ def register_trainer(tag=None):
     
     def decorator(fn):
         name = tag or fn.__name__
-        _mil_trainers[name] = fn
+        _mil_trainers.add(name, fn)
         return fn
     
     if callable(tag):
@@ -106,7 +114,7 @@ def register_trainer(tag=None):
 
 
 def register_model(tag=None, config=None):
-    """Decorator to register a PyTorch feature extractor."""
+    """Decorator to register a MIL model, with its config class."""
 
     def decorator(fn):
         nonlocal config
@@ -115,7 +123,7 @@ def register_model(tag=None, config=None):
 
         name = tag or fn.__name__
         config = config or MILModelConfig
-        _mil_models[name] = (fn, config)
+        _mil_models.add(name, fn, config=config)
         return fn
     
     if callable(tag):

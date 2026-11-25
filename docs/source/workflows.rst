@@ -22,6 +22,67 @@ This division keeps cohort preparation, algorithm code, and result files
 separate. A new method does not need to copy the project layout or invent a
 new result format.
 
+Classify slides with MIL
+------------------------
+
+The ``classification`` and ``regression`` tasks work with the ``mil`` method,
+which trains and evaluates with :func:`histox.mil.train_mil` and
+:func:`histox.mil.eval_mil` on a directory of feature bags
+(:class:`histox.Bag`). Patient-level splits from :mod:`histox.splits` select
+the training and validation slides.
+
+.. code-block:: python
+
+    import histox as hx
+
+    dataset = project.dataset(tile_px=224, tile_um=112)
+    cohort = dataset.cohort
+
+    experiment = hx.Experiment(
+        task='classification',
+        method='mil',
+        cohort=dataset,
+        data_spec=cohort.data_spec({'label': 'subtype'}),
+        method_config={'model': 'attention_mil', 'bags': 'bags/', 'epochs': 20},
+        output='experiments/subtype',
+    )
+    for fold in hx.splits.patient_kfold(cohort, k=5, stratify='subtype', seed=0):
+        experiment.fit(split=fold)
+        result = experiment.evaluate(split=fold)
+        print(result.metrics)          # {'n': ..., 'auroc': ..., 'accuracy': ...}
+
+``data_spec`` maps the task's semantic field (``label`` for classification,
+``target`` for regression) to an annotation column. The loss defaults to
+cross-entropy for classification and mean squared error for regression; any
+:func:`histox.mil.mil_config` option can be set in ``method_config``.
+
+Train a tile-level classifier
+-----------------------------
+
+The ``tile_classifier`` method trains a convolutional network on tiles with
+:meth:`histox.Project.train`, where each tile inherits its slide's label, and
+evaluates with :meth:`histox.Project.evaluate`. Task metrics are computed on
+slide-level predictions by default (``level='patient'`` or ``'tile'`` also
+work).
+
+.. code-block:: python
+
+    experiment = hx.Experiment(
+        task='classification',
+        method='tile_classifier',
+        cohort=dataset,
+        data_spec=dataset.cohort.data_spec({'label': 'subtype'}),
+        method_config={'project': project, 'tile_px': 224, 'tile_um': 112,
+                       'model': 'resnet18', 'epochs': [5], 'batch_size': 64},
+    )
+    fold = hx.splits.patient_holdout(dataset.cohort, val_fraction=0.2, stratify='subtype')
+    experiment.fit(split=fold)
+    print(experiment.evaluate(split=fold).metrics)
+
+Any :class:`histox.ModelParams` argument can be given in ``method_config``,
+or a complete ``ModelParams`` as ``params``. Other :meth:`Project.train`
+options (``max_tiles``, ``pretrain``, ...) are passed to ``fit``.
+
 Build PS3 through the common interface
 --------------------------------------
 

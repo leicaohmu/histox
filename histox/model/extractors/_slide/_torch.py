@@ -28,7 +28,7 @@ class _SlideIterator(torch.utils.data.IterableDataset):
             img = image_dict['image']
             if self.img_format not in ('numpy', 'png'):
                 np_data = torch.from_numpy(
-                    np.fromstring(img, dtype=np.uint8))
+                    np.frombuffer(img, dtype=np.uint8).copy())
                 img = torchvision.io.decode_image(np_data)
             else:
                 img = torch.from_numpy(img).permute(2, 0, 1)

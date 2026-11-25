@@ -1,9 +1,10 @@
 """Tools for evaluation MIL models."""
 
 import os
-import inspect
 import pandas as pd
 import histox as hx
+from histox.bag import load_coords
+from ._aggregator import SlideAggregator
 import numpy as np
 
 from rich.progress import Progress, track
@@ -486,7 +487,7 @@ def predict_from_bags(
     *,
     attention: bool = False,
     attention_pooling: Optional[str] = None,
-    use_lens: bool = False,
+    use_lens: Optional[bool] = None,
     device: Optional[Any] = None,
     apply_softmax: Optional[bool] = None,
     uq: bool = False
@@ -505,8 +506,9 @@ def predict_from_bags(
         attention (bool): Whether to calculate attention scores. Defaults to False.
         attention_pooling (str, optional): Pooling strategy for attention scores.
             Can be 'avg', 'max', or None. Defaults to None.
-        use_lens (bool): Whether to use the length of each bag as an additional
-            input to the model. Defaults to False.
+        use_lens (bool, optional): Whether to use the length of each bag as an
+            additional input to the model. Defaults to what the model declares
+            (see :class:`histox.mil.SlideAggregator`).
         device (str, optional): Device on which to run inference. Defaults to None.
         apply_softmax (bool): Whether to apply softmax to the model output. Defaults
             to True for categorical outcomes, False for continuous outcomes.
@@ -576,7 +578,7 @@ def predict_from_multimodal_bags(
     *,
     attention: bool = True,
     attention_pooling: Optional[str] = None,
-    use_lens: bool = True,
+    use_lens: Optional[bool] = None,
     device: Optional[Any] = None,
     apply_softmax: Optional[bool] = None,
 ) -> Tuple[np.ndarray, List[List[np.ndarray]]]:
@@ -592,8 +594,9 @@ def predict_from_multimodal_bags(
         attention (bool): Whether to calculate attention scores. Defaults to False.
         attention_pooling (str, optional): Pooling strategy for attention scores.
             Can be 'avg', 'max', or None. Defaults to None.
-        use_lens (bool): Whether to use the length of each bag as an additional
-            input to the model. Defaults to False.
+        use_lens (bool, optional): Whether to use the length of each bag as an
+            additional input to the model. Defaults to what the model declares
+            (see :class:`histox.mil.SlideAggregator`).
         device (str, optional): Device on which to run inference. Defaults to None.
         apply_softmax (bool): Whether to apply softmax to the model output. Defaults
             to True for categorical outcomes, False for continuous
@@ -623,9 +626,10 @@ def predict_from_multimodal_bags(
         loaded = [torch.unsqueeze(utils._load_bag(b).to(device), dim=0)
                   for b in bag]
         with torch.inference_mode():
-            if use_lens:
-                model_args = [(mag_bag, torch.from_numpy(np.array([mag_bag.shape[1]])).to(device))
-                              for mag_bag in loaded]
+            # One (bags, lens) pair per modality, or a single list of bags.
+            if SlideAggregator(model, use_lens=use_lens).use_lens:
+                model_args = [(b, torch.full((b.shape[0],), b.shape[1], device=b.device))
+                              for b in loaded]
             else:
                 model_args = (loaded,)
             model_out = model(*model_args)
@@ -657,7 +661,7 @@ def run_inference(
     uq: bool = False,
     forward_kwargs: Optional[dict] = None,
     apply_softmax: Optional[bool] = None,
-    use_lens: Union[bool, "torch.Tensor"] = False,
+    use_lens: Optional[Union[bool, "torch.Tensor"]] = None,
     device: Optional[Any] = None
 ) -> Tuple[np.ndarray, Optional[np.ndarray], Optional[np.ndarray]]:
     """Low-level interface for running inference on a MIL model.
@@ -675,9 +679,10 @@ def run_inference(
             the model's forward function. Defaults to None.
         apply_softmax (bool): Whether to apply softmax to the model output. Defaults
             to True for categorical outcomes, False for continuous outcomes.
-        use_lens (bool, torch.Tensor): Whether to use the length of each bag as an
-            additional input to the model. If a tensor is passed, this will be used
-            as the lens. Defaults to False.
+        use_lens (bool, torch.Tensor, optional): Whether to use the length of
+            each bag as an additional input to the model. If a tensor is
+            passed, this will be used as the lens. Defaults to what the model
+            declares (see :class:`histox.mil.SlideAggregator`).
         device (str, optional): Device on which to run inference. Defaults to None.
 
     Returns:
@@ -693,39 +698,24 @@ def run_inference(
 
     y_pred, y_att, y_uncertainty = None, None, None
 
-    # Prepare lens
-    device = utils._detect_device(model, device, verbose=False)
-    if isinstance(use_lens, bool) and use_lens:
-        lens = torch.full((loaded_bags.shape[0],), loaded_bags.shape[1], device=device)
-        model_args = (loaded_bags, lens)
-    elif use_lens is not False and use_lens is not None:
-        model_args = (loaded_bags, use_lens)
+    # Prepare lens: a tensor is used as given; a bool forces the convention;
+    # None follows the model (see SlideAggregator).
+    lens = None
+    if use_lens is None or isinstance(use_lens, bool):
+        agg = SlideAggregator(model, use_lens=use_lens)
     else:
-        model_args = (loaded_bags,)
+        agg = SlideAggregator(model, use_lens=True)
+        lens = use_lens
 
-    if uq and 'uq' in inspect.signature(model.forward).parameters:
-        kw = dict(uq=True, **forward_kwargs)
-    elif uq:
-        raise RuntimeError("Model does not support UQ.")
-    else:
-        kw = forward_kwargs
-
-    # Check if the model can return attention during inference. 
-    # If so, this saves us a forward pass through the model.
-    if attention and 'return_attention' in inspect.signature(model.forward).parameters:
-        model_out, y_att = model(*model_args, return_attention=True, **kw)
-    # Otherwise, use the model's `calculate_attention` function directly.
+    out = agg.predict(loaded_bags, lens, attention=attention, uq=uq, **forward_kwargs)
+    if attention and uq:
+        y_pred, y_att, y_uncertainty = out
     elif attention:
-        model_out = model(*model_args, **kw)
-        y_att = model.calculate_attention(*model_args)
+        y_pred, y_att = out
+    elif uq:
+        y_pred, y_uncertainty = out
     else:
-        model_out = model(*model_args, **kw)
-
-    # Parse uncertainty from model output.
-    if uq:
-        y_pred, y_uncertainty = model_out
-    else:
-        y_pred = model_out
+        y_pred = out
 
     if attention:
         y_att = utils._pool_attention(torch.squeeze(y_att), pooling=attention_pooling)
@@ -965,9 +955,8 @@ def get_mil_tile_predictions(
         n_bags = len(tile_pred)
 
         # Find the associated locations.
-        bag_index = join(dirname(bag), f'{slide}.index.npz')
-        if exists(bag_index):
-            locations = np.load(bag_index)['arr_0']
+        locations = load_coords(bag)
+        if locations is not None:
             assert len(locations) == n_bags
             df_loc_x.append(locations[:, 0])
             df_loc_y.append(locations[:, 1])

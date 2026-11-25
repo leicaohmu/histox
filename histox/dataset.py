@@ -511,7 +511,7 @@ class Dataset:
         self,
         config: Optional[Union[str, Dict[str, Dict[str, str]]]] = None,
         sources: Optional[Union[str, List[str]]] = None,
-        tile_px: Optional[int] = None,
+        tile_px: Optional[Union[int, "hx.TileSpec"]] = None,
         tile_um: Optional[Union[str, int]] = None,
         *,
         tfrecords: Optional[str] = None,
@@ -558,7 +558,8 @@ class Dataset:
             sources (List[str]): List of dataset sources to include from
                 configuration. If not provided, will use all sources in the
                 provided configuration. Defaults to None.
-            tile_px (int): Tile size in pixels.
+            tile_px (int or :class:`histox.TileSpec`): Tile size in pixels,
+                or a TileSpec giving ``tile_px`` and ``tile_um`` at once.
             tile_um (int or str): Tile size in microns (int) or magnification
                 (str, e.g. "20x").
 
@@ -579,6 +580,16 @@ class Dataset:
             errors.SourceNotFoundError: If provided source does not exist
                 in the dataset config.
         """
+        if isinstance(tile_px, hx.TileSpec):
+            spec = tile_px
+            if spec.stride_div != 1 or spec.origin != (0, 0):
+                raise ValueError(
+                    "A Dataset uses only tile_px and tile_um from a TileSpec. "
+                    "Pass stride_div / randomize_origin to extract_tiles() instead, "
+                    "or use Project.extract_tiles(spec).")
+            if tile_um is not None:
+                raise ValueError("Dataset: pass either a TileSpec or tile_um, not both")
+            tile_px, tile_um = spec.tile_px, spec.tile_um
         if isinstance(tile_um, str):
             hx.util.assert_is_mag(tile_um)
             tile_um = tile_um.lower()
@@ -654,6 +665,27 @@ class Dataset:
             self.tile_px,
             self.tile_um
         )
+
+    @property
+    def cohort(self) -> "hx.Cohort":
+        """The dataset's patients, slides, and labels as a :class:`histox.Cohort`.
+
+        Uses the filtered annotations and the slide sources of this dataset.
+        """
+        if self.annotations is None:
+            raise errors.AnnotationsError("No annotations loaded")
+        paths = self.slide_paths(apply_filters=True)
+        return hx.Cohort(self.filtered_annotations, slides=paths)
+
+    @property
+    def tile_spec(self) -> Optional["hx.TileSpec"]:
+        """The dataset's tile size as a :class:`histox.TileSpec`.
+
+        ``None`` if the dataset was created without a tile size.
+        """
+        if self.tile_px is None or self.tile_um is None:
+            return None
+        return hx.TileSpec(self.tile_px, self.tile_um)
 
     @property
     def annotations(self) -> Optional[pd.DataFrame]:
@@ -1985,13 +2017,16 @@ class Dataset:
         *,
         tile_df: Optional[pd.DataFrame] = None
     ) -> None:
-        """Filter bags by tiles in an ROI."""
-        import torch
+        """Filter bags by tiles in an ROI.
+
+        Writes, for each slide with at least one tile inside an ROI, a bag
+        with only those tiles to ``dest``, together with its tile index and
+        the source directory's ``bags_config.json``.
+        """
+        from histox.bag import Bag
 
         #TODO: extend to tfrecords
         #TODO: accelerate with multiprocessing
-        #TODO: save filtered indices
-        #TODO: copy bags config
 
         if tile_df is None:
             tile_df = self.get_tile_dataframe()
@@ -2007,28 +2042,26 @@ class Dataset:
                 continue
 
             # Get the bag
-            bag = torch.load(join(bags_path, slide+'.pt'))
-            bag_index = np.load(join(bags_path, slide+'.index.npz'))['arr_0']
+            bag = Bag.load(bags_path, slide)
+            if bag.coords is None:
+                log.warning(f"No tile index for bag {slide}; skipping.")
+                continue
 
             # Subset the ROI based on this slide
             slide_df = roi_df.loc[roi_df.slide == slide]
 
-            # Get the common locations (in an ROI)
-            bag_locs = {tuple(r) for r in bag_index}
+            # Find the tiles of the bag that lie in an ROI
             roi_locs = {tuple(r) for r in np.stack([slide_df.loc_x.values, slide_df.loc_y.values], axis=1)}
-            common_locs = bag_locs.intersection(roi_locs)
+            in_roi = np.array([tuple(row) in roi_locs for row in bag.coords], dtype=bool)
 
-            # Find indices in the bag that match the common locations (in an ROI)
-            bag_i = [i for i, row in enumerate(bag_index) if tuple(row) in common_locs]
-
-            if not len(bag_i):
+            if not in_roi.any():
                 log.debug("No common locations found for {}".format(slide))
                 continue
 
-            # Subset and save the bag
-            bag = bag[bag_i]
-            torch.save(bag, join(dest, slide+'.pt'))
-            log.debug("Subset size ({}): {} -> {}".format(slide, len(bag_index), len(bag)))
+            # Subset and save the bag, its index, and the extraction config
+            subset = bag.subset(in_roi)
+            subset.save(dest)
+            log.debug("Subset size ({}): {} -> {}".format(slide, len(bag), len(subset)))
             n_complete += 1
 
         log.info("Bag filtering complete. {} bags filtered.".format(n_complete))
@@ -3751,6 +3784,8 @@ class Dataset:
             tf.data.Dataset
 
         """
+        from histox._deprecation import warn_tensorflow
+        warn_tensorflow()
         from histox.io.tensorflow import interleave
 
         if self.tile_px is None:

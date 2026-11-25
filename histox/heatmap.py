@@ -678,6 +678,11 @@ class Heatmap:
         ax.set_xlim(0, self._thumb.size[0])
         ax.set_ylim(self._thumb.size[1], 0)
 
+    def to_spatial_map(self, *, uncertainty: bool = False) -> "hx.SpatialMap":
+        """Return the predictions (or uncertainty) as a :class:`histox.SpatialMap`."""
+        from histox.spatial import SpatialMap
+        return SpatialMap.from_heatmap(self, uncertainty=uncertainty)
+
     def save_npz(self, path: Optional[str] = None) -> str:
         """Save heatmap predictions and uncertainty in .npz format.
 
@@ -1031,8 +1036,11 @@ def calculate_heatmap_extent(
         grid: np.ndarray
 ) -> Tuple[float, float, float, float]:
     """Calculate implot extent for a heatmap grid."""
-    full_extract = int(wsi.tile_um / wsi.mpp)
-    wsi_stride = int(full_extract / wsi.stride_div)
+    # Use the tile size and stride the slide grid was actually built with.
+    # Recomputing them from tile_um / mpp drifts when the tile size was given
+    # as a magnification, because WSI stores a rounded tile_um in that case.
+    full_extract = wsi.full_extract_px
+    wsi_stride = wsi.full_stride
     _overlay_wsi_dim = (wsi_stride * (grid.shape[1]),
                         wsi_stride * (grid.shape[0]))
     _overlay_offset_wsi_dim = (

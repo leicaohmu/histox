@@ -1522,7 +1522,8 @@ def map_values_to_slide_grid(
         locations = np.array(locations)
 
     # Transform from coordinates as center locations to top-left locations.
-    locations = locations - int(wsi.full_extract_px/2)
+    from histox.geometry import tile_topleft
+    locations = tile_topleft(locations, wsi.full_extract_px)
 
     for i, wsi_dim in enumerate(locations):
         try:

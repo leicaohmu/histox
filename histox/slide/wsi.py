@@ -33,6 +33,8 @@ from types import SimpleNamespace
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union, Sequence
 
 import histox as hx
+from histox import geometry as hx_geometry
+from histox.slide.tile_spec import TileSpec, resolve_tile_args
 import histox.slide.qc
 from histox.util import log, path_to_name  # noqa F401
 from .report import SlideReport
@@ -82,16 +84,16 @@ class WSI:
     def __init__(
         self,
         path: str,
-        tile_px: int,
-        tile_um: Union[int, str],
-        stride_div: int = 1,
+        tile_px: Union[int, "TileSpec"],
+        tile_um: Optional[Union[int, str]] = None,
+        stride_div: Optional[int] = None,
         *,
         enable_downsample: bool = True,
         roi_dir: Optional[str] = None,
         rois: Optional[List[str]] = None,
         roi_method: str = 'auto',
         roi_filter_method: Union[str, float] = 'center',
-        origin: Union[str, Tuple[int, int]] = (0, 0),
+        origin: Optional[Union[str, Tuple[int, int]]] = None,
         pb: Optional[Progress] = None,
         verbose: bool = True,
         use_edge_tiles: bool = False,
@@ -105,9 +107,13 @@ class WSI:
 
         Args:
             path (str): Path to slide.
-            tile_px (int): Size of tiles to extract, in pixels.
+            tile_px (int or :class:`histox.TileSpec`): Size of tiles to
+                extract, in pixels. Alternatively, a :class:`histox.TileSpec`
+                giving ``tile_px``, ``tile_um``, ``stride_div``, and ``origin``
+                at once; the separate arguments must then be left unset.
             tile_um (int or str): Size of tiles to extract, in microns (int) or
-                magnification (str, e.g. "20x").
+                magnification (str, e.g. "20x"). Required unless ``tile_px``
+                is a TileSpec.
             stride_div (int, optional): Stride divisor for tile extraction
                 (1 = no tile overlap; 2 = 50% overlap, etc). Defaults to 1.
             enable_downsample (bool, optional): Allow use of downsampled
@@ -172,6 +178,17 @@ class WSI:
                 Defaults to an empty list.
 
         """
+        # Accept a TileSpec in place of tile_px / tile_um / stride_div / origin.
+        tile_px, tile_um, stride_div, origin = resolve_tile_args(
+            tile_px, tile_um, stride_div, origin, caller='WSI')
+        if tile_um is None:
+            raise TypeError("WSI() missing required argument: 'tile_um'")
+        if stride_div is None:
+            stride_div = 1
+        if origin is None:
+            origin = (0, 0)
+        self._requested_tile_um = tile_um
+
         # Initialize calculated variables
         if hx.util.is_dicom_slide(path):
             path = os.path.normpath(path)
@@ -320,6 +337,17 @@ class WSI:
 
         # Summarize slide information
         self._log_slide_summary()
+
+    @property
+    def tile_spec(self) -> TileSpec:
+        """The :class:`histox.TileSpec` this slide was tiled with.
+
+        ``tile_um`` is returned as requested (e.g. ``'20x'``), even though
+        ``WSI.tile_um`` holds the equivalent size in microns.
+        """
+        return TileSpec(self.tile_px,
+                        getattr(self, '_requested_tile_um', self.tile_um),
+                        self.stride_div, self.origin)
 
     def __repr__(self) -> str:
         base = "WSI(\n"
@@ -1508,7 +1536,8 @@ class WSI:
             (centroids, np.expand_dims(np.arange(centroids.shape[0]), axis=-1)),
             axis=-1)
         nonzero = self.seg_coord[:, 0] > 0
-        self.seg_coord[:, 0:2][nonzero] -= int(self.full_extract_px/2)
+        self.seg_coord[:, 0:2][nonzero] = hx_geometry.tile_topleft(
+            self.seg_coord[:, 0:2][nonzero], self.full_extract_px)
         self.estimated_num_tiles = centroids.shape[0]
 
     def area(self) -> float:
@@ -1871,8 +1900,7 @@ class WSI:
         if anchor not in ('topleft', 'center'):
             raise ValueError("anchor must be 'topleft' or 'center'")
         if anchor == 'center':
-            x -= int(self.full_extract_px/2)
-            y -= int(self.full_extract_px/2)
+            x, y = hx_geometry.tile_topleft((x, y), self.full_extract_px)
         coord_idx, = np.where((
             (self.coord[:, 0] == x)
             & (self.coord[:, 1] == y)
@@ -1964,7 +1992,7 @@ class WSI:
             self.coord[:, 2:4].T,
             dims=self.grid.shape
         )
-        unmasked_coord_indices = np.in1d(
+        unmasked_coord_indices = np.isin(
             linear_indices_of_coord,
             true_grid_indices
         )
@@ -2070,8 +2098,7 @@ class WSI:
             self.grid[tuple(self.coord[:, 2:4].T)].astype(bool)
         ].copy()
         if anchor == 'center':
-            c[:, 0] += int(self.full_extract_px/2)
-            c[:, 1] += int(self.full_extract_px/2)
+            c[:, 0:2] = hx_geometry.tile_center(c[:, 0:2], self.full_extract_px)
         return c
 
     def get_tile_dataframe(self) -> pd.DataFrame:
@@ -2100,8 +2127,7 @@ class WSI:
             _, roi = self.get_tile_roi(grid=(xi, yi))
 
             # Convert from top-left to center coordinates
-            x += int(self.full_extract_px/2)
-            y += int(self.full_extract_px/2)
+            x, y = hx_geometry.tile_center((x, y), self.full_extract_px)
 
             loc.append([x, y])
             grid.append([xi, yi])
@@ -2555,8 +2581,7 @@ class WSI:
         assert len(grid_idx) == 1
         x, y, grid_x, grid_y = self.coord[grid_idx[0]]
         if anchor == 'center':
-            x += int(self.full_extract_px/2)
-            y += int(self.full_extract_px/2)
+            x, y = hx_geometry.tile_center((x, y), self.full_extract_px)
         return x, y
 
     def get_tile_mask(self, index, sparse_mask) -> np.ndarray:
@@ -3075,7 +3100,7 @@ class WSI:
             method (str, Callable, list(Callable)): Quality control method(s).
                 If a string, may be 'blur', 'otsu', or 'both'.
                 If a callable (or list of callables), each must accept a hx.WSI
-                object and return a np.ndarray (dtype=np.bool).
+                object and return a np.ndarray (dtype=bool).
             blur_radius (int, optional): Blur radius. Only used if method is
                 'blur' or 'both'.
             blur_threshold (float, optional): Blur threshold. Only used if
@@ -3382,6 +3407,8 @@ class WSI:
             'loc_x'         Image tile center x location (if ``incl_loc`` provided)
             'loc_y'         Image tile center y location (if ``incl_loc`` provided)
         """
+        from histox._deprecation import warn_tensorflow
+        warn_tensorflow()
 
         import tensorflow as tf
 
