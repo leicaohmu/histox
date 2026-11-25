@@ -3125,6 +3125,8 @@ class Project:
                 pd.DataFrame: History of hyperparameters resulting metrics.
 
         """
+        from histox.util.smac_utils import require_hpo
+        require_hpo()
         from smac.facade.smac_bb_facade import SMAC4BB  # noqa: F811
         from smac.scenario.scenario import Scenario
 

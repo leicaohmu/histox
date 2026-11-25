@@ -299,8 +299,8 @@ def decode_image(
 
 def auto_decode_image(img_string: bytes, *, img_type: Optional[str] = None):
     if img_type is None:
-        import imghdr
-        img_type = imghdr.what('', img_string)
+        from histox.io.io_utils import detect_image_format
+        img_type = detect_image_format(img_string)
     return decode_image(img_string, img_type)
 
 

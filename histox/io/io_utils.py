@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 
-import imghdr
 import io
 import os
 import struct
@@ -54,6 +53,31 @@ def _is_torch_float(img):
             img.dtype == torch.float16 or img.dtype == torch.float32)
 
 
+def detect_image_format(data: bytes) -> Optional[str]:
+    """Detect an encoded image's format from its leading bytes.
+
+    Replaces :func:`imghdr.what`, which was removed in Python 3.13, for the
+    formats HistoX stores.
+
+    Args:
+        data (bytes): Encoded image.
+
+    Returns:
+        str or None: ``'jpeg'``, ``'png'``, ``'tiff'``, or ``'bmp'``, or None if
+        the format is not recognized.
+    """
+    head = bytes(data[:8])
+    if head.startswith(b'\xff\xd8\xff'):
+        return 'jpeg'
+    if head.startswith(b'\x89PNG\r\n\x1a\n'):
+        return 'png'
+    if head[:4] in (b'II*\x00', b'MM\x00*'):
+        return 'tiff'
+    if head.startswith(b'BM'):
+        return 'bmp'
+    return None
+
+
 def detect_tfrecord_format(tfr: str) -> Tuple[Optional[List[str]],
                                               Optional[str]]:
     '''Detects tfrecord format.
@@ -73,7 +97,7 @@ def detect_tfrecord_format(tfr: str) -> Tuple[Optional[List[str]],
     except errors.EmptyTFRecordsError:
         log.debug(f"Unable to detect format for {tfr}; file empty.")
         return None, None
-    img_type = imghdr.what('', record['image_raw'])
+    img_type = detect_image_format(record['image_raw'])
     return list(record.keys()), img_type
 
 
