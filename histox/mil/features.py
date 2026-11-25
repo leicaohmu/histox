@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import torch
 import histox as hx
+from histox.bag import load_coords, load_features
 import os
 from typing import Union, List, Optional, Callable, Tuple, Any, Dict
 from os.path import join, dirname, exists
@@ -154,13 +155,13 @@ class MILFeatures:
         locations = {}
         for bag in bags:
             slide = path_to_name(bag)
-            bag_index = join(dirname(bag), f'{slide}.index.npz')
-            if not exists(bag_index):
+            coords = load_coords(bag)
+            if coords is None:
                 log.warning(
                     f"Could not find index file for bag {bag}. Unable to determine "
                     "tile location information.")
                 return None
-            locations[slide] = np.load(bag_index)['arr_0']
+            locations[slide] = coords
         return locations
 
     def _get_mil_activations(self, bags: Union[np.ndarray, List[str]]):
@@ -182,7 +183,7 @@ class MILFeatures:
 
         for bag in bags:
             # Load the bag.
-            loaded = torch.load(bag).to(self.device)
+            loaded = load_features(bag, device=self.device)   # float32
             loaded = torch.unsqueeze(loaded, dim=0)
 
             with torch.inference_mode():

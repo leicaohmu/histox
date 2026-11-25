@@ -12,7 +12,7 @@ See :ref:`mil_api` for more information on the MIL API.
 Generating Features
 *******************
 
-The first step in MIL model development is generating features from image tiles, as discussed in the :ref:`features` section. Features from whole-slide images are exported as "bags" of features, where each bag contains a set of features from a single slide. Each bag is a PyTorch tensor saved in ``*.pt`` format. Bags are saved in a directory, and the directory path is passed to the MIL model during training and evaluation.
+The first step in MIL model development is generating features from image tiles, as discussed in the :ref:`features` section. Features from whole-slide images are exported as "bags" of features, where each bag contains a set of features from a single slide. Each bag is a PyTorch tensor saved in ``*.pt`` format, stored as float16 and loaded as float32; see :class:`histox.Bag`. Bags are saved in a directory, and the directory path is passed to the MIL model during training and evaluation.
 
 Training
 ********
