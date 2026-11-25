@@ -363,6 +363,11 @@ class QCMask:
     def shape(self):
         return self.mask.shape
 
+    def to_spatial_map(self, wsi: "hx.WSI") -> "hx.SpatialMap":
+        """Return this mask as a :class:`histox.SpatialMap` on ``wsi`` (True = excluded)."""
+        from histox.spatial import SpatialMap
+        return SpatialMap.from_qc_mask(self, wsi)
+
 
 class Alignment:
 

@@ -678,6 +678,11 @@ class Heatmap:
         ax.set_xlim(0, self._thumb.size[0])
         ax.set_ylim(self._thumb.size[1], 0)
 
+    def to_spatial_map(self, *, uncertainty: bool = False) -> "hx.SpatialMap":
+        """Return the predictions (or uncertainty) as a :class:`histox.SpatialMap`."""
+        from histox.spatial import SpatialMap
+        return SpatialMap.from_heatmap(self, uncertainty=uncertainty)
+
     def save_npz(self, path: Optional[str] = None) -> str:
         """Save heatmap predictions and uncertainty in .npz format.
 
