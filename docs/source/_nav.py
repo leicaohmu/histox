@@ -176,6 +176,7 @@ NAV = [
                 ('histox', 'histox'),
                 ('project', 'histox.Project'),
                 ('dataset', 'histox.Dataset'),
+                ('cohort', 'histox.Cohort'),
                 ('model_params', 'histox.ModelParams'),
             ]),
             ('Data and slides', [

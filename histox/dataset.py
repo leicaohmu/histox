@@ -667,6 +667,17 @@ class Dataset:
         )
 
     @property
+    def cohort(self) -> "hx.Cohort":
+        """The dataset's patients, slides, and labels as a :class:`histox.Cohort`.
+
+        Uses the filtered annotations and the slide sources of this dataset.
+        """
+        if self.annotations is None:
+            raise errors.AnnotationsError("No annotations loaded")
+        paths = self.slide_paths(apply_filters=True)
+        return hx.Cohort(self.filtered_annotations, slides=paths)
+
+    @property
     def tile_spec(self) -> Optional["hx.TileSpec"]:
         """The dataset's tile size as a :class:`histox.TileSpec`.
 
