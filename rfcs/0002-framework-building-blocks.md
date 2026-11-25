@@ -160,6 +160,41 @@ requirement for training.
 adapters. `Dataset.torch()` keeps its signature and builds on `TileDataset`
 internally. `hx.Dataset` stays as the project-level cohort manager.
 
+**End-to-end training from images.** Most MIL methods train on precomputed
+feature bags, but end-to-end training (image tiles → `TileEncoder` →
+`Aggregator`, with gradients through the encoder) must be possible with the
+same blocks:
+
+- `TileBagDataset`: one item per slide or patient, returning `image` as uint8 `[K, C, H, W]` plus `coords`, `target`, and `mask`. A `sampler` argument chooses which K tiles: `"random"` (new sample every epoch), `"all"` (chunks of K), or a callable that receives the slide's tile scores, for top-k selection from a previous pass.
+- It reads from a `TileStore` with random access by index. TFRecords with their existing `.index.npz` files already provide this.
+- Reading random tiles directly from slides is supported but documented as slow (see the measurements below). It suits inference and feature extraction, which read tiles in grid order.
+- `TileEncoder` exposes `set_grad_checkpointing()` and a `trainable` setting (`"none"`, `"last"`, `"all"`), so memory and speed can be traded without rewriting the model.
+
+Measured on the lab server (RTX 3090 shared with another job at about 90%
+utilization, so GPU figures are lower bounds; 6 TCGA slides, 224 px at
+112 µm, K random tiles per slide):
+
+| Data source (random access) | Tiles/s, 1 process | Tiles/s, 8 workers |
+|---|---|---|
+| `hx.WSI[...]`, current public API | 51 | – |
+| cuCIM `read_region`, direct | 43 | 74 |
+| TFRecord by index, read only | 3,264 | – |
+| TFRecord by index, read + JPEG decode (OpenCV) | 1,300 | 9,457 |
+
+| Training step, AMP | ResNet-50, K=256 | ViT-S/16, K=256 |
+|---|---|---|
+| Encoder frozen | 1,825 tiles/s, 1.8 GB | 2,792 tiles/s, 0.9 GB |
+| Last stage trained | 1,520 tiles/s, 1.9 GB | 1,859 tiles/s, 2.9 GB |
+| Full fine-tuning | 657 tiles/s, 11.9 GB | 891 tiles/s, 9.4 GB |
+| Full + gradient checkpointing | 533 tiles/s, 8.6 GB | 726 tiles/s, 2.5 GB |
+
+Conclusions that shape the design:
+
+- An indexed tile store with 8 workers delivers 10 to 14 times what full fine-tuning consumes, so data loading is not the bottleneck.
+- Random reads straight from slides deliver about one tenth of what the GPU needs. The cause is random access itself: reading the same slides in grid order reached about 740 tiles/s in the earlier extraction benchmark. End-to-end training therefore needs extracted tiles, which costs disk space: about 33 KB per 224-px JPEG tile, 2.9 GB for these 6 slides.
+- GPU JPEG decoding (`torchvision.io.decode_jpeg`, one image at a time, torchvision 0.17) reached 882 tiles/s, slower than CPU workers. It should be measured again with batched decoding in the Python 3.11 environment.
+- Gradient checkpointing cuts ViT memory by about 4 times for about 20% less throughput, so a 24 GB GPU can fine-tune a ViT-S on bags of several hundred tiles.
+
 ### P3. `histox.nn`: `TileEncoder` and `Aggregator`
 
 Two base classes, both `nn.Module` subclasses:
@@ -280,7 +315,7 @@ Each step is one pull request with tests and docs.
 2. P2 sample convention, `histox.data.BagDataset`, and `collate_bags`.
 3. P3 `Aggregator` and `AggregatorOutput`; port `Attention_MIL` and `TransMIL`; `SlideAggregator` accepts both styles.
 4. P3 `TileEncoder` and `hx.features.extract`; port the PyTorch extractors; move `CoxPHLoss` and pooling layers to `histox.nn`.
-5. P2 `TileDataset`, `SlideDataset`, and `TileStore` with the TFRecord implementation.
+5. P2 `TileDataset`, `SlideDataset`, `TileBagDataset`, and `TileStore` with the TFRecord implementation; an end-to-end MIL example with a partially trained encoder.
 6. P5 `hx.save`/`hx.load`.
 7. P5 trainers and workflow methods accept modules; `ModelParams(model=module)`; plain-PyTorch MIL trainer.
 8. P6 heatmaps and evaluation accept modules.
