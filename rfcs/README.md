@@ -19,4 +19,4 @@ and a one-line reason, so the reasoning stays on record.
 | RFC | Title | Status |
 |---|---|---|
 | [0001](0001-core-abstractions.md) | Core abstractions | Accepted |
-| [0002](0002-framework-building-blocks.md) | From application to framework | Draft |
+| [0002](0002-framework-building-blocks.md) | From application to framework | Accepted |
