@@ -67,11 +67,26 @@ from histox.workflows import (
 _NONCOMMERCIAL_MODULES = {'biscuit', 'stylegan2', 'stylegan3', 'extractors'}
 _GPL_MODULES = {'clam'}
 
+# Subpackages that ``import histox`` does not load eagerly, because they are
+# slow to import or need optional dependencies. They are imported on first
+# attribute access, so ``hx.mil.train_mil(...)`` works after ``import histox
+# as hx`` regardless of what else has been imported.
+_LAZY_SUBMODULES = {
+    'transforms', 'mil', 'cellseg', 'segment', 'simclr', 'grad',
+    'experimental', 'studio',
+}
+
+
 def __getattr__(name):
-    if name == 'transforms':
-        # Imported on first use: it loads the PyTorch augmentation module.
+    if name in _LAZY_SUBMODULES:
         import importlib
-        mod = importlib.import_module('histox.transforms')
+        try:
+            mod = importlib.import_module(f'histox.{name}')
+        except ImportError as e:
+            # AttributeError keeps hasattr() working; the message keeps the
+            # original reason, such as a missing optional dependency.
+            raise AttributeError(
+                f"histox.{name} could not be imported: {e}") from e
         globals()[name] = mod
         return mod
     if name in _NONCOMMERCIAL_MODULES:
