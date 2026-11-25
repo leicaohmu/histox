@@ -63,6 +63,12 @@ _NONCOMMERCIAL_MODULES = {'biscuit', 'stylegan2', 'stylegan3', 'extractors'}
 _GPL_MODULES = {'clam'}
 
 def __getattr__(name):
+    if name == 'transforms':
+        # Imported on first use: it loads the PyTorch augmentation module.
+        import importlib
+        mod = importlib.import_module('histox.transforms')
+        globals()[name] = mod
+        return mod
     if name in _NONCOMMERCIAL_MODULES:
         try:
             import importlib
