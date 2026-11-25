@@ -5,4 +5,4 @@ sphinx-copybutton
 sphinx-design
 sphinxcontrib-video
 sphinx-gallery==0.17.1
-torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
+torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu

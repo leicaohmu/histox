@@ -1,6 +1,5 @@
 numpy
 gast>=0.3.3
-tensorflow>=2.7,<2.12
 scipy
 scikit-learn
 matplotlib>=3.2
@@ -27,8 +26,6 @@ saliency
 rasterio
 smac==1.4.0
 ConfigSpace
-tensorflow_probability<0.20
-tensorflow_datasets<4.9.0
 rich
 pillow>=6.0.0
 imgui>=2.0.0
