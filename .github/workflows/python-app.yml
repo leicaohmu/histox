@@ -111,6 +111,12 @@ jobs:
           python -m pip install ".[studio]"
           python -m pip install -r docs/requirements.txt
 
+      - name: Check that HistoX imports
+        # Sphinx hides import errors behind generic hints; fail early with
+        # the real traceback instead.
+        run: |
+          python -c "import histox, histox.grad, histox.gan, histox.studio; print(histox.__version__)"
+
       - name: Build documentation
         run: |
           python -m sphinx -b html -q -w sphinx-warnings.txt docs/source docs/_build/html
