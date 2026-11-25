@@ -32,9 +32,12 @@ See RFC 0001 (``rfcs/0001-core-abstractions.md``), proposal P3.
 import json
 import os
 from os.path import exists, join
-from typing import Any, Dict, List, Optional, Sequence, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Union
 
 import numpy as np
+
+if TYPE_CHECKING:
+    import torch
 
 __all__ = ['Bag', 'list_bags', 'load_features', 'load_coords', 'FLOAT16_MAX']
 
