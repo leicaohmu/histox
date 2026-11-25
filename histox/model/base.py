@@ -12,6 +12,8 @@ from histox import errors
 from histox.util import log, log_manifest, no_scope  # noqa: F401
 
 if TYPE_CHECKING:
+    import torch
+    from histox.model._card import ModelCard
     from histox.norm import StainNormalizer
 
 
@@ -539,6 +541,37 @@ class BaseFeatureExtractor:
         'kwargs' is a dictionary of keyword arguments.
         """
         raise NotImplementedError
+
+    @property
+    def card(self) -> "ModelCard":
+        """A :class:`histox.model.ModelCard` describing this extractor.
+
+        Includes the license, citation, weights source, feature dimension,
+        and the input size and normalization applied by its preprocessing,
+        as far as they are known.
+        """
+        from histox.model._card import card_from_extractor
+        return card_from_extractor(self)
+
+    @property
+    def module(self) -> Optional["torch.nn.Module"]:
+        """The underlying PyTorch module, or ``None`` if there is none.
+
+        Use it to inspect or fine-tune the network directly. The extractor
+        itself also handles preprocessing, batching, and whole-slide input.
+        """
+        try:
+            import torch
+        except ImportError:
+            return None
+        candidates = [self.__dict__.get('model'), self.__dict__.get('_model')]
+        inner = self.__dict__.get('ftrs')
+        if inner is not None:
+            candidates += [getattr(inner, '_model', None), inner.__dict__.get('model')]
+        for c in candidates:
+            if isinstance(c, torch.nn.Module):
+                return c
+        return None
 
     def print_license(self) -> None:
         """Print the license statement for the pretrained model."""

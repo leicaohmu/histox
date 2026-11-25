@@ -21,7 +21,7 @@ def build_tensorflow_feature_extractor(name, **kwargs):
 
 # -----------------------------------------------------------------------------
 
-@register_tf
+@register_tf(card_cls='histox.model.extractors.simclr.SimCLR_Features')
 def simclr(ckpt, **kwargs):
     from .simclr import SimCLR_Features
     return SimCLR_Features(ckpt, **kwargs)

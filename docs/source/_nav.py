@@ -192,6 +192,7 @@ NAV = [
                 ('workflows_api', 'histox.workflows'),
                 ('registry', 'histox.registry'),
                 ('model', 'histox.model'),
+                ('model_card', 'Model cards'),
                 ('model_torch', 'histox.model.torch'),
                 ('mil_module', 'histox.mil'),
                 ('simclr', 'histox.simclr'),
