@@ -10,6 +10,7 @@ from typing import Any, Dict, List
 import histox as hx
 from histox import errors
 from .base import BaseFeatureExtractor
+from ._card import ModelCard, extractor_card
 from .features import DatasetFeatures
 from .extractors import (
     list_extractors, list_torch_extractors, list_tensorflow_extractors,
