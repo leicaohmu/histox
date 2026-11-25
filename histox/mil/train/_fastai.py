@@ -137,7 +137,8 @@ def build_learner(
 
     # Loss should weigh inversely to class occurences.
     if config.is_classification() and config.weighted_loss:
-        counts = pd.value_counts(targets[train_idx])
+        # pd.value_counts() was removed in pandas 3.
+        counts = pd.Series(targets[train_idx]).value_counts()
         weights = counts.sum() / counts
         weights /= weights.sum()
         weights = torch.tensor(
