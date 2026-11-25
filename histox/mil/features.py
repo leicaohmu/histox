@@ -4,6 +4,7 @@ import pandas as pd
 import torch
 import histox as hx
 from histox.bag import load_coords, load_features
+from ._aggregator import SlideAggregator
 import os
 from typing import Union, List, Optional, Callable, Tuple, Any, Dict
 from os.path import join, dirname, exists
@@ -188,45 +189,28 @@ class MILFeatures:
 
             with torch.inference_mode():
 
-                # Apply lens to model input.
-                if hasattr(self.config.model_config, 'use_lens') and self.config.model_config.use_lens:
-                    lens = torch.from_numpy(
-                        np.array([loaded.shape[1]])).to(self.device)
-                    model_args = (loaded, lens)
-                else:
-                    model_args = (loaded,)
+                # One calling convention for every MIL model.
+                use_lens = getattr(self.config.model_config, 'use_lens', None)
+                agg = SlideAggregator(self.model, use_lens=use_lens)
+                model_out = agg.predict(loaded)
+                h, clam_att = agg.activations(loaded)
 
-                # Attention MIL and TransMIL.
-                if self.model.__class__.__name__ in ('Attention_MIL', 'TransMIL'):
-                    model_out = self.model(*model_args)
-
-                    h = self.model.get_last_layer_activations(*model_args)  # type: ignore
-                    att = torch.squeeze(self.model.calculate_attention(*model_args))  # type: ignore
+                if clam_att is not None:
+                    # CLAM models return their attention with the activations.
+                    if clam_att.shape[0] == 1:
+                        y_att.append(clam_att.cpu().numpy()[0])
+                    else:
+                        y_att.append(clam_att.cpu().numpy())
+                elif agg.supports_attention:
+                    att = torch.squeeze(agg.attention(loaded))
                     if len(att.shape) == 2 and not self.attention_pooling:
                         raise ValueError("Attention pooling required for 2D attention")
                     elif len(att.shape) == 2:
                         att = self._attention_pool(att)
                     y_att.append(att.cpu().numpy())
-
-                # FC MIL (CLAM implementation)
-                elif self.model.__class__.__name__ in ('MIL_fc, MIL_fc_mc'):
-                    model_out = self.model(*model_args)
-                    h = self.model.get_last_layer_activations(*model_args)  # type: ignore
-                    y_att = None
-
-                # CLAM models.
-                elif self.model.__class__.__name__ in ('CLAM_SB', 'CLAM_MB'):
-                    model_out = self.model(*model_args)[0]
-                    h, A = self.model.get_last_layer_activations(*model_args)  # type: ignore
-                    if A.shape[0] == 1:
-                        y_att.append(A.cpu().numpy()[0])
-                    else:
-                        y_att.append(A.cpu().numpy())
-
                 else:
-                    raise NotImplementedError(
-                        f"Layer activation support for model {self.model.__class__.__name__} is not implemented."
-                    )
+                    # e.g. fully connected MIL: no attention.
+                    y_att = None
 
                 hs.append(h.cpu())
                 yp = torch.nn.functional.softmax(model_out, dim=1).cpu().numpy()
