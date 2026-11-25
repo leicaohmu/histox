@@ -11,6 +11,8 @@ from ..base import BaseFeatureExtractor
 
 
 def build_tensorflow_feature_extractor(name, **kwargs):
+    from histox._deprecation import warn_tensorflow
+    warn_tensorflow()
     if is_tensorflow_extractor(name):
         if name in _tf_extractors:
             return _tf_extractors[name](**kwargs)

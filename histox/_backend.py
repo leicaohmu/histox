@@ -19,6 +19,10 @@ elif os.environ['HX_BACKEND'] not in _valid_backends:
                         ', '.join(_valid_backends)
                     ))
 
+if os.environ['HX_BACKEND'] == 'tensorflow':
+    from ._deprecation import warn_tensorflow
+    warn_tensorflow(stacklevel=2)
+
 # Slide backend - use cuCIM if available.
 _valid_slide_backends = ('cucim', 'libvips')
 if 'HX_SLIDE_BACKEND' not in os.environ:

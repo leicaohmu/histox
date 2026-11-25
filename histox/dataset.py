@@ -3784,6 +3784,8 @@ class Dataset:
             tf.data.Dataset
 
         """
+        from histox._deprecation import warn_tensorflow
+        warn_tensorflow()
         from histox.io.tensorflow import interleave
 
         if self.tile_px is None:

@@ -3407,6 +3407,8 @@ class WSI:
             'loc_x'         Image tile center x location (if ``incl_loc`` provided)
             'loc_y'         Image tile center y location (if ``incl_loc`` provided)
         """
+        from histox._deprecation import warn_tensorflow
+        warn_tensorflow()
 
         import tensorflow as tf
 

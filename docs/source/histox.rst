@@ -9,3 +9,5 @@ histox
 .. autofunction:: load_project
 .. autofunction:: getLoggingLevel
 .. autofunction:: setLoggingLevel
+
+.. autoclass:: HistoXDeprecationWarning
