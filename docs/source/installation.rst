@@ -1,10 +1,11 @@
 Installation
 ============
 
-HistoX is under active development. The current ``0.2.x`` API is pre-stable,
-so pin the package version in reproducible projects. Python 3.9 is the current
-development and continuous-integration baseline; the package metadata still
-declares Python 3.7 or newer while compatibility is being audited.
+HistoX is under active development. The current ``0.3.x`` API is pre-stable,
+so pin the package version in reproducible projects. HistoX requires Python
+3.11 or newer and is tested on Python 3.11, 3.12, and 3.13, following the
+Python versions supported by current PyTorch releases. Projects that must stay
+on an older Python version can use HistoX ``0.2.x``.
 
 Recommended installation
 ------------------------
@@ -13,7 +14,7 @@ Install the published package with the PyTorch backend:
 
 .. code-block:: bash
 
-   conda create -n histox python=3.9
+   conda create -n histox python=3.11
    conda activate histox
    python -m pip install --upgrade pip
    python -m pip install "histox[torch]"
@@ -38,7 +39,7 @@ directory whose name is distinct from the import package:
 
    git clone https://github.com/leicaohmu/histox.git histox-src
    cd histox-src
-   conda create -n histox python=3.9
+   conda create -n histox python=3.11
    conda activate histox
    python -m pip install --upgrade pip
    python -m pip install -e ".[torch]"
@@ -63,16 +64,24 @@ Installation groups
    * - ``python -m pip install "histox[torch]"``
      - PyTorch backend and related training tools. Recommended for new work.
    * - ``python -m pip install "histox[tf]"``
-     - Legacy TensorFlow compatibility for inherited workflows.
+     - Legacy TensorFlow backend. Deprecated since 0.3 and removed no earlier
+       than 0.5; use the PyTorch backend for all new work.
    * - ``python -m pip install "histox[torch,cucim]"``
      - PyTorch and cuCIM; install the matching CuPy build separately.
    * - ``python -m pip install "histox[torch,cucim-cuda12]"``
      - PyTorch, cuCIM, and the CUDA 12 CuPy build.
    * - ``python -m pip install "histox[torch,cucim-cuda11]"``
      - PyTorch, cuCIM, and the CUDA 11 CuPy build.
+   * - ``python -m pip install "histox[studio]"``
+     - Graphical dependencies of :doc:`HistoX Studio <studio>`. Not yet
+       available for Python 3.13.
+   * - ``python -m pip install "histox[hpo]"``
+     - SMAC3 and ConfigSpace for Bayesian hyperparameter search. On Python
+       3.11 and newer, SMAC 1.x builds ``pyrfr`` from source, which requires
+       SWIG (``conda install swig``).
    * - ``python -m pip install "histox[dicom]"``
      - Local DICOM Slide Microscopy files and multi-instance series via
-       ``wsidicom``. This group requires Python 3.9 or newer.
+       ``wsidicom``.
 
 Do not install multiple ``cupy-*`` variants in one environment. Match the
 CuPy build to the CUDA runtime reported by ``nvidia-smi``.
@@ -110,7 +119,7 @@ Run this before creating a project:
    print("model backend:", hx.backend())
    print("slide backend:", hx.slide_backend())
 
-For the current development line, the first line should report ``0.2.1``.
+For the current development line, the first line should report ``0.3.0``.
 The package location must point to a real ``histox/__init__.py`` file rather
 than ``None``. The backend values depend on the packages installed in the
 environment.
@@ -143,7 +152,9 @@ needed:
    export HX_BACKEND=torch
    export HX_SLIDE_BACKEND=libvips
 
-Use ``HX_BACKEND=tensorflow`` only for legacy workflows that require it. The
+Use ``HX_BACKEND=tensorflow`` only for legacy workflows that require it. It
+is deprecated since 0.3: HistoX emits :class:`histox.HistoXDeprecationWarning`
+when it is selected, and it will be removed no earlier than 0.5. The
 ``HX_BACKEND`` and ``HX_SLIDE_BACKEND`` names are the supported HistoX
 environment interface.
 

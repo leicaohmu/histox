@@ -116,6 +116,42 @@ Training requires extracted tiles, valid labels, and enough memory for the
 selected batch size. Establish patient-level splits and an untouched test
 cohort before reporting performance; see :ref:`training`.
 
+7. Run the baseline as an experiment
+------------------------------------
+
+:class:`histox.workflows.Experiment` runs the same training through one
+interface that also records the split, the trained model, and the task
+metrics. Splits are made by patient, so tiles from one patient never appear
+in both training and validation.
+
+.. code-block:: python
+
+   dataset = project.dataset(tile_px=256, tile_um="20x")
+
+   experiment = hx.Experiment(
+       task="classification",
+       method="tile_classifier",
+       cohort=dataset,
+       data_spec=dataset.cohort.data_spec({"label": "label"}),
+       method_config={
+           "project": project,
+           "tile_px": 256,
+           "tile_um": "20x",
+           "model": "resnet50",
+           "epochs": 1,
+           "batch_size": 16,
+       },
+   )
+   fold = hx.splits.patient_holdout(
+       dataset.cohort, val_fraction=0.2, stratify="label"
+   )
+   experiment.fit(split=fold)
+   print(experiment.evaluate(split=fold).metrics)
+
+Changing ``method="tile_classifier"`` to ``method="mil"`` trains a
+multiple-instance learning model on feature bags instead. See
+:doc:`workflows` for both methods and for k-fold cross-validation.
+
 Plan public data without downloading it
 ---------------------------------------
 
