@@ -19,6 +19,12 @@ Core types
 .. autoclass:: SurvivalTask
    :members:
 
+.. autoclass:: ClassificationTask
+   :members:
+
+.. autoclass:: RegressionTask
+   :members:
+
 .. autoclass:: Method
    :members:
 
@@ -49,6 +55,12 @@ Engines and pretrained bundles
 
 .. autoclass:: PS3PretrainedBundle
    :members:
+
+Methods
+-------
+
+.. autoclass:: histox.workflows.MILMethod
+   :members: trainer_config, build_model, stage_fit, stage_evaluate
 
 Exceptions
 ----------
