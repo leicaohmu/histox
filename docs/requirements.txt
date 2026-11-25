@@ -6,3 +6,4 @@ sphinx-design
 sphinxcontrib-video
 sphinx-gallery==0.17.1
 torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu
+torchvision==0.26.0
