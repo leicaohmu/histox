@@ -45,6 +45,8 @@ from histox.workflows import (
     RegistryError,
     RunResult,
     SurvivalTask,
+    ClassificationTask,
+    RegressionTask,
     Task,
     UnknownMethodError,
     UnknownTaskError,

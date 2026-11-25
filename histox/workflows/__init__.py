@@ -26,8 +26,8 @@ from .exceptions import (
 )
 from .experiment import Experiment
 from .pretrained import PS3PretrainedBundle
-from .tasks import SurvivalTask
-from .methods import PS3Method
+from .tasks import ClassificationTask, RegressionTask, SurvivalTask
+from .methods import MILMethod, PS3Method
 
 __all__ = [
     "Artifact",
@@ -42,6 +42,9 @@ __all__ = [
     "RegistryError",
     "RunResult",
     "SurvivalTask",
+    "ClassificationTask",
+    "RegressionTask",
+    "MILMethod",
     "Task",
     "UnknownMethodError",
     "UnknownTaskError",
