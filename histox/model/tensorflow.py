@@ -21,6 +21,7 @@ from tensorflow.keras import applications as kapps
 
 import histox as hx
 import histox.model.base as _base
+from histox._deprecation import warn_tensorflow
 import histox.util.neptune_utils
 from histox import errors
 from histox.util import log, NormFit, no_scope
@@ -28,6 +29,8 @@ from histox.util import log, NormFit, no_scope
 from . import tensorflow_utils as tf_utils
 from .base import log_manifest, BaseFeatureExtractor
 from .tensorflow_utils import unwrap, flatten, eval_from_model, build_uq_model  # type: ignore
+
+warn_tensorflow()
 
 # Set the tensorflow logger
 if hx.getLoggingLevel() == logging.DEBUG:

@@ -5,6 +5,7 @@ __gitcommit__ = ""
 __github__ = 'https://github.com/leicaohmu/histox'
 
 # Configure deep learning and slide backends
+from ._deprecation import HistoXDeprecationWarning
 from ._backend import backend, slide_backend
 
 # Import logging functions required for other submodules
