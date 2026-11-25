@@ -199,6 +199,7 @@ NAV = [
                 ('gan', 'histox.gan'),
                 ('grad', 'histox.grad'),
                 ('norm', 'histox.norm'),
+                ('transforms', 'histox.transforms'),
             ]),
             ('Pathology and utilities', [
                 ('spatial', 'histox.SpatialMap'),
