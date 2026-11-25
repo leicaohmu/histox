@@ -18,16 +18,16 @@ class MILMethod(Method):
     :func:`histox.mil.eval_mil`, so an experiment trains exactly as those
     functions do.
 
-    Configuration (``method_config``):
-        model (str or callable): MIL model, e.g. ``'attention_mil'``,
-            ``'transmil'``. Defaults to ``'attention_mil'``.
-        bags (str): Directory of feature bags (see :class:`histox.Bag`).
-        n_feats, n_out (int, optional): Needed only for :meth:`build_model`
-            before training; ``fit`` infers them from the data.
-        Any other keys are passed to :func:`histox.mil.mil_config`
-        (``epochs``, ``lr``, ``batch_size``, ``loss``, ...). ``loss``
-        defaults to ``'cross_entropy'`` for classification and ``'mse'`` for
-        regression.
+    Configuration keys (``method_config``):
+
+    * ``model``: MIL model name or callable, e.g. ``'attention_mil'`` or
+      ``'transmil'``. Defaults to ``'attention_mil'``.
+    * ``bags``: directory of feature bags (see :class:`histox.Bag`).
+    * ``n_feats`` and ``n_out``: needed only for :meth:`build_model` before
+      training; ``fit`` infers them from the data.
+    * Any other key is passed to :func:`histox.mil.mil_config` (``epochs``,
+      ``lr``, ``batch_size``, ``loss``, ...). ``loss`` defaults to
+      ``'cross_entropy'`` for classification and ``'mse'`` for regression.
 
     The experiment's ``cohort`` should be a :class:`histox.Dataset`; a
     :class:`histox.splits.Split` passed to a stage selects its slides.
