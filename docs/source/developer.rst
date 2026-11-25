@@ -15,6 +15,8 @@ researchers building components beyond the high-level user guide.
    tile_labels
    plugins
    troubleshooting
+   release_notes
 
 TensorFlow compatibility APIs are listed in the :doc:`API reference <api>`
-under *Legacy TensorFlow*.
+under *Legacy TensorFlow (deprecated)*. The TensorFlow backend is deprecated
+since 0.3 and will be removed no earlier than 0.5; see :doc:`release_notes`.

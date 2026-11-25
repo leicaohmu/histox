@@ -22,7 +22,7 @@ HistoX
        <div class="histox-home__pillars-inner">
          <a href="data.html"><strong>Data</strong><span>Discover and cache public cohorts</span></a>
          <a href="slide_processing.html"><strong>Whole-slide imaging</strong><span>Read, tile, normalize, and segment</span></a>
-         <a href="training.html"><strong>Models</strong><span>Train classification, MIL, and survival pipelines</span></a>
+         <a href="workflows.html"><strong>Models</strong><span>Train classification, MIL, and survival pipelines</span></a>
          <a href="evaluation.html"><strong>Interpretation</strong><span>Evaluate models and inspect spatial evidence</span></a>
        </div>
      </section>
@@ -57,7 +57,7 @@ HistoX
          <div class="histox-home__capabilities">
            <article><h3>Data</h3><p>Discover public cohorts, verify files, cache locally, and keep dataset metadata reproducible.</p><a href="data.html">Explore data tools →</a></article>
            <article><h3>Slides</h3><p>Read, tile, normalize, segment, and quality-control whole-slide images through one interface.</p><a href="slide_processing.html">Process slides →</a></article>
-           <article><h3>Models</h3><p>Train PyTorch models for classification, MIL, survival analysis, and multimodal research.</p><a href="training.html">Build models →</a></article>
+           <article><h3>Models</h3><p>Train PyTorch models for classification, MIL, survival analysis, and multimodal research.</p><a href="workflows.html">Build models →</a></article>
            <article><h3>Evidence</h3><p>Evaluate cohorts and inspect spatial evidence with heatmaps, saliency, and uncertainty tools.</p><a href="evaluation.html">Evaluate results →</a></article>
          </div>
        </div>

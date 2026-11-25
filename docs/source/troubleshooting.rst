@@ -55,6 +55,30 @@ Individual tests can be manually skipped with the following syntax:
 
 To view a list of all tests that will be run (and thus can be skipped), pass the argument ``--help``.
 
+PyTorch crashes with a cuDNN or CUDA symbol error
+*************************************************
+
+PyTorch wheels from pip ship their own CUDA and cuDNN libraries. If
+``LD_LIBRARY_PATH`` points to a system CUDA installation, PyTorch may load an
+incompatible cuDNN from there instead, and fail during the first GPU
+convolution with an error such as::
+
+    Could not load symbol cudnnGetLibConfig ... undefined symbol: cudnnGetLibConfig
+
+Remove the system CUDA directories from ``LD_LIBRARY_PATH`` for the HistoX
+environment, or start Python without it:
+
+.. code-block:: bash
+
+    env -u LD_LIBRARY_PATH python my_script.py
+
+``histox.studio`` or ``hx.util.create_search_space`` raises an ImportError
+**************************************************************************
+
+HistoX Studio and Bayesian hyperparameter search use optional dependencies.
+Install them with ``pip install "histox[studio]"`` or
+``pip install "histox[hpo]"``. See :doc:`installation`.
+
 Issue Reporting
 ***************
 

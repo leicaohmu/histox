@@ -213,7 +213,7 @@ NAV = [
                 ('util', 'histox.util'),
                 ('studio_module', 'histox.studio'),
             ]),
-            ('Legacy TensorFlow', [
+            ('Legacy TensorFlow (deprecated)', [
                 ('io_tensorflow', 'histox.io.tensorflow'),
                 ('model_tensorflow', 'histox.model.tensorflow'),
             ]),
@@ -228,6 +228,7 @@ NAV = [
             ('extensions', 'Extensions', 'Optional packages built on HistoX.'),
             ('plugins', 'Plugins', 'Register your own components.'),
             ('troubleshooting', 'Troubleshooting', 'Diagnose common problems.'),
+            ('release_notes', 'Release notes', 'Changes, deprecations, and fixes by release.'),
             ('https://github.com/leicaohmu/histox', 'GitHub', 'Source code, issues, and pull requests.'),
         ],
         'sidebar': [
@@ -242,6 +243,7 @@ NAV = [
             ]),
             ('Support', [
                 ('troubleshooting', 'Troubleshooting'),
+                ('release_notes', 'Release notes'),
             ]),
         ],
     },
