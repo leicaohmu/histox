@@ -24,8 +24,6 @@ crc32c
 tabulate
 saliency
 rasterio
-smac==1.4.0
-ConfigSpace
 rich
 pillow>=6.0.0
 imgui>=2.0.0
@@ -38,8 +36,7 @@ requests
 cucim
 versioneer
 cellpose<2.2
-zarr
-spacy<3.8
+zarr>=2.16,<3
 fastai
 gdown
 triangle

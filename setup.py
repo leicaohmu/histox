@@ -63,8 +63,6 @@ setuptools.setup(
         'numpy',
         'tabulate',
         'rasterio',
-        'smac==1.4.0',
-        'ConfigSpace',
         'rich',
         'pillow>=6.0.0',
         'imgui>=2.0.0',
@@ -74,7 +72,8 @@ setuptools.setup(
         'pyperclip',
         'requests',
         'parameterized',
-        'zarr',
+        # histox.cellseg relies on zarr 2 internals removed in zarr 3.
+        'zarr>=2.16,<3',
         'gdown',
         'triangle',
         'pyarrow',
@@ -84,12 +83,18 @@ setuptools.setup(
             'torch',
             'torchvision',
             'pretrainedmodels',
+            'six',  # needed by pretrainedmodels, which does not declare it
             'cellpose<2.2',
-            'spacy<3.8',
             'fastai',
             'pytorch-lightning',
             'timm',
             'segmentation-models-pytorch',
+        ],
+        # Bayesian hyperparameter search (Project.smac_search). SMAC 1.x
+        # builds pyrfr from source on Python 3.11+, which requires SWIG.
+        'hpo': [
+            'smac==1.4.0',
+            'ConfigSpace',
         ],
         'huggingface': [
             'transformers>=4.32,<5',

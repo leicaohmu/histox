@@ -258,6 +258,8 @@ Bayesian optimization
 
 You can also perform Bayesian hyperparameter optimization using `SMAC3 <https://automl.github.io/SMAC3/master/>`_, which uses a `configuration space <https://automl.github.io/ConfigSpace/master/>`_ to determine the types and ranges of hyperparameters to search.
 
+SMAC3 and ConfigSpace are optional. Install them with ``pip install "histox[hpo]"``. On Python 3.11 and newer, SMAC 1.x builds its ``pyrfr`` dependency from source, which requires `SWIG <https://www.swig.org/>`_ (for example ``conda install swig``).
+
 HistoX provides several functions to assist with building these configuration spaces. :func:`histox.util.create_search_space` allows you to define a range to search for each hyperparameter via keyword arguments:
 
 .. code-block:: python
