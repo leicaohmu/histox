@@ -181,6 +181,7 @@ NAV = [
             ]),
             ('Data and slides', [
                 ('data_api', 'histox.data'),
+                ('data_datasets', 'PyTorch datasets'),
                 ('dataset_features', 'DatasetFeatures'),
                 ('bag', 'histox.Bag'),
                 ('slide', 'histox.WSI'),
