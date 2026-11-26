@@ -52,16 +52,3 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
           repository-url: https://upload.pypi.org/legacy/
-
-  notify-docs:
-    name: Trigger documentation deployment
-    needs: build-n-publish
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Trigger lei-lab-site to redeploy
-        uses: peter-evans/repository-dispatch@v4
-        with:
-          token: ${{ secrets.DOCS_REPO_TOKEN }}
-          repository: leicaohmu/lei-lab-site
-          event-type: pypi-lib-updated
