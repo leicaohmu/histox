@@ -25,6 +25,16 @@ New features
   bags in a batch and returns a ``mask`` and ``lens``. See
   :doc:`data_datasets`. The existing ``histox.mil.data.BagDataset`` used by
   the MIL trainer is unchanged.
+- :mod:`histox.nn` with :class:`histox.nn.Aggregator`, the base class for
+  slide-level models. ``forward(features, mask)`` returns an
+  :class:`~histox.nn.AggregatorOutput` with logits, per-tile attention, and
+  the slide embedding. Subclasses work with MIL inference, evaluation, and
+  attention maps without registration. See :doc:`nn`.
+- :mod:`histox.models` with :class:`~histox.models.ABMIL` and
+  :class:`~histox.models.TransMIL`, built on ``Aggregator``. ``from_legacy``
+  converts trained ``Attention_MIL`` and ``TransMIL`` models, with identical
+  outputs. :func:`histox.mil.train_mil` does not train ``Aggregator`` models
+  yet; train them with a PyTorch loop (see :doc:`mil`).
 
 0.3.0
 -----

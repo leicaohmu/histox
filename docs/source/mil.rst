@@ -153,23 +153,35 @@ a batch and returns their lengths and a mask:
     import torch
     from torch.utils.data import DataLoader
     import histox as hx
-    from histox.mil.models import Attention_MIL
 
     train = hx.data.BagDataset(cohort, "bags/", target="subtype", max_tiles=4096)
     loader = DataLoader(train, batch_size=8, shuffle=True,
                         collate_fn=hx.data.collate_bags)
 
-    model = Attention_MIL(train.num_features, len(train.classes))
+    model = hx.models.ABMIL(train.num_features, len(train.classes))
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
     for epoch in range(20):
         for batch in loader:
-            logits = model(batch["features"], batch["lens"])
-            loss = torch.nn.functional.cross_entropy(logits, batch["target"])
+            out = model(batch["features"], batch["mask"])
+            loss = torch.nn.functional.cross_entropy(out.logits, batch["target"])
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
-See :doc:`data_datasets` for the item format and options.
+``out.attention`` holds the per-tile attention and ``out.embedding`` the pooled
+slide embedding. To map attention back onto the slide:
+
+.. code-block:: python
+
+    model.eval()
+    bag = hx.Bag.load("bags/", slide)
+    with torch.no_grad():
+        attention = model(bag.features[None]).attention[0]
+    # stride: tile spacing in level-0 pixels, e.g. hx.WSI(path, bag.tile_spec).full_stride
+    attention_map = hx.SpatialMap.from_bag(bag, attention.numpy(), stride=stride)
+
+See :doc:`data_datasets` for the item format and :doc:`nn` for writing your own
+model.
 
 Multi-Magnification MIL
 -----------------------
@@ -205,6 +217,17 @@ The feature extractors used for each modality, as specified in the ``bags_config
 
 Custom Architectures
 --------------------
+
+.. tip::
+
+   New models should subclass :class:`histox.nn.Aggregator`: implement
+   ``forward(features, mask)`` and return an
+   :class:`~histox.nn.AggregatorOutput`. Such a model works with HistoX
+   inference, evaluation, and attention maps without registration. Train it
+   with a loop as shown above; support in :func:`histox.mil.train_mil` follows
+   in a later release. See :doc:`nn`.
+
+The guidelines below apply to models trained with :func:`histox.mil.train_mil`.
 
 Training custom MIL models is straightforward with HistoX, particularly if your model can adhere to a few simple guidelines:
 
