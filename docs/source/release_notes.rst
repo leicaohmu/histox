@@ -10,6 +10,22 @@ feature emits :class:`histox.HistoXDeprecationWarning`, names its replacement,
 and stays for at least two minor releases. Earlier releases are listed on
 `GitHub <https://github.com/leicaohmu/histox/tags>`_.
 
+0.4.0 (in development)
+----------------------
+
+This release implements RFC 0002: documented base classes that users subclass
+to extend HistoX, and training with ordinary PyTorch loops.
+
+New features
+************
+
+- :class:`histox.data.BagDataset` and :func:`histox.data.collate_bags`: a
+  PyTorch dataset of feature bags built from a :class:`histox.Cohort`, one item
+  per slide or per patient, returning ``dict`` items. ``collate_bags`` pads the
+  bags in a batch and returns a ``mask`` and ``lens``. See
+  :doc:`data_datasets`. The existing ``histox.mil.data.BagDataset`` used by
+  the MIL trainer is unchanged.
+
 0.3.0
 -----
 

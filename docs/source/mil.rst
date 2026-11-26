@@ -140,6 +140,37 @@ Hyperparameters, model configuration, and feature extractor information is logge
 
 .. _multimag:
 
+Training with your own loop
+---------------------------
+
+:class:`histox.data.BagDataset` serves feature bags to a standard PyTorch
+``DataLoader``, so a MIL model can be trained with a plain loop instead of
+:func:`histox.mil.train_mil`. :func:`histox.data.collate_bags` pads the bags in
+a batch and returns their lengths and a mask:
+
+.. code-block:: python
+
+    import torch
+    from torch.utils.data import DataLoader
+    import histox as hx
+    from histox.mil.models import Attention_MIL
+
+    train = hx.data.BagDataset(cohort, "bags/", target="subtype", max_tiles=4096)
+    loader = DataLoader(train, batch_size=8, shuffle=True,
+                        collate_fn=hx.data.collate_bags)
+
+    model = Attention_MIL(train.num_features, len(train.classes))
+    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
+    for epoch in range(20):
+        for batch in loader:
+            logits = model(batch["features"], batch["lens"])
+            loss = torch.nn.functional.cross_entropy(logits, batch["target"])
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+See :doc:`data_datasets` for the item format and options.
+
 Multi-Magnification MIL
 -----------------------
 
