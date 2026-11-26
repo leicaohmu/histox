@@ -73,7 +73,7 @@ _GPL_MODULES = {'clam'}
 # as hx`` regardless of what else has been imported.
 _LAZY_SUBMODULES = {
     'transforms', 'mil', 'cellseg', 'segment', 'simclr', 'grad',
-    'experimental', 'studio',
+    'experimental', 'studio', 'nn', 'models',
 }
 
 

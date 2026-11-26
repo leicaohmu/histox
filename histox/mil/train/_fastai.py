@@ -132,6 +132,15 @@ def build_learner(
     n_in, n_out = config.inspect_batch(batch)
     model = config.build_model(n_in, n_out).to(device)
 
+    from histox.mil._aggregator import is_aggregator
+    if is_aggregator(model):
+        raise NotImplementedError(
+            f"{type(model).__name__} is a histox.nn.Aggregator. The fastai MIL "
+            "trainer does not support Aggregator models yet; train it with a "
+            "PyTorch loop over histox.data.BagDataset (see the MIL guide, "
+            "'Training with your own loop'), then use it for inference and "
+            "evaluation as usual.")
+
     if hasattr(model, 'relocate'):
         model.relocate()
 

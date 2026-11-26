@@ -195,6 +195,8 @@ NAV = [
                 ('registry', 'histox.registry'),
                 ('model', 'histox.model'),
                 ('model_card', 'Model cards'),
+                ('nn', 'histox.nn'),
+                ('models', 'histox.models'),
                 ('model_torch', 'histox.model.torch'),
                 ('mil_module', 'histox.mil'),
                 ('simclr', 'histox.simclr'),
