@@ -596,7 +596,7 @@ class Studio(ImguiWindow):
 
                 imgui.separator()
                 if imgui.menu_item('Release Notes')[1]:
-                    webbrowser.open(join(hx.__github__, 'releases/tag', hx.__version__))
+                    webbrowser.open(join(hx.__github__, 'releases/tag', 'v' + hx.__version__))
                 if imgui.menu_item('Report Issue')[1]:
                     webbrowser.open(join(hx.__github__, 'issues'))
                 imgui.separator()
